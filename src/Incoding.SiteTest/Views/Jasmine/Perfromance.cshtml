@@ -1,0 +1,154 @@
+﻿    @using Incoding.Block.Logging    @using Incoding.Extensions
+@using Incoding.SiteTest
+@model JasmineIndexContainer
+           
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    @Html.Incoding().Link(Url.Content("~/Content/Site.css"))
+    @Html.Incoding().Link(Url.Content("~/Content/css/jasmine.css"))
+
+
+    @Html.Incoding().Script(Url.Content("~/Scripts/jquery-{0}.min.js".F(Model.JqueryVersion)))
+    @Html.Incoding().Script(Url.Content("~/Scripts/underscore.js"))
+
+    @Html.Incoding().Script(Url.Content("~/Scripts/jquery.form.js"))
+    @Html.Incoding().Script(Url.Content("~/Scripts/jquery.history.js"))
+    @Html.Incoding().Script(Url.Content("~/Scripts/jquery.validate.js"))
+    @Html.Incoding().Script(Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js"))
+    @Html.Incoding().Script(Url.Content("~/Scripts/handlebars.js"))
+
+
+
+    <script src="@Url.Content("~/Scripts/incoding.url.js")"> </script>
+    <script src="@Url.Content("~/Scripts/incoding.core.js")"> </script>    
+    <script src="@Url.Content("~/Scripts/incoding.meta.helper.js")"> </script>
+    <script src="@Url.Content("~/Scripts/incoding.meta.engine.js")"> </script>
+    <script src="@Url.Content("~/Scripts/incoding.meta.conditional.js")"> </script>
+    <script src="@Url.Content("~/Scripts/incoding.meta.executable.js")"> </script>    
+    
+
+    @Html.Incoding().Script(Url.Content("~/Scripts/JSON2.js"))
+    @Html.Incoding().Script(Url.Content("~/Scripts/jasmine.js"))
+    @Html.Incoding().Script(Url.Content("~/Scripts/jasmine-jquery.js"))
+    @Html.Incoding().Script(Url.Content("~/Scripts/jasmine-html.js"))
+    @Html.Incoding().Script(Url.Content("~/Scripts/jquery.mockjax.js"))
+
+
+    @Html.Incoding().Script("https://cdn.jsdelivr.net/lodash/4.11.2/lodash.min.js")
+    @Html.Incoding().Script(Url.Content("~/Scripts/platform.js"))    
+    @Html.Incoding().Script(Url.Content("~/Scripts/benchmark.js"))    
+    @*@Html.Incoding().Script(Url.Content("~/Scripts/inc-performance.js"))*@
+
+
+    <script>
+        var suite = new Benchmark.Suite;
+
+        var prevOb = $('#ExecutableInsertWithProperty');
+        // add tests
+        suite.add('Search by selector', function() {
+                $('#ExecutableInsertWithProperty');
+            })
+            .add('Search by jquery object', function() {
+                if (prevOb instanceof JQuery) {
+                    prevOb = $(prevOb);
+                }
+            })
+            .on('cycle', function(event) {
+                console.log(String(event.target));
+            })
+            .on('complete', function() {
+                console.log('Fastest is ' + this.filter('fastest').map('name'));
+            })
+            .run({ 'async' : true });
+    </script>
+
+    <script type="text/javascript">
+        IncodingEngine.Current = {
+            parse : function() {
+
+            }
+        };
+        (function() {
+
+            var jasmineEnv = jasmine.getEnv();
+            jasmineEnv.updateInterval = 1000;
+
+            var htmlReporter = new jasmine.HtmlReporter();
+
+            jasmineEnv.addReporter(htmlReporter);
+
+            jasmineEnv.specFilter = function(spec) {
+                return htmlReporter.specFilter(spec);
+            };
+
+            var currentWindowOnload = window.onload;
+
+            window.onload = function() {
+                if (currentWindowOnload) {
+                    currentWindowOnload();
+                }
+                execJasmine();
+            };
+
+            function execJasmine() {
+                jasmineEnv.execute();
+            }
+
+        })();
+    </script>
+</head>
+
+<body>
+<input type="hidden" value="@(new ExecutableInsert("html", "Prop2", string.Empty, false, string.Empty).ToJsonString())" id="ExecutableInsertWithProperty"/>
+
+    @*@for (int i = 0; i < 1000; i++)
+    {
+        @(Html.When(JqueryBind.InitIncoding)
+              .OnSuccess(dsl => dsl.Self().JQuery.Attr.AddClass(B.Btn))
+              .AsHtmlAttributes()
+              .ToDiv())
+    }
+
+
+<div id="simpleIML">
+    @for (int i = 0; i < 1000; i++)
+    {
+        @(Html.When(JqueryBind.Click)
+              .OnSuccess(dsl => dsl.Window.Alert("Test"))
+              .AsHtmlAttributes()
+              .ToDiv())
+    }
+</div>
+<div id="clickIML">
+    @for (int i = 0; i < 1000; i++)
+    {
+        @(Html.When(JqueryBind.Click)
+              .OnSuccess(dsl => dsl.Self().JQuery.Attr.AddClass(B.Btn))
+              .AsHtmlAttributes()
+              .ToDiv())
+    }
+</div>
+<div id="complexIML">
+    @for (int i = 0; i < 1000; i++)
+    {
+        @(Html.When(JqueryBind.Click)
+              .OnSuccess(dsl =>
+                         {
+                             dsl.Window.Alert("Test");
+                             dsl.Window.Console.Log(LogType.Debug, "test");
+                         })
+              .When(JqueryBind.InitIncoding)
+              .PreventDefault()
+              .OnSuccess(dsl =>
+                         {
+                             dsl.WithClass("test").Trigger.Incoding();
+                             dsl.WithId("aga").JQuery.Attr.AddClass("asd");
+                             dsl.WithClass(B.Disabled).JQuery.Attr.Remove(HtmlAttribute.Accept);
+
+                         })
+              .AsHtmlAttributes()
+              .ToDiv())
+    }
+</div>*@
+</body>

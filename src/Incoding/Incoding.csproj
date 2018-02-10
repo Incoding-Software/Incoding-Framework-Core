@@ -1,0 +1,439 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D66AD474-A026-4AB2-B475-6477488443C4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Incoding</RootNamespace>
+    <AssemblyName>Incoding</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+    <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>Incoding.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>False</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>False</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsInferRequires>False</CodeContractsInferRequires>
+    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
+    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
+    <CodeContractsSuggestAssumptions>True</CodeContractsSuggestAssumptions>
+    <CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
+    <CodeContractsSuggestEnsures>True</CodeContractsSuggestEnsures>
+    <CodeContractsSuggestObjectInvariants>True</CodeContractsSuggestObjectInvariants>
+    <CodeContractsDisjunctiveRequires>False</CodeContractsDisjunctiveRequires>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>True</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>True</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsBaseLineFile />
+    <CodeContractsCacheAnalysisResults>False</CodeContractsCacheAnalysisResults>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>%28none%29</CodeContractsReferenceAssembly>
+    <CodeContractsAnalysisWarningLevel>2</CodeContractsAnalysisWarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <DocumentationFile>
+    </DocumentationFile>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>False</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>False</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsInferRequires>False</CodeContractsInferRequires>
+    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
+    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
+    <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
+    <CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
+    <CodeContractsSuggestEnsures>False</CodeContractsSuggestEnsures>
+    <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
+    <CodeContractsDisjunctiveRequires>False</CodeContractsDisjunctiveRequires>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>False</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsBaseLineFile />
+    <CodeContractsCacheAnalysisResults>False</CodeContractsCacheAnalysisResults>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>%28none%29</CodeContractsReferenceAssembly>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <DocumentationFile>bin\Release\Incoding.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
+    <OutputPath>bin\Publish\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\Incoding.Infrastructure.Data.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>IncFramework.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20505.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20505.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Block\Caching\CachingFactory.cs" />
+    <Compile Include="Block\Caching\Core\ICacheKey.cs" />
+    <Compile Include="Block\Caching\CachingInit.cs" />
+    <Compile Include="Block\Caching\Policy\CachingPolicy.cs" />
+    <Compile Include="Block\Caching\Policy\CachingPolicyFluentEx.cs" />
+    <Compile Include="Block\Caching\Policy\IsCacheExpires.cs" />
+    <Compile Include="Block\Caching\Providers\ICachedProvider.cs" />
+    <Compile Include="Block\Caching\Providers\MemCachedProvider.cs" />
+    <Compile Include="Block\Caching\Providers\MemoryListCachedProvider.cs" />
+    <Compile Include="Block\Caching\Providers\EmptyCachedProvider.cs" />
+    <Compile Include="Block\Caching\Providers\NetCachedProvider.cs" />
+    <Compile Include="Block\Core\FactoryBase.cs" />
+    <Compile Include="Block\Core\IsSatisfied.cs" />
+    <Compile Include="Block\Core\SatisfiedSyntax.cs" />
+    <Compile Include="Block\Core\SatisfiedSyntaxEx.cs" />
+    <Compile Include="Block\ExceptionHandling\ExceptionHandlingFactory.cs" />
+    <Compile Include="Block\ExceptionHandling\InitExceptionHandling.cs" />
+    <Compile Include="Block\ExceptionHandling\Policy\ActionPolicy.cs" />
+    <Compile Include="Block\ExceptionHandling\Policy\ExceptionPolicy.cs" />
+    <Compile Include="Block\ExceptionHandling\Policy\ExceptionPolicyFluentEx.cs" />
+    <Compile Include="Block\IoC\Core\IIocProvider.cs" />
+    <Compile Include="Block\IoC\IoCFactory.cs" />
+    <Compile Include="Block\IoC\IoCInit.cs" />
+    <Compile Include="Block\IoC\Provider\SimpleInjectorIoCProvider.cs" />
+    <Compile Include="Block\IoC\Provider\DryIocProvider.cs" />
+    <Compile Include="Block\IoC\Provider\NinjectIoCProvider.cs" />
+    <Compile Include="Block\IoC\Provider\StructureMapIoCProvider.cs" />
+    <Compile Include="Block\Logging\Core\DefaultParserException.cs" />
+    <Compile Include="Block\Logging\Core\IParserException.cs" />
+    <Compile Include="Block\Logging\Core\LogMessage.cs" />
+    <Compile Include="Block\Logging\Core\LogType.cs" />
+    <Compile Include="Block\Logging\InitLogging.cs" />
+    <Compile Include="Block\Logging\Loggers\ActionLogger.cs" />
+    <Compile Include="Block\Logging\Loggers\ClipboardLogger.cs" />
+    <Compile Include="Block\Logging\Loggers\ConsoleLogger.cs" />
+    <Compile Include="Block\Logging\Loggers\EventLogger.cs" />
+    <Compile Include="Block\Logging\Loggers\FileLogger.cs" />
+    <Compile Include="Block\Logging\Loggers\ILogger.cs" />
+    <Compile Include="Block\Logging\Loggers\LoggerBase.cs" />
+    <Compile Include="Block\Logging\Loggers\TraceLogger.cs" />
+    <Compile Include="Block\Logging\LoggingFactory.cs" />
+    <Compile Include="Block\Logging\Policy\LoggingPolicy.cs" />
+    <Compile Include="Block\Scheduler\Command\ChangeDelayToSchedulerStatusByUIDCommand.cs" />
+    <Compile Include="Block\Scheduler\Command\ChangeDelayToSchedulerStatusCommand.cs" />
+    <Compile Include="Block\Scheduler\Persistence\OptionOfDelayAttribute.cs" />
+    <Compile Include="Block\Scheduler\Query\GetRecurrencyDateQuery.cs" />
+    <Compile Include="Block\Scheduler\StartSchedulerCommand.cs" />
+    <Compile Include="ContractAbbreviateAttribute.cs" />
+    <Compile Include="ContractArgumentValidatorAttribute.cs" />
+    <Compile Include="ContractOptionAttribute.cs" />
+    <Compile Include="CQRS\Common\Command\AddCookieCommand.cs" />
+    <Compile Include="CQRS\Common\Command\DeleteEntityByIdCommandT.cs" />
+    <Compile Include="CQRS\Common\Query\GetCookiesAsStringQuery.cs" />
+    <Compile Include="CQRS\Common\Query\HasEntitiesQuery.cs" />
+    <Compile Include="CQRS\Common\Response\IncBoolResponse.cs" />
+    <Compile Include="CQRS\Common\Response\IncStructureResponse.cs" />
+    <Compile Include="CQRS\Common\Specifications\EntityByRandomOrderSpec.cs" />
+    <Compile Include="CQRS\Core\CommandBase.cs" />
+    <Compile Include="CQRS\Common\Command\DeleteEntityByIdCommand.cs" />
+    <Compile Include="CQRS\Common\Query\GetEntitiesQuery.cs" />
+    <Compile Include="CQRS\Common\Query\GetEntityByIdQuery.cs" />
+    <Compile Include="CQRS\Core\CommandComposite.cs" />
+    <Compile Include="CQRS\Core\IMessage.cs" />
+    <Compile Include="Block\Scheduler\Command\AddDelayToSchedulerCommand.cs" />
+    <Compile Include="Block\Scheduler\Persistence\DelayOfStatus.cs" />
+    <Compile Include="Block\Scheduler\Persistence\DelayToScheduler.cs" />
+    <Compile Include="CQRS\Core\ISettingCommandComposite.cs" />
+    <Compile Include="CQRS\Core\MessageBase.cs" />
+    <Compile Include="CQRS\Core\IDispatcher.cs" />
+    <Compile Include="CQRS\Core\MessageExecuteSetting.cs" />
+    <Compile Include="CQRS\Core\MessageExecuteSettingAttribute.cs" />
+    <Compile Include="CQRS\DefaultDispatcher.cs" />
+    <Compile Include="CQRS\Core\QueryBase.cs" />
+    <Compile Include="CQRS\DispatcherExtensions.cs" />
+    <Compile Include="CQRS\Common\Specifications\EntityContainIdSpec.cs" />
+    <Compile Include="CQRS\Common\Specifications\EntityByIdSpec.cs" />
+    <Compile Include="CQRS\ISetUp.cs" />
+    <Compile Include="Block\Scheduler\Query\GetExpectedDelayToSchedulerQuery.cs" />
+    <Compile Include="Data\CollectionAsString.cs" />
+    <Compile Include="Data\Core\IEntity.cs" />
+    <Compile Include="Data\Core\IManagerDataBase.cs" />
+    <Compile Include="Data\Core\IRepository.cs" />
+    <Compile Include="Data\Core\ISessionFactory.cs" />
+    <Compile Include="Data\Core\IUnitOfWork.cs" />
+    <Compile Include="Data\Core\IUnitOfWorkFactory.cs" />
+    <Compile Include="Data\Core\QueryableExtensions.cs" />
+    <Compile Include="Data\Core\Specifications\Fetch\AdHocFetchEFSpecification.cs" />
+    <Compile Include="Data\Core\Specifications\Fetch\AdHocFetchNhibernateSpecification.cs" />
+    <Compile Include="Data\Core\Specifications\Fetch\AdHocFetchRavenDbSpecification.cs" />
+    <Compile Include="Data\Core\Specifications\Fetch\AdHocFetchSpecificationBase.cs" />
+    <Compile Include="Data\Core\Specifications\Fetch\AndFetchSpecification.cs" />
+    <Compile Include="Data\Core\Specifications\Fetch\FetchSpecification.cs" />
+    <Compile Include="Data\Core\Specifications\Order\AdHocOrderSpecification.cs" />
+    <Compile Include="Data\Core\Specifications\Order\OrderSpecification.cs" />
+    <Compile Include="Data\Core\Specifications\Order\OrderType.cs" />
+    <Compile Include="Data\Core\Specifications\PaginatedSpecification.cs" />
+    <Compile Include="Data\Core\UnitOfWorkBase.cs" />
+    <Compile Include="Data\DictionaryAsString.cs" />
+    <Compile Include="Data\IncEntityBase.cs" />
+    <Compile Include="Data\IncPaginatedResult.cs" />
+    <Compile Include="Data\Provider\EF\ContextExtensions.cs" />
+    <Compile Include="Data\Provider\EF\EFClassMap.cs" />
+    <Compile Include="Data\Provider\EF\EntityFrameworkRepository.cs" />
+    <Compile Include="Data\Provider\EF\EntityFrameworkSessionFactory.cs" />
+    <Compile Include="Data\Provider\EF\EntityFrameworkUnitOfWork.cs" />
+    <Compile Include="Data\Provider\EF\EntityFrameworkUnitOfWorkFactory.cs" />
+    <Compile Include="Data\Provider\EF\IEFClassMap.cs" />
+    <Compile Include="Data\Provider\EF\IEntityFrameworkSessionFactory.cs" />
+    <Compile Include="Data\Provider\EF\IncDbContext.cs" />
+    <Compile Include="Data\Provider\MongoDb\IMongoDbSessionFactory.cs" />
+    <Compile Include="Data\Provider\MongoDb\MongoDatabaseDisposable.cs" />
+    <Compile Include="Data\Provider\MongoDb\MongoDbRepository.cs" />
+    <Compile Include="Data\Provider\MongoDb\MongoDbSessionFactory.cs" />
+    <Compile Include="Data\Provider\MongoDb\MongoDbUnitOfWork.cs" />
+    <Compile Include="Data\Provider\MongoDb\MongoDbUnitOfWorkFactory.cs" />
+    <Compile Include="Data\Provider\NHibernate\HqGenerator\GuidStringGenerator.cs" />
+    <Compile Include="Data\Provider\NHibernate\INhibernateSessionFactory.cs" />
+    <Compile Include="Data\Provider\NHibernate\NhibernateEntityMap.cs" />
+    <Compile Include="Data\Provider\NHibernate\NhibernateManagerDataBase.cs" />
+    <Compile Include="Data\Provider\NHibernate\NhibernateRepository.cs" />
+    <Compile Include="Data\Provider\NHibernate\NhibernateSessionFactory.cs" />
+    <Compile Include="Data\Provider\NHibernate\NhibernateUnitOfWork.cs" />
+    <Compile Include="Data\Provider\NHibernate\NhibernateUnitOfWorkFactory.cs" />
+    <Compile Include="Data\Provider\NHibernate\SqlFunctions.cs" />
+    <Compile Include="Data\Provider\RavenDb\IRavenDbSessionFactory.cs" />
+    <Compile Include="Data\Provider\RavenDb\RavenDbRepository.cs" />
+    <Compile Include="Data\Provider\RavenDb\RavenDbSessionFactory.cs" />
+    <Compile Include="Data\Provider\RavenDb\RavenDbUnitOfWork.cs" />
+    <Compile Include="Data\Provider\RavenDb\RavenDbUnitOfWorkFactory.cs" />
+    <Compile Include="Extensions\AnonymousHelper.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Extensions\DictionaryExtensions.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Extensions\EqualsExtensions.cs" />
+    <Compile Include="Extensions\ExpressionEqualExtensions.cs" />
+    <Compile Include="Extensions\MathHelper.cs" />
+    <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="Extensions\SelectorExtensions.cs" />
+    <Compile Include="Extensions\LinqSpecs\AdHocSpecification.cs" />
+    <Compile Include="Extensions\LinqSpecs\AndSpecification.cs" />
+    <Compile Include="Extensions\LinqSpecs\ExpressionCombining\ExpressionVisitor.cs" />
+    <Compile Include="Extensions\LinqSpecs\ExpressionCombining\ParameterRebinder.cs" />
+    <Compile Include="Extensions\LinqSpecs\ExpressionCombining\Utility.cs" />
+    <Compile Include="Extensions\LinqSpecs\ExpressionSerialization\ExpressionSerializer.cs" />
+    <Compile Include="Extensions\LinqSpecs\ExpressionSerialization\ExpressionUtility.cs" />
+    <Compile Include="Extensions\LinqSpecs\ExpressionSerialization\TypeResolver.cs" />
+    <Compile Include="Extensions\LinqSpecs\NegateSpecification.cs" />
+    <Compile Include="Extensions\LinqSpecs\OrSpecification.cs" />
+    <Compile Include="Extensions\LinqSpecs\Specification.cs" />
+    <Compile Include="Maybe\MaybeObject.cs" />
+    <Compile Include="Extensions\OtherExtensions.cs" />
+    <Compile Include="Extensions\ReflectionExtensions.cs" />
+    <Compile Include="Extensions\SpecificationExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\StringUrlExtensions.cs" />
+    <Compile Include="Guard.cs" />
+    <Compile Include="IncFrameworkException.cs" />
+    <Compile Include="IncWebException.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Quality\IgnoreCompareAttribute.cs" />
+    <Compile Include="Quality\IgnoreInventAttribute.cs" />
+    <Compile Include="Quality\ObsoleteMessage.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\EmailSenders\FakeEmailSender.cs" />
+    <Compile Include="Utilities\EmailSenders\IEmailSender.cs" />
+    <Compile Include="Utilities\EmailSenders\NetEmailSender.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Block\Counter\" />
+    <Folder Include="CQRS\MVD Integrated\" />
+    <Folder Include="MvcContrib\Core\" />
+    <Folder Include="MvcContrib\Extensions\" />
+    <Folder Include="MvcContrib\HtmlHelper\" />
+    <Folder Include="MvcContrib\Incoding Controls\" />
+    <Folder Include="MvcContrib\Incoding Meta Language\Client Framework\" />
+    <Folder Include="MvcContrib\Incoding Meta Language\Condionals\Builder\" />
+    <Folder Include="MvcContrib\Incoding Meta Language\Condionals\Instances\" />
+    <Folder Include="MvcContrib\Incoding Meta Language\DSL\Core\" />
+    <Folder Include="MvcContrib\Incoding Meta Language\DSL\Instances\Jquery\" />
+    <Folder Include="MvcContrib\Incoding Meta Language\Executables\Action\" />
+    <Folder Include="MvcContrib\Incoding Meta Language\Executables\Core\" />
+    <Folder Include="MvcContrib\Incoding Meta Language\JqueryHelper\Options\" />
+    <Folder Include="MvcContrib\Incoding Meta Language\JqueryHelper\Primitive\" />
+    <Folder Include="MvcContrib\Incoding Meta Language\Selectors\Core\" />
+    <Folder Include="MvcContrib\Incoding Meta Language\Selectors\JavaScript\" />
+    <Folder Include="MvcContrib\Incoding Meta Language\Selectors\Jquery\" />
+    <Folder Include="MvcContrib\MVD\Core\" />
+    <Folder Include="MvcContrib\MVD\Handlers\" />
+    <Folder Include="MvcContrib\Primitive\" />
+    <Folder Include="MvcContrib\Template\Factory\" />
+    <Folder Include="MvcContrib\Template\Syntax\" />
+    <Folder Include="MvcContrib\ViewModel\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="IncFramework.pub" />
+    <None Include="IncFramework.PublicKeyOnly.snk" />
+    <None Include="IncFramework.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ResharperMemberLayout.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties BuildVersion_DetectChanges="True" BuildVersion_IncrementBeforeBuild="False" BuildVersion_BuildAction="Both" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.TimeStamp" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

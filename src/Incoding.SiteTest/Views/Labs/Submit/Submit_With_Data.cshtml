@@ -1,0 +1,9 @@
+﻿@using (Html.When(JqueryBind.Submit)
+            .PreventDefault()
+            .Submit(options => { options.Data = new RouteValueDictionary(new { value = "value", text = "text" }); })
+            .AsHtmlAttributes()
+            .ToBeginForm(Url.Action("Submit", "Labs")))
+{
+    <input name="value" type="text"/>
+    <input type="submit" value="Save"/>
+}

@@ -1,0 +1,64 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;NETCOREAPP2_0</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Block\IoC Factory\Providers\**" />
+    <Compile Remove="DataGroup\Provider\Nhibernate\**" />
+    <EmbeddedResource Remove="Block\IoC Factory\Providers\**" />
+    <EmbeddedResource Remove="DataGroup\Provider\Nhibernate\**" />
+    <None Remove="Block\IoC Factory\Providers\**" />
+    <None Remove="DataGroup\Provider\Nhibernate\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="DataGroup\Provider\Persistence Specification\When_nhibernate_session_extensions.cs" />
+    <Compile Remove="DataGroup\Provider\Repository DB\When_nhibernate_repository.cs" />
+    <Compile Remove="DataGroup\Speicifications\When_ad_hoc_fetch_specification_equal.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="appsettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
+    <PackageReference Include="Machine.Specifications.Runner.VisualStudio" Version="2.6.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.2.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.2.0" />
+    <PackageReference Include="Ninject" Version="3.3.4" />
+    <PackageReference Include="Ninject.Extensions.Conventions" Version="3.3.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Incoding.Core\Incoding.Core.csproj" />
+    <ProjectReference Include="..\Incoding.Data\Incoding.Data.csproj" />
+    <ProjectReference Include="..\Incoding.MSpec\Incoding.MSpec.csproj" />
+    <ProjectReference Include="..\Incoding.Web\Incoding.Web.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System">
+      <HintPath>System</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

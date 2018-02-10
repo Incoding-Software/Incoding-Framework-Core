@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+
+<package>
+  <metadata>
+    <id>Incoding.Framework</id>
+    <version>1.4.0.255</version>
+    <title>Incoding framework</title>
+    <authors>Vlad Kopachinsky</authors>
+    <owners>Incoding software</owners>
+    <description>
+      Incredible Tools for development.
+      Benefits and Features:
+      Define behavior of your Ajax dynamic pages with NO Javascript code.
+      CQRS implementation is simpler than you thinked of it.
+      Mspec helpers would shorter time spent on unit testing
+    </description>
+    <releaseNotes>
+    </releaseNotes>
+    <summary>
+      Incoding Framework back-end
+    </summary>
+    <language>en-US</language>
+    <projectUrl>http://incframework.com</projectUrl>
+    <iconUrl>http://incframework.com/favicon.ico</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <licenseUrl>http://opensource.org/licenses/Apache-2.0</licenseUrl>
+    <copyright>Copyright  2013 - 2016</copyright>
+    <dependencies>
+      <group>
+        <dependency id="structuremap" version="4.4.2" />
+        <dependency id="JetBrains.Annotations" version="9.2.0.0" />
+        <dependency id="FluentNHibernate" version="2.0.3.0" />        
+        <dependency id="FluentValidation.MVC3-signed" version="5.0.0.3" />
+      </group>
+    </dependencies>
+    <references>
+      <group targetFramework="net45">
+        <reference file="Incoding.dll" />
+      </group>
+    </references>
+    <tags>incoding, web framework, framework,cqrs, repository</tags>
+  </metadata>
+  <files>
+    <file src="lib\net45\*.*" target="lib" />
+    <file src="content\**" target="content"/>
+    <file src="tools\" target="tools" />
+  </files>
+</package>

@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="MvcContrib\MVD\Handlers\**" />
+    <EmbeddedResource Remove="MvcContrib\MVD\Handlers\**" />
+    <None Remove="MvcContrib\MVD\Handlers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="MvcContrib\Core\IncControllerFactory.cs" />
+    <Compile Remove="MvcContrib\Template\Factory\TemplateMustacheFactory.cs" />
+    <Compile Remove="MvcContrib\Template\Syntax\TemplateMustacheSyntax.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="7.4.0" />
+    <PackageReference Include="Handlebars.Net" Version="1.9.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Incoding.Core\Incoding.Core.csproj" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy  &quot;$(SolutionDir)Incoding.Web\MvcContrib\Incoding Meta Language\Client Framework\*.*&quot;   &quot;$(SolutionDir)Incoding.WebTest\wwwroot\&quot; /C /F /Y /S" />
+  </Target>
+
+</Project>

@@ -1,0 +1,76 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="7.4.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\benchmark.js" />
+    <None Include="wwwroot\js\blanket.jasmine.adapter.js" />
+    <None Include="wwwroot\js\blanket.min.js" />
+    <None Include="wwwroot\js\bootstrap.js" />
+    <None Include="wwwroot\js\bootstrap.min.js" />
+    <None Include="wwwroot\js\dot.js" />
+    <None Include="wwwroot\js\dust-full-0.3.0.js" />
+    <None Include="wwwroot\js\handlebars.js" />
+    <None Include="wwwroot\js\inc-performance.js" />
+    <None Include="wwwroot\js\inc-specifications.js" />
+    <None Include="wwwroot\js\incoding.core.js" />
+    <None Include="wwwroot\js\incoding.framework.js" />
+    <None Include="wwwroot\js\incoding.meta.conditional.js" />
+    <None Include="wwwroot\js\incoding.meta.engine.js" />
+    <None Include="wwwroot\js\incoding.meta.executable.js" />
+    <None Include="wwwroot\js\incoding.meta.helper.js" />
+    <None Include="wwwroot\js\incoding.meta.trace.js" />
+    <None Include="wwwroot\js\incoding.url.js" />
+    <None Include="wwwroot\js\jasmine-html.js" />
+    <None Include="wwwroot\js\jasmine-jquery.js" />
+    <None Include="wwwroot\js\jasmine.js" />
+    <None Include="wwwroot\js\jquery-1.7.2.min.js" />
+    <None Include="wwwroot\js\jquery-1.7.min.js" />
+    <None Include="wwwroot\js\jquery-1.8.0.min.js" />
+    <None Include="wwwroot\js\jquery-1.8.1.min.js" />
+    <None Include="wwwroot\js\jquery-1.8.2.min.js" />
+    <None Include="wwwroot\js\jquery-1.8.3.min.js" />
+    <None Include="wwwroot\js\jquery-1.9.0.min.js" />
+    <None Include="wwwroot\js\jquery-1.9.1.min.js" />
+    <None Include="wwwroot\js\jquery-2.0.0.intellisense.js" />
+    <None Include="wwwroot\js\jquery-2.0.0.js" />
+    <None Include="wwwroot\js\jquery-2.0.0.min.js" />
+    <None Include="wwwroot\js\jquery-2.0.0.min.map" />
+    <None Include="wwwroot\js\jquery.form.js" />
+    <None Include="wwwroot\js\jquery.form.min.js" />
+    <None Include="wwwroot\js\jquery.history.js" />
+    <None Include="wwwroot\js\jquery.mockjax.js" />
+    <None Include="wwwroot\js\jquery.validate-vsdoc.js" />
+    <None Include="wwwroot\js\jquery.validate.js" />
+    <None Include="wwwroot\js\jquery.validate.min.js" />
+    <None Include="wwwroot\js\jquery.validate.unobtrusive.js" />
+    <None Include="wwwroot\js\jquery.validate.unobtrusive.min.js" />
+    <None Include="wwwroot\js\JSON2.js" />
+    <None Include="wwwroot\js\mustache.js" />
+    <None Include="wwwroot\js\platform.js" />
+    <None Include="wwwroot\js\underscore.js" />
+    <None Include="wwwroot\js\underscore.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Incoding.Core\Incoding.Core.csproj" />
+    <ProjectReference Include="..\Incoding.Data\Incoding.Data.csproj" />
+    <ProjectReference Include="..\Incoding.Web\Incoding.Web.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Scripts\" />
+  </ItemGroup>
+
+</Project>
