@@ -1,4 +1,6 @@
-﻿namespace Incoding.UnitTest
+﻿using Incoding.Data.Raven.Provider;
+
+namespace Incoding.UnitTest
 {
     #region << Using >>
 

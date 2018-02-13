@@ -1,4 +1,6 @@
-﻿namespace Incoding.UnitTest
+﻿using Incoding.Data.Raven.Provider;
+
+namespace Incoding.UnitTest
 {
     #region << Using >>
 
@@ -17,7 +19,7 @@
                          var document = Pleasure.MockAsObject<IDocumentSession>();
                          var sessionFactory = Pleasure.MockAsObject<IRavenDbSessionFactory>(mock => mock.Setup(r => r.Open(connectionString)).Returns(document));
                          unitOfWork = new RavenDbUnitOfWorkFactory(sessionFactory)
-                                 .Create(isolated,  connectionString);
+                                 .Create(isolated, false, connectionString);
                      };
 
         Behaves_like<Behavior_unit_of_work_factory> verify;

@@ -1,4 +1,6 @@
-﻿namespace Incoding.CQRS
+﻿using Newtonsoft.Json;
+
+namespace Incoding.CQRS
 {
     #region << Using >>
 
@@ -44,7 +46,7 @@
 
         public bool IsOuter { get; set; }
 
-        [IgnoreCompare("Design fixed"), IgnoreDataMember]
+        [IgnoreCompare("Design fixed"), IgnoreDataMember, JsonIgnore]
         public Guid UID { get; set; }
 
         #endregion

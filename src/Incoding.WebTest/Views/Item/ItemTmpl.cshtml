@@ -1,0 +1,24 @@
+﻿@using Incoding.Mvc.MvcContrib.Extensions
+@using Incoding.WebTest.Operations
+@using (var template = Html.Incoding().Template<GetItemsQuery.Response>())
+{
+    <div class="row">
+        <div class="col-xs-6 col-lg-6 col-md-6 col-sm-6">
+            Id
+        </div>
+        <div class="col-xs-6 col-lg-6 col-md-6 col-sm-6">
+            Value
+        </div>
+    </div>
+    using (var each = template.ForEach())
+    {
+        <div class="row">
+            <div class="col-xs-6 col-lg-6 col-md-6 col-sm-6">
+                @each.For(r => r.Key)
+            </div>
+            <div class="col-xs-6 col-lg-6 col-md-6 col-sm-6">
+                @each.For(r => r.StringPresentation)
+            </div>
+        </div>
+    }
+}

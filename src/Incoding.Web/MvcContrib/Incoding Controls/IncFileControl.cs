@@ -11,7 +11,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
 
     #endregion
 
-    public class IncFileControl<TModel, TProperty> : IncControlBase
+    public class IncFileControl<TModel, TProperty> : IncControlBase where TModel : new()
     {
         #region Fields
 
@@ -38,7 +38,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
 
         public override IHtmlContent ToHtmlString()
         {
-            return HtmlExtensions.Incoding<TModel>(this.htmlHelper).File(Value, GetAttributes());
+            return this.htmlHelper.Incoding().File(Value, GetAttributes());
         }
     }
 }

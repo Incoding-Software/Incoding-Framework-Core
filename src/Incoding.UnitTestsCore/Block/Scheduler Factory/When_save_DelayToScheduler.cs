@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Incoding.UnitTest
 {
     #region << Using >>
-
-    using System.Data;
+    
     using Incoding.Block;
     using Incoding.Data;
     using Incoding.MSpecContrib;
@@ -16,7 +16,7 @@ namespace Incoding.UnitTest
     [Subject(typeof(DelayToScheduler))/*, Isolated*/]
     public class When_save_DelayToScheduler : SpecWithPersistenceSpecification<DelayToScheduler>
     {
-        It should_be_ef = () => new PersistenceSpecification<DelayToScheduler>(PleasureForData.BuildEFSessionFactory(new IncDbContext(new DbContextOptionsBuilder<IncDbContext>().Options)
+        It should_be_ef = () => new PersistenceSpecification<DelayToScheduler>(PleasureForData.BuildEFSessionFactory(MSpecAssemblyContext.EFFluent
             /*"IncRealEFSchedulerDb", typeof(DelayToScheduler).Assembly)*/, true)
                                                                                               .Create(IsolationLevel.ReadUncommitted, true, null))
                                         .VerifyMappingAndSchema();
@@ -28,7 +28,7 @@ namespace Incoding.UnitTest
                                                                                                                   {
                                                                                                                           Url = "http://localhost:8090/",
                                                                                                                           DefaultDatabase = "IncTest",
-                                                                                                                  }).Create(IsolationLevel.ReadCommitted))
+                                                                                                                  }).Create(IsolationLevel.ReadCommitted, false))
                                               .VerifyMappingAndSchema();
     }
 }

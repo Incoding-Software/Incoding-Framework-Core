@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Incoding.Data.EF.Provider;
+using Incoding.Data.Mongo.Provider;
+using Microsoft.EntityFrameworkCore;
 
 namespace Incoding.UnitTest
 {
@@ -44,7 +46,7 @@ namespace Incoding.UnitTest
             }
         }
 
-        public static void Init(this IRepository repository)
+        public static IRepository Init(this IRepository repository)
         {
             foreach (var entity in repository.Query<DbEntity>())
                 repository.Delete(entity);
@@ -80,6 +82,7 @@ namespace Incoding.UnitTest
                                                                                                               }))));
             repository.Flush();
             Pleasure.Sleep100Milliseconds(); // wait for apply data base.
+            return repository;
         }
 
         public static bool IsMongo(this IRepository repository)
@@ -90,6 +93,11 @@ namespace Incoding.UnitTest
         public static bool IsNH(this IRepository repository)
         {
             return false; //repository is NhibernateRepository;
+        }
+
+        public static bool IsEF(this IRepository repository)
+        {
+            return repository is EntityFrameworkRepository;
         }
 
         #endregion

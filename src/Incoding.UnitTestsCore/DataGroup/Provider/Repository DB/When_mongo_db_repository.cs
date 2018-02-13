@@ -1,4 +1,6 @@
-﻿namespace Incoding.UnitTest
+﻿using Incoding.Data.Mongo.Provider;
+
+namespace Incoding.UnitTest
 {
     #region << Using >>
 
@@ -19,8 +21,7 @@
                          BsonClassMap.RegisterClassMap<IncEntityBase>(map => map.UnmapProperty(r => r.Id));
                          var url = new MongoUrl(ConfigurationManager.ConnectionStrings["IncRealMongoDb"].ConnectionString);
                          var database = new MongoClient(url).GetServer().GetDatabase(url.DatabaseName);
-                         repository = new MongoDbRepository(new MongoDatabaseDisposable(database));
-                         repository.Init();
+                         GetRepository = () => new MongoDbRepository(new MongoDatabaseDisposable(database)).Init();
                      };
 
         Behaves_like<Behavior_repository> should_be_behavior;

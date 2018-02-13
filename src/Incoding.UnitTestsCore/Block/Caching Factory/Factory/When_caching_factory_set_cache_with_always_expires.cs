@@ -21,7 +21,7 @@ namespace Incoding.UnitTest.Block
                                   {
                                       cachingFactory = new CachingFactory();
                                       cachingFactory.Initialize(caching => caching
-                                                                                   .WithPolicy(r=>r.ForDeepDerived<ICacheKey>().NeverExpires())
+                                                                                   //.WithPolicy(r=>r.ForDeepDerived<ICacheKey>().NeverExpires())
                                                                                    .WithProvider(new MemoryListCachedProvider()));
                                   };
 

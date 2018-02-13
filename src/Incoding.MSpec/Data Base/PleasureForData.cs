@@ -1,4 +1,7 @@
 using Incoding.Core.Utilities;
+using Incoding.Data.EF.Provider;
+using Incoding.Data.Mongo.Provider;
+using Incoding.Data.Raven.Provider;
 
 namespace Incoding.MSpecContrib
 {
@@ -18,22 +21,24 @@ namespace Incoding.MSpecContrib
 
     public static class PleasureForData
     {
-        public static Lazy<IUnitOfWorkFactory> Factory = null;
+        [ThreadStatic]
+        public static Func<IUnitOfWorkFactory> Factory;
 
         #region Factory constructors
 
-        public static IUnitOfWorkFactory BuildEFSessionFactory(IncDbContext dbContext, bool reloadDb = true)
+        public static IUnitOfWorkFactory BuildEFSessionFactory(Func<IncDbContext> dbContext, bool reloadDb = false)
         {
             try
             {
+                var context = dbContext();
                 if (reloadDb)
                 {
-                    dbContext.Database.EnsureDeleted();
+                    context.Database.EnsureDeleted();
                 }
 
-                dbContext.Database.EnsureCreated();
+                context.Database.EnsureCreated();
 
-                return new EntityFrameworkUnitOfWorkFactory(new EntityFrameworkSessionFactory((str) => dbContext));
+                return new EntityFrameworkUnitOfWorkFactory(new EntityFrameworkSessionFactory((str) => context));
             }
                     
                     ////ncrunch: no coverage start
@@ -99,9 +104,9 @@ namespace Incoding.MSpecContrib
             return new RavenDbUnitOfWorkFactory(new RavenDbSessionFactory(document));
         }
 
-        public static void StartEF(IncDbContext dbContext, bool reloadDb = true)
+        public static void StartEF(Func<IncDbContext> dbContext, bool reloadDb = true)
         {
-            Factory = new Lazy<IUnitOfWorkFactory>(() => BuildEFSessionFactory(dbContext, reloadDb));
+            Factory = () => BuildEFSessionFactory(dbContext, reloadDb);
         }
 
         /*

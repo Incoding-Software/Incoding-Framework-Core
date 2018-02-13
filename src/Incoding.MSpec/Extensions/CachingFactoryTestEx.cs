@@ -17,7 +17,7 @@
         public static void ShouldBeDelete<TCacheKey>(this CachingFactory factory, TCacheKey cacheKey) where TCacheKey : ICacheKey
         {
             var provider = ((CachingInit)factory.TryGetValue("init")).Provider;
-            Mock.Get(provider).Verify(r => r.Delete(Pleasure.MockIt.Is<TCacheKey>(key => key.GetName().ShouldEqual(cacheKey.GetName()))));
+            Mock.Get(provider).Verify(r => r.Delete(Pleasure.MockIt.Is<string>(key => key.ShouldEqual(cacheKey.GetName()))));
         }
 
         public static void ShouldBeGet<TInstance, TCacheKey>(this CachingFactory factory, TCacheKey cacheKey)
@@ -25,7 +25,7 @@
                 where TInstance : class, new()
         {
             var provider = ((CachingInit)factory.TryGetValue("init")).Provider;
-            Mock.Get(provider).Verify(r => r.Get<TInstance>(Pleasure.MockIt.Is<TCacheKey>(key => key.GetName().ShouldEqual(cacheKey.GetName()))));
+            Mock.Get(provider).Verify(r => r.Get<TInstance>(Pleasure.MockIt.Is<string>(key => key.ShouldEqual(cacheKey.GetName()))));
         }
 
         public static void ShouldBeSet<TCacheKey, TInstance>(this CachingFactory factory, TCacheKey cacheKey, TInstance instance)
@@ -33,7 +33,7 @@
                 where TCacheKey : ICacheKey
         {
             var provider = ((CachingInit)factory.TryGetValue("init")).Provider;
-            Mock.Get(provider).Verify(r => r.Set(Pleasure.MockIt.Is<TCacheKey>(key => key.GetName().ShouldEqual(cacheKey.GetName())), Pleasure.MockIt.IsStrong(instance)));
+            Mock.Get(provider).Verify(r => r.Set(Pleasure.MockIt.Is<string>(key => key.ShouldEqual(cacheKey.GetName())), Pleasure.MockIt.IsStrong(instance), new CacheOptions()));
         }
 
         public static void Stub(this CachingFactory factory, Action<Mock<ICachedProvider>> action)
@@ -50,7 +50,7 @@
                 where TInstance : class
                 where TCacheKey : ICacheKey
         {
-            factory.Stub(mock => mock.Setup(r => r.Get<TInstance>(Pleasure.MockIt.Is<TCacheKey>(key => key.GetName().ShouldEqual(cacheKey.GetName())))).Returns(instance));
+            factory.Stub(mock => mock.Setup(r => r.Get<TInstance>(Pleasure.MockIt.Is<string>(key => key.ShouldEqual(cacheKey.GetName())))).Returns(instance));
         }
 
         #endregion

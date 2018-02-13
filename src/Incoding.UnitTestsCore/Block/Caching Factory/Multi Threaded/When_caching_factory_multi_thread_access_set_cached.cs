@@ -30,6 +30,6 @@ namespace Incoding.UnitTest.Block
 
         Because of = () => Pleasure.MultiThread.Do10(() => cachingFactory.Set(new FakeCacheKey(), new FakeSerializeObject()));
 
-        It should_be_call_set_cached_only_at_once = () => provider.Verify(r => r.Set(Pleasure.MockIt.IsStrong(new FakeCacheKey()), Pleasure.MockIt.IsStrong(new FakeSerializeObject())), Times.Exactly(10));
+        It should_be_call_set_cached_only_at_once = () => provider.Verify(r => r.Set(Pleasure.MockIt.IsStrong(new FakeCacheKey().GetName()), Pleasure.MockIt.IsStrong(new FakeSerializeObject()), null), Times.Exactly(10));
     }
 }

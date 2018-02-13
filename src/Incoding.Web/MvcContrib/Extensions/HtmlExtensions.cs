@@ -59,22 +59,22 @@ namespace Incoding.Mvc.MvcContrib.Extensions
             return new HtmlString(IoCFactory.Instance.TryResolve<ITemplateFactory>().Render(HtmlHelper, view, data, model));
         }
 
-        public static IncodingHtmlHelperFor<TModel, TProperty> For<TModel, TProperty>(this IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> property)
+        public static IncodingHtmlHelperFor<TModel, TProperty> For<TModel, TProperty>(this IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> property) where TModel : new()
         {
             return new IncodingHtmlHelperFor<TModel, TProperty>(htmlHelper, property);
         }
 
-        public static IncodingHtmlHelperForGroup<TModel, TProperty> ForGroup<TModel, TProperty>(this IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> property)
+        public static IncodingHtmlHelperForGroup<TModel, TProperty> ForGroup<TModel, TProperty>(this IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> property) where TModel : new()
         {
             return new IncodingHtmlHelperForGroup<TModel, TProperty>(htmlHelper, property);
         }
 
-        public static IncodingHtmlHelper Incoding<TModel>(this IHtmlHelper<TModel> htmlHelper)
+        public static IncodingHtmlHelper<TModel> Incoding<TModel>(this IHtmlHelper<TModel> htmlHelper) where TModel : new()
         {
             HtmlHelper = htmlHelper;
-            return new IncodingHtmlHelper(htmlHelper);
+            return new IncodingHtmlHelper<TModel>(htmlHelper);
         }
-
+        
         public static SelectorHelper<TModel> Selector<TModel>(this IHtmlHelper<TModel> htmlHelper)
         {
             HtmlHelper = htmlHelper;

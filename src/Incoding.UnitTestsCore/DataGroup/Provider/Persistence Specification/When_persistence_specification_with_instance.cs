@@ -1,11 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Incoding.UnitTest.MSpecGroup
 {
     #region << Using >>
 
     using System.Configuration;
-    using System.Data;
     using Incoding.Data;
     using Incoding.MSpecContrib;
     using Machine.Specifications;
@@ -25,11 +25,11 @@ namespace Incoding.UnitTest.MSpecGroup
 
         It should_be_entity_framework = () =>
                                         {
-                                            var dbContext = MSpecAssemblyContext.EFFluent();
-                                            dbContext.Database.AutoTransactionsEnabled = false;
+                                            //var dbContext = MSpecAssemblyContext.EFFluent();
+                                            //dbContext.Database.AutoTransactionsEnabled = false;
                                             //dbContext.Database.LazyLoadingEnabled = true;
 
-                                            new PersistenceSpecification<DbEntity>(PleasureForData.BuildEFSessionFactory(dbContext).Create(IsolationLevel.ReadUncommitted, true))
+                                            new PersistenceSpecification<DbEntity>(PleasureForData.BuildEFSessionFactory(MSpecAssemblyContext.EFFluent).Create(IsolationLevel.ReadUncommitted, true))
                                                     .CheckProperty(r => r.Value, Pleasure.Generator.String())
                                                     .CheckProperty(r => r.ValueNullable, Pleasure.Generator.PositiveNumber())
                                                     .CheckProperty(r => r.Reference)
@@ -59,7 +59,7 @@ namespace Incoding.UnitTest.MSpecGroup
                                                                                                           {
                                                                                                                   Url = ConfigurationManager.ConnectionStrings["IncRealRavenDb"].ConnectionString,
                                                                                                                   DefaultDatabase = "IncTest",
-                                                                                                          }).Create(IsolationLevel.ReadCommitted))
+                                                                                                          }).Create(IsolationLevel.ReadCommitted, false))
                                               .CheckProperty(r => r.Value, Pleasure.Generator.String())
                                               .CheckProperty(r => r.ValueNullable, Pleasure.Generator.PositiveNumber())
                                               .CheckProperty(r => r.Reference)

@@ -18,11 +18,7 @@
     <PackageReference Include="Antlr3.Runtime" Version="3.5.1" />
     <PackageReference Include="Iesi.Collections" Version="4.0.3" />
     <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.1" />
     <PackageReference Include="mongocsharpdriver" Version="2.5.0" />
-    <PackageReference Include="RavenDB.Client" Version="3.5.5" />
     <PackageReference Include="Remotion.Linq" Version="2.2.0" />
     <PackageReference Include="Remotion.Linq.EagerFetching" Version="2.1.0" />
     <PackageReference Include="System.Data.Common" Version="4.3.0" />
@@ -34,6 +30,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Incoding.Core\Incoding.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\Core\Specifications\Fetch\" />
+    <Folder Include="Data\Provider\MongoDb\" />
+    <Folder Include="Data\Provider\RavenDb\" />
   </ItemGroup>
 
 </Project>

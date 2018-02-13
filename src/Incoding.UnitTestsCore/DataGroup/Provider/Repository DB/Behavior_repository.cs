@@ -1,4 +1,7 @@
 ﻿using Incoding.Core.Block.Core;
+using Incoding.Data.EF.Provider;
+using Incoding.Data.Mongo.Provider;
+using Incoding.Data.Raven.Provider;
 
 namespace Incoding.UnitTest
 {
@@ -27,6 +30,7 @@ namespace Incoding.UnitTest
         {
             public override Action<AdHocFetchSpecificationBase<DbEntityQuery>> FetchedBy()
             {
+                var repository = GetRepository();
                 if (repository.IsNH())
                     return specification => specification.JoinMany(dbEntity => dbEntity.Items, entity => entity.Parent);
 
@@ -38,6 +42,7 @@ namespace Incoding.UnitTest
         {
             public override Action<AdHocFetchSpecificationBase<DbEntityQueryAsItem>> FetchedBy()
             {
+                var repository = GetRepository();
                 if (repository.IsNH())
                     return specification => specification.Join(dbEntity => dbEntity.Parent, entity => entity.Reference);
 
@@ -140,79 +145,116 @@ namespace Incoding.UnitTest
 
         #endregion
 
-        It should_be_paginated = () => repository.Paginated<DbEntityQuery>(new PaginatedSpecification(1, 5))
-                                                 .Should(result =>
-                                                         {
-                                                             result.TotalCount.ShouldEqual(10);
-                                                             result.Items.Count.ShouldEqual(5);
-                                                         });
+        It should_be_paginated = () =>
+        {
+            var repository = GetRepository();
+            repository.Paginated<DbEntityQuery>(new PaginatedSpecification(1, 5))
+                .Should(result =>
+                {
+                    result.TotalCount.ShouldEqual(10);
+                    result.Items.Count.ShouldEqual(5);
+                });
+        };
 
-        It should_be_paginated_with_fetch_and_order = () => repository.Paginated(new PaginatedSpecification(1, 5), 
-                                                                                 orderSpecification: new FakeOrderSpecification(), 
-                                                                                 fetchSpecification: new FakeJoinFetch(), 
-                                                                                 whereSpecification: new RealDbEntityContainIdWhereSpec(repository.Query<DbEntityQuery>()
-                                                                                                                                                  .Take(7)
-                                                                                                                                                  .ToList()
-                                                                                                                                                  .Select(r => r.Id)
-                                                                                                                                                  .ToArray(), repository is RavenDbRepository))
-                                                                      .Should(result =>
-                                                                              {
-                                                                                  result.TotalCount.ShouldEqual(7);
-                                                                                  if (!repository.IsNH())
-                                                                                      result.Items.Count.ShouldEqual(5); // bug with nhibernate.
+        It should_be_paginated_with_fetch_and_order = () =>
+        {
+            var repository = GetRepository();
+            repository.Paginated(new PaginatedSpecification(1, 5),
+                    orderSpecification: new FakeOrderSpecification(),
+                    fetchSpecification: new FakeJoinFetch(),
+                    whereSpecification: new RealDbEntityContainIdWhereSpec(repository.Query<DbEntityQuery>()
+                        .Take(7)
+                        .ToList()
+                        .Select(r => r.Id)
+                        .ToArray(), repository is RavenDbRepository))
+                .Should(result =>
+                {
+                    result.TotalCount.ShouldEqual(7);
+                    if (!repository.IsNH())
+                        result.Items.Count.ShouldEqual(5); // bug with nhibernate.
 
-                                                                                  repository.Close(() => result.Items[0].Reference.ShouldNotBeNull());
-                                                                              });
+                    repository.Close(() => result.Items[0].Reference.ShouldNotBeNull());
+                });
+        };
 
-        It should_be_query = () => repository.Query<DbEntityQuery>()
-                                             .Count()
-                                             .ShouldEqual(10);
+        It should_be_query = () =>
+        {
+            var repository = GetRepository();
+            repository.Query<DbEntityQuery>()
+                .Count()
+                .ShouldEqual(10);
+        };
 
-        It should_be_query_all_spec = () => repository.Query(paginatedSpecification: new PaginatedSpecification(1, 5), 
-                                                             orderSpecification: new FakeOrderSpecification(), 
-                                                             whereSpecification: new DbEntityValueGreater0WhereSpec(), 
-                                                             fetchSpecification: new FakeJoinFetch())
-                                                      .ToList()
-                                                      .Should(list =>
-                                                              {
-                                                                  if (!repository.IsNH())
-                                                                      list.Count.ShouldEqual(5); // bug with nhibernate.
+        It should_be_query_all_spec = () =>
+        {
+            var repository = GetRepository();
+            repository.Query(paginatedSpecification: new PaginatedSpecification(1, 5),
+                    orderSpecification: new FakeOrderSpecification(),
+                    whereSpecification: new DbEntityValueGreater0WhereSpec(),
+                    fetchSpecification: new FakeJoinFetch())
+                .ToList()
+                .Should(list =>
+                {
+                    if (!repository.IsNH())
+                        list.Count.ShouldEqual(5); // bug with nhibernate.
 
-                                                                  foreach (var realDbEntity in list)
-                                                                      realDbEntity.Reference.ShouldNotBeNull();
-                                                              });
+                    foreach (var realDbEntity in list)
+                        realDbEntity.Reference.ShouldNotBeNull();
+                });
+        };
 
-        It should_be_query_order_descending = () => repository.Query(orderSpecification: new FakeOrderDescSpecification())
-                                                              .ToList()
-                                                              .Should(entities =>
-                                                                      {
-                                                                          entities[0].Value.ShouldBeGreaterThan(entities[1].Value);
-                                                                          entities[1].Value.ShouldBeGreaterThan(entities[2].Value);
-                                                                      });
+        It should_be_query_order_descending = () =>
+        {
+            var repository = GetRepository();
+            repository.Query(orderSpecification: new FakeOrderDescSpecification())
+                .ToList()
+                .Should(entities =>
+                {
+                    entities[0].Value.ShouldBeGreaterThan(entities[1].Value);
+                    entities[1].Value.ShouldBeGreaterThan(entities[2].Value);
+                });
+        };
 
-        It should_be_query_order = () => repository.Query(orderSpecification: new FakeOrderSpecification())
-                                                   .ToList()
-                                                   .Should(entities =>
-                                                           {
-                                                               entities[0].Value.ShouldBeLessThan(entities[1].Value);
-                                                               entities[1].Value.ShouldBeLessThan(entities[2].Value);
-                                                               entities[2].Value.ShouldBeLessThan(entities[3].Value);
-                                                           });
+        It should_be_query_order = () =>
+        {
+            var repository = GetRepository();
+            repository.Query(orderSpecification: new FakeOrderSpecification())
+                .ToList()
+                .Should(entities =>
+                {
+                    entities[0].Value.ShouldBeLessThan(entities[1].Value);
+                    entities[1].Value.ShouldBeLessThan(entities[2].Value);
+                    entities[2].Value.ShouldBeLessThan(entities[3].Value);
+                });
+        };
 
         // ReSharper disable RemoveToList.2
-        It should_be_query_paginated = () => repository.Query<DbEntityQuery>(paginatedSpecification: new PaginatedSpecification(1, 5))
-                                                       .ToList()
-                                                       .Count
-                                                       .ShouldEqual(5);
+        It should_be_query_paginated = () =>
+        {
+            var repository = GetRepository();
+            repository.Query<DbEntityQuery>(paginatedSpecification: new PaginatedSpecification(1, 5))
+                .ToList()
+                .Count
+                .ShouldEqual(5);
+        };
 
         // ReSharper restore RemoveToList.2
-        It should_be_query_where_true = () => repository.Query(whereSpecification: new DbEntityByIdWhereSpec(repository.Query<DbEntityQuery>().First().Id))
-                                                        .Count()
-                                                        .ShouldEqual(1);
+        It should_be_query_where_true = () =>
+        {
+            var repository = GetRepository();
+            repository.Query(
+                    whereSpecification: new DbEntityByIdWhereSpec(repository.Query<DbEntityQuery>().First().Id))
+                .Count()
+                .ShouldEqual(1);
+        };
 
-        It should_be_query_where_false = () => repository.Query(whereSpecification: new DbEntityByIdWhereSpec(Guid.NewGuid()))
-                                                         .Count()
-                                                         .ShouldEqual(0);
+        It should_be_query_where_false = () =>
+        {
+            var repository = GetRepository();
+            repository.Query(whereSpecification: new DbEntityByIdWhereSpec(Guid.NewGuid()))
+                .Count()
+                .ShouldEqual(0);
+        };
 
         #endregion
 
@@ -220,6 +262,7 @@ namespace Incoding.UnitTest
 
         It should_be_save = () =>
                             {
+                                var repository = GetRepository();
                                 var entity = new DbEntityAsGuid();
                                 repository.Save(entity);
                                 repository.Clear();
@@ -229,6 +272,7 @@ namespace Incoding.UnitTest
 
         It should_be_saves = () =>
                              {
+                                 var repository = GetRepository();
                                  var entity = new DbEntityAsGuid();
                                  var entity2 = new DbEntityAsGuid();
                                  repository.Saves(new[]
@@ -244,6 +288,7 @@ namespace Incoding.UnitTest
 
         It should_be_save_with_reference = () =>
                                            {
+                                               var repository = GetRepository();
                                                var entity = Pleasure.Generator.Invent<DbEntity>(dsl => dsl.GenerateTo(r => r.Reference));
                                                repository.Save(entity);
                                                repository.Clear();
@@ -256,6 +301,7 @@ namespace Incoding.UnitTest
 
         It should_be_save_with_many = () =>
                                       {
+                                          var repository = GetRepository();
                                           var entity = Pleasure.Generator.Invent<DbEntity>(dsl => dsl.Callback(r =>
                                                                                                                {
                                                                                                                    var item = new DbEntityItem();
@@ -272,6 +318,7 @@ namespace Incoding.UnitTest
 
         It should_be_save_or_update_with_new = () =>
                                                {
+                                                   var repository = GetRepository();
                                                    var entity = new DbEntity();
                                                    repository.SaveOrUpdate(entity);
                                                    repository.Clear();
@@ -286,12 +333,14 @@ namespace Incoding.UnitTest
                                     };
 */It should_be_get_provider = () =>
                                     {
+                                        var repository = GetRepository();
                                         if (!repository.IsNH())
                                             repository.GetProvider<IncDbContext>().ShouldNotBeNull();
                                     };
 
         It should_be_save_or_update_with_exist = () =>
                                                  {
+                                                     var repository = GetRepository();
                                                      var entity = repository.Query<DbEntity>()
                                                                             .First();
                                                      Catch.Exception(() => repository.SaveOrUpdate(entity)).ShouldBeNull();
@@ -302,6 +351,7 @@ namespace Incoding.UnitTest
 
         It should_be_delete_all = () =>
                                   {
+                                      var repository = GetRepository();
                                       Pleasure.Do10(i => repository.Save(new DbEntityAsGuid()));
                                       repository.Flush();
 
@@ -313,6 +363,7 @@ namespace Incoding.UnitTest
 
         It should_be_delete_by_id = () =>
                                     {
+                                        var repository = GetRepository();
                                         var entity = new DbEntityAsGuid();
                                         repository.Save(entity);
                                         repository.Flush();
@@ -325,6 +376,7 @@ namespace Incoding.UnitTest
 
         It should_be_delete_by_ids = () =>
                                      {
+                                         var repository = GetRepository();
                                          var ids = new Guid[10];
                                          Pleasure.Do10(i =>
                                                        {
@@ -333,15 +385,19 @@ namespace Incoding.UnitTest
                                                            repository.Flush();
                                                            ids[i] = entity.Id;
                                                        });
-
+                                         repository.Flush();
                                          repository.DeleteByIds<DbEntityAsGuid>(ids.Cast<object>().ToArray());
                                          repository.Clear();
+                                         repository.Flush();
+                                         //if(repository.IsEF())
+                                         //    repository.GetProvider<IncDbContext>().Set<DbEntityAsGuid>().Local.Clear();
 
                                          ids.DoEach(o => repository.GetById<DbEntityAsGuid>(o).ShouldBeNull());
                                      };
 
-        It should_be_delete_by_ids_int = () =>
+        private It should_be_delete_by_ids_int = () =>
                                          {
+                                             var repository = GetRepository();
                                              var ids = new int[10];
                                              Pleasure.Do10(i =>
                                                            {
@@ -354,6 +410,7 @@ namespace Incoding.UnitTest
                                                            });
 
                                              repository.DeleteByIds<DbEntityByInt>(ids.Cast<object>().ToArray());
+                                             repository.Flush();
                                              repository.Clear();
 
                                              ids.DoEach(o => repository.GetById<DbEntityByInt>(o).ShouldBeNull());
@@ -361,6 +418,7 @@ namespace Incoding.UnitTest
 
         It should_be_delete_by_ids_with_special_name_column = () =>
                                                               {
+                                                                  var repository = GetRepository();
                                                                   var ids = new object[10];
                                                                   Pleasure.Do10(i =>
                                                                                 {
@@ -371,6 +429,7 @@ namespace Incoding.UnitTest
                                                                                 });
 
                                                                   repository.DeleteByIds<DbEntityWithSpecificIdName>(ids.ToArray());
+                                                                  repository.Flush();
                                                                   repository.Clear();
 
                                                                   ids.DoEach(o => repository.GetById<DbEntityWithSpecificIdName>(o).ShouldBeNull());
@@ -382,6 +441,7 @@ namespace Incoding.UnitTest
 
         It should_be_query_fetch = () =>
                                    {
+                                       var repository = GetRepository();
                                        if (repository.IsMongo())
                                            return;
 
@@ -416,6 +476,7 @@ namespace Incoding.UnitTest
 
         It should_be_get_by_id = () =>
                                  {
+                                     var repository = GetRepository();
                                      var entity = new DbEntityAsGuid();
                                      repository.Save(entity);
                                      repository.Flush();
@@ -423,29 +484,39 @@ namespace Incoding.UnitTest
                                      repository.GetById<DbEntityAsGuid>(entity.Id).ShouldNotBeNull();
                                  };
 
-        It should_be_get_by_id_with_null = () => repository.GetById<DbEntityAsGuid>(null).ShouldBeNull();
+        It should_be_get_by_id_with_null = () =>
+        {
+            var repository = GetRepository();
+            repository.GetById<DbEntityAsGuid>(null).ShouldBeNull();
+        };
 
         It should_be_load_by_id = () =>
                                   {
+                                      var repository = GetRepository();
                                       var entity = new DbEntityAsGuid();
                                       repository.Save(entity);
 
                                       repository.LoadById<DbEntityAsGuid>(entity.Id).ShouldNotBeNull();
                                   };
 
-        It should_be_load_by_id_with_null = () => repository.LoadById<DbEntityAsGuid>(null).ShouldBeNull();
+        It should_be_load_by_id_with_null = () =>
+        {
+            var repository = GetRepository();
+            repository.LoadById<DbEntityAsGuid>(null).ShouldBeNull();
+        };
 
         #endregion
 
         #region Establish value
 
         [ThreadStatic]
-        protected static IRepository repository;
+        protected static Func<IRepository> GetRepository;
 
         #endregion
 
         It should_be_execute_sql = () =>
                                    {
+                                       var repository = GetRepository();
                                        bool isRaven = repository is RavenDbRepository;
                                        bool isMongo = repository is MongoDbRepository;
                                        if (!isRaven && !isMongo)

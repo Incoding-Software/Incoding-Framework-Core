@@ -1,10 +1,11 @@
+using System.Data;
+
 namespace Incoding.MSpecContrib
 {
     #region << Using >>
 
     using System;
     using System.Collections.Generic;
-    using System.Data;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
@@ -22,7 +23,7 @@ namespace Incoding.MSpecContrib
 
         public PersistenceSpecification(IUnitOfWork unitOfWork = null)
         {
-            this.unitOfWork = unitOfWork ?? PleasureForData.Factory.Value.Create(IsolationLevel.ReadUncommitted, true);
+            this.unitOfWork = unitOfWork ?? PleasureForData.Factory().Create(IsolationLevel.ReadUncommitted, true);
             this.repository = this.unitOfWork.GetRepository();
             original = new TEntity();
             properties = new List<string>();

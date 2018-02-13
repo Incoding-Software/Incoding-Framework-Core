@@ -11,7 +11,7 @@ namespace Incoding.Block.Caching
         /// <param name="key">
         ///     Caching <c>key</c>
         /// </param>
-        void Delete(ICacheKey key);
+        void Delete(string key);
 
         /// <summary>
         ///     <c>Delete</c> all keys
@@ -21,12 +21,12 @@ namespace Incoding.Block.Caching
         /// <summary>
         ///     Add or replace if value is exists
         /// </summary>
-        void Set<T>(ICacheKey key, T instance) where T : class;
+        void Set<T>(string key, T instance, CacheOptions cacheOptions);
 
         /// <summary>
         ///     Get value by caching <c>key</c>.
         ///     If value not exists return default(<c>T</c>)
         /// </summary>
-        T Get<T>(ICacheKey key) where T : class;
+        T Get<T>(string key);
     }
 }

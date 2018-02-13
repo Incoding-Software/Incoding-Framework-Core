@@ -1,9 +1,11 @@
-﻿namespace Incoding.UnitTest
+﻿using System.Data;
+using Incoding.Data.Raven.Provider;
+
+namespace Incoding.UnitTest
 {
     #region << Using >>
 
     using System;
-    using System.Data;
     using Incoding.Data;
     using Incoding.Extensions;
     using Incoding.MSpecContrib;

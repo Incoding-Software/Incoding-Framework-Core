@@ -24,7 +24,7 @@ namespace Incoding.UnitTest.Block
                                       cachingFactory = new CachingFactory();
                                       filterKey = "secretKey";
                                       cachingFactory.Initialize(caching => caching
-                                                                                   .WithPolicy(r=>r.ForAll().AlwaysExpires())
+                                                                                   //.WithPolicy(r=>r.ForAll().AlwaysExpires())
                                                                                    .WithProvider(new MemoryListCachedProvider()));
                                   };
 

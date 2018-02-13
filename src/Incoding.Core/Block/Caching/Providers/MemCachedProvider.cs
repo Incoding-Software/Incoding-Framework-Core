@@ -55,29 +55,28 @@ namespace Incoding.Block.Caching
 
         #region ICachedProvider Members
 
-        public void Delete(ICacheKey key)
+        public void Delete(string key)
         {
             Guard.NotNull("key", key);
-            this.memcached.Remove(key.GetName());
+            this.memcached.Remove(key);
         }
 
         public void DeleteAll()
         {
             this.memcached.FlushAll();
         }
-
-        public T Get<T>(ICacheKey key) where T : class
+        
+        public T Get<T>(string name)
         {
-            Guard.NotNull("key", key);
-            var name = key.GetName();
+            Guard.NotNull("name", name);
             var dictionary = this.memcached.Get<T>(new [] {name});
-            return dictionary.ContainsKey(name) ? dictionary[name] : null;
+            return dictionary.ContainsKey(name) ? dictionary[name] : default(T);
         }
 
-        public void Set<T>(ICacheKey key, T instance) where T : class
+        public void Set<T>(string key, T instance, CacheOptions cacheOptions)
         {
             Guard.NotNull("key", key);
-            this.memcached.Store(StoreMode.Set, key.GetName(), instance);
+            this.memcached.Store(StoreMode.Set, key, instance, cacheOptions.ValidFor);
         }
 
         #endregion

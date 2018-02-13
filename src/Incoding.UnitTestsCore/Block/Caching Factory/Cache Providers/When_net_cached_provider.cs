@@ -1,3 +1,6 @@
+using Incoding.Block.IoC;
+using Microsoft.Extensions.Caching.Memory;
+
 namespace Incoding.UnitTest.Block
 {
     #region << Using >>
@@ -12,7 +15,7 @@ namespace Incoding.UnitTest.Block
     {
         Establish establish = () =>
                                   {
-                                      cachedProvider = new NetCachedProvider();
+                                      cachedProvider = new NetCachedProvider(() => new MemoryCache(new MemoryCacheOptions()));
                                       cachedProvider.DeleteAll();
                                   };
 

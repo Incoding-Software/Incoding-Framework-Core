@@ -2,6 +2,6 @@ namespace Incoding.Data
 {
     public interface IEntity
     {
-        object Id { get; }
+        object Id { get; set; }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Incoding.Block.Caching
@@ -13,32 +14,41 @@ namespace Incoding.Block.Caching
     {
         private IMemoryCache _memoryCache;
 
+        private Func<IMemoryCache> _getCache;
+
         #region ICachedProvider Members
 
         public NetCachedProvider()
         {
-            _memoryCache = new MemoryCache(new MemoryCacheOptions());
+            if (_getCache == null)
+                _getCache = () => new MemoryCache(new MemoryCacheOptions());
+            _memoryCache = _getCache();
         }
 
-        public T Get<T>(ICacheKey key) where T : class
+        public NetCachedProvider(Func<IMemoryCache> getCache) : this()
         {
-            return _memoryCache.Get(key.GetName()) as T;
+            _getCache = getCache;
+        }
+        
+        public T Get<T>(string name)
+        {
+            return (T)_memoryCache.Get(name);
         }
 
-        public void Set<T>(ICacheKey key, T instance) where T : class
+        public void Set<T>(string key, T instance, CacheOptions cacheOptions)
         {
-            _memoryCache.Set(key.GetName(), instance);
+            _memoryCache.Set(key, instance, cacheOptions.ValidFor);
         }
 
         public void DeleteAll()
         {
             _memoryCache.Dispose();
-            _memoryCache = new MemoryCache(new MemoryCacheOptions());
+            _memoryCache = _getCache();
         }
 
-        public void Delete(ICacheKey key)
+        public void Delete(string key)
         {
-            _memoryCache.Remove(key.GetName());
+            _memoryCache.Remove(key);
         }
 
         #endregion

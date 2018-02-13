@@ -6,14 +6,17 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Incoding.Core;
 using Incoding.Data;
+using Incoding.Data.EF;
 using Incoding.Mvc.MvcContrib.Core;
 using Incoding.Web;
+using Incoding.Web.MvcContrib.IncHtmlHelper;
 using Incoding.WebTest.Operations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -47,8 +50,12 @@ namespace Incoding.WebTest
                 //configuration.RegisterValidatorsFromAssemblyContaining<ItemEntity>();
             });
             //services.ConfigureIncodingCoreServices();
-            services.ConfigureIncodingEFDataServices(typeof(ItemEntity), Configuration.GetConnectionString("Main"), 1);
+            services.ConfigureIncodingEFDataServices(typeof(ItemEntity), builder =>
+            {
+                builder.UseSqlServer(Configuration.GetConnectionString("Main"));
+            });
             services.ConfigureIncodingWebServices();
+            IncodingHtmlHelper.BootstrapVersion = BootstrapOfVersion.v3;
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddScoped<IUrlHelper>(x =>
             {

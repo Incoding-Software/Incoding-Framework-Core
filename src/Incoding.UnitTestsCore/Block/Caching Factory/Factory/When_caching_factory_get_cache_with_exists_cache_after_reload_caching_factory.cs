@@ -27,7 +27,7 @@ namespace Incoding.UnitTest.Block
                                   {
                                       cachingFactory = new CachingFactory();
                                       var memoryListCachedProvider = new MemoryListCachedProvider();
-                                      memoryListCachedProvider.Set(new FakeCacheKey(), new FakeSerializeObject { Name = Pleasure.Generator.TheSameString() });
+                                      memoryListCachedProvider.Set(new FakeCacheKey().GetName(), new FakeSerializeObject { Name = Pleasure.Generator.TheSameString() });
                                       cachingFactory.Initialize(caching => caching.WithProvider(memoryListCachedProvider));
                                   };
 

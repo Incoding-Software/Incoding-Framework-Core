@@ -1,5 +1,6 @@
 ﻿using System;
 using Incoding.Data;
+using Incoding.Data.EF.Provider;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -1,10 +1,7 @@
-﻿namespace Incoding.Data
+﻿using System.Data;
+
+namespace Incoding.Data
 {
-    #region << Using >>
-
-    using System.Data;
-
-    #endregion
 
     public interface IUnitOfWorkFactory
     {

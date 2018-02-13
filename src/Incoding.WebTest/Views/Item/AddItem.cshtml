@@ -1,0 +1,12 @@
+﻿@using Incoding.Mvc.MvcContrib.Extensions
+@using Incoding.WebTest.Operations
+@model Incoding.WebTest.Operations.AddItemCommand
+
+@using (Html.Incoding().BeginPush(setting =>
+{
+   setting.OnSuccess = dsl => dsl.WithId(nameof(GetItemsQuery)).Trigger.Incoding();
+}))
+{
+    @Html.ForGroup(r => r.OriginalValue).TextBox(control => control.Label.Name = "Value:")
+    @Html.Incoding().Submit("Save")
+}

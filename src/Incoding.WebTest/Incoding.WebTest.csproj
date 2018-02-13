@@ -65,6 +65,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Incoding.Core\Incoding.Core.csproj" />
+    <ProjectReference Include="..\Incoding.Data.EF\Incoding.Data.EF.csproj" />
     <ProjectReference Include="..\Incoding.Data\Incoding.Data.csproj" />
     <ProjectReference Include="..\Incoding.Web\Incoding.Web.csproj" />
   </ItemGroup>

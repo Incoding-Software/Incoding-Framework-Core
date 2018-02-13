@@ -1,8 +1,8 @@
 ﻿using System;
-using Incoding.Data;
-using Incoding.Data.Block;
+using Incoding.Data.EF.Provider;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 //using NHibernate;
 
@@ -65,21 +65,22 @@ namespace Incoding.UnitTest
         }
         */
 
-        private static IncDbContext efContext;
+        //private static IncDbContext efContext;
 
-        public static IncDbContext EFFluent()
+        public static Func<IncDbContext> EFFluent = () =>
         {
-            if (efContext == null)
-            {
-                var connectionString = Config.GetConnectionString("IncRealEFDb");
-                efContext = new IncDbContext(new DbContextOptionsBuilder<IncDbContext>()
-                    .UseSqlServer(connectionString)
-                    .Options, typeof(DbEntity).Assembly);
-                //bool deleted = efContext.Database.EnsureDeleted();
-                //bool created = efContext.Database.EnsureCreated();
-            }
+            //if (efContext == null)
+            //{
+            var connectionString = Config.GetConnectionString("IncRealEFDb");
+            var dbContextOptionsBuilder = new DbContextOptionsBuilder<IncDbContext>()
+                .UseSqlServer(connectionString);
+            dbContextOptionsBuilder.ConfigureWarnings(r => r.Ignore(RelationalEventId.AmbientTransactionWarning));
+            var efContext = new IncDbContext(dbContextOptionsBuilder.Options, typeof(DbEntity).Assembly);
+            //bool deleted = efContext.Database.EnsureDeleted();
+            //bool created = efContext.Database.EnsureCreated();
+            //}
             return efContext;
-        }
+        };
         /*
         public static FluentConfiguration NhibernateFluent()
         {
@@ -105,7 +106,7 @@ namespace Incoding.UnitTest
             var currentUiCulture = new CultureInfo("en-US");
             Thread.CurrentThread.CurrentUICulture = currentUiCulture;
             Thread.CurrentThread.CurrentCulture = currentUiCulture;
-            PleasureForData.StartEF(/*NhibernateFluent*/EFFluent());
+            PleasureForData.StartEF(/*NhibernateFluent*/EFFluent, false);
         }
 
         public void OnAssemblyComplete() { }

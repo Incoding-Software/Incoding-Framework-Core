@@ -15,17 +15,25 @@
     {
         Establish establish = () =>
                               {
-                                  expected = @"{""DataBaseInstance"":""kc21tcm4dhp@mail.comma4sztrrdmd@mail.combf1vp40jfz"",""Connection"":""xnhu0xqqv4a@mail.comclfqqyxxhrs@mail.com4guoiavzrn"",""IsolationLevel"":256}";
+                                  expected = @"{""DataBaseInstance"":""kc21tcm4dhp@mail.comma4sztrrdmd@mail.combf1vp40jfz"",""Connection"":""xnhu0xqqv4a@mail.comclfqqyxxhrs@mail.com4guoiavzrn"",""IsolationLevel"":256,""IsOuter"":false}";
                                   original = Pleasure.Generator.Invent<MessageExecuteSetting>(dsl => dsl.MuteCtor()
+                                  .Tuning(r => r.IsOuter, false)
                                                                                                         .Tuning(r => r.IsolationLevel, IsolationLevel.ReadUncommitted)
                                                                                                         .Tuning(r => r.DataBaseInstance, "kc21tcm4dhp@mail.comma4sztrrdmd@mail.combf1vp40jfz")
                                                                                                         .Tuning(r => r.Connection, "xnhu0xqqv4a@mail.comclfqqyxxhrs@mail.com4guoiavzrn"));
                               };
 
-        It should_be_deserialize = () => expected.DeserializeFromJson<MessageExecuteSetting>()
-                                                 .ShouldEqualWeak(original);
+        It should_be_deserialize = () =>
+        {
+            var messageExecuteSetting = expected.DeserializeFromJson<MessageExecuteSetting>();
+            messageExecuteSetting.ShouldEqualWeak(original);
+        };
 
-        It should_be_serialize = () => original.ToJsonString().ShouldEqual(expected);
+        It should_be_serialize = () =>
+        {
+            var jsonString = original.ToJsonString();
+            jsonString.ShouldEqual(expected);
+        };
 
         #region Establish value
 

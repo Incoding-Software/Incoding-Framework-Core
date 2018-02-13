@@ -4,6 +4,6 @@
 
     public class FakeEntityForNew:IEntity
     {
-        public virtual object Id { get; private set; }
+        public virtual object Id { get; set; }
     }
 }

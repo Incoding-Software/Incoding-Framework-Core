@@ -1,4 +1,6 @@
-﻿namespace Incoding.UnitTest
+﻿using Incoding.Data.Raven.Provider;
+
+namespace Incoding.UnitTest
 {
     #region << Using >>
 
@@ -35,13 +37,13 @@
 
         #region Establish value
 
-        protected static IRepository GetRepository()
+        protected static IRepository BuildRepository()
         {
             var docSession = new DocumentStore
-                             {
-                                     Url = ConfigurationManager.ConnectionStrings["IncRealRavenDb"].ConnectionString, 
-                                     DefaultDatabase = "IncTest", 
-                             };
+            {
+                Url = ConfigurationManager.ConnectionStrings["IncRealRavenDb"].ConnectionString,
+                DefaultDatabase = "IncTest",
+            };
             docSession.Conventions.AllowQueriesOnId = true;
             docSession.Conventions.MaxNumberOfRequestsPerSession = 1000;
             docSession.Initialize();
@@ -55,17 +57,17 @@
 
         Because of = () =>
                      {
-                         repository = GetRepository();
-                         repository.Init();
+                         GetRepository = () => BuildRepository().Init();
                      };
 
         Behaves_like<Behavior_repository> should_be_behavior;
 
-        It should_be_performance_get_by_id = () =>
-                                             {
-                                                 var id = repository.Query<DbEntityQuery>().First().Id;
-                                                 Pleasure.Do(i => repository.GetById<DbEntityQuery>(id), 1000)
-                                                         .ShouldBeLessThan(10);
-                                             };
+        private It should_be_performance_get_by_id = () =>
+        {
+            var repository = GetRepository();
+            var id = repository.Query<DbEntityQuery>().First().Id;
+            Pleasure.Do(i => repository.GetById<DbEntityQuery>(id), 1000)
+                    .ShouldBeLessThan(10);
+        };
     }
 }

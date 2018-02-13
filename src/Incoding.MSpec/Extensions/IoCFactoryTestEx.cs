@@ -1,3 +1,4 @@
+using System.Linq;
 using Incoding.Core.Block.IoC;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -28,16 +29,17 @@ namespace Incoding.MSpecContrib
 
         public static void StubResolveAll<TInstance>(this IoCFactory factory, IEnumerable<TInstance> mockInstances)
         {
-            Stub(factory, s => s.Setup(r => r.GetServices<TInstance>()).Returns(mockInstances));
+            Stub(factory, s => s.Setup(r => r.GetServices(typeof(TInstance))).Returns(mockInstances.OfType<object>()));
         }
 
         public static void StubTryResolve<TInstance>(this IoCFactory factory, TInstance mockInstance) where TInstance : class
         {
-            Stub(factory, s => s.Setup(r => r.GetService<TInstance>()).Returns(mockInstance));
+            Stub(factory, s => s.Setup(r => r.GetService(typeof(TInstance))).Returns(mockInstance));
         }
 
         public static void StubTryResolveByNamed<TInstance>(this IoCFactory factory, string named, TInstance mockInstance) where TInstance : class
         {
+            //TODO: would throw error cause GetService is extension here
             Stub(factory, s => s.Setup(r => r.GetService<TInstance>(named)).Returns(mockInstance));
         }
 

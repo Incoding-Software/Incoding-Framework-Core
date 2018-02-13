@@ -33,7 +33,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.MSpec", "Incoding.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.CoreUnitTests", "Incoding.CoreUnitTests\Incoding.CoreUnitTests.csproj", "{F3835514-FE25-4CE0-9DC0-263CEAC6B6EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Incoding.UnitTestsCore", "Incoding.UnitTestsCore\Incoding.UnitTestsCore.csproj", "{5161D152-6803-46E4-B3E2-ABB8727C91E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.UnitTestsCore", "Incoding.UnitTestsCore\Incoding.UnitTestsCore.csproj", "{5161D152-6803-46E4-B3E2-ABB8727C91E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Incoding.Data.EF", "Incoding.Data.EF\Incoding.Data.EF.csproj", "{923ECD3D-3BF3-41EA-8359-1117C72AC9BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Incoding.Data.Mongo", "Incoding.Data.Mongo\Incoding.Data.Mongo.csproj", "{65546B67-1D7A-4127-8C33-197819DAD18F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Incoding.Data.Raven", "Incoding.Data.Raven\Incoding.Data.Raven.csproj", "{261F1844-E79E-43D5-9A3B-D0E5F6768291}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -123,6 +129,24 @@ Global
 		{5161D152-6803-46E4-B3E2-ABB8727C91E5}.Publish|Any CPU.Build.0 = Debug|Any CPU
 		{5161D152-6803-46E4-B3E2-ABB8727C91E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5161D152-6803-46E4-B3E2-ABB8727C91E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{923ECD3D-3BF3-41EA-8359-1117C72AC9BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{923ECD3D-3BF3-41EA-8359-1117C72AC9BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{923ECD3D-3BF3-41EA-8359-1117C72AC9BD}.Publish|Any CPU.ActiveCfg = Debug|Any CPU
+		{923ECD3D-3BF3-41EA-8359-1117C72AC9BD}.Publish|Any CPU.Build.0 = Debug|Any CPU
+		{923ECD3D-3BF3-41EA-8359-1117C72AC9BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{923ECD3D-3BF3-41EA-8359-1117C72AC9BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65546B67-1D7A-4127-8C33-197819DAD18F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65546B67-1D7A-4127-8C33-197819DAD18F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65546B67-1D7A-4127-8C33-197819DAD18F}.Publish|Any CPU.ActiveCfg = Debug|Any CPU
+		{65546B67-1D7A-4127-8C33-197819DAD18F}.Publish|Any CPU.Build.0 = Debug|Any CPU
+		{65546B67-1D7A-4127-8C33-197819DAD18F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65546B67-1D7A-4127-8C33-197819DAD18F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{261F1844-E79E-43D5-9A3B-D0E5F6768291}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{261F1844-E79E-43D5-9A3B-D0E5F6768291}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{261F1844-E79E-43D5-9A3B-D0E5F6768291}.Publish|Any CPU.ActiveCfg = Debug|Any CPU
+		{261F1844-E79E-43D5-9A3B-D0E5F6768291}.Publish|Any CPU.Build.0 = Debug|Any CPU
+		{261F1844-E79E-43D5-9A3B-D0E5F6768291}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{261F1844-E79E-43D5-9A3B-D0E5F6768291}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -140,15 +164,18 @@ Global
 		{042FAB17-F5D6-4DEF-97B9-DB85FA7D831F} = {506ED6C6-6671-43EC-98A9-5FBF14201B62}
 		{F3835514-FE25-4CE0-9DC0-263CEAC6B6EB} = {506ED6C6-6671-43EC-98A9-5FBF14201B62}
 		{5161D152-6803-46E4-B3E2-ABB8727C91E5} = {506ED6C6-6671-43EC-98A9-5FBF14201B62}
+		{923ECD3D-3BF3-41EA-8359-1117C72AC9BD} = {506ED6C6-6671-43EC-98A9-5FBF14201B62}
+		{65546B67-1D7A-4127-8C33-197819DAD18F} = {506ED6C6-6671-43EC-98A9-5FBF14201B62}
+		{261F1844-E79E-43D5-9A3B-D0E5F6768291} = {506ED6C6-6671-43EC-98A9-5FBF14201B62}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_UpdateAssemblyVersion = False
-		BuildVersion_UpdateFileVersion = False
-		BuildVersion_BuildAction = ReBuild
-		BuildVersion_IncrementBeforeBuild = True
-		BuildVersion_DetectChanges = True
-		BuildVersion_BuildVersioningStyle = None.None.None.None
 		SolutionGuid = {834D889F-F4B3-4006-83EC-584703FCCDA2}
+		BuildVersion_BuildVersioningStyle = None.None.None.None
+		BuildVersion_DetectChanges = True
+		BuildVersion_IncrementBeforeBuild = True
+		BuildVersion_BuildAction = ReBuild
+		BuildVersion_UpdateFileVersion = False
+		BuildVersion_UpdateAssemblyVersion = False
 	EndGlobalSection
 	GlobalSection(NDepend) = preSolution
 		Project = ".\IncFramework.ndproj"

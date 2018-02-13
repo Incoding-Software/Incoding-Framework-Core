@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Incoding.Data.EF.Provider;
+using Microsoft.EntityFrameworkCore;
 
 namespace Incoding.UnitTest
 {
@@ -13,14 +14,9 @@ namespace Incoding.UnitTest
     [Subject(typeof(EntityFrameworkRepository)), Isolated]
     public class When_entity_framework_repository : Behavior_repository
     {
-        Because of = () =>
+        private Because of = () =>
                      {
-                         //Database.SetInitializer(new DropCreateDatabaseIfModelChanges<IncDbContext>());
-                         var dbContext = MSpecAssemblyContext.EFFluent();
-                         dbContext.Database.AutoTransactionsEnabled = false;
-                         //dbContext.Configuration.LazyLoadingEnabled = true;
-                         repository = new EntityFrameworkRepository(dbContext);
-                         repository.Init();
+                         GetRepository = () => new EntityFrameworkRepository(MSpecAssemblyContext.EFFluent()).Init();
                      };
 
         Behaves_like<Behavior_repository> should_be_behavior;

@@ -1,8 +1,9 @@
-﻿namespace Incoding.UnitTest
+﻿using System.Data;
+
+namespace Incoding.UnitTest
 {
     #region << Using >>
-
-    using System.Data;
+    
     using Incoding.Data;
     using Incoding.Extensions;
     using Incoding.MSpecContrib;

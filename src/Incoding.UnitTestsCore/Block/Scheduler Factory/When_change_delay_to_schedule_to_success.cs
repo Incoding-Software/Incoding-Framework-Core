@@ -20,9 +20,9 @@
 
                                   var instance = Pleasure.Generator.Invent<ChangeDelayToSchedulerStatusCommand>();
                                   DateTime? nextDt = Pleasure.Generator.DateTime();
+                                  lastStartOn = Pleasure.Generator.DateTime();
                                   delay = Pleasure.MockStrict<DelayToScheduler>(mock =>
                                                                                 {
-                                                                                    lastStartOn = Pleasure.Generator.DateTime();
                                                                                     mock.SetupGet(r => r.StartsOn).Returns(lastStartOn);
                                                                                     mock.SetupGet(r => r.Priority).Returns(Pleasure.Generator.PositiveNumber());
                                                                                     mock.SetupSet(r => r.Status = command.Status);
@@ -47,7 +47,7 @@
                                                               .Tuning(r => r.Priority, delay.Object.Priority), compare);
                               };
 
-        Because of = () => mockCommand.Original.Execute();
+        Because of = () => mockCommand.Execute();
 
         It should_be_update_start_on = () => recurrency.NowDate.ShouldEqual(lastStartOn);
 

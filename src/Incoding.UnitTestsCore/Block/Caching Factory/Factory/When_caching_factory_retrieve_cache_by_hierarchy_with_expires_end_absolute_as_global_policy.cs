@@ -21,7 +21,7 @@ namespace Incoding.UnitTest.Block
                          {
                              cachingFactory = new CachingFactory();
                              cachingFactory.Initialize(caching => caching
-                                                                          .WithPolicy(r => r.ForFirstDerived<FakeCacheCustomHierarchy>().EndAbsolute(Pleasure.NowPlush100Milliseconds))
+                                                                          //.WithPolicy(r => r.ForFirstDerived<FakeCacheCustomHierarchy>().EndAbsolute(Pleasure.NowPlush100Milliseconds))
                                                                           .WithProvider(new MemoryListCachedProvider()));
                              cachingFactory.Set(new FakeCacheCustomHierarchyDerived(), Pleasure.Generator.Invent<FakeSerializeObject>());
                          };

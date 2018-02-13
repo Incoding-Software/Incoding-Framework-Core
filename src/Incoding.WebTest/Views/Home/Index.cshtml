@@ -26,16 +26,13 @@
 @Html.Incoding().Script(Url.Content("~/js/incoding.meta.executable.js"))
 @Html.Incoding().Script(Url.Content("~/js/incoding.meta.conditional.js"))
 
+@Html.Partial("~/Views/Item/AddItem.cshtml")
 
-<input id="val" type="text" value="15"/>
+<hr/>
+
+@Html.Partial("~/Views/Item/ItemList.cshtml")
+
 <div class="clearfix"></div>
-@(Html.When(JqueryBind.Click)
-      .Ajax(dispatcher => dispatcher.Query<GetDoubleValueQuery>(new { OriginalValue = Selector.Jquery.Id("val")}).AsJson())
-      .OnSuccess(dsl => dsl.WithId("test").JQuery.Dom.Text())
-      .AsHtmlAttributes(new {@class="btn btn-default"})
-      .ToButton("Double it!"))
-<div class="clearfix"></div>
-<div id="test" style = "width: 100px; height: 100px; border: 1px solid red"></div>
 
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">

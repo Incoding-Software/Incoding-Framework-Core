@@ -11,7 +11,7 @@ namespace Incoding.WebTest.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index(GetDoubleValueQuery query)
+        public IActionResult Index(GetItemsQuery query)
         {
             return View();
         }

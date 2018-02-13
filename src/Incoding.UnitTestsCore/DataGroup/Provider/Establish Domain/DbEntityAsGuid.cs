@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using Incoding.Data.EF.Provider;
+using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

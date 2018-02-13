@@ -13,7 +13,7 @@ namespace Incoding.Data
         #region IEntity Members
 
         [IgnoreCompare("Design fixed")]
-        public virtual object Id { get; protected set; }
+        public virtual object Id { get; set; }
 
         #endregion
 

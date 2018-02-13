@@ -11,7 +11,7 @@ namespace Incoding.Web.MvcContrib.IncHtmlHelper
 
     #endregion
 
-    public class IncodingHtmlHelperFor<TModel, TProperty>
+    public class IncodingHtmlHelperFor<TModel, TProperty> where TModel : new()
     {
         #region Fields
 

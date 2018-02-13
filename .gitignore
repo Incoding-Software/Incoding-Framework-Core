@@ -36,6 +36,9 @@ x64/
 *.vssscc
 *.DotSettings
 .builds
+.vs/
+.nuget/
+*.ndproj
 
 # Visual C++ cache files
 ipch/
@@ -123,3 +126,6 @@ artifacts
 *.dll
 *.cache
 *.config
+
+appsettings.json
+src/UpgradeLog*

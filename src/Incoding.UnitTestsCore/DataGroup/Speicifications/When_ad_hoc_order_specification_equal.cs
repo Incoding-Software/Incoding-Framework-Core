@@ -22,7 +22,7 @@
 
             #region IEntity Members
 
-            public object Id { get; private set; }
+            public object Id { get; set; }
 
             #endregion
         }

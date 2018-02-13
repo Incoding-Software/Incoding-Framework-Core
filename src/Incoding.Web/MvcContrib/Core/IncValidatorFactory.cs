@@ -32,8 +32,21 @@ namespace Incoding.Mvc.MvcContrib.Core
 
         public IValidator GetValidator(Type type)
         {
-            var genericType = typeof(IValidator<>).MakeGenericType(new[] { type });
-            return IoCFactory.Instance.TryResolve<IValidator>(genericType);
+            IValidator validator;
+            try
+            {
+                var genericType = typeof(IValidator<>).MakeGenericType(new[] {type});
+                validator = IoCFactory.Instance.TryResolve<IValidator>(genericType);
+            }
+            catch (InvalidOperationException ex)
+            {
+                validator = new ValidateNothingDecorator();
+            }
+            return validator;
+        }
+
+        internal sealed class ValidateNothingDecorator : AbstractValidator<object>
+        {
         }
 
         #endregion

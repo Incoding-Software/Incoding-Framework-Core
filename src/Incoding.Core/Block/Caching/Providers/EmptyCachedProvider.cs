@@ -13,13 +13,13 @@ namespace Incoding.Block.Caching
     {
         #region ICachedProvider Members
 
-        public void Delete(ICacheKey key) { }
+        public void Delete(string key) { }
 
         public void DeleteAll() { }
 
-        public void Set<T>(ICacheKey key, T instance) where T : class { }
-
-        public T Get<T>(ICacheKey key) where T : class
+        public void Set<T>(string key, T instance, CacheOptions cacheOptions) { }
+        
+        public T Get<T>(string name)
         {
             return default(T);
         }

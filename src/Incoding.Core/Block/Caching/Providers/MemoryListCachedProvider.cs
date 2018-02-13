@@ -1,3 +1,5 @@
+using System.Collections.Concurrent;
+
 namespace Incoding.Block.Caching
 {
     #region << Using >>
@@ -11,7 +13,12 @@ namespace Incoding.Block.Caching
     {
         #region Fields
 
-        readonly Dictionary<string, object> cache;
+        readonly ConcurrentDictionary<string, object> cache;
+
+        static MemoryListCachedProvider()
+        {
+            
+        }
 
         #endregion
 
@@ -19,21 +26,21 @@ namespace Incoding.Block.Caching
 
         public MemoryListCachedProvider()
         {
-            this.cache = new Dictionary<string, object>();
+            this.cache = new ConcurrentDictionary<string, object>();
         }
 
         #endregion
 
         #region ICachedProvider Members
-
-        public T Get<T>(ICacheKey key) where T : class
+        
+        public T Get<T>(string name)
         {
-            return this.cache.ContainsKey(key.GetName()) ? this.cache[key.GetName()] as T : null;
+            return this.cache.ContainsKey(name) ? (T)this.cache[name] : default(T);
         }
 
-        public void Set<T>(ICacheKey key, T instance) where T : class
+        public void Set<T>(string key, T instance, CacheOptions cacheOptions = null)
         {
-            this.cache.Set(key.GetName(), instance);
+            this.cache.Set(key, instance);
         }
 
         public void DeleteAll()
@@ -41,10 +48,10 @@ namespace Incoding.Block.Caching
             this.cache.Clear();
         }
 
-        public void Delete(ICacheKey key)
+        public void Delete(string key)
         {
-            if (this.cache.ContainsKey(key.GetName()))
-                this.cache.Remove(key.GetName());
+            if (this.cache.ContainsKey(key))
+                ((IDictionary<string,object>)this.cache).Remove(key);
         }
 
         #endregion

@@ -75,35 +75,35 @@ namespace Incoding.UnitTest.Block
 
         It should_be_delete = () =>
                               {
-                                  cachedProvider.Set(new FakeCacheKey(), valueToCache);
-                                  cachedProvider.Delete(new FakeCacheKey());
+                                  cachedProvider.Set(new FakeCacheKey().GetName(), valueToCache, new CacheOptions());
+                                  cachedProvider.Delete(new FakeCacheKey().GetName());
 
-                                  cachedProvider.Get<FakeSerializeObject>(new FakeCacheKey()).ShouldBeNull();
+                                  cachedProvider.Get<FakeSerializeObject>(new FakeCacheKey().GetName()).ShouldBeNull();
                               };
 
         It should_be_delete_all = () =>
                                   {
-                                      cachedProvider.Set(new FakeCacheKey(), valueToCache);
-                                      cachedProvider.Set(new FakeCacheCustomHierarchy(), new FakeSerializeObject());
+                                      cachedProvider.Set(new FakeCacheKey().GetName(), valueToCache, new CacheOptions());
+                                      cachedProvider.Set(new FakeCacheCustomHierarchy().GetName(), new FakeSerializeObject(), new CacheOptions());
 
 
-                                      cachedProvider.Get<FakeSerializeObject>(new FakeCacheKey()).ShouldNotBeNull();
+                                      cachedProvider.Get<FakeSerializeObject>(new FakeCacheKey().GetName()).ShouldNotBeNull();
                                       cachedProvider.DeleteAll();
-                                      cachedProvider.Get<FakeSerializeObject>(new FakeCacheCustomHierarchy()).ShouldBeNull();
+                                      cachedProvider.Get<FakeSerializeObject>(new FakeCacheCustomHierarchy().GetName()).ShouldBeNull();
                                   };
 
         It should_be_found_in_cached = () =>
                                        {
-                                           cachedProvider.Set(new FakeCacheKey(), valueToCache);
-                                           Pleasure.Do10((i) => cachedProvider.Get<FakeSerializeObject>(new FakeCacheKey()).ShouldEqualWeak(valueToCache));
+                                           cachedProvider.Set(new FakeCacheKey().GetName(), valueToCache, new CacheOptions());
+                                           Pleasure.Do10((i) => cachedProvider.Get<FakeSerializeObject>(new FakeCacheKey().GetName()).ShouldEqualWeak(valueToCache));
                                        };
 
         It should_be_serialization = () =>
                                      {
                                          var key = new FakeCacheKey("7D668178-0A76-4E47-9FE9-C6ECD47383DB");
                                          var instance = Pleasure.Generator.Invent<FakeComplexityResponse>(dsl => dsl.GenerateTo(r => r.Teachers));
-                                         cachedProvider.Set(key, instance);
-                                         cachedProvider.Get<FakeComplexityResponse>(key).ShouldEqualWeak(instance);
+                                         cachedProvider.Set(key.GetName(), instance, new CacheOptions());
+                                         cachedProvider.Get<FakeComplexityResponse>(key.GetName()).ShouldEqualWeak(instance);
                                      };
     }
 }

@@ -3,19 +3,152 @@ using Incoding.Block.IoC;
 using Incoding.Extensions;
 using Incoding.Maybe;
 using Incoding.Mvc.MvcContrib.Extensions;
+using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Core;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.JqueryHelper.Options;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.JqueryHelper.Primitive;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Selectors.Core;
+using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Selectors.Jquery;
 using Incoding.Mvc.MvcContrib.Primitive;
 using Incoding.Mvc.MvcContrib.Template;
 using Incoding.Mvc.MvcContrib.Template.Factory;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Routing;
 
 namespace Incoding.Web.MvcContrib.IncHtmlHelper
 {
+    public class IncodingHtmlHelper
+    {
+        // ReSharper disable ConvertToConstant.Global
+        // ReSharper disable FieldCanBeMadeReadOnly.Global
+
+        ////ncrunch: no coverage start
+
+        #region Static Fields
+
+        public static Selector DropDownTemplateId = "incodingDropDownTemplate".ToId();
+
+        public static JqueryAjaxOptions DropDownOption = new JqueryAjaxOptions(JqueryAjaxOptions.Default);
+
+        public static BootstrapOfVersion BootstrapVersion = BootstrapOfVersion.v2;
+
+        public static B Def_Label_Class = B.Col_xs_5;
+
+        public static B Def_Control_Class = B.Col_xs_7;
+
+        internal static TagBuilder CreateScript(string id, HtmlType type, string src, HtmlString content)
+        {
+            var routeValueDictionary = new RouteValueDictionary(new { type = type.ToLocalization() });
+            if (!string.IsNullOrWhiteSpace(src))
+                routeValueDictionary.Merge(new { src });
+            if (!string.IsNullOrWhiteSpace(id))
+                routeValueDictionary.Merge(new { id });
+
+            return CreateTag(HtmlTag.Script, content, routeValueDictionary);
+        }
+
+        internal static TagBuilder CreateInput(string value, string type, object attributes)
+        {
+            var routeValueDictionary = AnonymousHelper.ToDictionary(attributes);
+            routeValueDictionary.Merge(new { value, type });
+            var input = CreateTag(HtmlTag.Input, HtmlString.Empty, routeValueDictionary);
+
+            return input;
+        }
+
+        internal static TagBuilder CreateTag(HtmlTag tag, HtmlString content, RouteValueDictionary attributes)
+        {
+            var tagBuilder = new TagBuilder(tag.ToStringLower());
+            tagBuilder.InnerHtml.AppendHtml(content.ReturnOrDefault(r => r, HtmlString.Empty));
+            tagBuilder.MergeAttributes(attributes, true);
+
+            return tagBuilder;
+        }
+
+        #endregion
+
+        ////ncrunch: no coverage end
+
+        // ReSharper restore FieldCanBeMadeReadOnly.Global
+        // ReSharper restore ConvertToConstant.Global
+    }
+
+    public class IncodingHtmlHelper<TModel> : IncodingHtmlHelper where TModel : new()
+    {
+        readonly IHtmlHelper<TModel> htmlHelper;
+
+        public IncodingHtmlHelper(IHtmlHelper<TModel> htmlHelper)
+        {
+            this.htmlHelper = htmlHelper;
+        }
+
+        public BeginTag BeginPush(Action<BeginPushSetting> evaluated)
+        {
+            var setting = new BeginPushSetting();
+            evaluated(setting);
+
+            return BeginPushInternal(setting);
+        }
+
+        private BeginTag BeginPushInternal(BeginPushSetting setting)
+        {
+            var routes = new RouteValueDictionary(new { @class = setting.CssClass, id = setting.Id ?? "" });
+            if (setting.IsMultiPart)
+                routes.Add("enctype", "multipart/form-data");
+
+            return htmlHelper.When(JqueryBind.InitIncoding)
+                .OnSuccess(dsl => dsl.Self().Form.Validation.Parse())
+                .When(JqueryBind.Submit)
+                .PreventDefault().StopPropagation()
+                .Submit()
+                .OnBegin(dsl =>
+                {
+                    setting.OnBegin?.Invoke(dsl);
+                })
+                .OnSuccess(dsl =>
+                {
+                    setting.OnSuccess?.Invoke(dsl);
+                })
+                .OnComplete(dsl =>
+                {
+                    setting.OnComplete?.Invoke(dsl);
+                })
+                .OnError(dsl =>
+                {
+                    dsl.Self().Form.Validation.Refresh();
+                    setting.OnError?.Invoke(dsl);
+                })
+
+                .AsHtmlAttributes(routes)
+                .ToBeginForm(setting.Url ?? new UrlHelper(this.htmlHelper.ViewContext).Dispatcher().Push<TModel>());
+        }
+
+        public class BeginPushSetting
+        {
+            public BeginPushSetting()
+            {
+                CssClass = "form-horizontal";
+            }
+
+            public Action<IIncodingMetaLanguageCallbackBodyDsl> OnSuccess { get; set; }
+
+            public Action<IIncodingMetaLanguageCallbackBodyDsl> OnBegin { get; set; }
+
+            public Action<IIncodingMetaLanguageCallbackBodyDsl> OnComplete { get; set; }
+
+            public Action<IIncodingMetaLanguageCallbackBodyDsl> OnError { get; set; }
+
+            public string CssClass { get; set; }
+
+            public bool IsMultiPart { get; set; }
+            public string Id { get; set; }
+
+            public string Url { get; set; }
+        }
+    /*}
+
     public class IncodingHtmlHelper
     {
         #region Fields
@@ -34,69 +167,13 @@ namespace Incoding.Web.MvcContrib.IncHtmlHelper
         }
 
         #endregion
-
-        static TagBuilder CreateScript(string id, HtmlType type, string src, HtmlString content)
-        {
-            var routeValueDictionary = new RouteValueDictionary(new { type = type.ToLocalization() });
-            if (!string.IsNullOrWhiteSpace(src))
-                routeValueDictionary.Merge(new { src });
-            if (!string.IsNullOrWhiteSpace(id))
-                routeValueDictionary.Merge(new { id });
-
-            return CreateTag(HtmlTag.Script, content, routeValueDictionary);
-        }
-
-        static TagBuilder CreateInput(string value, string type, object attributes)
-        {
-            var routeValueDictionary = AnonymousHelper.ToDictionary(attributes);
-            routeValueDictionary.Merge(new { value, type });
-            var input = CreateTag(HtmlTag.Input, HtmlString.Empty, routeValueDictionary);
-
-            return input;
-        }
-
-        internal static TagBuilder CreateTag(HtmlTag tag, HtmlString content, RouteValueDictionary attributes)
-        {
-            var tagBuilder = new TagBuilder(tag.ToStringLower());
-            tagBuilder.InnerHtml.AppendHtml(content.ReturnOrDefault(r => r, HtmlString.Empty));
-            tagBuilder.MergeAttributes(attributes, true);
-
-            return tagBuilder;
-        }
-
-        // ReSharper disable ConvertToConstant.Global
-        // ReSharper disable FieldCanBeMadeReadOnly.Global
-
-        ////ncrunch: no coverage start
-
-        #region Static Fields
-
-        public static Selector DropDownTemplateId = "incodingDropDownTemplate".ToId();
-
-        public static JqueryAjaxOptions DropDownOption = new JqueryAjaxOptions(JqueryAjaxOptions.Default);
-
-        public static BootstrapOfVersion BootstrapVersion = BootstrapOfVersion.v2;
-
-        public static B Def_Label_Class  = B.Col_xs_5;
-
-        public static B Def_Control_Class = B.Col_xs_7;
-
+        */
         
-        
-        #endregion
-
-        ////ncrunch: no coverage end
-
-        // ReSharper restore FieldCanBeMadeReadOnly.Global
-        // ReSharper restore ConvertToConstant.Global
-
-        ////ncrunch: no coverage end
-
         #region Api Methods
 
         public IHtmlContent Script([PathReference] string src)
         {
-            var script = CreateScript(string.Empty, HtmlType.TextJavaScript, src, HtmlString.Empty);
+            var script = IncodingHtmlHelper.CreateScript(string.Empty, HtmlType.TextJavaScript, src, HtmlString.Empty);
             return script;
         }
 
