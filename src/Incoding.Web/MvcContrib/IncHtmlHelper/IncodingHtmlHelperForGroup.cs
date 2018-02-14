@@ -34,7 +34,7 @@ namespace Incoding.Web.MvcContrib.IncHtmlHelper
         ////ncrunch: no coverage start
         #region Api Methods
 
-        public IHtmlContent Static(Action<IncHorizontalControl<IncStaticControl<TModel, TProperty>>> configuration = null)
+        public IHtmlContent Static(Action<IncHorizontalControl<IncStaticControl<TModel, TProperty>, TModel>> configuration = null)
         {
             return Group(new IncStaticControl<TModel, TProperty>(htmlHelper, property), configuration);
         }
@@ -46,54 +46,54 @@ namespace Incoding.Web.MvcContrib.IncHtmlHelper
             return hidden.ToHtmlString();
         }
 
-        public IHtmlContent CheckBox(Action<IncHorizontalControl<IncCheckBoxControl<TModel, TProperty>>> configuration = null)
+        public IHtmlContent CheckBox(Action<IncHorizontalControl<IncCheckBoxControl<TModel, TProperty>, TModel>> configuration = null)
         {
             return Group(new IncCheckBoxControl<TModel, TProperty>(htmlHelper, property), configuration);
         }
 
-        public IHtmlContent TextBox(Action<IncHorizontalControl<IncTextBoxControl<TModel, TProperty>>> configuration = null)
+        public IHtmlContent TextBox(Action<IncHorizontalControl<IncTextBoxControl<TModel, TProperty>, TModel>> configuration = null)
         {
             return Group(new IncTextBoxControl<TModel, TProperty>(htmlHelper, property), configuration);
         }
 
-        public IHtmlContent File(Action<IncHorizontalControl<IncFileControl<TModel, TProperty>>> configuration = null)
+        public IHtmlContent File(Action<IncHorizontalControl<IncFileControl<TModel, TProperty>, TModel>> configuration = null)
         {
             return Group(new IncFileControl<TModel, TProperty>(htmlHelper, property), configuration);
         }
 
-        public IHtmlContent TextArea(Action<IncHorizontalControl<IncTextAreaControl<TModel, TProperty>>> configuration = null)
+        public IHtmlContent TextArea(Action<IncHorizontalControl<IncTextAreaControl<TModel, TProperty>, TModel>> configuration = null)
         {
             return Group(new IncTextAreaControl<TModel, TProperty>(htmlHelper, property), configuration);
         }
 
-        public IHtmlContent Password(Action<IncHorizontalControl<IncPasswordControl<TModel, TProperty>>> configuration = null)
+        public IHtmlContent Password(Action<IncHorizontalControl<IncPasswordControl<TModel, TProperty>, TModel>> configuration = null)
         {
             return Group(new IncPasswordControl<TModel, TProperty>(htmlHelper, property), configuration);
         }
 
-        public IHtmlContent DropDown(Action<IncHorizontalControl<IncDropDownControl<TModel, TProperty>>> configuration = null)
+        public IHtmlContent DropDown(Action<IncHorizontalControl<IncDropDownControl<TModel, TProperty>, TModel>> configuration = null)
         {
             return Group(new IncDropDownControl<TModel, TProperty>(htmlHelper, property), configuration);
         }
 
-        public IHtmlContent ListBox(Action<IncHorizontalControl<IncListBoxControl<TModel, TProperty>>> configuration = null)
+        public IHtmlContent ListBox(Action<IncHorizontalControl<IncListBoxControl<TModel, TProperty>, TModel>> configuration = null)
         {
             return Group(new IncListBoxControl<TModel, TProperty>(htmlHelper, property), configuration);
         }
 
-        public IHtmlContent RadioButton(Action<IncHorizontalControl<IncRadioButtonControl<TModel, TProperty>>> configuration = null)
+        public IHtmlContent RadioButton(Action<IncHorizontalControl<IncRadioButtonControl<TModel, TProperty>, TModel>> configuration = null)
         {
             return Group(new IncRadioButtonControl<TModel, TProperty>(htmlHelper, property), configuration);
         }
 
         #endregion
 
-        IHtmlContent Group<TInput>(TInput input, Action<IncHorizontalControl<TInput>> configuration) where TInput : IncControlBase
+        IHtmlContent Group<TInput>(TInput input, Action<IncHorizontalControl<TInput, TModel>> configuration) where TInput : IncControlBase<TModel>
         {
-            var label = new IncLabelControl(htmlHelper, property);
+            var label = new IncLabelControl<TModel>(htmlHelper, property);
             label.AddClass("control-label");
-            var validation = new IncValidationControl(htmlHelper, property);
-            var horizontal = new IncHorizontalControl<TInput>(label, input, validation);
+            var validation = new IncValidationControl<TModel>(htmlHelper, property);
+            var horizontal = new IncHorizontalControl<TInput, TModel>(label, input, validation);
             MaybeObject.Do(configuration, r => r(horizontal));
 
             return horizontal.ToHtmlString();

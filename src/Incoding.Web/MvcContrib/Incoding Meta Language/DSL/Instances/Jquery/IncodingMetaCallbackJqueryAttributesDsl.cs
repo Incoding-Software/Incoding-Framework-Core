@@ -9,6 +9,7 @@ using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Selectors.Core;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Selectors.Jquery;
 using Incoding.Web.MvcContrib.IncHtmlHelper;
 using JetBrains.Annotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances.Jquery
 {
@@ -20,14 +21,16 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances.Jquery
     {
         #region Fields
 
+        private readonly IHtmlHelper _htmlHelper;
         readonly IIncodingMetaLanguagePlugInDsl plugInDsl;
 
         #endregion
 
         #region Constructors
 
-        public IncodingMetaCallbackJqueryAttributesDsl(IIncodingMetaLanguagePlugInDsl plugInDsl)
+        public IncodingMetaCallbackJqueryAttributesDsl(IHtmlHelper htmlHelper, IIncodingMetaLanguagePlugInDsl plugInDsl)
         {
+            _htmlHelper = htmlHelper;
             this.plugInDsl = plugInDsl;
         }
 
@@ -48,7 +51,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances.Jquery
         /// </summary>
         public IExecutableSetting Toggle(string attribute)
         {
-            return plugInDsl.Core().JQuery.Call("toggleProp", attribute);
+            return plugInDsl.Core(_htmlHelper).JQuery.Call("toggleProp", attribute);
         }
 
         /// <summary>
@@ -84,7 +87,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances.Jquery
         /// </param>
         public IExecutableSetting ToggleClass(string @class)
         {
-            return plugInDsl.Core().JQuery.Call("toggleClass", @class);
+            return plugInDsl.Core(_htmlHelper).JQuery.Call("toggleClass", @class);
         }
 
         /// <summary>
@@ -140,7 +143,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances.Jquery
         /// <param name="key">Html attributes</param>
         public IExecutableSetting Remove(string key)
         {
-            return plugInDsl.Core().JQuery.Call("removeAttr", key.ToLower());
+            return plugInDsl.Core(_htmlHelper).JQuery.Call("removeAttr", key.ToLower());
         }
 
         /// <summary>
@@ -184,7 +187,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances.Jquery
         /// </param>
         public IExecutableSetting Set(string key, Selector value = null)
         {
-            return plugInDsl.Core().JQuery.Call("attr", key, value ?? key);
+            return plugInDsl.Core(_htmlHelper).JQuery.Call("attr", key, value ?? key);
         }
 
         /// <summary>
@@ -218,7 +221,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances.Jquery
         /// <param name="key">Html attributes</param>
         public IExecutableSetting RemoveProp(string key)
         {
-            return plugInDsl.Core().JQuery.Call("removeProp", key);
+            return plugInDsl.Core(_htmlHelper).JQuery.Call("removeProp", key);
         }
 
         /// <summary>
@@ -239,7 +242,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances.Jquery
         /// </param>
         public IExecutableSetting SetProp(string key, Selector value = null)
         {
-            return plugInDsl.Core().JQuery.Call("prop", key, value ?? key);
+            return plugInDsl.Core(_htmlHelper).JQuery.Call("prop", key, value ?? key);
         }
 
         /// <summary>
@@ -266,7 +269,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances.Jquery
             if (value is IEnumerable)
                 return plugInDsl.Registry(new ExecutableEval(JavaScriptCodeTemplate.Target_Val.F(value.ToJsonString())));
 
-            return plugInDsl.Core().JQuery.Call("val", value.Recovery(string.Empty));
+            return plugInDsl.Core(_htmlHelper).JQuery.Call("val", value.Recovery(string.Empty));
         }
 
         /// <summary>
@@ -281,7 +284,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances.Jquery
             if (value == null)
                 return Val((object)null);
 
-            return plugInDsl.Core().JQuery.Call("val", value(Selector.Jquery));
+            return plugInDsl.Core(_htmlHelper).JQuery.Call("val", value(Selector.Jquery));
         }
 
         /// <summary>

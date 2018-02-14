@@ -20,7 +20,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
 
     #endregion
 
-    public class IncDropDownControl<TModel, TProperty> : IncControlBase
+    public class IncDropDownControl<TModel, TProperty> : IncControlBase<TModel>
     {
         #region Constructors
 

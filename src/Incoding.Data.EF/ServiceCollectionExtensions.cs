@@ -12,8 +12,6 @@ namespace Incoding.Data.EF
         public static void ConfigureIncodingEFDataServices(this IServiceCollection services, Type entityType, 
             Action<DbContextOptionsBuilder<IncDbContext>> builderConfigure)
         {
-            services.ConfigureIncodingCoreServices();
-
             services.AddSingleton<IUnitOfWorkFactory, EntityFrameworkUnitOfWorkFactory>();
 
 //            string path = Path.Combine(AppContext.BaseDirectory, string.Format("fluently_{0}_{1}.cfg", version,
@@ -38,11 +36,7 @@ namespace Incoding.Data.EF
             EntityFrameworkSessionFactory sessionFactory = new EntityFrameworkSessionFactory(incDbContext);
 
             services.AddSingleton<IEntityFrameworkSessionFactory>(sessionFactory);
-
-
-            IoCFactory.Instance.Initialize(services.BuildServiceProvider());
-
-
+            
             //var container = new Container();
             //container.Register<IDispatcher, DefaultDispatcher>();
 

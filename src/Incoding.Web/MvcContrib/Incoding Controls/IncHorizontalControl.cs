@@ -13,38 +13,38 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
 
     #endregion
 
-    public class IncHorizontalControl<TInput> : IncControlBase where TInput : IncControlBase
+    public class IncHorizontalControl<TInput, TModel> : IncControlBase<TModel> where TInput : IncControlBase<TModel>
     {
         #region Constructors
 
-        public IncHorizontalControl(IncLabelControl label, TInput input, IncControlBase validation)
+        public IncHorizontalControl(IncLabelControl<TModel> label, TInput input, IncControlBase<TModel> validation)
         {
             Label = label;
             Input = input;
             Validation = validation;
-            HelpBlock = new IncHelpBlockControl();
-            Control = new IncDivControl();
+            HelpBlock = new IncHelpBlockControl<TModel>();
+            Control = new IncDivControl<TModel>();
         }
 
         #endregion
 
         #region Properties
 
-        public IncLabelControl Label { get; set; }
+        public IncLabelControl<TModel> Label { get; set; }
 
         public TInput Input { get; set; }
 
-        public IncDivControl Control { get; set; }
+        public IncDivControl<TModel> Control { get; set; }
 
-        public IncControlBase Validation { get; set; }
+        public IncControlBase<TModel> Validation { get; set; }
 
-        public IncHelpBlockControl HelpBlock { get; set; }
+        public IncHelpBlockControl<TModel> HelpBlock { get; set; }
 
         #endregion
 
         public override IHtmlContent ToHtmlString()
         {
-            Func<IncControlBase, bool> isForDefClass = @base => !@base.GetAttr(HtmlAttribute.Class).With(r => r.Contains("col-"));
+            Func<IncControlBase<TModel>, bool> isForDefClass = @base => !@base.GetAttr(HtmlAttribute.Class).With(r => r.Contains("col-"));
             bool isV3orMore = IncodingHtmlHelper.BootstrapVersion == BootstrapOfVersion.v3;
             bool isStatic = Input.GetType().Name.Contains("IncStaticControl");
 

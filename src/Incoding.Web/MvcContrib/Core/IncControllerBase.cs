@@ -79,7 +79,7 @@ namespace Incoding.Mvc.MvcContrib.Core
             Guard.NotNullOrWhiteSpace("viewName", viewName);
             ViewData.Model = model;
 
-            var viewResult = await _serviceProvider.GetService<IViewRenderService>().RenderToStringAsync(viewName, model);
+            var viewResult = await _serviceProvider.GetService<IViewRenderService>().RenderToStringAsync(ControllerContext, viewName, model);
             return viewResult;
         }
 

@@ -8,6 +8,7 @@ using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Core;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.JqueryHelper.Primitive;
 using Incoding.Web.MvcContrib.IncHtmlHelper;
 using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
 using Newtonsoft.Json.Linq;
 
@@ -17,9 +18,11 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
 
     #endregion
 
-    public abstract class IncControlBase
+    public abstract class IncControlBase<TModel>
     {
         #region Fields
+
+        protected IHtmlHelper<TModel> htmlHelper;
 
         protected RouteValueDictionary attributes = new RouteValueDictionary();
 
@@ -33,7 +36,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
 
             if (isIml)
             {
-                attributes.Merge(new IncodingMetaLanguageDsl(JqueryBind.InitIncoding)
+                attributes.Merge(new IncodingMetaLanguageDsl(htmlHelper, JqueryBind.InitIncoding)
                                          .OnSuccess(dsl =>
                                                     {
                                                         OnInit.Do(action => action(dsl));

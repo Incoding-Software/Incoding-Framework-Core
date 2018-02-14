@@ -11,7 +11,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
 
     #endregion
 
-    public class IncLabelControl : IncControlBase
+    public class IncLabelControl<TModel> : IncControlBase<TModel>
     {
         #region Fields
 

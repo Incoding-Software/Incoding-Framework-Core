@@ -2,6 +2,7 @@
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Core;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances.Jquery;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Executables;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances
 {
@@ -13,14 +14,16 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances
     {
         #region Fields
 
+        private readonly IHtmlHelper _htmlHelper;
         protected IIncodingMetaLanguagePlugInDsl plugIn;
 
         #endregion
 
         #region Constructors
 
-        public IncodingMetaLanguageCoreDsl(IIncodingMetaLanguagePlugInDsl plugIn)
+        public IncodingMetaLanguageCoreDsl(IHtmlHelper htmlHelper, IIncodingMetaLanguagePlugInDsl plugIn)
         {
+            _htmlHelper = htmlHelper;
             this.plugIn = plugIn;
         }
 
@@ -28,15 +31,15 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances
 
         #region Properties
 
-        public IncodingMetaCallbackBindDsl Bind { get { return new IncodingMetaCallbackBindDsl(this.plugIn); } }
+        public IncodingMetaCallbackBindDsl Bind { get { return new IncodingMetaCallbackBindDsl(_htmlHelper, this.plugIn); } }
 
-        public IncodingMetaCallbackInsertDsl Insert { get { return new IncodingMetaCallbackInsertDsl(this.plugIn); } }
+        public IncodingMetaCallbackInsertDsl Insert { get { return new IncodingMetaCallbackInsertDsl(this._htmlHelper, this.plugIn); } }
 
         public IExecutableSetting Break { get { return this.plugIn.Registry(new ExecutableBreak()); } }
 
-        public IncodingMetaCallbackJqueryDsl JQuery { get { return new IncodingMetaCallbackJqueryDsl(this.plugIn); } }
+        public IncodingMetaCallbackJqueryDsl JQuery { get { return new IncodingMetaCallbackJqueryDsl(_htmlHelper, this.plugIn); } }
 
-        public IncodingMetaCallbackFuncDsl Func { get { return new IncodingMetaCallbackFuncDsl(this.plugIn); } }
+        public IncodingMetaCallbackFuncDsl Func { get { return new IncodingMetaCallbackFuncDsl(_htmlHelper, this.plugIn); } }
 
         public IncodingMetaCallbackStoreApiDsl Store { get { return new IncodingMetaCallbackStoreApiDsl(this.plugIn); } }
 

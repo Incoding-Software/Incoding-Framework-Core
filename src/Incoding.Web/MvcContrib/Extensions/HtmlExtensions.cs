@@ -90,7 +90,7 @@ namespace Incoding.Mvc.MvcContrib.Extensions
         {
             HtmlHelper = htmlHelper;
             UrlDispatcher = new UrlDispatcher(htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<IUrlHelper>());
-            return new IncodingMetaLanguageDsl(bind);
+            return new IncodingMetaLanguageDsl(htmlHelper, bind);
         }
 
         #endregion

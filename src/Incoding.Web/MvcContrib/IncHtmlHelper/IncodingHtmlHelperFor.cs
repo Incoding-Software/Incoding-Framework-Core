@@ -80,7 +80,7 @@ namespace Incoding.Web.MvcContrib.IncHtmlHelper
 
         #endregion
 
-        IHtmlContent Control<TInput>(TInput input, Action<TInput> configuration) where TInput : IncControlBase
+        IHtmlContent Control<TInput>(TInput input, Action<TInput> configuration) where TInput : IncControlBase<TModel>
         {
             configuration.Do(action => action(input));
             return input.ToHtmlString();

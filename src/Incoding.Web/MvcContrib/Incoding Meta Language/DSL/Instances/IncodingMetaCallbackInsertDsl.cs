@@ -13,6 +13,7 @@ using JetBrains.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Routing;
 
@@ -26,8 +27,9 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances
     {
         #region Constructors
 
-        public IncodingMetaCallbackInsertDsl(IIncodingMetaLanguagePlugInDsl plugIn)
+        public IncodingMetaCallbackInsertDsl(IHtmlHelper htmlHelper, IIncodingMetaLanguagePlugInDsl plugIn)
         {
+            _htmlHelper = htmlHelper;
             this.plugIn = plugIn;
         }
 
@@ -77,13 +79,12 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances
         [ExcludeFromCodeCoverage]
         public IncodingMetaCallbackInsertDsl WithTemplateByUrl(Func<UrlDispatcher, string> evaluated)
         {
-            var httpContext = new DefaultDispatcher().Query(new GetHttpContextQuery());
-            var dispatcher = new UrlDispatcher(new UrlHelper(new ActionContext(httpContext, httpContext.GetRouteData(), null)));
+            var dispatcher = new UrlDispatcher(new UrlHelper(_htmlHelper.ViewContext));
             return WithTemplateByUrl(evaluated(dispatcher));
         }
 
         [ExcludeFromCodeCoverage]
-        public IncodingMetaCallbackInsertDsl WithTemplateByView([PathReference, NotNull] string view)
+        public IncodingMetaCallbackInsertDsl WithTemplateByView([JetBrains.Annotations.AspMvcPartialView, NotNull] string view)
         {
             return WithTemplateByUrl((Func<UrlDispatcher, string>) (r => r.AsView(view)));
         }
@@ -99,7 +100,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances
         /// </summary>
         public IExecutableSetting Remove()
         {
-            return this.plugIn.Core().JQuery.Call("remove");
+            return this.plugIn.Core(_htmlHelper).JQuery.Call("remove");
         }
 
         /// <summary>
@@ -107,7 +108,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances
         /// </summary>
         public IExecutableSetting Empty()
         {
-            return this.plugIn.Core().JQuery.Call("empty");
+            return this.plugIn.Core(_htmlHelper).JQuery.Call("empty");
         }
 
         /// <summary>
@@ -115,7 +116,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances
         /// </summary>
         public IExecutableSetting Detach()
         {
-            return this.plugIn.Core().JQuery.Call("detach");
+            return this.plugIn.Core(_htmlHelper).JQuery.Call("detach");
         }
 
         /// <summary>
@@ -126,7 +127,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances
         /// </param>
         public IExecutableSetting Wrap()
         {
-            return this.plugIn.Core().JQuery.Call("wrap", this.content);
+            return this.plugIn.Core(_htmlHelper).JQuery.Call("wrap", this.content);
         }
 
         /// <summary>
@@ -137,7 +138,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances
         /// </param>
         public IExecutableSetting WrapAll()
         {
-            return this.plugIn.Core().JQuery.Call(this.content);
+            return this.plugIn.Core(_htmlHelper).JQuery.Call(this.content);
         }
 
         [Obsolete("Please use On with Selector.Result.For<T>(r=>r.Prop)", false)]
@@ -212,6 +213,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances
 
         #region Fields
 
+        private readonly IHtmlHelper _htmlHelper;
         readonly IIncodingMetaLanguagePlugInDsl plugIn;
 
         string insertProperty = string.Empty;

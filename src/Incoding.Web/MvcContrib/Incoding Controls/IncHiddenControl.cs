@@ -9,7 +9,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
 
     #endregion
 
-    public class IncHiddenControl<TModel, TProperty> : IncControlBase
+    public class IncHiddenControl<TModel, TProperty> : IncControlBase<TModel>
     {
         #region Fields
 

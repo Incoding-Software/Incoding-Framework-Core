@@ -9,7 +9,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
 
     #endregion
 
-    public class IncHelpBlockControl : IncControlBase
+    public class IncHelpBlockControl<TModel> : IncControlBase<TModel>
     {
         #region Properties
 

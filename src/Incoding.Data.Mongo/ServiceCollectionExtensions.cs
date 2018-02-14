@@ -19,8 +19,6 @@ namespace Incoding.Data.Mongo
 
             services.AddSingleton<IMongoDbSessionFactory>(sessionFactory);
             
-            IoCFactory.Instance.Initialize(services.BuildServiceProvider());
-
 
             //var container = new Container();
             //container.Register<IDispatcher, DefaultDispatcher>();

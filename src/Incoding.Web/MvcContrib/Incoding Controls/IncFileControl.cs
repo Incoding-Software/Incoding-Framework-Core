@@ -11,7 +11,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
 
     #endregion
 
-    public class IncFileControl<TModel, TProperty> : IncControlBase where TModel : new()
+    public class IncFileControl<TModel, TProperty> : IncControlBase<TModel> where TModel : new()
     {
         #region Fields
 

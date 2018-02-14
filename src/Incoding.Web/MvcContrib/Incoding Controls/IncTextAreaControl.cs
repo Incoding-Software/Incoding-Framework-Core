@@ -11,7 +11,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
 
     #endregion
 
-    public class IncTextAreaControl<TModel, TProperty> : IncControlBase
+    public class IncTextAreaControl<TModel, TProperty> : IncControlBase<TModel>
     {
         #region Fields
 

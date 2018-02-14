@@ -14,7 +14,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
 
     #endregion
 
-    public class IncRadioButtonControl<TModel, TProperty> : IncControlBase
+    public class IncRadioButtonControl<TModel, TProperty> : IncControlBase<TModel>
     {
         #region Constructors
 
@@ -22,7 +22,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
         {
             this.htmlHelper = htmlHelper;
             this.property = property;
-            this.Label = new IncLabelControl(htmlHelper, property);
+            this.Label = new IncLabelControl<TModel>(htmlHelper, property);
         }
 
         #endregion
@@ -65,7 +65,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
 
         public object Value { get; set; }
 
-        public IncLabelControl Label { get; protected set; }
+        public IncLabelControl<TModel> Label { get; protected set; }
 
         public string IconClass { get; set; }
 

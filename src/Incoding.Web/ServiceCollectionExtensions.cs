@@ -1,4 +1,6 @@
 ﻿using Incoding.Block.Caching;
+using Incoding.Mvc.MvcContrib.Template.Factory;
+using Incoding.Web.MvcContrib.IncHtmlHelper;
 using Incoding.Web.MvcContrib.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -14,8 +16,8 @@ namespace Incoding.Web
         {
             services.AddScoped<IViewRenderService, ViewRenderService>();
             services.AddMemoryCache();
-            var serviceProvider = services.BuildServiceProvider();
-            CachingFactory.Instance.Initialize(init => init.WithProvider(new NetCachedProvider(() => serviceProvider.GetRequiredService<IMemoryCache>())));
+            services.AddTransient<ITemplateFactory, TemplateHandlebarsFactory>();
+            IncodingHtmlHelper.BootstrapVersion = BootstrapOfVersion.v3;
         }
     }
 }

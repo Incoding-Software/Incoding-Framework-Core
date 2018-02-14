@@ -3,6 +3,7 @@ using Incoding.Extensions;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Core;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Executables;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.JqueryHelper.Primitive;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances
 {
@@ -14,14 +15,16 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances
     {
         #region Fields
 
+        private readonly IHtmlHelper _htmlHelper;
         readonly IIncodingMetaLanguagePlugInDsl plugIn;
 
         #endregion
 
         #region Constructors
 
-        public IncodingMetaCallbackBindDsl(IIncodingMetaLanguagePlugInDsl plugIn)
+        public IncodingMetaCallbackBindDsl(IHtmlHelper htmlHelper, IIncodingMetaLanguagePlugInDsl plugIn)
         {
+            _htmlHelper = htmlHelper;
             this.plugIn = plugIn;
         }
 
@@ -31,7 +34,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances
 
         public IExecutableSetting Attach(Func<IIncodingMetaLanguageEventBuilderDsl, IIncodingMetaLanguageEventBuilderDsl> action)
         {
-            string meta = action(new IncodingMetaLanguageDsl(string.Empty))
+            string meta = action(new IncodingMetaLanguageDsl(_htmlHelper, string.Empty))
                     .AsHtmlAttributes()["incoding"].ToString();
 
             return this.plugIn.Registry(new ExecutableBind("attach", meta, string.Empty));

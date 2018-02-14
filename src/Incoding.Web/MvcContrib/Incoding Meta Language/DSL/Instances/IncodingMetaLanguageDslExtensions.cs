@@ -1,5 +1,6 @@
 ﻿using System;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Core;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances
 {
@@ -19,10 +20,10 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances
             behaviorDsl.UnLock();
         }
 
-        [Obsolete("Please skip because it is redundant")]
-        public static IncodingMetaLanguageCoreDsl Core(this IIncodingMetaLanguagePlugInDsl plugInDsl)
+        //[Obsolete("Please skip because it is redundant")]
+        internal static IncodingMetaLanguageCoreDsl Core(this IIncodingMetaLanguagePlugInDsl plugInDsl, IHtmlHelper htmlHelper)
         {
-            return new IncodingMetaLanguageCoreDsl(plugInDsl);
+            return new IncodingMetaLanguageCoreDsl(htmlHelper, plugInDsl);
         }
 
         #endregion

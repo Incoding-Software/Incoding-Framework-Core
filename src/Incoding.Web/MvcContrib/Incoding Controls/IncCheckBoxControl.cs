@@ -14,7 +14,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
 
     #endregion
 
-    public class IncCheckBoxControl<TModel, TProperty> : IncControlBase
+    public class IncCheckBoxControl<TModel, TProperty> : IncControlBase<TModel>
     {
 
         #region Constructors
@@ -23,7 +23,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
         {
             this.htmlHelper = htmlHelper;
             this.property = property;
-            this.Label = new IncLabelControl(htmlHelper, property);
+            this.Label = new IncLabelControl<TModel>(htmlHelper, property);
         }
 
         #endregion
@@ -56,16 +56,14 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
         }
 
         #region Fields
-
-        readonly IHtmlHelper<TModel> htmlHelper;
-
+        
         readonly Expression<Func<TModel, TProperty>> property;
 
         #endregion
 
         #region Properties
 
-        public IncLabelControl Label { get; protected set; }
+        public IncLabelControl<TModel> Label { get; protected set; }
 
         public ModeOfCheckbox Mode { get; set; }
 

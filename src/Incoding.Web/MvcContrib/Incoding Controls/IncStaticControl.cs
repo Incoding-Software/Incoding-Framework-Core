@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 
 namespace Incoding.Mvc.MvcContrib.Incoding_Controls
 {
-    public class IncStaticControl<TModel, TProperty> : IncControlBase
+    public class IncStaticControl<TModel, TProperty> : IncControlBase<TModel>
     {
         #region Fields
 

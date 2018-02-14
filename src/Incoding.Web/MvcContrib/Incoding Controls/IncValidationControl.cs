@@ -9,7 +9,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
 
     #endregion
 
-    public class IncValidationControl : IncControlBase
+    public class IncValidationControl<TModel> : IncControlBase<TModel>
     {
         #region Fields
 

@@ -1,14 +1,10 @@
-﻿using System.Data;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Incoding.Data.EF.Provider
 {
-    #region << Using >>
-
-    #endregion
-
     [ExcludeFromCodeCoverage]
     public class EntityFrameworkUnitOfWork : UnitOfWorkBase<DbContext>
     {

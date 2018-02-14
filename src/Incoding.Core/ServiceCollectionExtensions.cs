@@ -1,4 +1,5 @@
-﻿using Incoding.CQRS;
+﻿using Incoding.Block.IoC;
+using Incoding.CQRS;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Incoding.Core

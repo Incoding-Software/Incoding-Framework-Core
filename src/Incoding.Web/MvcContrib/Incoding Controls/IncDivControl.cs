@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Incoding.Mvc.MvcContrib.Incoding_Controls
 {
-    public class IncDivControl : IncControlBase
+    public class IncDivControl<TModel> : IncControlBase<TModel>
     {
         public HtmlString Content { get; internal set; }
 

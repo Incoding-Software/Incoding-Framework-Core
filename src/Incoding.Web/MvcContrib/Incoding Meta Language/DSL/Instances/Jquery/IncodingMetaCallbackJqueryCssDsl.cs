@@ -3,6 +3,7 @@ using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Core;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Executables;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.JqueryHelper.Primitive;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Selectors.Core;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances.Jquery
 {
@@ -14,14 +15,16 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances.Jquery
     {
         #region Fields
 
+        private readonly IHtmlHelper _htmlHelper;
         readonly IIncodingMetaLanguagePlugInDsl plugInDsl;
 
         #endregion
 
         #region Constructors
 
-        public IncodingMetaCallbackJqueryCssDsl(IIncodingMetaLanguagePlugInDsl plugInDsl)
+        public IncodingMetaCallbackJqueryCssDsl(IHtmlHelper htmlHelper, IIncodingMetaLanguagePlugInDsl plugInDsl)
         {
+            _htmlHelper = htmlHelper;
             this.plugInDsl = plugInDsl;
         }
 
@@ -38,7 +41,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances.Jquery
         /// </param>
         public IExecutableSetting Set(string key, Selector value)
         {
-            return this.plugInDsl.Core().JQuery.Call("css", key, value);
+            return this.plugInDsl.Core(_htmlHelper).JQuery.Call("css", key, value);
         }
 
         /// <summary>
@@ -71,7 +74,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances.Jquery
         /// </param>
         public IExecutableSetting Height(Selector value)
         {
-            return this.plugInDsl.Core().JQuery.Call("height", value);
+            return this.plugInDsl.Core(_htmlHelper).JQuery.Call("height", value);
         }
 
         /// <summary>
@@ -82,7 +85,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances.Jquery
         /// </param>
         public IExecutableSetting ScrollLeft(Selector value)
         {
-            return this.plugInDsl.Core().JQuery.Call("scrollLeft", value);
+            return this.plugInDsl.Core(_htmlHelper).JQuery.Call("scrollLeft", value);
         }
 
         /// <summary>
@@ -93,7 +96,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances.Jquery
         /// </param>
         public IExecutableSetting ScrollTop(Selector value)
         {
-            return this.plugInDsl.Core().JQuery.Call("scrollTop", value);
+            return this.plugInDsl.Core(_htmlHelper).JQuery.Call("scrollTop", value);
         }
 
         /// <summary>
@@ -104,7 +107,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances.Jquery
         /// </param>
         public IExecutableSetting Width(Selector value)
         {
-            return this.plugInDsl.Core().JQuery.Call("width", value);
+            return this.plugInDsl.Core(_htmlHelper).JQuery.Call("width", value);
         }
 
         #endregion

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Encodings.Web;
 using Incoding.Extensions;
 using Incoding.Maybe;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.JqueryHelper.Options;
@@ -18,6 +19,23 @@ namespace Incoding.Mvc.MvcContrib.Extensions
 
     public static class RouteValueDictionaryExtensions
     {
+        public static MvcForm ToMvcForm(this RouteValueDictionary htmlAttributes, IHtmlHelper htmlHelper, string url,
+                                           JqueryAjaxOptions.HttpVerbs method = JqueryAjaxOptions.HttpVerbs.Post,
+                                           Enctype enctype = Enctype.ApplicationXWWWFormUrlEncoded
+                )
+        {
+            if (!htmlAttributes.ContainsKey(HtmlAttribute.Method.ToStringLower()))
+                htmlAttributes.Set(HtmlAttribute.Method.ToStringLower(), EnumExtensions.ToStringLower(method));
+
+            if (!htmlAttributes.ContainsKey(HtmlAttribute.Enctype.ToStringLower()))
+                htmlAttributes.Set(HtmlAttribute.Enctype.ToStringLower(), enctype.ToLocalization());
+
+            if (!htmlAttributes.ContainsKey(HtmlAttribute.Action.ToStringLower()))
+                htmlAttributes.Set(HtmlAttribute.Action.ToStringLower(), url);
+
+            return new MvcForm(htmlHelper.ViewContext, HtmlEncoder.Default);
+        }
+
         [Obsolete("Use ToBeginTag wihtout HtmlHelper")]
         public static BeginTag ToBeginForm(this RouteValueDictionary htmlAttributes, IHtmlHelper htmlHelper, string url,
                                            JqueryAjaxOptions.HttpVerbs method = JqueryAjaxOptions.HttpVerbs.Post,

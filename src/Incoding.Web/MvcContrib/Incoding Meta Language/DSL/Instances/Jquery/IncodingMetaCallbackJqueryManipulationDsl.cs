@@ -3,6 +3,7 @@ using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Core;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Executables;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Selectors.Core;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances.Jquery
 {
@@ -14,14 +15,16 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances.Jquery
     {
         #region Fields
 
+        private readonly IHtmlHelper _htmlHelper;
         readonly IIncodingMetaLanguagePlugInDsl plugInDsl;
 
         #endregion
 
         #region Constructors
 
-        public IncodingMetaCallbackJqueryManipulationDsl(IIncodingMetaLanguagePlugInDsl plugInDsl)
+        public IncodingMetaCallbackJqueryManipulationDsl(IHtmlHelper htmlHelper, IIncodingMetaLanguagePlugInDsl plugInDsl)
         {
+            _htmlHelper = htmlHelper;
             this.plugInDsl = plugInDsl;
         }
 
@@ -37,7 +40,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances.Jquery
         /// </param>
         public IExecutableSetting Wrap(Selector selector)
         {
-            return this.plugInDsl.Core().JQuery.Call("wrap", selector);
+            return this.plugInDsl.Core(_htmlHelper).JQuery.Call("wrap", selector);
         }
 
         /// <summary>
@@ -56,7 +59,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances.Jquery
         /// </param>
         public IExecutableSetting WrapAll(Selector selector)
         {
-            return this.plugInDsl.Core().JQuery.Call("wrapAll", selector);
+            return this.plugInDsl.Core(_htmlHelper).JQuery.Call("wrapAll", selector);
         }
 
         /// <summary>
@@ -189,7 +192,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances.Jquery
         /// </param>
         public IExecutableSetting ReplaceWith(Selector newContent)
         {
-            return this.plugInDsl.Core().JQuery.Call("replaceWith", newContent);
+            return this.plugInDsl.Core(_htmlHelper).JQuery.Call("replaceWith", newContent);
         }
 
         /// <summary>
@@ -205,7 +208,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances.Jquery
         /// </summary>
         public IExecutableSetting Remove()
         {
-            return this.plugInDsl.Core().JQuery.Call("remove");
+            return this.plugInDsl.Core(_htmlHelper).JQuery.Call("remove");
         }
 
         /// <summary>
@@ -213,7 +216,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances.Jquery
         /// </summary>
         public IExecutableSetting Empty()
         {
-            return this.plugInDsl.Core().JQuery.Call("empty");
+            return this.plugInDsl.Core(_htmlHelper).JQuery.Call("empty");
         }
 
         /// <summary>
@@ -221,14 +224,14 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances.Jquery
         /// </summary>
         public IExecutableSetting Detach()
         {
-            return this.plugInDsl.Core().JQuery.Call("detach");
+            return this.plugInDsl.Core(_htmlHelper).JQuery.Call("detach");
         }
 
         #endregion
 
         IExecutableSetting Insert(string method, Selector selector)
         {
-            return this.plugInDsl.Core().JQuery.Call(method, selector);
+            return this.plugInDsl.Core(_htmlHelper).JQuery.Call(method, selector);
         }
     }
 }

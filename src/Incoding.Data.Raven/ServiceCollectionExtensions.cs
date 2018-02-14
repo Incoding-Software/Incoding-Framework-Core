@@ -20,10 +20,7 @@ namespace Incoding.Data.Raven
             RavenDbSessionFactory sessionFactory = new RavenDbSessionFactory(docSession);
 
             services.AddSingleton<IRavenDbSessionFactory>(sessionFactory);
-
-
-            IoCFactory.Instance.Initialize(services.BuildServiceProvider());
-
+            
 
             //var container = new Container();
             //container.Register<IDispatcher, DefaultDispatcher>();

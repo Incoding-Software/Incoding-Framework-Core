@@ -24,6 +24,8 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL
 
     public partial class IncodingMetaLanguageDsl : IncodingMetaLanguageCoreDsl, IIncodingMetaLanguageBindingDsl, IIncodingMetaLanguageCallbackBodyDsl, IIncodingMetaLanguageCallbackInstancesDsl, IIncodingMetaLanguageSettingEventDsl
     {
+        private readonly IHtmlHelper _htmlHelper;
+
         public override string ToString()
         {
             throw new NotImplementedException("Please finishing IML expression with AsHtmlAttributes().ToTag(some)");
@@ -50,12 +52,13 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL
 
         #region Constructors
 
-        public IncodingMetaLanguageDsl(JqueryBind currentBind)
-                : this(currentBind.ToJqueryString()) { }
+        public IncodingMetaLanguageDsl(IHtmlHelper htmlHelper, JqueryBind currentBind)
+                : this(htmlHelper, currentBind.ToJqueryString()) { }
 
-        public IncodingMetaLanguageDsl(string currentBind)
-                : base(null)
+        public IncodingMetaLanguageDsl(IHtmlHelper htmlHelper, string currentBind)
+                : base(htmlHelper, null)
         {
+            _htmlHelper = htmlHelper;
             plugIn = this;
             meta = new IncodingMetaContainer();
             When(currentBind);
