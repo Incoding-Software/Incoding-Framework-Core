@@ -1,4 +1,7 @@
-﻿namespace Incoding.CQRS
+﻿using Incoding.Core.CQRS.Core;
+using Incoding.Core.Maybe;
+
+namespace Incoding.CQRS
 {
     #region << Using >>
 
@@ -6,7 +9,6 @@
     using System.Diagnostics.CodeAnalysis;
     using System.Web;
     using Incoding.Block;
-    using Incoding.Maybe;
     using JetBrains.Annotations;
 
     #endregion

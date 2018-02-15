@@ -1,4 +1,6 @@
-﻿namespace Incoding.UnitTest
+﻿using Incoding.Core.Block.Scheduler.Persistence;
+
+namespace Incoding.UnitTest
 {
     #region << Using >>
 

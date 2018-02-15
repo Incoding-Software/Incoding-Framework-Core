@@ -1,5 +1,6 @@
 using System.IO;
 using System.Text.Encodings.Web;
+using Incoding.Core.Extensions;
 using Incoding.Extensions;
 using Incoding.Mvc.MvcContrib.Primitive;
 using Microsoft.AspNetCore.Html;

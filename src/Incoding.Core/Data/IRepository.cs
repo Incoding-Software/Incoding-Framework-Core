@@ -1,11 +1,11 @@
+using System.Collections.Generic;
+using System.Linq;
 using Incoding.Core.Block.Core;
+using Incoding.Core.Extensions.LinqSpecs;
 
-namespace Incoding.Data
+namespace Incoding.Core.Data
 {
     #region << Using >>
-
-    using System.Collections.Generic;
-    using System.Linq;
 
     #endregion
 

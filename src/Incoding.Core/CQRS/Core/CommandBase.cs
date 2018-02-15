@@ -1,4 +1,4 @@
-namespace Incoding.CQRS
+namespace Incoding.Core.CQRS.Core
 {
     public abstract class CommandBase : MessageBase { }
 }

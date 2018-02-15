@@ -1,3 +1,6 @@
+using Incoding.Core.Extensions;
+using Incoding.Core.Maybe;
+using Incoding.Core.Quality;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 
@@ -15,8 +18,6 @@ namespace Incoding.MSpecContrib
     using System.Reflection;
     using System.Web;
     using Incoding.Extensions;
-    using Incoding.Maybe;
-    using Incoding.Quality;
 
     #endregion
 

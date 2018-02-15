@@ -1,4 +1,6 @@
-﻿namespace IncodingContrib.UnitTest
+﻿using Incoding.Core.Block.Scheduler.Query;
+
+namespace IncodingContrib.UnitTest
 {
     #region << Using >>
 
@@ -22,7 +24,7 @@
 
             var res = MockQuery<GetRecurrencyDateQuery, DateTime?>
                     .When(query);
-            res.Original.Execute();
+            res.Execute();
             return res;
         }
 

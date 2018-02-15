@@ -1,4 +1,6 @@
-﻿using Incoding.Data.EF.Provider;
+﻿using Incoding.Core.Data;
+using Incoding.Core.Quality;
+using Incoding.Data.EF.Provider;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,7 +12,6 @@ namespace Incoding.UnitTest
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using Incoding.Data;
-    using Incoding.Quality;
     using Raven.Imports.Newtonsoft.Json;
 
     #endregion

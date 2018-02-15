@@ -1,4 +1,4 @@
-﻿namespace Incoding.Block
+﻿namespace Incoding.Core.Block.Scheduler.Persistence
 {
     public enum DelayOfStatus
     {

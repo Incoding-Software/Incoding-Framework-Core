@@ -1,10 +1,12 @@
-﻿namespace Incoding.Block
+﻿using System;
+using Incoding.Core.Block.Scheduler.Persistence;
+using Incoding.Core.Block.Scheduler.Query;
+using Incoding.Core.CQRS.Core;
+using Incoding.Core.Extensions;
+
+namespace Incoding.Core.Block.Scheduler.Command
 {
     #region << Using >>
-
-    using System;
-    using Incoding.CQRS;
-    using Incoding.Extensions;
 
     #endregion
 

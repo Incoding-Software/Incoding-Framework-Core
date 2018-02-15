@@ -1,4 +1,7 @@
-﻿namespace Incoding.UnitTest
+﻿using Incoding.Core.CQRS.Core;
+using Incoding.Core.Extensions;
+
+namespace Incoding.UnitTest
 {
     #region << Using >>
 

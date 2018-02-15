@@ -1,3 +1,4 @@
+using Incoding.Core.Extensions;
 using Microsoft.AspNetCore.Routing;
 
 namespace Incoding.Extensions

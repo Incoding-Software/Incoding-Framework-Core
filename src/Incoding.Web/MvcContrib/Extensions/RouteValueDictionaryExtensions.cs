@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Text.Encodings.Web;
+using Incoding.Core.Extensions;
+using Incoding.Core.Maybe;
 using Incoding.Extensions;
-using Incoding.Maybe;
+using Incoding.Mvc.MvcContrib.Incoding_Meta_Language;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.JqueryHelper.Options;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.JqueryHelper.Primitive;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Selectors.Core;
@@ -20,7 +22,7 @@ namespace Incoding.Mvc.MvcContrib.Extensions
 
     public static class RouteValueDictionaryExtensions
     {
-        public static MvcForm ToMvcForm(this RouteValueDictionary htmlAttributes, IHtmlHelper htmlHelper, string url,
+        public static MvcForm ToMvcForm(this HtmlRouteValueDictionary htmlAttributes, string url,
                                            FormMethod method,
                                            Enctype enctype = Enctype.ApplicationXwwwFormUrlEncoded
                 )
@@ -34,17 +36,16 @@ namespace Incoding.Mvc.MvcContrib.Extensions
             //if (!htmlAttributes.ContainsKey(HtmlAttribute.Action.ToStringLower()))
             //    htmlAttributes.Set(HtmlAttribute.Action.ToStringLower(), url);
 
-            return new IncodingHtmlHelper(htmlHelper).BeginMvcForm(url, enctype, method, false, htmlAttributes);
+            return new IncodingHtmlHelper(htmlAttributes.HtmlHelper).BeginMvcForm(url, enctype, method, false, htmlAttributes);
         }
-
-        [Obsolete("Use ToBeginTag wihtout HtmlHelper")]
-        public static BeginTag ToBeginForm(this RouteValueDictionary htmlAttributes, IHtmlHelper htmlHelper, string url,
+        
+        public static BeginTag ToBeginForm(this HtmlRouteValueDictionary htmlAttributes, string url,
                                            JqueryAjaxOptions.HttpVerbs method = JqueryAjaxOptions.HttpVerbs.Post,
                                            Enctype enctype = Enctype.ApplicationXwwwFormUrlEncoded
                 )
         {
             if (!htmlAttributes.ContainsKey(HtmlAttribute.Method.ToStringLower()))
-                htmlAttributes.Set(HtmlAttribute.Method.ToStringLower(), EnumExtensions.ToStringLower(method));
+                htmlAttributes.Set(HtmlAttribute.Method.ToStringLower(), method.ToStringLower());
 
             if (!htmlAttributes.ContainsKey(HtmlAttribute.Enctype.ToStringLower()))
                 htmlAttributes.Set(HtmlAttribute.Enctype.ToStringLower(), enctype.ToLocalization());
@@ -54,23 +55,12 @@ namespace Incoding.Mvc.MvcContrib.Extensions
 
             return ToBeginTag(htmlAttributes, HtmlTag.Form);
         }
-
-        public static BeginTag ToBeginForm(this RouteValueDictionary htmlAttributes, string url)
+        
+        public static BeginTag ToBeginTag(this HtmlRouteValueDictionary htmlAttributes, HtmlTag tag)
         {
-            return ToBeginForm(htmlAttributes, HtmlExtensions.HtmlHelper, url);
+            return new BeginTag(htmlAttributes.HtmlHelper, tag, htmlAttributes);
         }
-
-        [Obsolete("Use ToBeginTag wihtout HtmlHelper")]
-        public static BeginTag ToBeginTag(this RouteValueDictionary htmlAttributes, IHtmlHelper htmlHelper, HtmlTag tag)
-        {
-            return new BeginTag(htmlHelper, tag, htmlAttributes);
-        }
-
-        public static BeginTag ToBeginTag(this RouteValueDictionary htmlAttributes, HtmlTag tag)
-        {
-            return ToBeginTag(htmlAttributes, HtmlExtensions.HtmlHelper, tag);
-        }
-
+        
         ////ncrunch: no coverage end
 
         public static IHtmlContent ToButton(this RouteValueDictionary htmlAttributes)

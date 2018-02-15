@@ -1,8 +1,8 @@
-namespace Incoding.Block.Caching
+using System.Diagnostics.CodeAnalysis;
+
+namespace Incoding.Core.Block.Caching.Core
 {
     #region << Using >>
-
-    using System.Diagnostics.CodeAnalysis;
 
     #endregion
 

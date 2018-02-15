@@ -1,5 +1,5 @@
-﻿using Incoding.Data;
-using Incoding.Quality;
+﻿using Incoding.Core.Data;
+using Incoding.Core.Quality;
 
 namespace Incoding.Mvc.MvcContrib.ViewModel
 {

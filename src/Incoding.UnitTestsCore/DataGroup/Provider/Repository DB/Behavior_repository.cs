@@ -1,4 +1,8 @@
 ﻿using Incoding.Core.Block.Core;
+using Incoding.Core.Data;
+using Incoding.Core.Extensions;
+using Incoding.Core.Extensions.LinqSpecs;
+using Incoding.Core.Maybe;
 using Incoding.Data.EF.Provider;
 using Incoding.Data.Mongo.Provider;
 using Incoding.Data.Raven.Provider;
@@ -12,7 +16,6 @@ namespace Incoding.UnitTest
     using System.Linq.Expressions;
     using Incoding.Data;
     using Incoding.Extensions;
-    using Incoding.Maybe;
     using Incoding.MSpecContrib;
     using Machine.Specifications;
     using NCrunch.Framework;
@@ -508,8 +511,7 @@ namespace Incoding.UnitTest
         #endregion
 
         #region Establish value
-
-        [ThreadStatic]
+        
         protected static Func<IRepository> GetRepository;
 
         #endregion

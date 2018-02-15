@@ -1,4 +1,5 @@
-﻿using Incoding.Data.Mongo.Provider;
+﻿using Incoding.Core.Data;
+using Incoding.Data.Mongo.Provider;
 
 namespace Incoding.UnitTest
 {

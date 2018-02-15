@@ -1,3 +1,5 @@
+using Incoding.Core.Block.Caching;
+
 namespace Incoding.UnitTest.Block
 {
     #region << Using >>

@@ -1,15 +1,20 @@
 ﻿@using Incoding.Mvc.MvcContrib.Extensions
 @using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.JqueryHelper.Primitive
 @using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Selectors.Core
+@using Incoding.Mvc.MvcContrib.Primitive
 @using Incoding.WebTest.Operations
 @using (Html.BeginForm())
 {
     
 }
-@(Html.When(JqueryBind.InitIncoding)
-      .Ajax(new GetItemsQuery())
-      .OnSuccess(dsl => dsl.Self().JQuery.Dom.Use(Selector.Result).WithTemplateByView("~/Views/Item/ItemTmpl.cshtml").Html())
-      .AsHtmlAttributes(new { id = nameof(GetItemsQuery) })
-      .ToDiv())
+
+@using (Html.When(JqueryBind.None)
+    .Ajax(new GetItemsQuery())
+    .OnSuccess(dsl => dsl.Self().JQuery.Dom.Use(Selector.Result).WithTemplateByView("~/Views/Item/ItemTmpl.cshtml").Html())
+    .AsHtmlAttributes(new {id = nameof(GetItemsQuery)})
+    .ToBeginTag(HtmlTag.Div))
+{
+    @Html.Dispatcher().AsViewFromQuery(new GetItemsQuery(), "~/Views/Item/ItemTmpl.cshtml")
+}
 
 

@@ -1,5 +1,5 @@
 ﻿using System;
-using Incoding.Block.IoC;
+using Incoding.Core.Block.IoC;
 using Incoding.Mvc.MvcContrib.Template.Factory;
 using Incoding.Mvc.MvcContrib.Template.Syntax;
 using Microsoft.AspNetCore.Mvc.Rendering;

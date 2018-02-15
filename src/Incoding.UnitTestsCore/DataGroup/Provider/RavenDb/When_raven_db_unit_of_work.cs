@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using Incoding.Core.Extensions;
 using Incoding.Data.Raven.Provider;
 
 namespace Incoding.UnitTest

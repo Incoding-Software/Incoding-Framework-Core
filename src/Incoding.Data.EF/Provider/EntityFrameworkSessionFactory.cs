@@ -9,13 +9,6 @@ namespace Incoding.Data.EF.Provider
 
     public class EntityFrameworkSessionFactory : IEntityFrameworkSessionFactory
     {
-        #region Static Fields
-
-        //[ThreadStatic]
-        //static DbContext currentSession;
-
-        #endregion
-
         #region Fields
 
         readonly Func<string, DbContext> createDb;

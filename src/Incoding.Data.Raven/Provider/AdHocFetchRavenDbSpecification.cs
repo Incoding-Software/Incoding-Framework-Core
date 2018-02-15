@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
-using Incoding.Extensions;
+using Incoding.Core.Data;
+using Incoding.Core.Extensions;
 using JetBrains.Annotations;
 using Raven.Client.Linq;
 

@@ -1,3 +1,5 @@
+using Incoding.Core.Data;
+
 namespace Incoding.MSpecContrib
 {
     #region << Using >>
@@ -9,8 +11,6 @@ namespace Incoding.MSpecContrib
 
     public static class PleasureForData
     {
-        [ThreadStatic]
         public static Func<IUnitOfWorkFactory> Factory;
-        
     }
 }

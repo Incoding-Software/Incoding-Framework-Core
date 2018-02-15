@@ -1,8 +1,6 @@
-namespace Incoding.Extensions
+namespace Incoding.Core.Extensions
 {
     #region << Using >>
-
-    using System.Diagnostics;
 
     #endregion
 

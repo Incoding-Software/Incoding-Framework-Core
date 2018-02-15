@@ -1,11 +1,13 @@
-﻿namespace Incoding.CQRS
+﻿using Incoding.Core.CQRS.Core;
+using Incoding.Core.Data;
+
+namespace Incoding.CQRS
 {
     #region << Using >>
 
     using System.Collections.Generic;
     using System.Linq;
     using Incoding.Block;
-    using Incoding.Data;
 
     #endregion
 

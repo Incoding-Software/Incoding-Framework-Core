@@ -1,10 +1,10 @@
-namespace Incoding.Block.IoC
+using System;
+using System.Collections.Generic;
+using JetBrains.Annotations;
+
+namespace Incoding.Core.Block.IoC.Core
 {
     #region << Using >>
-
-    using System;
-    using System.Collections.Generic;
-    using JetBrains.Annotations;
 
     #endregion
 
@@ -16,8 +16,8 @@ namespace Incoding.Block.IoC
 
         void Forward<TNew>([NotNull] TNew newInstance) where TNew : class;
 
-        [Obsolete("Please use TryGet because performance issues")]
-        TInstance Get<TInstance>([NotNull] Type type) where TInstance : class;
+        //[Obsolete("Please use TryGet because performance issues")]
+        //TInstance Get<TInstance>([NotNull] Type type) where TInstance : class;
 
         IEnumerable<TInstance> GetAll<TInstance>([NotNull] Type typeInstance);
 

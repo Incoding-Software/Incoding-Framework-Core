@@ -1,9 +1,9 @@
-namespace Incoding.Extensions
+using System;
+using Incoding.Core.Block.Scheduler.Query;
+
+namespace Incoding.Core.Extensions
 {
     #region << Using >>
-
-    using System;
-    using Incoding.Block;
 
     #endregion
 

@@ -1,11 +1,10 @@
-namespace Incoding.Block.ExceptionHandling
+using System;
+using System.Linq;
+using Incoding.Core.Block.Core;
+
+namespace Incoding.Core.Block.ExceptionHandling
 {
     #region << Using >>
-
-    using System;
-    using System.Linq;
-    using System.Threading;
-    using Incoding.Block.Core;
 
     #endregion
 

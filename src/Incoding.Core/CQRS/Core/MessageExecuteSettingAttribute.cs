@@ -1,9 +1,9 @@
-﻿namespace Incoding.CQRS
+﻿using System;
+using System.Data;
+
+namespace Incoding.Core.CQRS.Core
 {
     #region << Using >>
-
-    using System;
-    using System.Data;
 
     #endregion
 

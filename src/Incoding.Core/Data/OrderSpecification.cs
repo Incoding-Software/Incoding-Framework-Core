@@ -1,9 +1,9 @@
-﻿namespace Incoding.Data
+﻿using System;
+using Incoding.Core.Extensions;
+
+namespace Incoding.Core.Data
 {
     #region << Using >>
-
-    using System;
-    using Incoding.Extensions;
 
     #endregion
 

@@ -1,9 +1,10 @@
+using Incoding.Core.Block.Core;
+
 namespace Incoding.UnitTest.Block
 {
     #region << Using >>
 
     using System;
-    using Incoding.Block.Core;
     using Incoding.MSpecContrib;
     using Machine.Specifications;
 

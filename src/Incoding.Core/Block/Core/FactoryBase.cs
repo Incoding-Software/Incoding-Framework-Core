@@ -1,9 +1,9 @@
-namespace Incoding.Block.Core
+using System;
+using Incoding.Core.Maybe;
+
+namespace Incoding.Core.Block.Core
 {
     #region << Using >>
-
-    using System;
-    using Incoding.Maybe;
 
     #endregion
 

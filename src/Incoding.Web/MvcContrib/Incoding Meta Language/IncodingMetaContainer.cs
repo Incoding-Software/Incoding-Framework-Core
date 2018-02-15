@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Incoding.Core.Extensions;
+using Incoding.Core.Maybe;
 using Incoding.Extensions;
-using Incoding.Maybe;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Condionals.Instances;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Executables.Core;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Selectors.Jquery;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
 
 namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language
@@ -80,10 +82,11 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language
 
         #region Api Methods
 
-        public RouteValueDictionary AsHtmlAttributes(object htmlAttributes = null)
+        public HtmlRouteValueDictionary AsHtmlAttributes(IHtmlHelper htmlHelper, object htmlAttributes = null)
         {
             const string dataIncodingKey = "incoding";
-            var res = new RouteValueDictionary(AnonymousHelper.ToDictionary(htmlAttributes));
+            var res = new HtmlRouteValueDictionary(AnonymousHelper.ToDictionary(htmlAttributes));
+            res.HtmlHelper = htmlHelper;
             var callbacks = merges.Select(@base => @base.AsObject()).ToArray();
 
             if (!res.ContainsKey(dataIncodingKey))

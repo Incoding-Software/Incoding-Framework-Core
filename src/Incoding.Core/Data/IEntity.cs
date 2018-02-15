@@ -1,4 +1,4 @@
-namespace Incoding.Data
+namespace Incoding.Core.Data
 {
     public interface IEntity
     {

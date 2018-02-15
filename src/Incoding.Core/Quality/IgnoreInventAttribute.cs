@@ -1,10 +1,10 @@
-namespace Incoding.Quality
+using System;
+using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
+
+namespace Incoding.Core.Quality
 {
     #region << Using >>
-
-    using System;
-    using System.Diagnostics.CodeAnalysis;
-    using JetBrains.Annotations;
 
     #endregion
 

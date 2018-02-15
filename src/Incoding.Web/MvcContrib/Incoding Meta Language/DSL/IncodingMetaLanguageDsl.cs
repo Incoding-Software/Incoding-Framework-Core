@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
+using Incoding.Core.Extensions;
 using Incoding.Extensions;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Condionals.Instances;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Core;
@@ -129,17 +130,17 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL
             return On(IncodingCallbackStatus.Success, action);
         }
 
-        public RouteValueDictionary AsHtmlAttributes(object htmlAttributes)
+        public HtmlRouteValueDictionary AsHtmlAttributes(object htmlAttributes)
         {
-            return meta.AsHtmlAttributes(htmlAttributes);
+            return meta.AsHtmlAttributes(_htmlHelper, htmlAttributes);
         }
 
-        public RouteValueDictionary AsHtmlAttributes()
+        public HtmlRouteValueDictionary AsHtmlAttributes()
         {
             return AsHtmlAttributes(null);
         }
 
-        public RouteValueDictionary AsHtmlAttributes(string id = "", string classes = "", bool disabled = false, bool readOnly = false,
+        public HtmlRouteValueDictionary AsHtmlAttributes(string id = "", string classes = "", bool disabled = false, bool readOnly = false,
                                                      bool autocomplete = false, string placeholder = "", string title = "")
         {
             var routes = new RouteValueDictionary();
@@ -158,12 +159,12 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL
             if (autocomplete)
                 routes.Add(HtmlAttribute.AutoComplete.ToStringLower(), HtmlAttribute.AutoComplete.ToStringLower());
 
-            return meta.AsHtmlAttributes(routes);
+            return meta.AsHtmlAttributes(_htmlHelper, routes);
         }
 
         public string AsStringAttributes(object htmlAttributes = null)
         {
-            return meta.AsHtmlAttributes(htmlAttributes).Aggregate(string.Empty, (s, pair) => s += " {0}=\"{1}\" ".F(pair.Key, HttpUtility.HtmlEncode(pair.Value)));
+            return meta.AsHtmlAttributes(_htmlHelper, htmlAttributes).Aggregate(string.Empty, (s, pair) => s += " {0}=\"{1}\" ".F(pair.Key, HttpUtility.HtmlEncode(pair.Value)));
         }
 
         public IIncodingMetaLanguageBindingDsl When(JqueryBind nextBind)

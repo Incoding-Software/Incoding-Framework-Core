@@ -1,4 +1,8 @@
+using Incoding.Core;
 using Incoding.Core.Block.Core;
+using Incoding.Core.CQRS.Core;
+using Incoding.Core.Data;
+using Incoding.Core.Extensions.LinqSpecs;
 
 namespace Incoding.MSpecContrib
 {

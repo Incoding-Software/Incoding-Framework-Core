@@ -1,6 +1,6 @@
 using System;
 
-namespace Incoding.Block.Caching
+namespace Incoding.Core.Block.Caching.Providers
 {
     public class CacheOptions
     {

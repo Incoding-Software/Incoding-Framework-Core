@@ -1,4 +1,7 @@
 using Incoding.Core;
+using Incoding.Core.Extensions;
+using Incoding.Core.Maybe;
+using Incoding.Core.Quality;
 using Incoding.Data;
 
 namespace Incoding.MSpecContrib
@@ -15,8 +18,6 @@ namespace Incoding.MSpecContrib
     using System.Reflection;
     using System.Text;
     using Incoding.Extensions;
-    using Incoding.Maybe;
-    using Incoding.Quality;
     using Machine.Specifications;
 
     #endregion

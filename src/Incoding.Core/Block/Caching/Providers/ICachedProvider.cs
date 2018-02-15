@@ -1,4 +1,4 @@
-namespace Incoding.Block.Caching
+namespace Incoding.Core.Block.Caching.Providers
 {
     /// <summary>
     ///     All <c>lock</c> implement in <see cref="CachingFactory" /> then not need added lock or any multi-threaded.

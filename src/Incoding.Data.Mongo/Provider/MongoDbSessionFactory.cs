@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using Incoding.Core.Data;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
@@ -14,10 +15,7 @@ namespace Incoding.Data.Mongo.Provider
         #region Static Fields
 
         static readonly ConcurrentDictionary<string, MongoClient> clients = new ConcurrentDictionary<string, MongoClient>();
-
-        [ThreadStatic]
-        static IMongoDatabase currentSession;
-
+        
         #endregion
 
         #region Fields
@@ -51,7 +49,7 @@ namespace Incoding.Data.Mongo.Provider
 
             var url = new MongoUrl(connectionString);
             var client = clients.GetOrAdd(connectionString, s => new MongoClient(url));
-            currentSession = client.GetDatabase(url.DatabaseName);
+            var currentSession = client.GetDatabase(url.DatabaseName);
             return new MongoDatabaseWrapper(currentSession);
         }
 

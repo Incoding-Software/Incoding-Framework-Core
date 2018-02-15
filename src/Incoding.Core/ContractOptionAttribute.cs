@@ -1,10 +1,10 @@
-namespace Incoding
+using System;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+
+namespace Incoding.Core
 {
     #region << Using >>
-
-    using System;
-    using System.Diagnostics;
-    using System.Diagnostics.CodeAnalysis;
 
     #endregion
 

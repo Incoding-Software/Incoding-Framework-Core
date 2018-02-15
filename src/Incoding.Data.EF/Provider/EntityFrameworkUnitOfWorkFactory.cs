@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Data;
+using Incoding.Core.Data;
 using JetBrains.Annotations;
 
 namespace Incoding.Data.EF.Provider

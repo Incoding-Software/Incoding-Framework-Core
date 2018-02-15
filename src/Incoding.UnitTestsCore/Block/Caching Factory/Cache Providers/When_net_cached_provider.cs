@@ -1,4 +1,3 @@
-using Incoding.Block.IoC;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Incoding.UnitTest.Block

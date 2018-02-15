@@ -1,3 +1,5 @@
+using Incoding.Core.Data;
+
 namespace Incoding.UnitTest
 {
     #region << Using >>

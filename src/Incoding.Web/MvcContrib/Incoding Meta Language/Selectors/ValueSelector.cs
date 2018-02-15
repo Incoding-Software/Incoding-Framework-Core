@@ -1,4 +1,5 @@
-﻿using Incoding.Extensions;
+﻿using Incoding.Core.Extensions;
+using Incoding.Extensions;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Selectors.Core;
 
 namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Selectors

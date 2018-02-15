@@ -1,3 +1,7 @@
+using Incoding.Core.CQRS.Core;
+using Incoding.Core.Data;
+using Incoding.Core.Quality;
+
 namespace Incoding.CQRS
 {
     #region << Using >>
@@ -6,8 +10,6 @@ namespace Incoding.CQRS
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using Incoding.Block;
-    using Incoding.Data;
-    using Incoding.Quality;
     using JetBrains.Annotations;
 
     #endregion

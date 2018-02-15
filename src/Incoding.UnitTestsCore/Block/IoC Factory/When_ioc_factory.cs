@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
 using Incoding.Core.Block.IoC;
+using Incoding.Core.Block.IoC.Core;
+using Incoding.Core.Block.Logging.Loggers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Incoding.UnitTest.Block
@@ -8,8 +10,6 @@ namespace Incoding.UnitTest.Block
     #region << Using >>
 
     using System.Collections.Generic;
-    using Incoding.Block.IoC;
-    using Incoding.Block.Logging;
     using Incoding.MSpecContrib;
     using Machine.Specifications;
     using Moq;
@@ -38,8 +38,8 @@ namespace Incoding.UnitTest.Block
 
         It should_be_get_by_type = () =>
         {
-            iocProvider.Setup(r => r.Get<ILogger>(typeof(ILogger))).Returns(new ClipboardLogger());
-            iocFactory.Resolve<ILogger>(typeof(ILogger)).ShouldBeAssignableTo<ClipboardLogger>();
+            iocProvider.Setup(r => r.TryGet<ILogger>(typeof(ILogger))).Returns(new ClipboardLogger());
+            iocFactory.TryResolve<ILogger>(typeof(ILogger)).ShouldBeAssignableTo<ClipboardLogger>();
         };
 
         It should_be_try_get_by_type = () =>

@@ -1,10 +1,11 @@
-﻿namespace Incoding.Block.Logging
+﻿using System;
+using System.Text;
+using Incoding.Core.Block.Logging.Core;
+using Incoding.Core.Extensions;
+
+namespace Incoding.Core.Block.Logging.Loggers
 {
     #region << Using >>
-
-    using System;
-    using System.Text;
-    using Incoding.Extensions;
 
     #endregion
 

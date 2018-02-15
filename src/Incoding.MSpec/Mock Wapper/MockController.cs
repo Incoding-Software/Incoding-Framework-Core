@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Security.Claims;
+using Incoding.Core.CQRS.Core;
+using Incoding.Core.Extensions;
 using Incoding.Mvc.MvcContrib.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
@@ -18,7 +20,6 @@ namespace Incoding.MSpecContrib
 
     using System;
     using System.Linq;
-    using Incoding.Block.IoC;
     using Incoding.CQRS;
     using Incoding.Extensions;
     using Moq;

@@ -1,6 +1,6 @@
 ﻿using System;
 using FluentValidation;
-using Incoding.Block.IoC;
+using Incoding.Core.Block.IoC;
 
 namespace Incoding.Mvc.MvcContrib.Core
 {

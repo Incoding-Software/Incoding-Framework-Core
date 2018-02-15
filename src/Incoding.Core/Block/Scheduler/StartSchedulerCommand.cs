@@ -1,14 +1,18 @@
-﻿namespace Incoding.Block
+﻿using System;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
+using Incoding.Core.Block.Logging;
+using Incoding.Core.Block.Scheduler.Command;
+using Incoding.Core.Block.Scheduler.Persistence;
+using Incoding.Core.Block.Scheduler.Query;
+using Incoding.Core.CQRS;
+using Incoding.Core.CQRS.Core;
+using Incoding.Core.Extensions;
+
+namespace Incoding.Core.Block.Scheduler
 {
     #region << Using >>
-
-    using System;
-    using System.Diagnostics;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Incoding.Block.Logging;
-    using Incoding.CQRS;
-    using Incoding.Extensions;
 
     #endregion
 

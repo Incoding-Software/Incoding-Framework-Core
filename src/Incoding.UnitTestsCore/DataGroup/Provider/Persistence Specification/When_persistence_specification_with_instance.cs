@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using Incoding.Core.Data;
 using Incoding.Data.Mongo.Provider;
 using Incoding.Data.Raven.Provider;
 using Microsoft.EntityFrameworkCore;
@@ -44,11 +45,10 @@ namespace Incoding.UnitTest.MSpecGroup
         private static IUnitOfWorkFactory BuildMongoDb(string url, bool reload = true)
         {
             var mongoUrl = new MongoUrl(url);
-            var db = new MongoClient(mongoUrl).GetServer();
+            var client = new MongoClient(mongoUrl);
             if (reload)
             {
-                if (db.DatabaseExists(mongoUrl.DatabaseName))
-                    db.DropDatabase(mongoUrl.DatabaseName);
+                client.DropDatabase(mongoUrl.DatabaseName);
             }
 
             if (!BsonClassMap.IsClassMapRegistered(typeof(IncEntityBase)))

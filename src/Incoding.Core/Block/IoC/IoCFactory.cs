@@ -1,19 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Incoding.Core.Block.IoC;
+using Incoding.Core.Block.Core;
 using JetBrains.Annotations;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace Incoding.Block.IoC
+namespace Incoding.Core.Block.IoC
 {
     #region << Using >>
-
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Incoding.Block.Core;
-    using JetBrains.Annotations;
 
     #endregion
 
@@ -43,14 +36,14 @@ namespace Incoding.Block.IoC
             this.init.Provider.Eject<TInstance>();
         }
 
-        [Obsolete("Please use TryResolve instead of Resolve because")]
-        public TInstance Resolve<TInstance>([NotNull] Type typeInstance) where TInstance : class
-        {
-            Guard.NotNull("typeInstance", typeInstance);
+        //[Obsolete("Please use TryResolve instead of Resolve because")]
+        //public TInstance Resolve<TInstance>([NotNull] Type typeInstance) where TInstance : class
+        //{
+        //    Guard.NotNull("typeInstance", typeInstance);
 
-            var resolve = this.init.Provider.Get<TInstance>(typeInstance);
-            return resolve;
-        }
+        //    var resolve = this.init.Provider.Get<TInstance>(typeInstance);
+        //    return resolve;
+        //}
 
         public List<TInstance> ResolveAll<TInstance>() where TInstance : class
         {

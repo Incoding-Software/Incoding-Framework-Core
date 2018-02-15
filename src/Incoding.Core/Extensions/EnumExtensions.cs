@@ -1,12 +1,12 @@
-namespace Incoding.Extensions
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+
+namespace Incoding.Core.Extensions
 {
     #region << Using >>
-
-    using System;
-    using System.Collections.Concurrent;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Linq;
 
     #endregion
 

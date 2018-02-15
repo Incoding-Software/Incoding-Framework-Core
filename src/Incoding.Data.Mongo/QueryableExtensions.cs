@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
 using Incoding.Core.Block.Core;
-using Incoding.Extensions;
-using Incoding.Maybe;
+using Incoding.Core.Data;
+using Incoding.Core.Extensions;
+using Incoding.Core.Extensions.LinqSpecs;
+using Incoding.Core.Maybe;
 
 namespace Incoding.Data.Mongo
 {

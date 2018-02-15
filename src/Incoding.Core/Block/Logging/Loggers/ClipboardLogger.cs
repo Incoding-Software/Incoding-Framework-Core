@@ -1,6 +1,7 @@
-﻿using Incoding.Core.Utilities;
+﻿using Incoding.Core.Block.Logging.Core;
+using Incoding.Core.Utilities;
 
-namespace Incoding.Block.Logging
+namespace Incoding.Core.Block.Logging.Loggers
 {
     public class ClipboardLogger : LoggerBase
     {

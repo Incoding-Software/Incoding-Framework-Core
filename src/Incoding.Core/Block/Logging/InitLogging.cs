@@ -1,9 +1,11 @@
-namespace Incoding.Block.Logging
+using System;
+using System.Collections.Generic;
+using Incoding.Core.Block.Logging.Core;
+using Incoding.Core.Block.Logging.Policy;
+
+namespace Incoding.Core.Block.Logging
 {
     #region << Using >>
-
-    using System;
-    using System.Collections.Generic;
 
     #endregion
 

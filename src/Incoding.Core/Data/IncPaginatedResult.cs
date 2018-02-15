@@ -1,8 +1,8 @@
-namespace Incoding.Data
+using System.Collections.Generic;
+
+namespace Incoding.Core.Data
 {
     #region << Using >>
-
-    using System.Collections.Generic;
 
     #endregion
 

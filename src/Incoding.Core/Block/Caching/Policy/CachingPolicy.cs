@@ -1,8 +1,9 @@
-namespace Incoding.Block.Caching
+using Incoding.Core.Block.Caching.Core;
+using Incoding.Core.Block.Core;
+
+namespace Incoding.Core.Block.Caching.Policy
 {
     #region << Using >>
-
-    using Incoding.Block.Core;
 
     #endregion
 

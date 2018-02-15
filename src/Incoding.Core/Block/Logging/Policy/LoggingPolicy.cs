@@ -1,11 +1,13 @@
-namespace Incoding.Block.Logging
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Incoding.Core.Block.Logging.Core;
+using Incoding.Core.Block.Logging.Loggers;
+using Incoding.Core.Extensions;
+
+namespace Incoding.Core.Block.Logging.Policy
 {
     #region << Using >>
-
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Incoding.Extensions;
 
     #endregion
 

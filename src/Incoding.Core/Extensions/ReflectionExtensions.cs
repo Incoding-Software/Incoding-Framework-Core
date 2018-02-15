@@ -1,16 +1,14 @@
-using Incoding.Core;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using Incoding.Core.Maybe;
 
-namespace Incoding.Extensions
+namespace Incoding.Core.Extensions
 {
     #region << Using >>
-
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Reflection;
-    using System.Runtime.CompilerServices;
-    using Incoding.Maybe;
 
     #endregion
 

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Timers;
-using Incoding.Block.IoC;
-using Incoding.Block.Logging;
-using Incoding.CQRS;
+using Incoding.Core.Block.IoC;
+using Incoding.Core.Block.Logging;
+using Incoding.Core.Block.Logging.Core;
+using Incoding.Core.CQRS.Core;
 
 namespace Incoding.Core.Tasks
 {

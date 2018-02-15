@@ -1,11 +1,12 @@
-namespace Incoding.Block.Caching
+using System;
+using System.Collections.Concurrent;
+using Incoding.Core.Block.Caching.Core;
+using Incoding.Core.Block.Caching.Providers;
+using Incoding.Core.Block.Core;
+
+namespace Incoding.Core.Block.Caching
 {
     #region << Using >>
-
-    using System;
-    using System.Collections.Concurrent;
-    using System.Threading;
-    using Incoding.Block.Core;
 
     #endregion
 

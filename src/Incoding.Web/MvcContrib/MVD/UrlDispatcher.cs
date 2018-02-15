@@ -5,9 +5,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
+using Incoding.Core.Extensions;
+using Incoding.Core.Maybe;
+using Incoding.Core.Quality;
 using Incoding.Extensions;
-using Incoding.Maybe;
-using Incoding.Quality;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -118,7 +119,7 @@ namespace Incoding.Mvc.MvcContrib.MVD
 
             string AsJson();
 
-            string AsView([PathReference, NotNull] string incView);
+            string AsView([AspMvcPartialView, NotNull] string incView);
         }
 
         #region Constants
@@ -156,7 +157,7 @@ namespace Incoding.Mvc.MvcContrib.MVD
             return res.Push<TCommand>(routes);
         }
 
-        public string AsView([PathReference] string incView)
+        public string AsView([AspMvcPartialView] string incView)
         {
             // ReSharper disable once Mvc.ActionNotResolved
             // ReSharper disable once Mvc.ControllerNotResolved
@@ -202,7 +203,7 @@ namespace Incoding.Mvc.MvcContrib.MVD
 
             #region Api Methods
 
-            public string AsView([PathReference, NotNull] string incView)
+            public string AsView([AspMvcPartialView, NotNull] string incView)
             {
                 defaultRoutes.Add("incView", incView);
                 // ReSharper disable once Mvc.ActionNotResolved

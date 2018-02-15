@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Incoding.Block.IoC;
+using Incoding.Core.Block.IoC.Core;
 using SimpleInjector;
 
 namespace Incoding.Core.IoC.SimpleInjector
@@ -36,10 +36,10 @@ namespace Incoding.Core.IoC.SimpleInjector
             throw new NotSupportedException();
         }
 
-        public TInstance Get<TInstance>(Type type) where TInstance : class
-        {
-            return (TInstance)this.container.GetInstance(type);
-        }
+        //public TInstance Get<TInstance>(Type type) where TInstance : class
+        //{
+        //    return (TInstance)this.container.GetInstance(type);
+        //}
 
         public IEnumerable<TInstance> GetAll<TInstance>(Type typeInstance)
         {

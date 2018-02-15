@@ -1,4 +1,10 @@
-﻿namespace Incoding.UnitTest
+﻿using Incoding.Core.Block.Scheduler.Command;
+using Incoding.Core.Block.Scheduler.Persistence;
+using Incoding.Core.Block.Scheduler.Query;
+using Incoding.Core.CQRS.Core;
+using Incoding.Core.Extensions;
+
+namespace Incoding.UnitTest
 {
     #region << Using >>
 
@@ -26,7 +32,7 @@
                                           .StubQuery(command.Recurrency, nextDt);
                               };
 
-        Because of = () => mockCommand.Original.Execute();
+        Because of = () => mockCommand.Execute();
 
         It should_be_saves = () => mockCommand.ShouldBeSave<DelayToScheduler>(scheduler => scheduler.ShouldEqualWeak(command, (dsl) => dsl.IgnoreBecauseCalculate(r => r.Id)
                                                                                                                                           .ForwardToValue(r => r.Option, new DelayToScheduler.OptionOfDelay()

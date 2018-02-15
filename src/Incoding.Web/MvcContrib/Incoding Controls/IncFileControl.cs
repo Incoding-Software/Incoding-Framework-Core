@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq.Expressions;
 using System.Text.Encodings.Web;
+using Incoding.Core.Extensions;
 using Incoding.Extensions;
 using Incoding.Mvc.MvcContrib.Extensions;
 using Microsoft.AspNetCore.Html;

@@ -1,14 +1,14 @@
-﻿using Incoding.Core.Block.Core;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Incoding.Core.Block.Core;
+using Incoding.Core.Block.Scheduler.Persistence;
+using Incoding.Core.CQRS.Core;
+using Incoding.Core.Extensions;
 
-namespace Incoding.Block
+namespace Incoding.Core.Block.Scheduler.Query
 {
     #region << Using >>
-
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Incoding.CQRS;
-    using Incoding.Extensions;
 
     #endregion
 

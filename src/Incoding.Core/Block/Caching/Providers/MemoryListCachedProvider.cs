@@ -1,11 +1,10 @@
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using Incoding.Core.Extensions;
 
-namespace Incoding.Block.Caching
+namespace Incoding.Core.Block.Caching.Providers
 {
     #region << Using >>
-
-    using System.Collections.Generic;
-    using Incoding.Extensions;
 
     #endregion
 

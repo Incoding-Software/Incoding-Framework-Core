@@ -1,11 +1,11 @@
-namespace Incoding
+using System;
+using System.Diagnostics.Contracts;
+using Incoding.Core.Extensions;
+using JetBrains.Annotations;
+
+namespace Incoding.Core
 {
     #region << Using >>
-
-    using System;
-    using System.Diagnostics.Contracts;
-    using Incoding.Extensions;
-    using JetBrains.Annotations;
 
     #endregion
 

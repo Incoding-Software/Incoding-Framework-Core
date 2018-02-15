@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Diagnostics.CodeAnalysis;
+using Incoding.Core.Data;
 using JetBrains.Annotations;
 
 namespace Incoding.Data.Mongo.Provider

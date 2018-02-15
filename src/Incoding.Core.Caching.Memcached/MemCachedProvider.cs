@@ -1,4 +1,4 @@
-﻿using Incoding.Block.Caching;
+﻿using Incoding.Core.Block.Caching.Providers;
 
 namespace Incoding.Core.Caching.Memcached
 {

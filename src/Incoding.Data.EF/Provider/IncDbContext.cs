@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Incoding.Extensions;
+using Incoding.Core.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Incoding.Data.EF.Provider

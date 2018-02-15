@@ -1,4 +1,5 @@
-﻿using Incoding.CQRS;
+﻿using Incoding.Core.CQRS.Core;
+using Incoding.CQRS;
 
 namespace Incoding.WebTest.Operations
 {

@@ -1,14 +1,13 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using System.Data;
+using System.Runtime.Serialization;
+using Incoding.Core.Extensions;
+using Incoding.Core.Quality;
+using Newtonsoft.Json;
 
-namespace Incoding.CQRS
+namespace Incoding.Core.CQRS.Core
 {
     #region << Using >>
-
-    using System;
-    using System.Data;
-    using System.Runtime.Serialization;
-    using Incoding.Extensions;
-    using Incoding.Quality;
 
     #endregion
 

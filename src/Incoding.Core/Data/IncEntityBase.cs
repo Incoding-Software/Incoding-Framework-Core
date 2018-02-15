@@ -1,11 +1,11 @@
-namespace Incoding.Data
+using Incoding.Core.Extensions;
+using Incoding.Core.Maybe;
+using Incoding.Core.Quality;
+
+namespace Incoding.Core.Data
 {
     #region << Using >>
 
-    using Incoding.Extensions;
-    using Incoding.Maybe;
-    using Incoding.Quality;
-    
     #endregion
 
     public abstract class IncEntityBase : IEntity

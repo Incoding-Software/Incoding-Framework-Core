@@ -19,8 +19,7 @@ namespace Incoding.UnitTest
 
         static string value1;
 
-        static string value2;
-
+        
         static IEnumerable<string> collection;
 
         #endregion

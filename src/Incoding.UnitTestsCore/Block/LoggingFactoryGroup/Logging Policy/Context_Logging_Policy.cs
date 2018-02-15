@@ -1,8 +1,10 @@
+using Incoding.Core.Block.Logging.Loggers;
+using Incoding.Core.Block.Logging.Policy;
+
 namespace Incoding.UnitTest.Block
 {
     #region << Using >>
 
-    using Incoding.Block.Logging;
     using Moq;
 
     #endregion

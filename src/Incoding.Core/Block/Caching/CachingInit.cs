@@ -1,10 +1,8 @@
-namespace Incoding.Block.Caching
+using Incoding.Core.Block.Caching.Providers;
+
+namespace Incoding.Core.Block.Caching
 {
     #region << Using >>
-
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
 
     #endregion
 

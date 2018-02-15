@@ -1,7 +1,9 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
-using Incoding.Block.IoC;
+using Incoding.Core.Block.IoC;
+using Incoding.Core.CQRS.Core;
+using Incoding.Core.Extensions;
 using Incoding.CQRS;
 using Incoding.Extensions;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL;
@@ -10,7 +12,9 @@ using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.JqueryHelper.Primitive;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Selectors;
 using Incoding.Mvc.MvcContrib.MVD;
 using Incoding.Mvc.MvcContrib.Template.Factory;
+using Incoding.Web.MvcContrib;
 using Incoding.Web.MvcContrib.IncHtmlHelper;
+using Incoding.Web.MvcContrib.Services;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
@@ -27,39 +31,24 @@ namespace Incoding.Mvc.MvcContrib.Extensions
 
     public static class HtmlExtensions
     {
-        [ThreadStatic]
-        internal static IHtmlHelper HtmlHelper;
-
-        [ThreadStatic]
-        internal static IUrlDispatcher UrlDispatcher;
-
         #region Factory constructors
 
-        public static IDispatcher Dispatcher(this IHtmlHelper htmlHelper)
+        public static HtmlDispatcher Dispatcher(this IHtmlHelper htmlHelper)
         {
-            HtmlHelper = htmlHelper;
-            return IoCFactory.Instance.TryResolve<IDispatcher>();
+            return new HtmlDispatcher(IoCFactory.Instance.TryResolve<IDispatcher>(), htmlHelper);
         }
 
         // ReSharper disable once UnusedParameter.Global
-        public static HtmlString AsView<TData>(this IDispatcher dispatcher, TData data, [PathReference] string view, object model = null) where TData : class
+        public static IHtmlContent AsView<TData>(this HtmlDispatcher dispatcher, TData data, [AspMvcPartialView] string view, object model = null) where TData : class
         {
-            Guard.NotNull("HtmlHelper", HtmlHelper, "HtmlHelper != null");
-            return new HtmlString(IoCFactory.Instance.TryResolve<ITemplateFactory>().Render(HtmlHelper, view, data, model));
+            return new HtmlString(IoCFactory.Instance.TryResolve<ITemplateFactory>().Render(dispatcher.HtmlHelper, view, data, model));
         }
 
-        public static HtmlString AsViewFromQuery<TResult>(this IDispatcher dispatcher, QueryBase<TResult> query, [PathReference] string view, object model = null) where TResult : class
+        public static IHtmlContent AsViewFromQuery<TResult>(this HtmlDispatcher dispatcher, QueryBase<TResult> query, [AspMvcPartialView] string view, object model = null) where TResult : class
         {
             return dispatcher.AsView(dispatcher.Query(query), view, model);
         }
-
-        [Obsolete("Please use AsView or AsViewFromQuery with Html.Dispatcher().AsView(data) / Html.Dispatcher().AsViewFromQuery(query)", true), ExcludeFromCodeCoverage, UsedImplicitly]
-        public static HtmlString AsView<TData>(this TData data, [PathReference] string view, object model = null) where TData : class
-        {
-            Guard.NotNull("HtmlHelper", HtmlHelper, "HtmlHelper != null");
-            return new HtmlString(IoCFactory.Instance.TryResolve<ITemplateFactory>().Render(HtmlHelper, view, data, model));
-        }
-
+        
         public static IncodingHtmlHelperFor<TModel, TProperty> For<TModel, TProperty>(this IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> property) where TModel : new()
         {
             return new IncodingHtmlHelperFor<TModel, TProperty>(htmlHelper, property);
@@ -72,13 +61,11 @@ namespace Incoding.Mvc.MvcContrib.Extensions
 
         public static IncodingHtmlHelper<TModel> Incoding<TModel>(this IHtmlHelper<TModel> htmlHelper) where TModel : new()
         {
-            HtmlHelper = htmlHelper;
             return new IncodingHtmlHelper<TModel>(htmlHelper);
         }
         
         public static SelectorHelper<TModel> Selector<TModel>(this IHtmlHelper<TModel> htmlHelper)
         {
-            HtmlHelper = htmlHelper;
             return new SelectorHelper<TModel>();
         }
 
@@ -89,8 +76,6 @@ namespace Incoding.Mvc.MvcContrib.Extensions
 
         public static IIncodingMetaLanguageBindingDsl When(this IHtmlHelper htmlHelper, string bind)
         {
-            HtmlHelper = htmlHelper;
-            UrlDispatcher = new UrlDispatcher(new UrlHelper(htmlHelper.ViewContext));
             return new IncodingMetaLanguageDsl(htmlHelper, bind);
         }
 

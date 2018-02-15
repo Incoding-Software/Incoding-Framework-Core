@@ -1,17 +1,17 @@
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Threading;
+using Incoding.Core.Block.IoC;
 using Incoding.Core.CQRS.Common;
-using Incoding.Data;
+using Incoding.Core.CQRS.Core;
+using Incoding.Core.Data;
+using Incoding.Core.Maybe;
 
-namespace Incoding.CQRS
+namespace Incoding.Core.CQRS
 {
     #region << Using >>
-
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Linq;
-    using System.Threading;
-    using Incoding.Block.IoC;
-    using Incoding.Maybe;
 
     #endregion
 

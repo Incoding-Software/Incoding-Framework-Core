@@ -1,16 +1,12 @@
-﻿using Incoding.Block.IoC;
-using Incoding.Data;
+﻿using System;
+using System.Runtime.Serialization;
+using Incoding.Core.Data;
+using Incoding.Core.Quality;
+using Newtonsoft.Json;
 
-namespace Incoding.CQRS
+namespace Incoding.Core.CQRS.Core
 {
     #region << Using >>
-
-    using System;
-    using System.Runtime.Serialization;
-    using System.Threading.Tasks;
-    using Incoding.Maybe;
-    using Incoding.Quality;
-    using Newtonsoft.Json;
 
     #endregion
 

@@ -1,6 +1,6 @@
 ﻿using System;
-using Incoding.Block.IoC;
 using Incoding.Core;
+using Incoding.Core.Data;
 using Incoding.Data.Mongo.Provider;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;

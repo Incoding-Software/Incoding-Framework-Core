@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Incoding.Core.Block.IoC;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Incoding.Block.IoC
+namespace Incoding.Core.Block.IoC
 {
     public class IoCFactoryDI
     {

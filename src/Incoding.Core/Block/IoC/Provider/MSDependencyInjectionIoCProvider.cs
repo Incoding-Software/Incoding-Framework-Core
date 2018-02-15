@@ -1,13 +1,12 @@
-﻿using Incoding.Core.Block.IoC;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Incoding.Core.Block.IoC.Core;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Incoding.Block.IoC
+namespace Incoding.Core.Block.IoC.Provider
 {
     #region << Using >>
-
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
 
     #endregion
 
@@ -34,10 +33,10 @@ namespace Incoding.Block.IoC
             throw new NotSupportedException();
         }
         
-        public TInstance Get<TInstance>(Type type) where TInstance : class
-        {
-            return (TInstance)this.container.GetRequiredService(type);
-        }
+        //public TInstance Get<TInstance>(Type type) where TInstance : class
+        //{
+        //    return (TInstance)this.container.GetRequiredService(type);
+        //}
 
         public IEnumerable<TInstance> GetAll<TInstance>(Type typeInstance)
         {

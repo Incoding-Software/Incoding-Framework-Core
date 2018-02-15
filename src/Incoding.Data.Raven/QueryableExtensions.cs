@@ -1,8 +1,10 @@
 ﻿using System.Linq;
 using Incoding.Core.Block.Core;
+using Incoding.Core.Data;
+using Incoding.Core.Extensions;
+using Incoding.Core.Extensions.LinqSpecs;
+using Incoding.Core.Maybe;
 using Incoding.Data.Raven.Provider;
-using Incoding.Extensions;
-using Incoding.Maybe;
 
 namespace Incoding.Data.Raven
 {

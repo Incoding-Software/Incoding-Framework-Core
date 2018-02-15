@@ -2,13 +2,15 @@
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Linq;
+using System.Threading.Tasks;
 using HandlebarsDotNet;
-using Incoding.Block.IoC;
 using Incoding.CQRS;
 using Incoding.Extensions;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language;
 using Incoding.Mvc.MvcContrib.Template.Syntax;
+using Incoding.Web.MvcContrib.Services;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Incoding.Mvc.MvcContrib.Template.Factory
 {
@@ -60,12 +62,9 @@ namespace Incoding.Mvc.MvcContrib.Template.Factory
 
             return cache.GetOrAdd(fullPathToView + GetVersion(), (i) =>
                                                                  {
-                                                                     var tmpl = IoCFactory.Instance.TryResolve<IDispatcher>().Query(new RenderViewQuery()
-                                                                                                                                    {
-                                                                                                                                            HtmlHelper = htmlHelper,
-                                                                                                                                            PathToView = pathToView,
-                                                                                                                                            Model = modelForView
-                                                                                                                                    }).ToString();
+                                                                     var viewRenderService = htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<IViewRenderService>();
+                                                                     var tmpl = viewRenderService
+                                                                        .RenderToStringAsync(htmlHelper.ViewContext, pathToView, modelForView).Result;
                                                                      return Handlebars.Compile(tmpl);
                                                                  })(new { data = correctData });
         }

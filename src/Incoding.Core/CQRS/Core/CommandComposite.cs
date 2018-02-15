@@ -1,11 +1,11 @@
-﻿namespace Incoding.CQRS
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using Incoding.Core.Extensions;
+using Incoding.Core.Maybe;
+
+namespace Incoding.Core.CQRS.Core
 {
     #region << Using >>
-
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using Incoding.Extensions;
-    using Incoding.Maybe;
 
     #endregion
 

@@ -1,3 +1,6 @@
+using Incoding.Core.Extensions;
+using Incoding.Core.Maybe;
+
 namespace Incoding.MSpecContrib
 {
     #region << Using >>
@@ -9,7 +12,6 @@ namespace Incoding.MSpecContrib
     using System.Text;
     using FluentValidation.Results;
     using Incoding.Extensions;
-    using Incoding.Maybe;
     using Machine.Specifications;
 
     #endregion

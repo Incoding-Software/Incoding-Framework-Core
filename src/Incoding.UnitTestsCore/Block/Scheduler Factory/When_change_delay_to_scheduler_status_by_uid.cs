@@ -1,4 +1,7 @@
-﻿namespace Incoding.UnitTest
+﻿using Incoding.Core.Block.Scheduler.Command;
+using Incoding.Core.Block.Scheduler.Persistence;
+
+namespace Incoding.UnitTest
 {
     #region << Using >>
 
@@ -36,7 +39,7 @@
                                           .StubPush(new ChangeDelayToSchedulerStatusCommand() { Id = entities[1].Id, Status = command.Status });
                               };
 
-        Because of = () => { exception = Catch.Exception(() => mockCommand.Original.Execute()); };
+        Because of = () => { exception = Catch.Exception(() => mockCommand.Execute()); };
 
         It should_be_success = () => exception.ShouldBeNull();
     }

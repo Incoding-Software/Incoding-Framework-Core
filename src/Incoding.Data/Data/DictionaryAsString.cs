@@ -1,3 +1,6 @@
+using Incoding.Core;
+using Incoding.Core.Extensions;
+
 namespace Incoding.Data
 {
     #region << Using >>
@@ -6,7 +9,6 @@ namespace Incoding.Data
     using System.Collections.Generic;
     using System.Linq;
     using System.Web;
-    using Incoding.Extensions;
 
     #endregion
 

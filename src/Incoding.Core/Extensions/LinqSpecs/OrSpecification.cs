@@ -1,10 +1,10 @@
-namespace Incoding
+using System;
+using System.Linq.Expressions;
+using Incoding.Core.Extensions.LinqSpecs.ExpressionCombining;
+
+namespace Incoding.Core.Extensions.LinqSpecs
 {
     #region << Using >>
-
-    using System;
-    using System.Linq.Expressions;
-    using Incoding.ExpressionCombining;
 
     #endregion
 

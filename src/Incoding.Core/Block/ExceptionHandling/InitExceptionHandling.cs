@@ -3,12 +3,13 @@
 // @incoding 2011
 #endregion
 
-namespace Incoding.Block.ExceptionHandling
+using System;
+using System.Collections.Generic;
+using Incoding.Core.Block.ExceptionHandling.Policy;
+
+namespace Incoding.Core.Block.ExceptionHandling
 {
     #region << Using >>
-
-    using System;
-    using System.Collections.Generic;
 
     #endregion
 

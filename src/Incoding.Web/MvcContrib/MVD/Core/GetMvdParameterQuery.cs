@@ -1,5 +1,6 @@
 using System.Collections.Specialized;
 using System.Web;
+using Incoding.Core.CQRS.Core;
 using Incoding.CQRS;
 
 namespace Incoding.Mvc.MvcContrib.MVD.Core

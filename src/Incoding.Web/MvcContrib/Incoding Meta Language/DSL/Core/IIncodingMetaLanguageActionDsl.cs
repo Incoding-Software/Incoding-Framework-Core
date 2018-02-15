@@ -1,4 +1,5 @@
 using System;
+using Incoding.Core.CQRS.Core;
 using Incoding.CQRS;
 using Incoding.Mvc.MvcContrib.Core;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.JqueryHelper.Options;
@@ -40,8 +41,8 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Core
 
         IIncodingMetaLanguageEventBuilderDsl Submit(Action<JqueryAjaxFormOptions> configuration = null);
 
-        [Obsolete(@"Use Submit with option.Selector = selector ")]
-        IIncodingMetaLanguageEventBuilderDsl SubmitOn(Func<JquerySelector, JquerySelector> action, Action<JqueryAjaxFormOptions> configuration = null);
+        //[Obsolete(@"Use Submit with option.Selector = selector ")]
+        //IIncodingMetaLanguageEventBuilderDsl SubmitOn(Func<JquerySelector, JquerySelector> action, Action<JqueryAjaxFormOptions> configuration = null);
 
         IIncodingMetaLanguageEventBuilderDsl Hash(string url = "", string prefix = "root");
 

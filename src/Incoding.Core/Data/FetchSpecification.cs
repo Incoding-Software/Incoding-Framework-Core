@@ -1,13 +1,9 @@
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using JetBrains.Annotations;
+using System;
+using Incoding.Core.Extensions;
 
-namespace Incoding.Data
+namespace Incoding.Core.Data
 {
     #region << Using >>
-
-    using System;
-    using Incoding.Extensions;
 
     #endregion
 

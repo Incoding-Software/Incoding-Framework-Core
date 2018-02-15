@@ -1,4 +1,5 @@
-﻿using Incoding.Data.Mongo.Provider;
+﻿using Incoding.Core.Extensions;
+using Incoding.Data.Mongo.Provider;
 using MongoDB.Driver;
 
 namespace Incoding.UnitTest

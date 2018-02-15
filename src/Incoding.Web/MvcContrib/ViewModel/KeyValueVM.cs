@@ -1,7 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
+using Incoding.Core.Extensions;
+using Incoding.Core.Maybe;
+using Incoding.Core.Quality;
 using Incoding.Extensions;
-using Incoding.Maybe;
-using Incoding.Quality;
 using JetBrains.Annotations;
 
 namespace Incoding.Mvc.MvcContrib.ViewModel

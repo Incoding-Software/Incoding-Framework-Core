@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using Incoding.Block;
-using Incoding.Quality;
+using Incoding.Core.Block.Scheduler.Persistence;
+using Incoding.Core.Quality;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

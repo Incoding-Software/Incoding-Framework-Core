@@ -1,9 +1,10 @@
-﻿namespace Incoding.UnitTest.Block
+﻿using Incoding.Core.Block.Logging.Core;
+
+namespace Incoding.UnitTest.Block
 {
     #region << Using >>
 
     using System;
-    using Incoding.Block.Logging;
     using Machine.Specifications;
 
     #endregion

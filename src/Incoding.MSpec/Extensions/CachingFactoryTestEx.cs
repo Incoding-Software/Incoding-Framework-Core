@@ -1,4 +1,9 @@
-﻿namespace Incoding.MSpecContrib
+﻿using Incoding.Core.Block.Caching;
+using Incoding.Core.Block.Caching.Core;
+using Incoding.Core.Block.Caching.Providers;
+using Incoding.Core.Extensions;
+
+namespace Incoding.MSpecContrib
 {
     #region << Using >>
 

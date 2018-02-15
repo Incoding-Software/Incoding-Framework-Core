@@ -1,9 +1,8 @@
-namespace Incoding.Extensions
+using System.Collections.Generic;
+
+namespace Incoding.Core.Extensions
 {
     #region << Using >>
-
-    using System;
-    using System.Collections.Generic;
 
     #endregion
 

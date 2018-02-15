@@ -1,4 +1,4 @@
-﻿using Incoding.CQRS;
+﻿using Incoding.Core.CQRS.Core;
 
 namespace Incoding.Core.Tasks
 {

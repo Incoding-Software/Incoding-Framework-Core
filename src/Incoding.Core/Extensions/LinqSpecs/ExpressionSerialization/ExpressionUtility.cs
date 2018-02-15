@@ -1,12 +1,12 @@
-namespace Incoding.ExpressionSerialization
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq.Expressions;
+using System.Reflection;
+
+namespace Incoding.Core.Extensions.LinqSpecs.ExpressionSerialization
 {
     #region << Using >>
-
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Linq.Expressions;
-    using System.Reflection;
 
     #endregion
 

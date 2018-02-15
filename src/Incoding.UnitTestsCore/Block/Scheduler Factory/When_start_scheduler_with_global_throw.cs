@@ -1,10 +1,14 @@
-﻿namespace Incoding.UnitTest
+﻿using Incoding.Core.Block.Logging;
+using Incoding.Core.Block.Logging.Core;
+using Incoding.Core.Block.Logging.Loggers;
+using Incoding.Core.Block.Scheduler;
+
+namespace Incoding.UnitTest
 {
     #region << Using >>
 
     using System;
     using Incoding.Block;
-    using Incoding.Block.Logging;
     using Incoding.MSpecContrib;
     using Machine.Specifications;
     using Moq;

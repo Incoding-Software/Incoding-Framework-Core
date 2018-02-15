@@ -1,11 +1,11 @@
-namespace Incoding.Extensions
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+
+namespace Incoding.Core.Extensions
 {
     #region << Using >>
-
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
-    using System.Text;
 
     #endregion
 

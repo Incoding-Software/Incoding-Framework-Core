@@ -1,11 +1,11 @@
-﻿namespace Incoding.CQRS
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using Incoding.Core.Quality;
+using JetBrains.Annotations;
+
+namespace Incoding.Core.CQRS.Common.Response
 {
     #region << Using >>
-
-    using System;
-    using System.Diagnostics.CodeAnalysis;
-    using Incoding.Quality;
-    using JetBrains.Annotations;
 
     #endregion
 

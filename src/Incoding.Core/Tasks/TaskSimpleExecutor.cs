@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Timers;
-using Incoding.Block.Logging;
 
 namespace Incoding.Core.Tasks
 {

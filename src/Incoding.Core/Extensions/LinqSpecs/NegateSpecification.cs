@@ -1,9 +1,9 @@
-namespace Incoding
+using System;
+using System.Linq.Expressions;
+
+namespace Incoding.Core.Extensions.LinqSpecs
 {
     #region << Using >>
-
-    using System;
-    using System.Linq.Expressions;
 
     #endregion
 

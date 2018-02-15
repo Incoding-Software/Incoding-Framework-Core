@@ -1,4 +1,5 @@
-﻿using Incoding.Data.EF.Provider;
+﻿using Incoding.Core.Data;
+using Incoding.Data.EF.Provider;
 using Incoding.Data.Mongo.Provider;
 using Microsoft.EntityFrameworkCore;
 

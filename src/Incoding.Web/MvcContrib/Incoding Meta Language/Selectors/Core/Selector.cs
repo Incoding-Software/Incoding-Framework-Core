@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Incoding.Core.Extensions;
+using Incoding.Core.Maybe;
 using Incoding.Extensions;
-using Incoding.Maybe;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Selectors.JavaScript;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Selectors.Jquery;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -40,8 +41,8 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Selectors.Core
 
         #region Factory constructors
 
-        [Obsolete("Use native element without wrapp", false)]
-        public static Selector Value(object value)
+        //[Obsolete("Use native element without wrapp", false)]
+        internal static Selector Value(object value)
         {
             return value.GetType().IsEnum ? new Selector((int)value) : new Selector(value.ToString());
         }

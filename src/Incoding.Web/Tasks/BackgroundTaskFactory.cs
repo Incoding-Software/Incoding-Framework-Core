@@ -2,9 +2,8 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
-using Incoding.Block.Logging;
+using Incoding.Core.Maybe;
 using Incoding.Core.Tasks;
-using Incoding.Maybe;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Hosting;
 
@@ -12,8 +11,6 @@ namespace Incoding.Web.Tasks
 {
     public class BackgroundTaskFactory
     {
-        private readonly IApplicationLifetime _applicationLifetime;
-
         IApplicationLifetime appLifetime;
         bool initialized;
 

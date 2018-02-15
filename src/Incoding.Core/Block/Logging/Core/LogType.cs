@@ -1,8 +1,8 @@
-namespace Incoding.Block.Logging
+using JetBrains.Annotations;
+
+namespace Incoding.Core.Block.Logging.Core
 {
     #region << Using >>
-
-    using JetBrains.Annotations;
 
     #endregion
 

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
+using Incoding.Core.Data;
+using Incoding.Core.Extensions.LinqSpecs;
 using Incoding.Data;
 using Incoding.Data.EF.Provider;
 using Microsoft.EntityFrameworkCore;

@@ -2,9 +2,10 @@
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using Incoding.Block.Logging;
+using Incoding.Core.Block.Logging;
+using Incoding.Core.Block.Logging.Core;
 
-namespace Incoding.Block.Caching
+namespace Incoding.Core.Block.Caching
 {
     public class FileCaching
     {

@@ -1,8 +1,8 @@
-namespace Incoding.Quality
+using JetBrains.Annotations;
+
+namespace Incoding.Core.Quality
 {
     #region << Using >>
-
-    using JetBrains.Annotations;
 
     #endregion
 

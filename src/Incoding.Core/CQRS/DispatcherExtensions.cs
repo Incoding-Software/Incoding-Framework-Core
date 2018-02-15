@@ -1,9 +1,10 @@
-namespace Incoding.CQRS
+using System;
+using Incoding.Core.CQRS.Core;
+using Incoding.Core.Maybe;
+
+namespace Incoding.Core.CQRS
 {
     #region << Using >>
-
-    using System;
-    using Incoding.Maybe;
 
     #endregion
 

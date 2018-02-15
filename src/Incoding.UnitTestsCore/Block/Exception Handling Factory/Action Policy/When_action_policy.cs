@@ -1,9 +1,11 @@
+using Incoding.Core.Block.ExceptionHandling.Policy;
+using Incoding.Core.Extensions;
+
 namespace Incoding.UnitTest.Block
 {
     #region << Using >>
 
     using System;
-    using Incoding.Block.ExceptionHandling;
     using Incoding.Extensions;
     using Incoding.MSpecContrib;
     using Machine.Specifications;

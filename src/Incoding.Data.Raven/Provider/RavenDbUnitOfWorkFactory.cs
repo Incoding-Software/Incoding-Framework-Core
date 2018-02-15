@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using Incoding.Core.Data;
 
 namespace Incoding.Data.Raven.Provider
 {

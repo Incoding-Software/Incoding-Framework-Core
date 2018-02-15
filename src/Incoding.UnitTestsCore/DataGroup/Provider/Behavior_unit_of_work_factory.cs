@@ -1,4 +1,6 @@
 ﻿using System.Data;
+using Incoding.Core.Data;
+using Incoding.Core.Extensions;
 
 namespace Incoding.UnitTest
 {

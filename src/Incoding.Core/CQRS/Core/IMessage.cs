@@ -1,11 +1,9 @@
-﻿using Incoding.Data;
+﻿using System;
+using Incoding.Core.Data;
 
-namespace Incoding.CQRS
+namespace Incoding.Core.CQRS.Core
 {
     #region << Using >>
-
-    using System;
-    using Newtonsoft.Json;
 
     #endregion
 

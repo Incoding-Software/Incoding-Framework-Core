@@ -1,4 +1,9 @@
 using Incoding.Core.Block.Core;
+using Incoding.Core.Block.IoC;
+using Incoding.Core.CQRS.Core;
+using Incoding.Core.Data;
+using Incoding.Core.Extensions;
+using Incoding.Core.Extensions.LinqSpecs;
 
 namespace Incoding.MSpecContrib
 {
@@ -7,7 +12,6 @@ namespace Incoding.MSpecContrib
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Incoding.Block.IoC;
     using Incoding.CQRS;
     using Incoding.Data;
     
@@ -68,9 +72,7 @@ namespace Incoding.MSpecContrib
         readonly Mock<IRepository> repository;
         
         private readonly List<Func<IMessage, bool>> predcatesStubs = new List<Func<IMessage, bool>>();
-
-        private bool isNew;
-
+        
         #endregion
 
         #region Api Methods

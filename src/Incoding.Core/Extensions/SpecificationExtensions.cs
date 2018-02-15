@@ -1,6 +1,7 @@
-using Incoding.Data;
+using Incoding.Core.Data;
+using Incoding.Core.Extensions.LinqSpecs;
 
-namespace Incoding.Extensions
+namespace Incoding.Core.Extensions
 {
     #region << Using >>
 

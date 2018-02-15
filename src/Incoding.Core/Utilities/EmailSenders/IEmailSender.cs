@@ -1,9 +1,9 @@
-namespace Incoding.Utilities
+using System;
+using System.Net.Mail;
+
+namespace Incoding.Core.Utilities.EmailSenders
 {
     #region << Using >>
-
-    using System;
-    using System.Net.Mail;
 
     #endregion
 

@@ -1,4 +1,4 @@
-namespace Incoding.Block.Core
+namespace Incoding.Core.Block.Core
 {
     public static class SatisfiedSyntaxEx
     {

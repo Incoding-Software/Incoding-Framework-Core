@@ -1,4 +1,6 @@
-﻿using Incoding.Data.EF.Provider;
+﻿using Incoding.Core.Data;
+using Incoding.Core.Quality;
+using Incoding.Data.EF.Provider;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,8 +12,7 @@ namespace Incoding.UnitTest
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Diagnostics.CodeAnalysis;
     using Incoding.Data;
-    using Incoding.Quality;
-    
+
     #endregion
 
     public class DbEntityByInt : IncEntityBase

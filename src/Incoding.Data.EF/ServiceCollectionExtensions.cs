@@ -1,6 +1,6 @@
 ﻿using System;
-using Incoding.Block.IoC;
 using Incoding.Core;
+using Incoding.Core.Data;
 using Incoding.Data.EF.Provider;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

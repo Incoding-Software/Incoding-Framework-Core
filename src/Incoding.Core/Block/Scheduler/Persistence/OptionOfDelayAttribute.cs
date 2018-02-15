@@ -1,7 +1,7 @@
-namespace Incoding.Block
-{
-    using System;
+using System;
 
+namespace Incoding.Core.Block.Scheduler.Persistence
+{
     public class OptionOfDelayAttribute : Attribute
     {
         public bool Async { get; set; }

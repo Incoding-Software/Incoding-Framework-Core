@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using Incoding.Core.Extensions;
 using Incoding.Extensions;
 
 namespace Incoding.Web.MvcContrib.IncHtmlHelper

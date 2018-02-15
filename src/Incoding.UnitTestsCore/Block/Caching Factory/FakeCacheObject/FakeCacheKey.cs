@@ -1,11 +1,12 @@
-﻿using JetBrains.Annotations;
+﻿using Incoding.Core.Block.Caching.Core;
+using Incoding.Core.Maybe;
+using JetBrains.Annotations;
 
 namespace Incoding.UnitTest.Block
 {
     #region << Using >>
 
     using Incoding.Block.Caching;
-    using Incoding.Maybe;
     using Machine.Specifications.Annotations;
 
     #endregion
@@ -16,9 +17,7 @@ namespace Incoding.UnitTest.Block
         #region Fields
 
         readonly string secretKey;
-
-        string PrivateField;
-
+        
         #endregion
 
         #region Constructors

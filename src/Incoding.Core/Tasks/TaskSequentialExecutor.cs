@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Incoding.CQRS;
+using Incoding.Core.CQRS;
 
 namespace Incoding.Core.Tasks
 {

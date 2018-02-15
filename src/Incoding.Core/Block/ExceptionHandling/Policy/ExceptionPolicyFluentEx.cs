@@ -1,9 +1,9 @@
-namespace Incoding.Block.ExceptionHandling
+using System;
+using Incoding.Core.Block.Core;
+
+namespace Incoding.Core.Block.ExceptionHandling.Policy
 {
     #region << Using >>
-
-    using System;
-    using Incoding.Block.Core;
 
     #endregion
 

@@ -9,13 +9,6 @@ namespace Incoding.Data.Raven.Provider
 
     public class RavenDbSessionFactory : IRavenDbSessionFactory
     {
-        #region Static Fields
-
-        [ThreadStatic]
-        static IDocumentSession currentSession;
-
-        #endregion
-
         #region Fields
 
         readonly Lazy<IDocumentStore> documentStore;
@@ -35,7 +28,7 @@ namespace Incoding.Data.Raven.Provider
 
         public IDocumentSession Open(string connection)
         {
-            currentSession = !string.IsNullOrWhiteSpace(connection)
+            var currentSession = !string.IsNullOrWhiteSpace(connection)
                                      ? this.documentStore.Value.OpenSession(connection)
                                      : this.documentStore.Value.OpenSession();
             return currentSession;

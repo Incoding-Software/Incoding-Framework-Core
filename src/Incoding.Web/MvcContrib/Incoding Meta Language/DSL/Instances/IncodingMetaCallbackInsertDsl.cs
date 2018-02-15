@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
+using Incoding.Core.Extensions;
 using Incoding.CQRS;
 using Incoding.Extensions;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Core;
@@ -46,24 +47,24 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances
             throw new ArgumentException("Argument should be type of Selector", "selector");
         }
 
-        [Obsolete("Please use WithTemplateByUrl/WithTemplateByView")]
-        public IncodingMetaCallbackInsertDsl WithTemplate([NotNull] Selector selector)
+        //[Obsolete("Please use WithTemplateByUrl/WithTemplateByView")]
+        internal IncodingMetaCallbackInsertDsl WithTemplate([NotNull] Selector selector)
         {
             this.insertTemplateSelector = selector;
             return this;
         }
 
-        [Obsolete("Please use WithTemplateByUrl/WithTemplateByView")]
-        public IncodingMetaCallbackInsertDsl WithTemplate([NotNull] JquerySelectorExtend selector)
-        {
-            return WithTemplate(selector as Selector);
-        }
+        ////[Obsolete("Please use WithTemplateByUrl/WithTemplateByView")]
+        //internal IncodingMetaCallbackInsertDsl WithTemplate([NotNull] JquerySelectorExtend selector)
+        //{
+        //    return WithTemplate(selector as Selector);
+        //}
 
-        [Obsolete("Suggest use ONLY WithTemplateByUrl")]
-        public IncodingMetaCallbackInsertDsl WithTemplateById([NotNull, HtmlAttributeValue("id")] string id)
-        {
-            return WithTemplate(id.ToId() as Selector);
-        }
+        ////[Obsolete("Suggest use ONLY WithTemplateByUrl")]
+        //internal IncodingMetaCallbackInsertDsl WithTemplateById([NotNull, HtmlAttributeValue("id")] string id)
+        //{
+        //    return WithTemplate(id.ToId() as Selector);
+        //}
 
         public IncodingMetaCallbackInsertDsl WithTemplateByUrl([NotNull] string url)
         {
@@ -84,7 +85,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Instances
         }
 
         [ExcludeFromCodeCoverage]
-        public IncodingMetaCallbackInsertDsl WithTemplateByView([JetBrains.Annotations.AspMvcPartialView, NotNull] string view)
+        public IncodingMetaCallbackInsertDsl WithTemplateByView([AspMvcPartialView, NotNull] string view)
         {
             return WithTemplateByUrl((Func<UrlDispatcher, string>) (r => r.AsView(view)));
         }

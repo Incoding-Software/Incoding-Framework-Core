@@ -12,7 +12,7 @@ namespace Incoding.Mvc.MvcContrib.MVD
 
         UrlDispatcher.UrlPush Push<TCommand>(object routes = null) where TCommand : new();
             
-        string AsView([PathReference, NotNull] string incView);
+        string AsView([AspMvcPartialView, NotNull] string incView);
 
         UrlDispatcher.UrlModel<TModel> Model<TModel>(object routes = null);
 

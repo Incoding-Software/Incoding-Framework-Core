@@ -1,4 +1,6 @@
-﻿namespace Incoding.Data
+﻿using Incoding.Core.Data;
+
+namespace Incoding.Data
 {
     #region << Using >>
 

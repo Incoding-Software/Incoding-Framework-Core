@@ -1,11 +1,11 @@
-namespace Incoding.ExpressionCombining
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq.Expressions;
+
+namespace Incoding.Core.Extensions.LinqSpecs.ExpressionCombining
 {
     #region << Using >>
-
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Linq.Expressions;
 
     #endregion
 

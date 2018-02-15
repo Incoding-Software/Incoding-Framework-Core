@@ -1,13 +1,12 @@
-namespace Incoding.Utilities
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Net;
+using System.Net.Mail;
+using JetBrains.Annotations;
+
+namespace Incoding.Core.Utilities.EmailSenders
 {
     #region << Using >>
-
-    using System;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Net;
-    using System.Net.Mail;
-    using Incoding.Maybe;
-    using JetBrains.Annotations;
 
     #endregion
 

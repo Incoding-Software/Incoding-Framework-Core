@@ -1,9 +1,9 @@
-﻿namespace Incoding.Extensions
+﻿using System;
+using Newtonsoft.Json;
+
+namespace Incoding.Core.Extensions
 {
     #region << Using >>
-
-    using System;
-    using Newtonsoft.Json;
 
     #endregion
 

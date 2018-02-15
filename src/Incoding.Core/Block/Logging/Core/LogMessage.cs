@@ -1,8 +1,8 @@
-namespace Incoding.Block.Logging
+using System;
+
+namespace Incoding.Core.Block.Logging.Core
 {
     #region << Using >>
-
-    using System;
 
     #endregion
 

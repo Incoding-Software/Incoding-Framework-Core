@@ -1,9 +1,9 @@
-namespace Incoding.Block.Caching
+using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
+
+namespace Incoding.Core.Block.Caching.Providers
 {
     #region << Using >>
-
-    using System.Diagnostics.CodeAnalysis;
-    using JetBrains.Annotations;
 
     #endregion
 

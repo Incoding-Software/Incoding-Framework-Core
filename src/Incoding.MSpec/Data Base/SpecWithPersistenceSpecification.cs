@@ -1,4 +1,5 @@
-﻿using Incoding.Block.IoC;
+﻿using Incoding.Core.Data;
+using Incoding.Core.Quality;
 using JetBrains.Annotations;
 
 namespace Incoding.MSpecContrib
@@ -7,7 +8,6 @@ namespace Incoding.MSpecContrib
 
     using System;
     using Incoding.Data;
-    using Incoding.Quality;
     using Machine.Specifications;
     using Machine.Specifications.Annotations;
 

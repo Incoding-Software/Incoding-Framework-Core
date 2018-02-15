@@ -1,4 +1,7 @@
 using System.Data;
+using Incoding.Core.Data;
+using Incoding.Core.Extensions;
+using Incoding.Core.Maybe;
 
 namespace Incoding.MSpecContrib
 {
@@ -11,7 +14,6 @@ namespace Incoding.MSpecContrib
     using System.Reflection;
     using Incoding.Data;
     using Incoding.Extensions;
-    using Incoding.Maybe;
     using Machine.Specifications;
     //using NHibernate.Util;
 

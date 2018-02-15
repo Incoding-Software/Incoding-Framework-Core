@@ -4,9 +4,7 @@
 
 #endregion
 
-using System;
-
-namespace Incoding.CQRS
+namespace Incoding.Core.CQRS.Core
 {
     /// <summary>
     ///     Interface Dispatcher

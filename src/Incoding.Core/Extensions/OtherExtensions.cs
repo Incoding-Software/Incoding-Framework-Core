@@ -1,11 +1,10 @@
-namespace Incoding.Extensions
+using System;
+using System.Drawing;
+using System.Linq.Expressions;
+
+namespace Incoding.Core.Extensions
 {
     #region << Using >>
-
-    using System;
-    using System.Drawing;
-    using System.Linq.Expressions;
-    using System.Reflection;
 
     #endregion
 

@@ -1,4 +1,6 @@
-﻿using Incoding.Data;
+﻿using Incoding.Core.Data;
+using Incoding.Core.Extensions.LinqSpecs;
+using Incoding.Data;
 
 namespace Incoding.CQRS
 {

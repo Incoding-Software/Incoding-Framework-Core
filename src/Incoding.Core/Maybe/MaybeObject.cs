@@ -1,9 +1,9 @@
-namespace Incoding.Maybe
+using System;
+using System.Collections.Generic;
+
+namespace Incoding.Core.Maybe
 {
     #region << Using >>
-
-    using System;
-    using System.Collections.Generic;
 
     #endregion
 

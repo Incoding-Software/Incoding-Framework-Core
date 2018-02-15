@@ -1,17 +1,15 @@
 ﻿
-using Incoding.Data;
+using System;
+using System.Linq;
+using System.Linq.Expressions;
+using Incoding.Core.Block.Scheduler.Query;
+using Incoding.Core.Data;
+using Incoding.Core.Extensions;
+using Incoding.Core.Extensions.LinqSpecs;
 
-namespace Incoding.Block
+namespace Incoding.Core.Block.Scheduler.Persistence
 {
     #region << Using >>
-
-    using System;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using Incoding.Extensions;
-    using Incoding.Quality;
-    using JetBrains.Annotations;
 
     #endregion
 

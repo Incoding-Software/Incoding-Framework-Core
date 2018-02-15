@@ -1,4 +1,8 @@
 ﻿using Incoding.Core.Block.Core;
+using Incoding.Core.Block.Scheduler.Persistence;
+using Incoding.Core.Block.Scheduler.Query;
+using Incoding.Core.CQRS.Core;
+using Incoding.Core.Extensions;
 
 namespace Incoding.UnitTest
 {

@@ -1,14 +1,12 @@
-﻿using Incoding.Core;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using Incoding.Core.Extensions;
 
-namespace Incoding.Data
+namespace Incoding.Core.Data
 {
     #region << Using >>
-
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using Incoding.Extensions;
 
     #endregion
 

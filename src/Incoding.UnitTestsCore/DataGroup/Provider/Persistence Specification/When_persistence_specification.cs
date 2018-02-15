@@ -1,4 +1,6 @@
-﻿namespace Incoding.UnitTest.MSpecGroup
+﻿using Incoding.Core.Data;
+
+namespace Incoding.UnitTest.MSpecGroup
 {
     #region << Using >>
 

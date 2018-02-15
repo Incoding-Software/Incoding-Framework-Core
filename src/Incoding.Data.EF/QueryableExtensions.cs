@@ -1,4 +1,8 @@
 ﻿using Incoding.Core.Block.Core;
+using Incoding.Core.Data;
+using Incoding.Core.Extensions;
+using Incoding.Core.Extensions.LinqSpecs;
+using Incoding.Core.Maybe;
 using Incoding.Data.EF.Provider;
 
 namespace Incoding.Data
@@ -7,8 +11,6 @@ namespace Incoding.Data
 
     using System;
     using System.Linq;
-    using Incoding.Extensions;
-    using Incoding.Maybe;
 
     #endregion
 

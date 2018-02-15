@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Incoding.Block.IoC;
 using Incoding.Core.Block.IoC;
+using Incoding.Core.Block.IoC.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 
@@ -17,12 +17,7 @@ namespace Incoding.MSpecContrib
         {
             factory.Initialize(init => StubInit(init, action));
         }
-
-        public static void StubResolve<TInstance>(this IoCFactory factory, Type type, TInstance mockInstance) where TInstance : class
-        {
-            Stub(factory, s => s.Setup(r => r.Get<TInstance>(type)).Returns(mockInstance));
-        }
-
+        
         public static void StubResolveAll<TInstance>(this IoCFactory factory, IEnumerable<TInstance> mockInstances)
         {
             Stub(factory, s => s.Setup(r => r.GetAll<TInstance>(typeof(TInstance))).Returns(mockInstances));

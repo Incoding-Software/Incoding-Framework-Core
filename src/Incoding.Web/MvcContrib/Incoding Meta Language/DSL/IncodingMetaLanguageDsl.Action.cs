@@ -1,7 +1,10 @@
 ﻿using System;
+using Incoding.Core;
+using Incoding.Core.CQRS.Core;
+using Incoding.Core.Extensions;
+using Incoding.Core.Maybe;
 using Incoding.CQRS;
 using Incoding.Extensions;
-using Incoding.Maybe;
 using Incoding.Mvc.MvcContrib.Core;
 using Incoding.Mvc.MvcContrib.Extensions;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Core;
@@ -13,6 +16,7 @@ using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Selectors.Jquery;
 using Incoding.Mvc.MvcContrib.MVD;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL
 {
@@ -58,8 +62,8 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL
             return SubmitOn(selector => selector.Self(), configuration);
         }
 
-        [Obsolete(@"Use Submit with option.Selector = selector ")]
-        public IIncodingMetaLanguageEventBuilderDsl SubmitOn(Func<JquerySelector, JquerySelector> action, Action<JqueryAjaxFormOptions> configuration = null)
+        //[Obsolete(@"Use Submit with option.Selector = selector ")]
+        internal IIncodingMetaLanguageEventBuilderDsl SubmitOn(Func<JquerySelector, JquerySelector> action, Action<JqueryAjaxFormOptions> configuration = null)
         {
             var options = new JqueryAjaxFormOptions(JqueryAjaxFormOptions.Default);
             MaybeObject.Do(configuration, r => r(options));
@@ -171,13 +175,13 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL
 
         public IIncodingMetaLanguageEventBuilderDsl Ajax([NotNull] Func<IUrlDispatcher, string> url)
         {
-            var urlDispatcher = HtmlExtensions.UrlDispatcher;
+            var urlDispatcher = new UrlDispatcher(new UrlHelper(_htmlHelper.ViewContext));
             return Ajax(url(urlDispatcher));
         }
 
         public IIncodingMetaLanguageEventBuilderDsl AjaxPost([NotNull] Func<IUrlDispatcher, string> url)
         {
-            var urlDispatcher = HtmlExtensions.UrlDispatcher;
+            var urlDispatcher = new UrlDispatcher(new UrlHelper(_htmlHelper.ViewContext));
             return AjaxPost(url(urlDispatcher));
         }
 

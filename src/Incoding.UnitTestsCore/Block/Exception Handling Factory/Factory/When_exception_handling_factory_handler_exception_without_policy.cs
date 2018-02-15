@@ -1,9 +1,10 @@
-﻿namespace Incoding.UnitTest.Block
+﻿using Incoding.Core.Block.ExceptionHandling;
+
+namespace Incoding.UnitTest.Block
 {
     #region << Using >>
 
     using System;
-    using Incoding.Block.ExceptionHandling;
     using Machine.Specifications;
 
     #endregion

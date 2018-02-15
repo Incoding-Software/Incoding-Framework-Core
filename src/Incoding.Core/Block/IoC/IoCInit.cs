@@ -1,4 +1,6 @@
-namespace Incoding.Block.IoC
+using Incoding.Core.Block.IoC.Core;
+
+namespace Incoding.Core.Block.IoC
 {
     public sealed class IoCInit
     {

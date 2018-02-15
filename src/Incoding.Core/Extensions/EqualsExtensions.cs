@@ -1,9 +1,9 @@
-namespace Incoding.Extensions
+using System.Linq;
+using Incoding.Core.Maybe;
+
+namespace Incoding.Core.Extensions
 {
     #region << Using >>
-
-    using System.Linq;
-    using Incoding.Maybe;
 
     #endregion
 
