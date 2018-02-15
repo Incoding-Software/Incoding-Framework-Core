@@ -13,10 +13,10 @@ namespace Incoding.Data.Mongo.Provider
     {
         #region Static Fields
 
-        static readonly ConcurrentDictionary<string, MongoServer> servers = new ConcurrentDictionary<string, MongoServer>();
+        static readonly ConcurrentDictionary<string, MongoClient> clients = new ConcurrentDictionary<string, MongoClient>();
 
         [ThreadStatic]
-        static MongoDatabaseDisposable currentSession;
+        static IMongoDatabase currentSession;
 
         #endregion
 
@@ -37,22 +37,22 @@ namespace Incoding.Data.Mongo.Provider
         public MongoDbSessionFactory(string defaultUrl)
         {
             this.defaultUrl = defaultUrl;
-            servers.AddOrUpdate(defaultUrl, s => new MongoClient(new MongoUrl(defaultUrl)).GetServer(), (s, server) => server);
+            clients.AddOrUpdate(defaultUrl, s => new MongoClient(new MongoUrl(defaultUrl)), (s, server) => server);
         }
 
         #endregion
 
         #region IMongoDbSessionFactory Members
         
-        public MongoDatabaseDisposable Open(string connectionString)
+        public MongoDatabaseWrapper Open(string connectionString)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
                 connectionString = this.defaultUrl;
 
             var url = new MongoUrl(connectionString);
-            var server = servers.GetOrAdd(connectionString, s => new MongoClient(url).GetServer());
-            currentSession = new MongoDatabaseDisposable(server.GetDatabase(url.DatabaseName));
-            return currentSession;
+            var client = clients.GetOrAdd(connectionString, s => new MongoClient(url));
+            currentSession = client.GetDatabase(url.DatabaseName);
+            return new MongoDatabaseWrapper(currentSession);
         }
 
         #endregion

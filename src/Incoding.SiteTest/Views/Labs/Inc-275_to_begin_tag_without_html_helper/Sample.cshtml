@@ -1,8 +1,0 @@
-﻿@using (Html.When(JqueryBind.Click)
-                  .Direct()
-                  .OnSuccess(dsl => dsl.Window.Alert("Test"))
-                  .AsHtmlAttributes()
-                  .ToBeginTag(HtmlTag.Span))
-{
-    <div>Test</div>
-}

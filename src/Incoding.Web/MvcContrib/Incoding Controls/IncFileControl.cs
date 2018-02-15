@@ -16,16 +16,13 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
     public class IncFileControl<TModel, TProperty> : IncControlBase<TModel> where TModel : new()
     {
         #region Fields
-
-        readonly IHtmlHelper<TModel> htmlHelper;
-
+        
         #endregion
 
         #region Constructors
 
-        public IncFileControl(IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> property)
+        public IncFileControl(IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> property) : base(htmlHelper)
         {
-            this.htmlHelper = htmlHelper;
             this.attributes.Set("id", ReflectionExtensions.GetMemberNameAsHtmlId(property));
             this.attributes.Set("name", ReflectionExtensions.GetMemberName(property));
         }

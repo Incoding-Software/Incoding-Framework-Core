@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Linq;
-using DryIoc;
 using HandlebarsDotNet;
 using Incoding.Block.IoC;
 using Incoding.CQRS;
@@ -56,7 +55,7 @@ namespace Incoding.Mvc.MvcContrib.Template.Factory
         {
             var fullPathToView = pathToView.AppendToQueryString(modelForView);
             object correctData = data;
-            if (data != null && !data.GetType().GetImplementedInterfaces().Contains(typeof(IEnumerable)))
+            if (data != null && !data.GetType().GetInterfaces().Contains(typeof(IEnumerable)))
                 correctData = new { data = data };
 
             return cache.GetOrAdd(fullPathToView + GetVersion(), (i) =>

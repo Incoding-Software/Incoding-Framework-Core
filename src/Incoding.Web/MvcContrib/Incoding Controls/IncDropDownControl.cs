@@ -26,9 +26,8 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
     {
         #region Constructors
 
-        public IncDropDownControl(IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> property)
+        public IncDropDownControl(IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> property) : base(htmlHelper)
         {
-            this.htmlHelper = htmlHelper;
             this.property = property;
             Data = new SelectList(new string[0]);
             Template = IncodingHtmlHelper.DropDownTemplateId;
@@ -38,9 +37,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
         #endregion
         
         #region Fields
-
-        readonly IHtmlHelper<TModel> htmlHelper;
-
+        
         readonly Expression<Func<TModel, TProperty>> property;
 
         JqueryAjaxOptions options = new JqueryAjaxOptions(IncodingHtmlHelper.DropDownOption);

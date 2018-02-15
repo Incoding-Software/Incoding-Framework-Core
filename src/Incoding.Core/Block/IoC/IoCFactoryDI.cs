@@ -7,6 +7,59 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Incoding.Block.IoC
 {
+    public class IoCFactoryDI
+    {
+        IServiceProvider serviceProvider;
+        bool initialized;
+
+        static readonly Lazy<IoCFactoryDI> instance = new Lazy<IoCFactoryDI>(() => new IoCFactoryDI());
+
+        public static IoCFactoryDI Instance { get { return instance.Value; } }
+
+        public void Initialize([NotNull] IServiceProvider serviceProvider)
+        {
+            if (serviceProvider == null) throw new ArgumentNullException(nameof(serviceProvider));
+            this.serviceProvider = serviceProvider;
+            initialized = true;
+        }
+
+        public bool IsInitialized { get { return initialized; } }
+
+        public TInstance TryResolve<TInstance>() where TInstance : class
+        {
+            var resolve = this.serviceProvider.GetRequiredService<TInstance>();
+            return resolve;
+        }
+        public TInstance TryResolveByNamed<TInstance>(string name) where TInstance : class
+        {
+            var resolve = this.serviceProvider.GetService<TInstance>(name);
+            return resolve;
+        }
+        
+        public TInstance TryResolve<TInstance>([NotNull] Type typeInstance) where TInstance : class
+        {
+            var resolve = this.serviceProvider.GetRequiredService(typeInstance);
+            return resolve as TInstance;
+        }
+
+        public IEnumerable<TInstance> ResolveAll<TInstance>() where TInstance : class
+        {
+            return ResolveAll<TInstance>(typeof(TInstance));
+        }
+
+        public IEnumerable<TInstance> ResolveAll<TInstance>([NotNull] Type typeInstance) where TInstance : class
+        {
+            var allInstances = this.serviceProvider.GetServices(typeInstance).OfType<TInstance>();
+            return allInstances;
+        }
+
+        public IServiceProvider GetProvider()
+        {
+            return serviceProvider;
+        }
+    }
+
+    /*
     #region << Using >>
 
     using System;
@@ -82,5 +135,5 @@ namespace Incoding.Block.IoC
         }
 
         #endregion
-    }
+    }*/
 }

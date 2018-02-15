@@ -24,6 +24,11 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
     {
         #region Fields
 
+        protected IncControlBase(IHtmlHelper<TModel> htmlHelper)
+        {
+            this.htmlHelper = htmlHelper;
+        }
+
         protected IHtmlHelper<TModel> htmlHelper;
 
         protected RouteValueDictionary attributes = new RouteValueDictionary();

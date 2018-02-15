@@ -20,8 +20,8 @@ namespace Incoding.UnitTest
                      {
                          BsonClassMap.RegisterClassMap<IncEntityBase>(map => map.UnmapProperty(r => r.Id));
                          var url = new MongoUrl(ConfigurationManager.ConnectionStrings["IncRealMongoDb"].ConnectionString);
-                         var database = new MongoClient(url).GetServer().GetDatabase(url.DatabaseName);
-                         GetRepository = () => new MongoDbRepository(new MongoDatabaseDisposable(database)).Init();
+                         var database = new MongoClient(url).GetDatabase(url.DatabaseName);
+                         GetRepository = () => new MongoDbRepository(new MongoDatabaseWrapper(database)).Init();
                      };
 
         Behaves_like<Behavior_repository> should_be_behavior;

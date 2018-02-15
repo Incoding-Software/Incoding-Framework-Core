@@ -14,18 +14,15 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
     public class IncValidationControl<TModel> : IncControlBase<TModel>
     {
         #region Fields
-
-        readonly IHtmlHelper htmlHelper;
-
+        
         readonly string property;
 
         #endregion
 
         #region Constructors
 
-        public IncValidationControl(IHtmlHelper htmlHelper, LambdaExpression property)
+        public IncValidationControl(IHtmlHelper<TModel> htmlHelper, LambdaExpression property) : base(htmlHelper)
         {
-            this.htmlHelper = htmlHelper;
             this.property = ReflectionExtensions.GetMemberName(property);
         }
 

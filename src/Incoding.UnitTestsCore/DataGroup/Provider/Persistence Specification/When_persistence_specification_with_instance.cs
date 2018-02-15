@@ -1,5 +1,9 @@
 ﻿using System.Data;
+using Incoding.Data.Mongo.Provider;
+using Incoding.Data.Raven.Provider;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Bson.Serialization;
+using MongoDB.Driver;
 
 namespace Incoding.UnitTest.MSpecGroup
 {
@@ -29,7 +33,7 @@ namespace Incoding.UnitTest.MSpecGroup
                                             //dbContext.Database.AutoTransactionsEnabled = false;
                                             //dbContext.Database.LazyLoadingEnabled = true;
 
-                                            new PersistenceSpecification<DbEntity>(PleasureForData.BuildEFSessionFactory(MSpecAssemblyContext.EFFluent).Create(IsolationLevel.ReadUncommitted, true))
+                                            new PersistenceSpecification<DbEntity>(PleasureForData.Factory().Create(IsolationLevel.ReadUncommitted, true))
                                                     .CheckProperty(r => r.Value, Pleasure.Generator.String())
                                                     .CheckProperty(r => r.ValueNullable, Pleasure.Generator.PositiveNumber())
                                                     .CheckProperty(r => r.Reference)
@@ -37,7 +41,23 @@ namespace Incoding.UnitTest.MSpecGroup
                                                     .VerifyMappingAndSchema();
                                         };
 
-        It should_be_mongo_db = () => new PersistenceSpecification<DbEntity>(PleasureForData.BuildMongoDb(ConfigurationManager.ConnectionStrings["IncRealMongoDb"].ConnectionString).Create(IsolationLevel.ReadCommitted, true))
+        private static IUnitOfWorkFactory BuildMongoDb(string url, bool reload = true)
+        {
+            var mongoUrl = new MongoUrl(url);
+            var db = new MongoClient(mongoUrl).GetServer();
+            if (reload)
+            {
+                if (db.DatabaseExists(mongoUrl.DatabaseName))
+                    db.DropDatabase(mongoUrl.DatabaseName);
+            }
+
+            if (!BsonClassMap.IsClassMapRegistered(typeof(IncEntityBase)))
+                BsonClassMap.RegisterClassMap<IncEntityBase>(map => map.UnmapProperty(r => r.Id));
+
+            return new MongoDbUnitOfWorkFactory(new MongoDbSessionFactory(url));
+        }
+
+        It should_be_mongo_db = () => new PersistenceSpecification<DbEntity>(BuildMongoDb(ConfigurationManager.ConnectionStrings["IncRealMongoDb"].ConnectionString).Create(IsolationLevel.ReadCommitted, true))
                                               .CheckProperty(r => r.Value, Pleasure.Generator.String())
                                               .CheckProperty(r => r.ValueNullable, Pleasure.Generator.PositiveNumber())
                                               .CheckProperty(r => r.Reference)
@@ -55,7 +75,12 @@ namespace Incoding.UnitTest.MSpecGroup
                                                                                       .VerifyMappingAndSchema())
                                                              .ShouldBeAssignableTo<InternalSpecificationException>();
 
-        It should_be_raven_db = () => new PersistenceSpecification<DbEntity>(PleasureForData.BuildRavenDb(new DocumentStore
+        public static RavenDbUnitOfWorkFactory BuildRavenDb(DocumentStore document)
+        {
+            return new RavenDbUnitOfWorkFactory(new RavenDbSessionFactory(document));
+        }
+
+        It should_be_raven_db = () => new PersistenceSpecification<DbEntity>(BuildRavenDb(new DocumentStore
                                                                                                           {
                                                                                                                   Url = ConfigurationManager.ConnectionStrings["IncRealRavenDb"].ConnectionString,
                                                                                                                   DefaultDatabase = "IncTest",

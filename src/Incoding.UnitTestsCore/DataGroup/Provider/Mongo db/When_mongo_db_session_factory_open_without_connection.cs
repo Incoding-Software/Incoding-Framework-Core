@@ -1,4 +1,5 @@
 ﻿using Incoding.Data.Mongo.Provider;
+using MongoDB.Driver;
 
 namespace Incoding.UnitTest
 {
@@ -19,7 +20,7 @@ namespace Incoding.UnitTest
 
         static MongoDbSessionFactory mongo;
 
-        static MongoDatabaseDisposable session;
+        static MongoDatabaseWrapper session;
 
         #endregion
 

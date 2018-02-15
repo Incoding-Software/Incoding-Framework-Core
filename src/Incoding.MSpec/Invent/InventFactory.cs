@@ -1,4 +1,3 @@
-using System.Data.SqlClient;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 
@@ -87,8 +86,8 @@ namespace Incoding.MSpecContrib
                 value = isEmpty ? new Dictionary<string, string>() : Pleasure.ToDynamicDictionary<string>(new { key = Pleasure.Generator.String() });
             else if (propertyType == typeof(Dictionary<string, object>))
                 value = isEmpty ? new Dictionary<string, object>() : Pleasure.ToDynamicDictionary<string>(new { key = Pleasure.Generator.String() }).ToDictionary(r => r.Key, r => (object)r.Value);
-            else if (propertyType == typeof(SqlConnection))
-                value = new SqlConnection(@"Data Source={0};Database={1};Integrated Security=true;".F(Pleasure.Generator.String(length: 5), Pleasure.Generator.String(length: 5)));
+            //else if (propertyType == typeof(SqlConnection))
+            //    value = new SqlConnection(@"Data Source={0};Database={1};Integrated Security=true;".F(Pleasure.Generator.String(length: 5), Pleasure.Generator.String(length: 5)));
 
             return isNullable ? Activator.CreateInstance(typeof(Nullable<>).MakeGenericType(propertyType), value) : value;
         }
@@ -124,7 +123,7 @@ namespace Incoding.MSpecContrib
         {
             var instanceType = typeof(T);
 
-            if (instanceType.IsPrimitive() || instanceType.IsAnyEquals(typeof(SqlConnection), typeof(byte[])))
+            if (instanceType.IsPrimitive() || instanceType.IsAnyEquals(/*typeof(SqlConnection),*/ typeof(byte[])))
                 return (T)GenerateValueOrEmpty(instanceType, false);
 
             if (instanceType.IsImplement<IEnumerable>())

@@ -1,9 +1,0 @@
-﻿
-    @(Html.When(JqueryBind.InitIncoding)          
-          .Direct()
-          .OnSuccess(dsl => dsl.Window.Alert("Init"))
-          .When(JqueryBind.Change | JqueryBind.InitIncoding)          
-          .Direct()
-          .OnSuccess(dsl => dsl.Window.Alert("Change Init"))
-          .AsHtmlAttributes()
-          .ToCheckBox(false))

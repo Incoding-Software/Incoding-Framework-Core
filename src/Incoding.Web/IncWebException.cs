@@ -9,8 +9,8 @@ namespace Incoding.Web
     {
         #region Constructors
 
-        [Obsolete("Please use factory method IncWebException.For")]
-        public IncWebException(string message) : base(message)
+        //[Obsolete("Please use factory method IncWebException.For")]
+        internal IncWebException(string message) : base(message)
         {
             Errors = new Dictionary<string, List<string>>();
         }

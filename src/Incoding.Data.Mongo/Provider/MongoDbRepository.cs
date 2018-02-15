@@ -23,13 +23,13 @@ namespace Incoding.Data.Mongo.Provider
     {
         #region Fields
 
-        readonly MongoDatabaseDisposable database;
+        readonly MongoDatabaseWrapper database;
 
         #endregion
 
         #region Constructors
 
-        public MongoDbRepository(MongoDatabaseDisposable database)
+        public MongoDbRepository(MongoDatabaseWrapper database)
         {
             this.database = database;
         }
@@ -51,7 +51,7 @@ namespace Incoding.Data.Mongo.Provider
 
         public void Save<TEntity>(TEntity entity) where TEntity : class, IEntity, new()
         {
-            GetCollection<TEntity>().Insert(entity);
+            GetCollection<TEntity>().InsertOne(entity);
         }
 
         public void Saves<TEntity>(IEnumerable<TEntity> entities) where TEntity : class, IEntity, new()
@@ -72,7 +72,7 @@ namespace Incoding.Data.Mongo.Provider
                 return;
             }
 
-            var update = new UpdateBuilder();
+            var update = new UpdateDefinitionBuilder<TEntity>();
             foreach (var property in typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance)
                                                     .Where(r => !r.Name.EqualsWithInvariant("Id")))
             {
@@ -112,19 +112,17 @@ namespace Incoding.Data.Mongo.Provider
                 update.Set(property.Name, bsonValue);
             }
 
-            GetCollection<TEntity>().Update(MongoDB.Driver.Builders.Query<TEntity>.EQ(r => r.Id, id), update);
+            GetCollection<TEntity>().UpdateMany(r => r.Id == id, update.Combine());
         }
 
         public void Delete<TEntity>(object id) where TEntity : class, IEntity, new()
         {
-            var query = MongoDB.Driver.Builders.Query<TEntity>.EQ(r => r.Id, id);
-            GetCollection<TEntity>().Remove(query);
+            GetCollection<TEntity>().DeleteOne(entity => entity.Id == id);
         }
 
         public void DeleteByIds<TEntity>(IEnumerable<object> ids) where TEntity : class, IEntity, new()
         {
-            var query = MongoDB.Driver.Builders.Query<TEntity>.In(r => r.Id, ids);
-            GetCollection<TEntity>().Remove(query);
+            GetCollection<TEntity>().DeleteMany(entity => ids.Contains(entity.Id));
         }
 
         public void Delete<TEntity>(TEntity entity) where TEntity : class, IEntity, new()
@@ -134,15 +132,14 @@ namespace Incoding.Data.Mongo.Provider
 
         public void DeleteAll<TEntity>() where TEntity : class, IEntity, new()
         {
-            GetCollection<TEntity>().RemoveAll();
+            GetCollection<TEntity>().DeleteMany(r => true);
         }
 
         public TEntity GetById<TEntity>(object id) where TEntity : class, IEntity, new()
         {
             if (id == null)
                 return null;
-            var query = MongoDB.Driver.Builders.Query<TEntity>.EQ(r => r.Id, id);
-            return GetCollection<TEntity>().FindOne(query);
+            return GetCollection<TEntity>().FindSync(entity => entity.Id == id).FirstOrDefault();
         }
 
         public TEntity LoadById<TEntity>(object id) where TEntity : class, IEntity, new()
@@ -171,7 +168,7 @@ namespace Incoding.Data.Mongo.Provider
 
         #endregion
 
-        MongoCollection<TEntity> GetCollection<TEntity>()
+        IMongoCollection<TEntity> GetCollection<TEntity>()
         {
             return database.Instance.GetCollection<TEntity>(typeof(TEntity).Name);
         }

@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using Incoding.UnitTest.MSpecGroup;
 using Microsoft.EntityFrameworkCore;
 
 namespace Incoding.UnitTest
@@ -16,15 +17,14 @@ namespace Incoding.UnitTest
     [Subject(typeof(DelayToScheduler))/*, Isolated*/]
     public class When_save_DelayToScheduler : SpecWithPersistenceSpecification<DelayToScheduler>
     {
-        It should_be_ef = () => new PersistenceSpecification<DelayToScheduler>(PleasureForData.BuildEFSessionFactory(MSpecAssemblyContext.EFFluent
-            /*"IncRealEFSchedulerDb", typeof(DelayToScheduler).Assembly)*/, true)
+        It should_be_ef = () => new PersistenceSpecification<DelayToScheduler>(PleasureForData.Factory()
                                                                                               .Create(IsolationLevel.ReadUncommitted, true, null))
                                         .VerifyMappingAndSchema();
 
         It should_be_nhibernate = () => new PersistenceSpecification<DelayToScheduler>()
                                                 .VerifyMappingAndSchema();
 
-        It should_be_raven_db = () => new PersistenceSpecification<DelayToScheduler>(PleasureForData.BuildRavenDb(new DocumentStore
+        It should_be_raven_db = () => new PersistenceSpecification<DelayToScheduler>(When_persistence_specification_with_instance.BuildRavenDb(new DocumentStore
                                                                                                                   {
                                                                                                                           Url = "http://localhost:8090/",
                                                                                                                           DefaultDatabase = "IncTest",

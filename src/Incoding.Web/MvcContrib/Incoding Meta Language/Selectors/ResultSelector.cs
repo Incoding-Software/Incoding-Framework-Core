@@ -32,9 +32,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Selectors
         {
             return true;
         }
-
-
-
+        
         internal const string TypeOfResult = "result";
 
         internal const string TypeOfEvent = "resultOfevent";

@@ -11,8 +11,8 @@ namespace Incoding.Data.EF.Provider
     {
         #region Static Fields
 
-        [ThreadStatic]
-        static DbContext currentSession;
+        //[ThreadStatic]
+        //static DbContext currentSession;
 
         #endregion
 

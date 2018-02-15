@@ -30,5 +30,9 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
             p.InnerHtml.Append(Message);
             p.WriteTo(writer, encoder);
         }
+
+        public IncHelpBlockControl(IHtmlHelper<TModel> htmlHelper) : base(htmlHelper)
+        {
+        }
     }
 }

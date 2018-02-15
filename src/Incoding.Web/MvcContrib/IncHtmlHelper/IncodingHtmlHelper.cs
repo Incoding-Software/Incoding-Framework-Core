@@ -125,6 +125,11 @@ namespace Incoding.Web.MvcContrib.IncHtmlHelper
             return new MvcForm(htmlHelper.ViewContext, HtmlEncoder.Default);
         }
 
+        public MvcTemplate<TModel> Template<TModel>()
+        {
+            return new MvcTemplate<TModel>(this.htmlHelper);
+        }
+
         #endregion
 
         ////ncrunch: no coverage end
@@ -235,18 +240,7 @@ namespace Incoding.Web.MvcContrib.IncHtmlHelper
             var script = IncodingHtmlHelper.CreateScript(string.Empty, HtmlType.TextJavaScript, src, HtmlString.Empty);
             return script;
         }
-
-        [Obsolete("Please use Template")]
-        public MvcScriptTemplate<TModel> ScriptTemplate<TModel>(string id)
-        {
-            return new MvcScriptTemplate<TModel>(this.htmlHelper, id);
-        }
-
-        public MvcTemplate<TModel> Template<TModel>()
-        {
-            return new MvcTemplate<TModel>(this.htmlHelper);
-        }
-
+        
         public IHtmlContent Link([PathReference] string href)
         {
             var tagBuilder = CreateTag(HtmlTag.Link, HtmlString.Empty, new RouteValueDictionary());

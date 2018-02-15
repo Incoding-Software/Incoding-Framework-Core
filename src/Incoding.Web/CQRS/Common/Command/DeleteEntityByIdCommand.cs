@@ -12,12 +12,11 @@ namespace Incoding.CQRS
 
     #endregion
 
-    public class DeleteEntityByIdCommand : CommandBase
+    public abstract class DeleteEntityByIdCommand : CommandBase
     {
         #region Constructors
-
-        [UsedImplicitly, Obsolete(ObsoleteMessage.SerializeConstructor), ExcludeFromCodeCoverage]
-        public DeleteEntityByIdCommand() { }
+        
+        protected DeleteEntityByIdCommand() { }
 
         public DeleteEntityByIdCommand(string id, Type type)
         {

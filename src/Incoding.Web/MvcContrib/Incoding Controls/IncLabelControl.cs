@@ -16,18 +16,15 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
     public class IncLabelControl<TModel> : IncControlBase<TModel>
     {
         #region Fields
-
-        readonly IHtmlHelper htmlHelper;
-
+        
         readonly string property;
 
         #endregion
 
         #region Constructors
 
-        public IncLabelControl(IHtmlHelper htmlHelper, LambdaExpression property)
+        public IncLabelControl(IHtmlHelper<TModel> htmlHelper, LambdaExpression property) : base(htmlHelper)
         {
-            this.htmlHelper = htmlHelper;
             this.property = ReflectionExtensions.GetMemberName(property).Split(".".ToCharArray()).LastOrDefault();
         }
 

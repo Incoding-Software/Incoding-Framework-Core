@@ -16,9 +16,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
     public class IncPasswordControl<TModel, TProperty> : IncControlBase<TModel>
     {
         #region Fields
-
-        readonly IHtmlHelper<TModel> htmlHelper;
-
+        
         readonly Expression<Func<TModel, TProperty>> property;
 
         #endregion
@@ -29,9 +27,8 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
 
         #region Constructors
 
-        public IncPasswordControl(IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> property)
+        public IncPasswordControl(IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> property) : base(htmlHelper)
         {
-            this.htmlHelper = htmlHelper;
             this.property = property;
         }
 

@@ -20,13 +20,13 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
     {
         #region Constructors
 
-        public IncHorizontalControl(IncLabelControl<TModel> label, TInput input, IncControlBase<TModel> validation)
+        public IncHorizontalControl(IHtmlHelper<TModel> htmlHelper, IncLabelControl<TModel> label, TInput input, IncControlBase<TModel> validation) : base(htmlHelper)
         {
             Label = label;
             Input = input;
             Validation = validation;
-            HelpBlock = new IncHelpBlockControl<TModel>();
-            Control = new IncDivControl<TModel>();
+            HelpBlock = new IncHelpBlockControl<TModel>(htmlHelper);
+            Control = new IncDivControl<TModel>(htmlHelper);
         }
 
         #endregion

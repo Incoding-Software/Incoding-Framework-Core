@@ -21,9 +21,8 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
 
         #region Constructors
 
-        public IncCheckBoxControl(IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> property)
+        public IncCheckBoxControl(IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> property) : base(htmlHelper)
         {
-            this.htmlHelper = htmlHelper;
             this.property = property;
             this.Label = new IncLabelControl<TModel>(htmlHelper, property);
         }

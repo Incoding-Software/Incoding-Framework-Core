@@ -20,5 +20,9 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
             tagBuilder.MergeAttributes(this.attributes, true);
             tagBuilder.WriteTo(writer, encoder);
         }
+
+        public IncDivControl(IHtmlHelper<TModel> htmlHelper) : base(htmlHelper)
+        {
+        }
     }
 }

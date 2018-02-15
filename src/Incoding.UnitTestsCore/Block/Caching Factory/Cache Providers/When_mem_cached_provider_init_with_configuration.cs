@@ -1,3 +1,4 @@
+using Incoding.Core.Caching.Memcached;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 

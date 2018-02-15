@@ -1,4 +1,5 @@
 ﻿using Incoding.Data.Mongo.Provider;
+using MongoDB.Driver;
 
 namespace Incoding.UnitTest
 {
@@ -18,7 +19,7 @@ namespace Incoding.UnitTest
 
         static MongoDbSessionFactory mongo;
 
-        static MongoDatabaseDisposable session;
+        static MongoDatabaseWrapper session;
 
         #endregion
 
@@ -26,6 +27,6 @@ namespace Incoding.UnitTest
 
         Because of = () => { session = mongo.Open("mongodb://localhost:27017/IncDb"); };
 
-        It should_be_open = () => session.Instance.Name.ShouldEqual("IncDb");
+        It should_be_open = () => session.Instance.DatabaseNamespace.DatabaseName.ShouldEqual("IncDb");
     }
 }

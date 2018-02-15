@@ -93,7 +93,7 @@ namespace Incoding.Web.MvcContrib.IncHtmlHelper
             var label = new IncLabelControl<TModel>(htmlHelper, property);
             label.AddClass("control-label");
             var validation = new IncValidationControl<TModel>(htmlHelper, property);
-            var horizontal = new IncHorizontalControl<TInput, TModel>(label, input, validation);
+            var horizontal = new IncHorizontalControl<TInput, TModel>(htmlHelper, label, input, validation);
             MaybeObject.Do(configuration, r => r(horizontal));
 
             return horizontal;

@@ -5,7 +5,7 @@ namespace Incoding.Core.Block.IoC
 {
     public static class ServiceProviderExtensions
     {
-        public static TService GetService<TService>(this IServiceProvider serviceProvider, string name)
+        public static TService GetService<TService>(this IServiceProvider serviceProvider, object name)
             where TService : class
         {
             return serviceProvider

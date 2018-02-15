@@ -12,18 +12,15 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
     public class IncStaticControl<TModel, TProperty> : IncControlBase<TModel>
     {
         #region Fields
-
-        readonly IHtmlHelper<TModel> htmlHelper;
-
+        
         readonly Expression<Func<TModel, TProperty>> property;
 
         #endregion
 
         #region Constructors
 
-        public IncStaticControl(IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> property)
+        public IncStaticControl(IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> property) : base(htmlHelper)
         {
-            this.htmlHelper = htmlHelper;
             this.property = property;
         }
 

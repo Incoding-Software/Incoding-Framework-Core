@@ -38,7 +38,7 @@ namespace Incoding.Mvc.MvcContrib.Core
                 var genericType = typeof(IValidator<>).MakeGenericType(new[] {type});
                 validator = IoCFactory.Instance.TryResolve<IValidator>(genericType);
             }
-            catch (InvalidOperationException ex)
+            catch (InvalidOperationException)
             {
                 validator = new ValidateNothingDecorator();
             }

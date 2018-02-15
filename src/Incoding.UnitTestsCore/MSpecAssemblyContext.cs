@@ -1,5 +1,8 @@
 ﻿using System;
+using Incoding.Core.Utilities;
+using Incoding.Data;
 using Incoding.Data.EF.Provider;
+using Incoding.Extensions;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -106,7 +109,37 @@ namespace Incoding.UnitTest
             var currentUiCulture = new CultureInfo("en-US");
             Thread.CurrentThread.CurrentUICulture = currentUiCulture;
             Thread.CurrentThread.CurrentCulture = currentUiCulture;
-            PleasureForData.StartEF(/*NhibernateFluent*/EFFluent, false);
+            StartEF(/*NhibernateFluent*/EFFluent, false);
+        }
+
+        public static void StartEF(Func<IncDbContext> dbContext, bool reloadDb = true)
+        {
+            PleasureForData.Factory = () => BuildEFSessionFactory(dbContext, reloadDb);
+        }
+
+        public static IUnitOfWorkFactory BuildEFSessionFactory(Func<IncDbContext> dbContext, bool reloadDb = false)
+        {
+            try
+            {
+                var context = dbContext();
+                if (reloadDb)
+                {
+                    context.Database.EnsureDeleted();
+                }
+
+                context.Database.EnsureCreated();
+
+                return new EntityFrameworkUnitOfWorkFactory(new EntityFrameworkSessionFactory((str) => context));
+            }
+
+            ////ncrunch: no coverage start
+            catch (Exception e)
+            {
+                Clipboard.Copy("Exception in  build configuration {0}".F(e));
+                return null;
+            }
+
+            ////ncrunch: no coverage end      
         }
 
         public void OnAssemblyComplete() { }

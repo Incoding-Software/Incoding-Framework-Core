@@ -20,9 +20,8 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
     {
         #region Constructors
 
-        public IncRadioButtonControl(IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> property)
+        public IncRadioButtonControl(IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> property) : base(htmlHelper)
         {
-            this.htmlHelper = htmlHelper;
             this.property = property;
             this.Label = new IncLabelControl<TModel>(htmlHelper, property);
         }
@@ -30,9 +29,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
         #endregion
         
         #region Fields
-
-        readonly IHtmlHelper<TModel> htmlHelper;
-
+        
         readonly Expression<Func<TModel, TProperty>> property;
 
         #endregion

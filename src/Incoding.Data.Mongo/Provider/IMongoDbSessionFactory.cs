@@ -1,5 +1,7 @@
-﻿namespace Incoding.Data.Mongo.Provider
+﻿using MongoDB.Driver;
+
+namespace Incoding.Data.Mongo.Provider
 {
-    public interface IMongoDbSessionFactory : ISessionFactory<MongoDatabaseDisposable> 
+    public interface IMongoDbSessionFactory : ISessionFactory<MongoDatabaseWrapper> 
     { }
 }

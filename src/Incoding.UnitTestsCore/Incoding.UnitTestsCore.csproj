@@ -50,7 +50,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Incoding.Core.Caching.Memcached\Incoding.Core.Caching.Memcached.csproj" />
     <ProjectReference Include="..\Incoding.Core\Incoding.Core.csproj" />
+    <ProjectReference Include="..\Incoding.Data.EF\Incoding.Data.EF.csproj" />
+    <ProjectReference Include="..\Incoding.Data.Mongo\Incoding.Data.Mongo.csproj" />
+    <ProjectReference Include="..\Incoding.Data.Raven\Incoding.Data.Raven.csproj" />
     <ProjectReference Include="..\Incoding.Data\Incoding.Data.csproj" />
     <ProjectReference Include="..\Incoding.MSpec\Incoding.MSpec.csproj" />
     <ProjectReference Include="..\Incoding.Web\Incoding.Web.csproj" />

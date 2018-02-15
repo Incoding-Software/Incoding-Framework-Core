@@ -9,9 +9,9 @@
 
     #endregion
 
-    public class HasEntitiesQuery<TEntity> : QueryBase<IncBoolResponse> where TEntity : class, IEntity, new()
+    public class HasEntitiesQuery<TEntity> : QueryBase<bool> where TEntity : class, IEntity, new()
     {
-        protected override IncBoolResponse ExecuteResult()
+        protected override bool ExecuteResult()
         {
             return Repository.Query<TEntity>().Any();
         }

@@ -1,1 +1,0 @@
-﻿{{#each data}}<option {{#if Selected}}selected="selected"{{/if}} value="{{Value}}" title="{{Title}}">{{{Text}}}</option>{{/each}}

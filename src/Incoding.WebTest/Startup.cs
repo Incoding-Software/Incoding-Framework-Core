@@ -51,12 +51,7 @@ namespace Incoding.WebTest
                     services.Add(ServiceDescriptor.Transient(result.InterfaceType, result.ValidatorType));
                     services.Add(ServiceDescriptor.Transient(result.ValidatorType, result.ValidatorType));
                 });
-                //configuration.RegisterValidatorsFromAssemblyContaining<ItemEntity>();
             })
-            //.AddRazorOptions(options =>
-            //{
-            //    options.PageViewLocationFormats.Insert(0, "{0}");
-            //})
             ;
             services.ConfigureIncodingCoreServices();
             services.ConfigureIncodingEFDataServices(typeof(ItemEntity), builder =>
@@ -64,16 +59,7 @@ namespace Incoding.WebTest
                 builder.UseSqlServer(Configuration.GetConnectionString("Main"));
             });
             services.ConfigureIncodingWebServices();
-            IncodingHtmlHelper.BootstrapVersion = BootstrapOfVersion.v3;
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
-            services.AddScoped<IUrlHelper>(x =>
-            {
-                var actionContext = x.GetService<IActionContextAccessor>().ActionContext;
-                return new UrlHelper(actionContext);
-            });
-
-            //var serviceProvider = services.BuildServiceProvider();
-                        
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -110,20 +96,20 @@ namespace Incoding.WebTest
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            IoCFactory.Instance.Initialize(app.ApplicationServices);
+            IoCFactory.Instance.Initialize(init => init.WithProvider(new MSDependencyInjectionIoCProvider(app.ApplicationServices)));
             CachingFactory.Instance.Initialize(init => init.WithProvider(new NetCachedProvider(() => app.ApplicationServices.GetRequiredService<IMemoryCache>())));
 
-            BackendTaskFactory.Instance.AddExecutor("SomeService", 
+            BackgroundTaskFactory.Instance.AddExecutor("SomeService", 
                 () =>
                 {
                     new DefaultDispatcher().Push(new BackgroundServiceCommand());
                 }, options => options.Interval = TimeSpan.FromSeconds(15));
 
-            BackendTaskFactory.Instance.AddSequentalExecutor("Some Sequential Service", 
+            BackgroundTaskFactory.Instance.AddSequentalExecutor("Some Sequential Service", 
                 new SequentialTestQuery(), arg => new SequentialTestCommand()
                 , options => options.Interval = TimeSpan.FromSeconds(15));
 
-            BackendTaskFactory.Instance.Initialize(applicationLifetime);
+            BackgroundTaskFactory.Instance.Initialize(applicationLifetime);
         }
     }
 }

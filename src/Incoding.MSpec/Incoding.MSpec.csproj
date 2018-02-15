@@ -9,20 +9,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
     <PackageReference Include="Machine.Specifications" Version="0.12.0" />
     <PackageReference Include="Machine.Specifications.Should" Version="0.11.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.1" />
     <PackageReference Include="Moq" Version="4.8.1" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.4.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Incoding.Core\Incoding.Core.csproj" />
-    <ProjectReference Include="..\Incoding.Data.EF\Incoding.Data.EF.csproj" />
-    <ProjectReference Include="..\Incoding.Data.Mongo\Incoding.Data.Mongo.csproj" />
-    <ProjectReference Include="..\Incoding.Data.Raven\Incoding.Data.Raven.csproj" />
     <ProjectReference Include="..\Incoding.Data\Incoding.Data.csproj" />
     <ProjectReference Include="..\Incoding.Web\Incoding.Web.csproj" />
   </ItemGroup>

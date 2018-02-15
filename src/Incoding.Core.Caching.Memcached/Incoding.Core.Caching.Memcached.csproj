@@ -5,12 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="RavenDB.Client" Version="3.5.5" />
+    <PackageReference Include="EnyimMemcachedCore" Version="2.1.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Incoding.Core\Incoding.Core.csproj" />
-    <ProjectReference Include="..\Incoding.Data\Incoding.Data.csproj" />
   </ItemGroup>
 
 </Project>

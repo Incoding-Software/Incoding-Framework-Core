@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using MongoDB.Driver;
 
 namespace Incoding.Data.Mongo.Provider
 {
@@ -9,11 +10,11 @@ namespace Incoding.Data.Mongo.Provider
     #endregion
 
     [UsedImplicitly, ExcludeFromCodeCoverage]
-    public class MongoDbUnitOfWork : UnitOfWorkBase<MongoDatabaseDisposable>
+    public class MongoDbUnitOfWork : UnitOfWorkBase<MongoDatabaseWrapper>
     {
         #region Constructors
 
-        public MongoDbUnitOfWork(MongoDatabaseDisposable session, IsolationLevel level)
+        public MongoDbUnitOfWork(MongoDatabaseWrapper session, IsolationLevel level)
                 : base(session)
         {
             repository = new MongoDbRepository(session);

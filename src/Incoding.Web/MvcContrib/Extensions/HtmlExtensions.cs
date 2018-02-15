@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Incoding.Mvc.MvcContrib.Extensions
@@ -89,7 +90,7 @@ namespace Incoding.Mvc.MvcContrib.Extensions
         public static IIncodingMetaLanguageBindingDsl When(this IHtmlHelper htmlHelper, string bind)
         {
             HtmlHelper = htmlHelper;
-            UrlDispatcher = new UrlDispatcher(htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<IUrlHelper>());
+            UrlDispatcher = new UrlDispatcher(new UrlHelper(htmlHelper.ViewContext));
             return new IncodingMetaLanguageDsl(htmlHelper, bind);
         }
 
