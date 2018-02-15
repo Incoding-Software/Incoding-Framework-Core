@@ -1,5 +1,7 @@
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text.Encodings.Web;
 using Incoding.Extensions;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -36,8 +38,8 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
         public string Name { get; set; }
 
         #endregion
-
-        public override IHtmlContent ToHtmlString()
+        
+        public override void WriteTo(TextWriter writer, HtmlEncoder encoder)
         {
             var tagBuilder = new TagBuilder("label");
             tagBuilder.Attributes.Add("for", TagBuilder.CreateSanitizedId(htmlHelper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(property), "_"));
@@ -48,7 +50,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
 
             tagBuilder.MergeAttributes(attributes, true);
             tagBuilder.TagRenderMode = TagRenderMode.Normal;
-            return new HtmlString(tagBuilder.ToString());
+            tagBuilder.WriteTo(writer, encoder);
         }
     }
 }

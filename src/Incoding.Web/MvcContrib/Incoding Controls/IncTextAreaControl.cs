@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Linq.Expressions;
+using System.Text.Encodings.Web;
 using Incoding.Extensions;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.JqueryHelper.Primitive;
 using Microsoft.AspNetCore.Html;
@@ -52,10 +54,10 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
         public int MaxLenght { set { this.attributes.Set(HtmlAttribute.MaxLength.ToStringLower(), value); } }
 
         #endregion
-
-        public override IHtmlContent ToHtmlString()
+        
+        public override void WriteTo(TextWriter writer, HtmlEncoder encoder)
         {
-            return this.htmlHelper.TextAreaFor(this.property, 5, 25, GetAttributes());
+            this.htmlHelper.TextAreaFor(this.property, 5, 25, GetAttributes()).WriteTo(writer, encoder);
         }
     }
 }

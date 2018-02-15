@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq.Expressions;
+using System.Text.Encodings.Web;
 using Incoding.Extensions;
 using Incoding.Maybe;
 using Incoding.Mvc.MvcContrib.Extensions;
@@ -34,47 +36,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
         }
 
         #endregion
-
-        public override IHtmlContent ToHtmlString()
-        {
-            string currentUrl = Data;
-            bool isAjax = !string.IsNullOrWhiteSpace(currentUrl);
-
-            var meta = isAjax ? this.htmlHelper.When(InitBind).Ajax(currentUrl)
-                               : this.htmlHelper.When(InitBind);
-            attributes = meta.OnSuccess(dsl =>
-                                        {
-                                            if (isAjax)
-                                            {
-                                                dsl.Self().JQuery.Dom.Empty();
-                                                foreach (var vm in (List<KeyValueVm>)Data.Optional)
-                                                {
-                                                    var option = new TagBuilder(HtmlTag.Option.ToStringLower());
-                                                    option.InnerHtml.Append(vm.Text);
-                                                    option.MergeAttribute(HtmlAttribute.Value.ToStringLower(), vm.Value);
-                                                    dsl.Self().JQuery.Dom.Use(new HtmlString(option.ToString()).ToString()).Prepend();
-                                                }
-                                                dsl.Self().Insert.WithTemplate(Template).Append();
-                                            }
-
-                                            var selected = ExpressionMetadataProvider.FromLambdaExpression(property, htmlHelper.ViewData, htmlHelper.MetadataProvider).Model;
-                                            if (selected != null)
-                                                dsl.Self().JQuery.Attr.Val(selected);
-
-                                            OnInit.Do(action => action(dsl));
-                                            OnEvent.Do(action => action(dsl));
-                                        })
-                             .When(JqueryBind.Change)
-                             .OnSuccess(dsl =>
-                                        {
-                                            OnChange.Do(action => action(dsl));
-                                            OnEvent.Do(action => action(dsl));
-                                        })
-                             .AsHtmlAttributes(this.attributes);
-
-            return this.htmlHelper.DropDownListFor(this.property, isAjax ? new SelectList(new string[] { }) : (SelectList)Data, string.Empty, this.attributes);
-        }
-
+        
         #region Fields
 
         readonly IHtmlHelper<TModel> htmlHelper;
@@ -96,5 +58,46 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
         public Selector Template { get; set; }
 
         #endregion
+
+        public override void WriteTo(TextWriter writer, HtmlEncoder encoder)
+        {
+            string currentUrl = Data;
+            bool isAjax = !string.IsNullOrWhiteSpace(currentUrl);
+
+            var meta = isAjax ? this.htmlHelper.When(InitBind).Ajax(currentUrl)
+                               : this.htmlHelper.When(InitBind);
+            attributes = meta.OnSuccess(dsl =>
+            {
+                if (isAjax)
+                {
+                    dsl.Self().JQuery.Dom.Empty();
+                    foreach (var vm in (List<KeyValueVm>)Data.Optional)
+                    {
+                        var option = new TagBuilder(HtmlTag.Option.ToStringLower());
+                        option.InnerHtml.Append(vm.Text);
+                        option.MergeAttribute(HtmlAttribute.Value.ToStringLower(), vm.Value);
+                        dsl.Self().JQuery.Dom.Use(new HtmlString(option.ToString()).ToString()).Prepend();
+                    }
+                    dsl.Self().Insert.WithTemplate(Template).Append();
+                }
+
+                var selected = ExpressionMetadataProvider.FromLambdaExpression(property, htmlHelper.ViewData, htmlHelper.MetadataProvider).Model;
+                if (selected != null)
+                    dsl.Self().JQuery.Attr.Val(selected);
+
+                OnInit.Do(action => action(dsl));
+                OnEvent.Do(action => action(dsl));
+            })
+                             .When(JqueryBind.Change)
+                             .OnSuccess(dsl =>
+                             {
+                                 OnChange.Do(action => action(dsl));
+                                 OnEvent.Do(action => action(dsl));
+                             })
+                             .AsHtmlAttributes(this.attributes);
+
+            var tag = this.htmlHelper.DropDownListFor(this.property, isAjax ? new SelectList(new string[] { }) : (SelectList)Data, string.Empty, this.attributes);
+            tag.WriteTo(writer, encoder);
+        }
     }
 }

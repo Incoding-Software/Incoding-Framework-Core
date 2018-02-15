@@ -1,5 +1,7 @@
 using System;
+using System.IO;
 using System.Linq.Expressions;
+using System.Text.Encodings.Web;
 using Incoding.Extensions;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.JqueryHelper.Primitive;
 using Incoding.Mvc.MvcContrib.Primitive;
@@ -27,8 +29,22 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
         }
 
         #endregion
+        
+        #region Fields
+        
+        readonly Expression<Func<TModel, TProperty>> property;
 
-        public override IHtmlContent ToHtmlString()
+        #endregion
+
+        #region Properties
+
+        public IncLabelControl<TModel> Label { get; protected set; }
+
+        public ModeOfCheckbox Mode { get; set; }
+
+        #endregion
+
+        public override void WriteTo(TextWriter writer, HtmlEncoder encoder)
         {
             bool isChecked = this.attributes.ContainsKey(HtmlAttribute.Checked.ToStringLower());
             if (!isChecked)
@@ -48,25 +64,10 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
             spanAsLabel.InnerHtml.AppendHtml(this.Label.Name);
             var label = new TagBuilder(HtmlTag.Label.ToStringLower());
             label.InnerHtml.AppendHtml(this.htmlHelper.CheckBox(ExpressionHelper.GetExpressionText(this.property), isChecked, GetAttributes()).ToString()
-                              + new TagBuilder(HtmlTag.I.ToStringLower())
-                              + spanAsLabel);
+                                       + new TagBuilder(HtmlTag.I.ToStringLower())
+                                       + spanAsLabel);
             div.InnerHtml.AppendHtml(label);
-
-            return div;
+            div.WriteTo(writer, encoder);
         }
-
-        #region Fields
-        
-        readonly Expression<Func<TModel, TProperty>> property;
-
-        #endregion
-
-        #region Properties
-
-        public IncLabelControl<TModel> Label { get; protected set; }
-
-        public ModeOfCheckbox Mode { get; set; }
-
-        #endregion
     }
 }

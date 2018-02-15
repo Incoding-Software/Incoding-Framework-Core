@@ -83,7 +83,7 @@ namespace Incoding.Web.MvcContrib.IncHtmlHelper
         IHtmlContent Control<TInput>(TInput input, Action<TInput> configuration) where TInput : IncControlBase<TModel>
         {
             configuration.Do(action => action(input));
-            return input.ToHtmlString();
+            return input;
         }
     }
 }

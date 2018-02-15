@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Text.Encodings.Web;
 using Incoding.Block.IoC;
 using Incoding.Extensions;
 using Incoding.Maybe;
@@ -15,12 +17,14 @@ using JetBrains.Annotations;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing;
 
 namespace Incoding.Web.MvcContrib.IncHtmlHelper
 {
     public class IncodingHtmlHelper
     {
+        private readonly IHtmlHelper htmlHelper;
         // ReSharper disable ConvertToConstant.Global
         // ReSharper disable FieldCanBeMadeReadOnly.Global
 
@@ -37,6 +41,11 @@ namespace Incoding.Web.MvcContrib.IncHtmlHelper
         public static B Def_Label_Class = B.Col_xs_5;
 
         public static B Def_Control_Class = B.Col_xs_7;
+
+        internal IncodingHtmlHelper(IHtmlHelper htmlHelper)
+        {
+            this.htmlHelper = htmlHelper;
+        }
 
         internal static TagBuilder CreateScript(string id, HtmlType type, string src, HtmlString content)
         {
@@ -67,6 +76,55 @@ namespace Incoding.Web.MvcContrib.IncHtmlHelper
             return tagBuilder;
         }
 
+        public MvcForm BeginMvcForm(string url, Enctype enctype, FormMethod method, bool? antiforgery, object htmlAttributes)
+        {
+            this.htmlHelper.ViewContext.FormContext = new FormContext()
+            {
+                CanRenderAtEndOfForm = true
+            };
+            return this.GenerateMvcForm(url, method, enctype, antiforgery, htmlAttributes);
+        }
+
+        private static IDictionary<string, object> GetHtmlAttributeDictionaryOrNull(object htmlAttributes)
+        {
+            IDictionary<string, object> dictionary = (IDictionary<string, object>)null;
+            if (htmlAttributes != null)
+                dictionary = htmlAttributes as IDictionary<string, object> ?? HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
+            return dictionary;
+        }
+
+        protected virtual TagBuilder GenerateFormCore(ViewContext viewContext, string action, Enctype enctype, string method, object htmlAttributes)
+        {
+            if (viewContext == null)
+                throw new ArgumentNullException(nameof(viewContext));
+            TagBuilder tagBuilder = new TagBuilder("form");
+            IDictionary<string, object> dictionaryOrNull = GetHtmlAttributeDictionaryOrNull(htmlAttributes);
+            tagBuilder.MergeAttributes<string, object>(dictionaryOrNull);
+            string actionKey = nameof(action);
+            tagBuilder.MergeAttribute(actionKey, action);
+            if (string.IsNullOrEmpty(method))
+                method = "post";
+            string methodName = nameof(method);
+            tagBuilder.MergeAttribute(methodName, method, true);
+            string enctypeName = nameof(enctype);
+            tagBuilder.MergeAttribute(enctypeName, enctype.ToLocalization(), true);
+            return tagBuilder;
+        }
+
+        protected virtual MvcForm GenerateMvcForm(string url, FormMethod method, Enctype enctype, bool? antiforgery, object htmlAttributes)
+        {
+            TagBuilder form = this.GenerateFormCore(this.htmlHelper.ViewContext, url, enctype, HtmlHelper.GetFormMethodString(method), htmlAttributes);
+            if (form != null)
+            {
+                form.TagRenderMode = TagRenderMode.StartTag;
+                form.WriteTo(this.htmlHelper.ViewContext.Writer, HtmlEncoder.Default);
+            }
+            if ((antiforgery.HasValue ? (antiforgery.Value ? 1 : 0) : ((uint)method > 0U ? 1 : 0)) != 0)
+                this.htmlHelper.ViewContext.FormContext.EndOfFormContent.Add(this.htmlHelper.AntiForgeryToken());
+
+            return new MvcForm(htmlHelper.ViewContext, HtmlEncoder.Default);
+        }
+
         #endregion
 
         ////ncrunch: no coverage end
@@ -79,12 +137,12 @@ namespace Incoding.Web.MvcContrib.IncHtmlHelper
     {
         readonly IHtmlHelper<TModel> htmlHelper;
 
-        public IncodingHtmlHelper(IHtmlHelper<TModel> htmlHelper)
+        public IncodingHtmlHelper(IHtmlHelper<TModel> htmlHelper) : base(htmlHelper)
         {
             this.htmlHelper = htmlHelper;
         }
 
-        public BeginTag BeginPush(Action<BeginPushSetting> evaluated)
+        public MvcForm BeginPush(Action<BeginPushSetting> evaluated)
         {
             var setting = new BeginPushSetting();
             evaluated(setting);
@@ -92,12 +150,10 @@ namespace Incoding.Web.MvcContrib.IncHtmlHelper
             return BeginPushInternal(setting);
         }
 
-        private BeginTag BeginPushInternal(BeginPushSetting setting)
+        private MvcForm BeginPushInternal(BeginPushSetting setting)
         {
             var routes = new RouteValueDictionary(new { @class = setting.CssClass, id = setting.Id ?? "" });
-            if (setting.IsMultiPart)
-                routes.Add("enctype", "multipart/form-data");
-
+            
             return htmlHelper.When(JqueryBind.InitIncoding)
                 .OnSuccess(dsl => dsl.Self().Form.Validation.Parse())
                 .When(JqueryBind.Submit)
@@ -122,8 +178,10 @@ namespace Incoding.Web.MvcContrib.IncHtmlHelper
                 })
 
                 .AsHtmlAttributes(routes)
-                .ToBeginForm(setting.Url ?? new UrlHelper(this.htmlHelper.ViewContext).Dispatcher().Push<TModel>());
+                .ToMvcForm(htmlHelper, setting.Url ?? new UrlHelper(this.htmlHelper.ViewContext).Dispatcher().Push<TModel>(), setting.Method, setting.EncType);
         }
+
+        
 
         public class BeginPushSetting
         {
@@ -141,11 +199,12 @@ namespace Incoding.Web.MvcContrib.IncHtmlHelper
             public Action<IIncodingMetaLanguageCallbackBodyDsl> OnError { get; set; }
 
             public string CssClass { get; set; }
-
-            public bool IsMultiPart { get; set; }
+            
             public string Id { get; set; }
 
             public string Url { get; set; }
+            public FormMethod Method { get; set; }
+            public Enctype EncType { get; set; }
         }
     /*}
 

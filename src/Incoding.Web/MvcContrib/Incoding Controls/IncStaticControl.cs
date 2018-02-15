@@ -1,5 +1,7 @@
 using System;
+using System.IO;
 using System.Linq.Expressions;
+using System.Text.Encodings.Web;
 using Incoding.Maybe;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -26,17 +28,17 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
         }
 
         #endregion
-
-        public override IHtmlContent ToHtmlString()
+        
+        public override void WriteTo(TextWriter writer, HtmlEncoder encoder)
         {
             var tagBuilder = new TagBuilder("p");
 
             tagBuilder.InnerHtml.AppendHtml(ExpressionMetadataProvider
-                    .FromLambdaExpression(property, htmlHelper.ViewData, htmlHelper.MetadataProvider)
-                    .Model.With(r => r.ToString()));
+                .FromLambdaExpression(property, htmlHelper.ViewData, htmlHelper.MetadataProvider)
+                .Model.With(r => r.ToString()));
 
             tagBuilder.MergeAttributes(attributes, true);
-            return tagBuilder;
+            tagBuilder.WriteTo(writer, encoder);
         }
     }
 }

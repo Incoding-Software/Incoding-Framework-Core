@@ -6,6 +6,7 @@ using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.JqueryHelper.Options;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.JqueryHelper.Primitive;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Selectors.Core;
 using Incoding.Mvc.MvcContrib.Primitive;
+using Incoding.Web.MvcContrib.IncHtmlHelper;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -20,26 +21,26 @@ namespace Incoding.Mvc.MvcContrib.Extensions
     public static class RouteValueDictionaryExtensions
     {
         public static MvcForm ToMvcForm(this RouteValueDictionary htmlAttributes, IHtmlHelper htmlHelper, string url,
-                                           JqueryAjaxOptions.HttpVerbs method = JqueryAjaxOptions.HttpVerbs.Post,
-                                           Enctype enctype = Enctype.ApplicationXWWWFormUrlEncoded
+                                           FormMethod method,
+                                           Enctype enctype = Enctype.ApplicationXwwwFormUrlEncoded
                 )
         {
-            if (!htmlAttributes.ContainsKey(HtmlAttribute.Method.ToStringLower()))
-                htmlAttributes.Set(HtmlAttribute.Method.ToStringLower(), EnumExtensions.ToStringLower(method));
+            //if (!htmlAttributes.ContainsKey(HtmlAttribute.Method.ToStringLower()))
+            //    htmlAttributes.Set(HtmlAttribute.Method.ToStringLower(), EnumExtensions.ToStringLower(method));
 
-            if (!htmlAttributes.ContainsKey(HtmlAttribute.Enctype.ToStringLower()))
-                htmlAttributes.Set(HtmlAttribute.Enctype.ToStringLower(), enctype.ToLocalization());
+            //if (!htmlAttributes.ContainsKey(HtmlAttribute.Enctype.ToStringLower()))
+            //    htmlAttributes.Set(HtmlAttribute.Enctype.ToStringLower(), enctype.ToLocalization());
 
-            if (!htmlAttributes.ContainsKey(HtmlAttribute.Action.ToStringLower()))
-                htmlAttributes.Set(HtmlAttribute.Action.ToStringLower(), url);
+            //if (!htmlAttributes.ContainsKey(HtmlAttribute.Action.ToStringLower()))
+            //    htmlAttributes.Set(HtmlAttribute.Action.ToStringLower(), url);
 
-            return new MvcForm(htmlHelper.ViewContext, HtmlEncoder.Default);
+            return new IncodingHtmlHelper(htmlHelper).BeginMvcForm(url, enctype, method, false, htmlAttributes);
         }
 
         [Obsolete("Use ToBeginTag wihtout HtmlHelper")]
         public static BeginTag ToBeginForm(this RouteValueDictionary htmlAttributes, IHtmlHelper htmlHelper, string url,
                                            JqueryAjaxOptions.HttpVerbs method = JqueryAjaxOptions.HttpVerbs.Post,
-                                           Enctype enctype = Enctype.ApplicationXWWWFormUrlEncoded
+                                           Enctype enctype = Enctype.ApplicationXwwwFormUrlEncoded
                 )
         {
             if (!htmlAttributes.ContainsKey(HtmlAttribute.Method.ToStringLower()))

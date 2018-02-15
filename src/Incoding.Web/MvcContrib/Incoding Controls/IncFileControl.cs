@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Linq.Expressions;
+using System.Text.Encodings.Web;
 using Incoding.Extensions;
 using Incoding.Mvc.MvcContrib.Extensions;
 using Microsoft.AspNetCore.Html;
@@ -35,10 +37,10 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
         public string Value { get; set; }
 
         #endregion
-
-        public override IHtmlContent ToHtmlString()
+        
+        public override void WriteTo(TextWriter writer, HtmlEncoder encoder)
         {
-            return this.htmlHelper.Incoding().File(Value, GetAttributes());
+            this.htmlHelper.Incoding().File(Value, GetAttributes()).WriteTo(writer, encoder);
         }
     }
 }

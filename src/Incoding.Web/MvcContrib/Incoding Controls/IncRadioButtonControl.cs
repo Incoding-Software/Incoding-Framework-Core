@@ -1,5 +1,7 @@
 using System;
+using System.IO;
 using System.Linq.Expressions;
+using System.Text.Encodings.Web;
 using Incoding.Extensions;
 using Incoding.Maybe;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.JqueryHelper.Primitive;
@@ -26,33 +28,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
         }
 
         #endregion
-
-        public override IHtmlContent ToHtmlString()
-        {
-            string value = Value.With(r => r.ToString());
-            Guard.NotNullOrWhiteSpace("value", value, errorMessage: "Please set Value like are setting.Value = something");
-
-            var div = new TagBuilder(HtmlTag.Div.ToStringLower());
-            div.AddCssClass(Mode == ModeOfRadio.Normal ? B.Radio.ToLocalization() : B.Radio_inline.ToLocalization());
-            var parentClass = GetAttributes().GetOrDefault(HtmlAttribute.Class.ToStringLower(), string.Empty).ToString();
-            if (!string.IsNullOrEmpty(parentClass))
-                div.AddCssClass(parentClass);
-            var spanAsLabel = new TagBuilder(HtmlTag.Span.ToStringLower());
-            spanAsLabel.InnerHtml.SetContent(this.Label.Name ?? value);
-            var label = new TagBuilder(HtmlTag.Label.ToStringLower());
-            label.TagRenderMode = TagRenderMode.Normal;
-            var icon = new TagBuilder(HtmlTag.I.ToStringLower());
-            if (!string.IsNullOrWhiteSpace(IconClass))
-                icon.AddCssClass(IconClass);
-
-            label.InnerHtml.AppendHtml(this.htmlHelper.RadioButtonFor(this.property, value, GetAttributes()).ToString()
-                              + icon
-                              + spanAsLabel);
-            div.InnerHtml.AppendHtml(label);
-
-            return new HtmlString(div.ToString());
-        }
-
+        
         #region Fields
 
         readonly IHtmlHelper<TModel> htmlHelper;
@@ -72,5 +48,30 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
         public ModeOfRadio Mode { get; set; }
 
         #endregion
+
+        public override void WriteTo(TextWriter writer, HtmlEncoder encoder)
+        {
+            string value = Value.With(r => r.ToString());
+            Guard.NotNullOrWhiteSpace("value", value, errorMessage: "Please set Value like are setting.Value = something");
+
+            var div = new TagBuilder(HtmlTag.Div.ToStringLower());
+            div.AddCssClass(Mode == ModeOfRadio.Normal ? B.Radio.ToLocalization() : B.Radio_inline.ToLocalization());
+            var parentClass = GetAttributes().GetOrDefault(HtmlAttribute.Class.ToStringLower(), string.Empty).ToString();
+            if (!string.IsNullOrEmpty(parentClass))
+                div.AddCssClass(parentClass);
+            var spanAsLabel = new TagBuilder(HtmlTag.Span.ToStringLower());
+            spanAsLabel.InnerHtml.SetContent(this.Label.Name ?? value);
+            var label = new TagBuilder(HtmlTag.Label.ToStringLower());
+            label.TagRenderMode = TagRenderMode.Normal;
+            var icon = new TagBuilder(HtmlTag.I.ToStringLower());
+            if (!string.IsNullOrWhiteSpace(IconClass))
+                icon.AddCssClass(IconClass);
+
+            label.InnerHtml.AppendHtml(this.htmlHelper.RadioButtonFor(this.property, value, GetAttributes()).ToString()
+                                       + icon
+                                       + spanAsLabel);
+            div.InnerHtml.AppendHtml(label);
+            div.WriteTo(writer, encoder);
+        }
     }
 }

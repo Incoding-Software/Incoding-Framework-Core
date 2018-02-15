@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.Encodings.Web;
 using Incoding.Extensions;
 using Incoding.Maybe;
 using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL;
@@ -18,7 +20,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
 
     #endregion
 
-    public abstract class IncControlBase<TModel>
+    public abstract class IncControlBase<TModel> : IHtmlContent
     {
         #region Fields
 
@@ -99,7 +101,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
 
         #region Api Methods
 
-        public abstract IHtmlContent ToHtmlString();
+        //public abstract IHtmlContent ToHtmlString();
 
         public string GetAttr(HtmlAttribute attr)
         {
@@ -198,5 +200,7 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
         }
 
         #endregion
+
+        public abstract void WriteTo(TextWriter writer, HtmlEncoder encoder);
     }
 }

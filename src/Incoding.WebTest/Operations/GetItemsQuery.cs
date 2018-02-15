@@ -31,6 +31,14 @@ namespace Incoding.WebTest.Operations
         }
     }
 
+    public class ClearItemCacheCommand : CommandBase
+    {
+        protected override void Execute()
+        {
+            CachingFactory.Instance.Delete(new GetItemsQuery());
+        }
+    }
+
     public class GetItemsQuery : QueryBase<List<GetItemsQuery.Response>>, ICacheKey
     {
         public class Response
@@ -45,7 +53,8 @@ namespace Incoding.WebTest.Operations
         {
             var result = CachingFactory.Instance.Retrieve(this, () =>
             {
-                var names = Repository.Query<ItemEntity>().Select(r => new Response
+                var names = Repository.Query(whereSpecification: new ItemEntity.Where.ByStringLongerThan(3),
+                    orderSpecification: new ItemEntity.Order.ByName()).Select(r => new Response
                 {
                     Key = r.Id.ToString(),
                     StringPresentation = "The value is: " + r.Name

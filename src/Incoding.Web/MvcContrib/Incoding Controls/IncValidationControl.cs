@@ -1,4 +1,6 @@
+using System.IO;
 using System.Linq.Expressions;
+using System.Text.Encodings.Web;
 using Incoding.Extensions;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -28,10 +30,10 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
         }
 
         #endregion
-
-        public override IHtmlContent ToHtmlString()
+        
+        public override void WriteTo(TextWriter writer, HtmlEncoder encoder)
         {
-            return this.htmlHelper.ValidationMessage(this.property, string.Empty, this.attributes, "span");
+            this.htmlHelper.ValidationMessage(this.property, string.Empty, this.attributes, "span").WriteTo(writer, encoder);
         }
     }
 }

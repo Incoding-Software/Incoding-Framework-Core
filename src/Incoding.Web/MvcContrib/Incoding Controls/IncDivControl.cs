@@ -1,3 +1,5 @@
+using System.IO;
+using System.Text.Encodings.Web;
 using Incoding.Extensions;
 using Incoding.Mvc.MvcContrib.Primitive;
 using Microsoft.AspNetCore.Html;
@@ -7,17 +9,16 @@ namespace Incoding.Mvc.MvcContrib.Incoding_Controls
 {
     public class IncDivControl<TModel> : IncControlBase<TModel>
     {
-        public HtmlString Content { get; internal set; }
-
-
-        public override IHtmlContent ToHtmlString()
+        public IHtmlContent Content { get; internal set; }
+        
+        public override void WriteTo(TextWriter writer, HtmlEncoder encoder)
         {
             var tagBuilder = new TagBuilder(HtmlTag.Div.ToStringLower());
             tagBuilder.TagRenderMode = TagRenderMode.Normal;
             tagBuilder.InnerHtml.AppendHtml(Content);
 
             tagBuilder.MergeAttributes(this.attributes, true);
-            return new HtmlString(tagBuilder.ToString());
+            tagBuilder.WriteTo(writer, encoder);
         }
     }
 }

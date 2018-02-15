@@ -2,10 +2,14 @@
 @using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.JqueryHelper.Primitive
 @using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Selectors.Core
 @using Incoding.WebTest.Operations
+@using (Html.BeginForm())
+{
+    
+}
 @(Html.When(JqueryBind.InitIncoding)
       .Ajax(new GetItemsQuery())
       .OnSuccess(dsl => dsl.Self().JQuery.Dom.Use(Selector.Result).WithTemplateByView("~/Views/Item/ItemTmpl.cshtml").Html())
-      .AsHtmlAttributes(new { id = nameof(GetItemsQuery)})
+      .AsHtmlAttributes(new { id = nameof(GetItemsQuery) })
       .ToDiv())
 
 

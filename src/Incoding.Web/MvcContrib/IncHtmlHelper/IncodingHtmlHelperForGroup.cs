@@ -43,7 +43,7 @@ namespace Incoding.Web.MvcContrib.IncHtmlHelper
         {
             var hidden = new IncHiddenControl<TModel, TProperty>(htmlHelper, property);
             MaybeObject.Do(configuration, r => r(hidden));
-            return hidden.ToHtmlString();
+            return hidden;
         }
 
         public IHtmlContent CheckBox(Action<IncHorizontalControl<IncCheckBoxControl<TModel, TProperty>, TModel>> configuration = null)
@@ -96,7 +96,7 @@ namespace Incoding.Web.MvcContrib.IncHtmlHelper
             var horizontal = new IncHorizontalControl<TInput, TModel>(label, input, validation);
             MaybeObject.Do(configuration, r => r(horizontal));
 
-            return horizontal.ToHtmlString();
+            return horizontal;
         }
 
         ////ncrunch: no coverage end

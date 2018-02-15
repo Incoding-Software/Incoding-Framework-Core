@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Web;
 using Incoding.Extensions;
 using Incoding.Mvc.MvcContrib.Primitive;
@@ -17,8 +18,7 @@ namespace Incoding.Mvc.MvcContrib.Extensions
         #region Fields
 
         readonly IHtmlHelper htmlHelper;
-
-        readonly string tag;
+        private readonly HtmlTag _tag;
 
         #endregion
 
@@ -27,14 +27,11 @@ namespace Incoding.Mvc.MvcContrib.Extensions
         public BeginTag(IHtmlHelper htmlHelper, HtmlTag tag, RouteValueDictionary attributes)
         {
             this.htmlHelper = htmlHelper;
-            this.tag = tag.ToStringLower();
-            
-            var startTag = new StringBuilder();
-            startTag.Append("<{0} ".F(this.tag));
-            foreach (var attr in attributes)
-                startTag.Append("{0}=\"{1}\" ".F(attr.Key, HttpUtility.HtmlEncode(attr.Value)));
-            startTag.Append(">");
-            htmlHelper.ViewContext.Writer.Write(startTag.ToString());
+            _tag = tag;
+            TagBuilder tagBuilder = new TagBuilder(tag.ToStringLower());
+            tagBuilder.MergeAttributes(attributes);
+            tagBuilder.TagRenderMode = TagRenderMode.StartTag;
+            tagBuilder.WriteTo(htmlHelper.ViewContext.Writer, HtmlEncoder.Default);
         }
 
         #endregion
@@ -43,7 +40,9 @@ namespace Incoding.Mvc.MvcContrib.Extensions
 
         public void Dispose()
         {
-            this.htmlHelper.ViewContext.Writer.Write("</{0}>".F(this.tag));
+            TagBuilder tagBuilder = new TagBuilder(_tag.ToStringLower());
+            tagBuilder.TagRenderMode = TagRenderMode.EndTag;
+            tagBuilder.WriteTo(htmlHelper.ViewContext.Writer, HtmlEncoder.Default);
         }
 
         #endregion

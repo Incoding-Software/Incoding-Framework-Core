@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Html;
+﻿using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Html;
 
 namespace Incoding.Extensions
 {
@@ -7,6 +8,15 @@ namespace Incoding.Extensions
         public static HtmlString ToMvcHtmlString(this string value)
         {
             return new HtmlString(value);
+        }
+
+        public static string HtmlContentToString(this IHtmlContent content)
+        {
+            using (var writer = new System.IO.StringWriter())
+            {
+                content.WriteTo(writer, HtmlEncoder.Default);
+                return writer.ToString();
+            }
         }
     }
 }
