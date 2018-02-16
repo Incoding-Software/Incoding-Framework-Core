@@ -12,12 +12,12 @@ namespace Incoding.UnitTest
 
     #endregion
 
-    [Subject(typeof(ChangeDelayToSchedulerStatusByUIDCommand))]
+    [Subject(typeof(ChangeSchedulerStatusByUIDCommand))]
     public class When_change_delay_to_scheduler_status_by_uid
     {
         #region Establish value
 
-        static MockMessage<ChangeDelayToSchedulerStatusByUIDCommand, object> mockCommand;
+        static MockMessage<ChangeSchedulerStatusByUIDCommand, object> mockCommand;
 
         static Exception exception;
 
@@ -25,18 +25,18 @@ namespace Incoding.UnitTest
 
         Establish establish = () =>
                               {
-                                  var command = Pleasure.Generator.Invent<ChangeDelayToSchedulerStatusByUIDCommand>();
+                                  var command = Pleasure.Generator.Invent<ChangeSchedulerStatusByUIDCommand>();
 
                                   var entities = new[]
                                                  {
                                                          Pleasure.Generator.Invent<DelayToScheduler>(), Pleasure.Generator.Invent<DelayToScheduler>(), 
                                                  };
-                                  mockCommand = MockCommand<ChangeDelayToSchedulerStatusByUIDCommand>
+                                  mockCommand = MockCommand<ChangeSchedulerStatusByUIDCommand>
                                           .When(command)
                                           .StubQuery(whereSpecification: new DelayToScheduler.Where.ByUID(command.UID), 
                                                      entities: entities)
-                                          .StubPush(new ChangeDelayToSchedulerStatusCommand() { Id = entities[0].Id, Status = command.Status })
-                                          .StubPush(new ChangeDelayToSchedulerStatusCommand() { Id = entities[1].Id, Status = command.Status });
+                                          .StubPush(new ChangeSchedulerStatusCommand() { Id = entities[0].Id, Status = command.Status })
+                                          .StubPush(new ChangeSchedulerStatusCommand() { Id = entities[1].Id, Status = command.Status });
                               };
 
         Because of = () => { exception = Catch.Exception(() => mockCommand.Execute()); };

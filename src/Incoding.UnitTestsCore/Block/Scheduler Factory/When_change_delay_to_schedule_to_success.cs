@@ -15,14 +15,14 @@ namespace Incoding.UnitTest
 
     #endregion
 
-    [Subject(typeof(ChangeDelayToSchedulerStatusCommand))]
+    [Subject(typeof(ChangeSchedulerStatusCommand))]
     public class When_change_delay_to_schedule_to_success
     {
         Establish establish = () =>
                               {
-                                  var command = Pleasure.Generator.Invent<ChangeDelayToSchedulerStatusCommand>(dsl => dsl.Tuning(s => s.Status, DelayOfStatus.Success));
+                                  var command = Pleasure.Generator.Invent<ChangeSchedulerStatusCommand>(dsl => dsl.Tuning(s => s.Status, DelayOfStatus.Success));
 
-                                  var instance = Pleasure.Generator.Invent<ChangeDelayToSchedulerStatusCommand>();
+                                  var instance = Pleasure.Generator.Invent<ChangeSchedulerStatusCommand>();
                                   DateTime? nextDt = Pleasure.Generator.DateTime();
                                   lastStartOn = Pleasure.Generator.DateTime();
                                   delay = Pleasure.MockStrict<DelayToScheduler>(mock =>
@@ -37,12 +37,12 @@ namespace Incoding.UnitTest
 
                                   recurrency = Pleasure.Generator.Invent<GetRecurrencyDateQuery>(dsl => dsl.Tuning(s => s.NowDate, lastStartOn));
 
-                                  Action<ICompareFactoryDsl<AddDelayToSchedulerCommand, AddDelayToSchedulerCommand>> compare
+                                  Action<ICompareFactoryDsl<ScheduleCommand, ScheduleCommand>> compare
                                           = dsl => dsl.ForwardToAction(r => r.Recurrency, schedulerCommand => schedulerCommand.Recurrency.ShouldEqualWeak(recurrency,
                                                                                                                                                           factoryDsl => factoryDsl.ForwardToValue(r => r.NowDate, null)
                                                                                                                                                                                   .ForwardToValue(r => r.RepeatCount, recurrency.RepeatCount - 1)
                                                                                                                                                                                   .ForwardToValue(r => r.StartDate, lastStartOn)));
-                                  mockCommand = MockCommand<ChangeDelayToSchedulerStatusCommand>
+                                  mockCommand = MockCommand<ChangeSchedulerStatusCommand>
                                           .When(command)
                                           .StubGetById(command.Id, delay.Object)
                                           .StubQuery(recurrency, nextDt)
@@ -59,7 +59,7 @@ namespace Incoding.UnitTest
 
         #region Establish value
 
-        static MockMessage<ChangeDelayToSchedulerStatusCommand, object> mockCommand;
+        static MockMessage<ChangeSchedulerStatusCommand, object> mockCommand;
 
         static Mock<DelayToScheduler> delay;
 

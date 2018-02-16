@@ -17,17 +17,17 @@ namespace Incoding.UnitTest
 
     #endregion
 
-    [Subject(typeof(AddDelayToSchedulerCommand))]
+    [Subject(typeof(ScheduleCommand))]
     public class When_add_delay_to_scheduler
     {
         Establish establish = () =>
                               {
                                   When_add_delay_to_scheduler.command = Pleasure.Generator.Invent<FakeCommand>(factoryDsl => factoryDsl.GenerateTo(r => r.Setting, dsl => { }));
                                   nextDt = Pleasure.Generator.DateTime();
-                                  var command = Pleasure.Generator.Invent<AddDelayToSchedulerCommand>(dsl => dsl.Tuning(r => r.Command, When_add_delay_to_scheduler.command)
+                                  var command = Pleasure.Generator.Invent<ScheduleCommand>(dsl => dsl.Tuning(r => r.Command, When_add_delay_to_scheduler.command)
                                                                                                                 .Tuning(r => r.Recurrency, Pleasure.Generator.Invent<GetRecurrencyDateQuery>()));
 
-                                  mockCommand = MockCommand<AddDelayToSchedulerCommand>
+                                  mockCommand = MockCommand<ScheduleCommand>
                                           .When(command)
                                           .StubQuery(command.Recurrency, nextDt);
                               };
@@ -71,7 +71,7 @@ namespace Incoding.UnitTest
 
         #region Establish value
 
-        static MockMessage<AddDelayToSchedulerCommand, object> mockCommand;
+        static MockMessage<ScheduleCommand, object> mockCommand;
 
         static CommandBase command;
 

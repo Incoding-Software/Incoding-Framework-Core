@@ -2,6 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Vlad Kopachinsky, Victor Gelmutdinov</Authors>
+    <Company>Incoding Software</Company>
+    <Product>Incoding.Web</Product>
+    <Description>Memcached provider for Incoding Software caching</Description>
+    <Copyright>Incoding Software, 2018</Copyright>
+    <PackageLicenseUrl>https://github.com/Incoding-Software/Incoding-Framework-Core/blob/master/LICENSE.md</PackageLicenseUrl>
+    <PackageProjectUrl>http://incframework.com</PackageProjectUrl>
+    <PackageIconUrl>http://incframework.com/Content/ico/icon-144x144.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/Incoding-Software/Incoding-Framework-Core</RepositoryUrl>
+    <PackageTags>framework, incoding, caching, memcached, provider</PackageTags>
+    <PackageReleaseNotes>Incoding Framework library migrated to .NET Standard and .NET Core</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

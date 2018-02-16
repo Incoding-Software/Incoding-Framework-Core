@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Incoding.Core.Maybe;
-using Incoding.Core.Tasks;
-using JetBrains.Annotations;
-using Microsoft.AspNetCore.Hosting;
 
-namespace Incoding.Web.Tasks
+namespace Incoding.Core.Tasks
 {
     public class BackgroundTaskFactory
     {
-        IApplicationLifetime appLifetime;
         bool initialized;
 
         static readonly Lazy<BackgroundTaskFactory> instance = new Lazy<BackgroundTaskFactory>(() => new BackgroundTaskFactory());
@@ -20,19 +14,18 @@ namespace Incoding.Web.Tasks
 
         public ConcurrentDictionary<string, TaskExecutorBase> Tasks = new ConcurrentDictionary<string, TaskExecutorBase>();
 
-        public void Initialize([NotNull] IApplicationLifetime applicationLifetime)
+        public void Initialize()
         {
-            this.appLifetime = applicationLifetime;
-
-            appLifetime.ApplicationStopping.Register(() =>
-            {
-                foreach (var taskExecutor in Tasks)
-                {
-                    taskExecutor.Value.Stop(true);
-                }
-            });
             initialized = true;
             Tasks.DoEach(pair => pair.Value.Start());
+        }
+
+        public void StopAll()
+        {
+            foreach (var taskExecutor in Tasks)
+            {
+                taskExecutor.Value.Stop(true);
+            }
         }
 
         public bool IsInitialized { get { return initialized; } }
@@ -45,9 +38,17 @@ namespace Incoding.Web.Tasks
             return null;
         }
 
-        public TaskSequentialExecutor<TItem> AddSequentalExecutor<TItem>(string key, SequentialTaskQueryBase<TItem> query, Func<TItem, SequentialTaskCommandBase<TItem>> createCommand, Action<TaskExecutorBase.TaskExecutorOptions> executorOptions = null)
+        public TaskSequentialExecutor<TItem> AddSequentalExecutor<TItem>(string key, Func<SequentialTaskQueryBase<TItem>> query, Func<TItem, SequentialTaskCommandBase<TItem>> createCommand, Action<TaskExecutorBase.TaskExecutorOptions> executorOptions = null)
         {
             var taskExecutor = new TaskSequentialExecutor<TItem>(query, createCommand).SetOptions(executorOptions);
+            if (Tasks.TryAdd(key, taskExecutor))
+                return taskExecutor as TaskSequentialExecutor<TItem>;
+            return null;
+        }
+
+        public TaskSequentialExecutor<TItem> AddSequentalExecutor<TItem>(string key, SequentialTask<TItem> task, Action<TaskExecutorBase.TaskExecutorOptions> executorOptions = null)
+        {
+            var taskExecutor = new TaskSequentialExecutor<TItem>(task.Query, task.Command).SetOptions(executorOptions);
             if (Tasks.TryAdd(key, taskExecutor))
                 return taskExecutor as TaskSequentialExecutor<TItem>;
             return null;

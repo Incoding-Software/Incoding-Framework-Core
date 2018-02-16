@@ -1,8 +1,8 @@
-namespace Incoding.Data
+using System;
+
+namespace Incoding.Data.Core
 {
     #region << Using >>
-
-    using System;
 
     #endregion
 

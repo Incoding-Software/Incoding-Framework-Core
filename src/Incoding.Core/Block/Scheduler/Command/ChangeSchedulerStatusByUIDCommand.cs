@@ -8,13 +8,13 @@ namespace Incoding.Core.Block.Scheduler.Command
 
     #endregion
 
-    public class ChangeDelayToSchedulerStatusByUIDCommand : CommandBase
+    public class ChangeSchedulerStatusByUIDCommand : CommandBase
     {
         protected override void Execute()
         {
             foreach (var delay in Repository.Query(whereSpecification: new DelayToScheduler.Where.ByUID(UID)))
             {
-                Dispatcher.Push(new ChangeDelayToSchedulerStatusCommand
+                Dispatcher.Push(new ChangeSchedulerStatusCommand
                                 {
                                         Id = delay.Id,
                                         Status = Status

@@ -1,15 +1,13 @@
-﻿using Incoding.Core.Data;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
+using Incoding.Core.Data;
 using Incoding.Core.Extensions.LinqSpecs;
-using Incoding.Data;
+using JetBrains.Annotations;
 
-namespace Incoding.CQRS
+namespace Incoding.Data.Specifications
 {
     #region << Using >>
-
-    using System;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq.Expressions;
-    using JetBrains.Annotations;
 
     #endregion
 

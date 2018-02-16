@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Incoding.Block.Caching;
@@ -8,31 +6,27 @@ using Incoding.Core;
 using Incoding.Core.Block.Caching;
 using Incoding.Core.Block.IoC;
 using Incoding.Core.Block.IoC.Provider;
+using Incoding.Core.Block.Scheduler;
 using Incoding.Core.CQRS;
-using Incoding.CQRS;
-using Incoding.Data;
+using Incoding.Core.Tasks;
 using Incoding.Data.EF;
 using Incoding.Mvc.MvcContrib.Core;
+using Incoding.Mvc.MvcContrib.Extensions;
 using Incoding.Web;
-using Incoding.Web.MvcContrib.IncHtmlHelper;
-using Incoding.Web.Tasks;
+using Incoding.Web.MvcContrib.FiltersAttributes;
 using Incoding.WebTest.Operations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Incoding.WebTest
 {
-    public class Startup
+    public class IncodingStartup
     {
-        public Startup(IConfiguration configuration)
+        public IncodingStartup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
@@ -44,7 +38,7 @@ namespace Incoding.WebTest
         {
             services.AddMvc(options =>
             {
-                options.Filters.Add(new ErrorHandlingFilter());
+                options.Filters.Add(new IncodingErrorHandlingFilter());
             }).AddFluentValidation(configuration =>
             {
                 configuration.ValidatorFactory = new IncValidatorFactory();
@@ -54,15 +48,13 @@ namespace Incoding.WebTest
                     services.Add(ServiceDescriptor.Transient(result.InterfaceType, result.ValidatorType));
                     services.Add(ServiceDescriptor.Transient(result.ValidatorType, result.ValidatorType));
                 });
-            })
-            ;
+            });
             services.ConfigureIncodingCoreServices();
             services.ConfigureIncodingEFDataServices(typeof(ItemEntity), builder =>
             {
                 builder.UseSqlServer(Configuration.GetConnectionString("Main"));
             });
             services.ConfigureIncodingWebServices();
-            services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -94,6 +86,7 @@ namespace Incoding.WebTest
 
             app.UseMvc(routes =>
             {
+                routes.ConfigureCQRS();
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
@@ -102,17 +95,24 @@ namespace Incoding.WebTest
             IoCFactory.Instance.Initialize(init => init.WithProvider(new MSDependencyInjectionIoCProvider(app.ApplicationServices)));
             CachingFactory.Instance.Initialize(init => init.WithProvider(new NetCachedProvider(() => app.ApplicationServices.GetRequiredService<IMemoryCache>())));
 
-            BackgroundTaskFactory.Instance.AddExecutor("SomeService", 
+            BackgroundTaskFactory.Instance.AddScheduler();
+
+            BackgroundTaskFactory.Instance.AddExecutor("SomeService",
                 () =>
                 {
                     new DefaultDispatcher().Push(new BackgroundServiceCommand());
                 }, options => options.Interval = TimeSpan.FromSeconds(15));
 
-            BackgroundTaskFactory.Instance.AddSequentalExecutor("Some Sequential Service", 
-                new SequentialTestQuery(), arg => new SequentialTestCommand()
+            BackgroundTaskFactory.Instance.AddSequentalExecutor("Some Sequential Service",
+                () => new SequentialTestQuery(), arg => new SequentialTestCommand()
                 , options => options.Interval = TimeSpan.FromSeconds(15));
 
-            BackgroundTaskFactory.Instance.Initialize(applicationLifetime);
+            BackgroundTaskFactory.Instance.Initialize();
+
+            applicationLifetime.ApplicationStopping.Register(() =>
+            {
+                BackgroundTaskFactory.Instance.StopAll();
+            });
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Incoding.Core.Block.Scheduler.Command
 
     #endregion
 
-    public class ChangeDelayToSchedulerStatusCommand : CommandBase
+    public class ChangeSchedulerStatusCommand : CommandBase
     {
         protected override void Execute()
         {
@@ -32,7 +32,7 @@ namespace Incoding.Core.Block.Scheduler.Command
                 recurrency.StartDate = Dispatcher.Query(recurrency);
                 if (!recurrency.StartDate.HasValue)
                     return;
-                Dispatcher.Push(new AddDelayToSchedulerCommand(delay)
+                Dispatcher.Push(new ScheduleCommand(delay)
                                 {
                                         UID = delay.UID,
                                         Priority = delay.Priority,                                                                               

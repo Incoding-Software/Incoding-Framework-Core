@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Timers;
 using Incoding.Core.Block.IoC;
 using Incoding.Core.Block.Logging;
@@ -10,8 +11,7 @@ namespace Incoding.Core.Tasks
     public abstract class TaskExecutorBase
     {
         public TaskExecutorOptions Options { get; set; } = new TaskExecutorOptions();
-        private Action action;
-
+        
         public IDispatcher Dispatcher { get; set; }
 
         protected TaskExecutorBase()
@@ -21,20 +21,30 @@ namespace Incoding.Core.Tasks
 
         public TaskExecutorBase SetOptions(Action<TaskExecutorOptions> executorOptions)
         {
-            executorOptions(Options);
+            executorOptions?.Invoke(Options);
             return this;
         }
-        
+
         public static TaskExecutorOptions DefaultOptions = new TaskExecutorOptions
         {
             OnError = exception => LoggingFactory.Instance.LogException(LogType.Debug, exception),
-            Interval = TimeSpan.FromSeconds(10)
+            Interval = TimeSpan.FromSeconds(10),
+            DelayToStart = TimeSpan.FromSeconds(30),
+            DelayBetweenSequencesMs = 10
         };
 
         public class TaskExecutorOptions
         {
             private Action<Exception> _onError;
             private TimeSpan? _interval;
+            private TimeSpan? _delayToStart;
+            private int? _delayBetweenSequencesMs;
+
+            public TimeSpan DelayToStart
+            {
+                get { return _delayToStart ?? DefaultOptions.DelayToStart; }
+                set { _delayToStart = value; }
+            }
 
             public Action<Exception> OnError
             {
@@ -47,12 +57,22 @@ namespace Incoding.Core.Tasks
                 get { return _interval ?? DefaultOptions.Interval; }
                 set { _interval = value; }
             }
+
+            public Func<bool> Conditional { get; set; } = () => true;
+
+            public int DelayBetweenSequencesMs
+            {
+                get { return _delayBetweenSequencesMs ?? DefaultOptions.DelayBetweenSequencesMs; }
+                set { _delayBetweenSequencesMs = value; }
+            }
+
+            public Action AfterExecution { get; set; }
         }
 
         private Timer _timer;
         private bool _executing;
         private readonly object _lock = new object();
-        protected bool _stopImmediately = false;
+        protected bool StopImmediately = false;
         private DateTime? _lastRunning;
         
         public bool IsExecuting { get { return _executing; } }
@@ -71,12 +91,15 @@ namespace Incoding.Core.Tasks
             {
                 if (_executing)
                     return;
+                if (!Options.Conditional())
+                    return;
                 try
                 {
                     lock (_lock)
                     {
                         _executing = true;
                         Execute();
+                        Options.AfterExecution?.Invoke();
                         _lastRunning = DateTime.UtcNow;
                         _executing = false;
                     }
@@ -86,13 +109,18 @@ namespace Incoding.Core.Tasks
                     Options.OnError?.Invoke(ex);// LoggingFactory.Instance.Log(LogType.Debug, "TaskManager: ", ex);
                 }
             };
-            _timer.Start();
+
+            Task.Factory.StartNew(() =>
+            {
+                Task.Delay(Options.DelayToStart);
+                _timer.Start();
+            });
         }
 
         public void Stop(bool immediate)
         {
             if (immediate)
-                _stopImmediately = true;
+                StopImmediately = true;
             lock (_lock)
             {
                 _timer?.Stop();

@@ -1,4 +1,5 @@
 ﻿using Incoding.Core.Block.Core;
+using Incoding.Core.Block.Scheduler;
 using Incoding.Core.Block.Scheduler.Persistence;
 using Incoding.Core.Block.Scheduler.Query;
 using Incoding.Core.CQRS.Core;
@@ -19,12 +20,12 @@ namespace Incoding.UnitTest
 
     #endregion
 
-    [Subject(typeof(GetExpectedDelayToSchedulerQuery))]
+    [Subject(typeof(GetSchedulersQuery))]
     public class When_get_all_delay_to_scheduler
     {
         Establish establish = () =>
                               {
-                                  var query = Pleasure.Generator.Invent<GetExpectedDelayToSchedulerQuery>(dsl => dsl.Tuning(r => r.IncludeInProgress, true));
+                                  var query = Pleasure.Generator.Invent<GetSchedulersQuery>();
                                   fakeCommand = Pleasure.Generator.Invent<FakeCommand>();
                                   Action<IInventFactoryDsl<DelayToScheduler>> action = dsl => dsl.Tuning(r => r.Type, typeof(FakeCommand).AssemblyQualifiedName)
                                                                                                  .GenerateTo(r => r.Option)
@@ -35,7 +36,7 @@ namespace Incoding.UnitTest
                                                             Pleasure.Generator.Invent(action),
                                                     };
 
-                                  mockQuery = MockQuery<GetExpectedDelayToSchedulerQuery, List<GetExpectedDelayToSchedulerQuery.Response>>
+                                  mockQuery = MockQuery<GetSchedulersQuery, List<GetSchedulersQuery.Response>>
                                           .When(query)
                                           .StubQuery(whereSpecification: new DelayToScheduler.Where.ByStatus(new[] { DelayOfStatus.New, DelayOfStatus.Error, DelayOfStatus.InProgress })
                                                              .And(new DelayToScheduler.Where.ByAsync(query.Async))
@@ -64,7 +65,7 @@ namespace Incoding.UnitTest
 
         #region Establish value
 
-        static MockMessage<GetExpectedDelayToSchedulerQuery, List<GetExpectedDelayToSchedulerQuery.Response>> mockQuery;
+        static MockMessage<GetSchedulersQuery, List<GetSchedulersQuery.Response>> mockQuery;
 
         static DelayToScheduler[] successEntities;
 

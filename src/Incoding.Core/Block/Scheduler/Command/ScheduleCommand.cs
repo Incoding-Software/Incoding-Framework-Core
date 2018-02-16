@@ -10,7 +10,7 @@ namespace Incoding.Core.Block.Scheduler.Command
 
     #endregion
 
-    public class AddDelayToSchedulerCommand : CommandBase
+    public class ScheduleCommand : CommandBase
     {
         protected override void Execute()
         {
@@ -40,7 +40,7 @@ namespace Incoding.Core.Block.Scheduler.Command
 
         #region Constructors
 
-        public AddDelayToSchedulerCommand(DelayToScheduler delay)
+        public ScheduleCommand(DelayToScheduler delay)
         {
             var instance = (CommandBase)delay.Command.DeserializeFromJson(Type.GetType(delay.Type));
             Command = instance;
@@ -49,7 +49,7 @@ namespace Incoding.Core.Block.Scheduler.Command
             Setting = instance.Setting;
         }
 
-        public AddDelayToSchedulerCommand() { }
+        public ScheduleCommand() { }
 
         #endregion
 

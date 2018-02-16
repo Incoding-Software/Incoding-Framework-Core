@@ -2,6 +2,23 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Vlad Kopachinsky, Victor Gelmutdinov</Authors>
+    <Company>Incoding Software</Company>
+    <Description>Core library for Incoding Framework</Description>
+    <Copyright>Incoding Software, 2018</Copyright>
+    <PackageProjectUrl>http://incframework.com</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Incoding-Software/Incoding-Framework-Core</RepositoryUrl>
+    <PackageTags>framework, incoding</PackageTags>
+    <PackageLicenseUrl>https://github.com/Incoding-Software/Incoding-Framework-Core/blob/master/LICENSE.md</PackageLicenseUrl>
+    <PackageReleaseNotes>Incoding Framework library migrated to .NET Standard and .NET Core</PackageReleaseNotes>
+    <PackageIconUrl>http://incframework.com/Content/ico/icon-144x144.png</PackageIconUrl>
+    <NeutralLanguage></NeutralLanguage>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,7 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Block\Counter\CounterFactory.cs" />
     <Compile Remove="Block\Logging\Loggers\EventLogger.cs" />
     <Compile Remove="Extensions\LinqSpecs\ExpressionSerialization\TypeResolver.cs" />
   </ItemGroup>
@@ -43,10 +59,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Block\Counter\" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using Incoding.Data.Core;
+using MongoDB.Driver;
 
 namespace Incoding.Data.Mongo.Provider
 {

@@ -1,10 +1,9 @@
-﻿using Incoding.Core.Data;
+﻿using System;
+using Incoding.Core.Data;
 
-namespace Incoding.Data
+namespace Incoding.Data.Core
 {
     #region << Using >>
-
-    using System;
 
     #endregion
 

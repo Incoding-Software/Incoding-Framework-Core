@@ -2,13 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Vlad Kopachinsky, Victor Gelmutdinov</Authors>
+    <Company>Incoding Software</Company>
+    <Description>Database abstractions library for Incoding Framework</Description>
+    <Copyright>Incoding Software, 2018</Copyright>
+    <PackageLicenseUrl>https://github.com/Incoding-Software/Incoding-Framework-Core/blob/master/LICENSE.md</PackageLicenseUrl>
+    <PackageProjectUrl>http://incframework.com</PackageProjectUrl>
+    <PackageIconUrl>http://incframework.com/Content/ico/icon-144x144.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/Incoding-Software/Incoding-Framework-Core</RepositoryUrl>
+    <PackageTags>framework, incoding, database, data</PackageTags>
+    <PackageReleaseNotes>Incoding Framework library migrated to .NET Standard and .NET Core</PackageReleaseNotes>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Data\Provider\NHibernate\**" />
-    <EmbeddedResource Remove="Data\Provider\NHibernate\**" />
-    <None Remove="Data\Provider\NHibernate\**" />
-  </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="NhibernatePersist.cs" />
@@ -16,12 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Incoding.Core\Incoding.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\Core\Specifications\Fetch\" />
-    <Folder Include="Data\Provider\MongoDb\" />
-    <Folder Include="Data\Provider\RavenDb\" />
   </ItemGroup>
 
 </Project>

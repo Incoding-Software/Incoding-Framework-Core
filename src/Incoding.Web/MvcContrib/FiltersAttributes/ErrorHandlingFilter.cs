@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Net;
-using Microsoft.AspNetCore.Mvc;
+using Incoding.Core.Block.ExceptionHandling;
+using Incoding.Mvc.MvcContrib.Core;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Incoding.Mvc.MvcContrib.Core
+namespace Incoding.Web.MvcContrib.FiltersAttributes
 {
-    public class ErrorHandlingFilter : ExceptionFilterAttribute
+    public class IncodingErrorHandlingFilter : ExceptionFilterAttribute
     {
         public override void OnException(ExceptionContext context)
         {
@@ -16,6 +17,8 @@ namespace Incoding.Mvc.MvcContrib.Core
         private static void HandleExceptionAsync(ExceptionContext context)
         {
             var exception = context.Exception;
+
+            ExceptionHandlingFactory.Instance.Handler(exception);
 
             SetExceptionResult(context, exception, HttpStatusCode.InternalServerError);
         }

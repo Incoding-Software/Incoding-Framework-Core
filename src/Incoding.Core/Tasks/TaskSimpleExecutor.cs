@@ -15,7 +15,7 @@ namespace Incoding.Core.Tasks
 
         protected override void Execute()
         {
-            if (_stopImmediately)
+            if (StopImmediately)
                 return;
             _action();
         }
