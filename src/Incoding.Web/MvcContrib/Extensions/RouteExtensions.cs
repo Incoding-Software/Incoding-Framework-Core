@@ -21,11 +21,11 @@ namespace Incoding.Mvc.MvcContrib.Extensions
                 defaults: new {controller = "Dispatcher", action = "Push"});
             routeBuilder.MapRoute(
                 name: "incodingCqrsRender",
-                template: "Cqrs/Render/{incView}",
+                template: "Cqrs/Render/{incType}",
                 defaults: new {controller = "Dispatcher", action = "Render"});
             routeBuilder.MapRoute(
                 name: "incodingCqrsFile",
-                template: "Cqrs/File/{incType}/{incFileDownloadName}",
+                template: "Cqrs/File/{incType}",
                 defaults: new {controller = "Dispatcher", action = "QueryToFile"});
         }
     }

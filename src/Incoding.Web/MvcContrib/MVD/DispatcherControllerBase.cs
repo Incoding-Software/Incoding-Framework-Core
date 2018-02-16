@@ -34,7 +34,7 @@ namespace Incoding.Mvc.MvcContrib.MVD
         {
             var parameter = dispatcher.Query(new GetMvdParameterQuery()
             {
-                Params = HttpContext.Request.GetNameValueCollection()
+                Params = ControllerContext.GetNameValueCollection()
             });
             // ReSharper disable once UnusedVariable
             var instance = await new CreateMessageByType()
@@ -51,7 +51,7 @@ namespace Incoding.Mvc.MvcContrib.MVD
         {
             var parameter = dispatcher.Query(new GetMvdParameterQuery()
             {
-                Params = HttpContext.Request.GetNameValueCollection()
+                Params = ControllerContext.GetNameValueCollection()
             });
             var query = await new CreateMessageByType() { Provider = _serviceProvider, Type = parameter.Type, ControllerContext = this.ControllerContext, ModelState = ModelState }.Execute();
 
@@ -66,7 +66,7 @@ namespace Incoding.Mvc.MvcContrib.MVD
         {
             var parameter = dispatcher.Query(new GetMvdParameterQuery()
             {
-                Params = HttpContext.Request.GetNameValueCollection()
+                Params = ControllerContext.GetNameValueCollection()
             });
             object model = null;
             if (!string.IsNullOrWhiteSpace(parameter.Type))
@@ -98,7 +98,7 @@ namespace Incoding.Mvc.MvcContrib.MVD
         {
             var parameter = dispatcher.Query(new GetMvdParameterQuery()
             {
-                Params = HttpContext.Request.GetNameValueCollection()
+                Params = ControllerContext.GetNameValueCollection()
             });
 
             var commands = await new CreateMessageByType.AsCommands
@@ -122,7 +122,7 @@ namespace Incoding.Mvc.MvcContrib.MVD
         {
             var parameter = dispatcher.Query(new GetMvdParameterQuery()
             {
-                Params = HttpContext.Request.GetNameValueCollection()
+                Params = ControllerContext.GetNameValueCollection()
             });
             var instance = await new CreateMessageByType()
             {
