@@ -1,16 +1,9 @@
 ﻿using Incoding.Core.Block.Caching.Core;
-using Incoding.Core.Maybe;
+using Incoding.Core;
 using JetBrains.Annotations;
 
 namespace Incoding.UnitTest.Block
 {
-    #region << Using >>
-
-    using Incoding.Block.Caching;
-    using Machine.Specifications.Annotations;
-
-    #endregion
-
     [Fake]
     public class FakeCacheKey : ICacheKey
     {

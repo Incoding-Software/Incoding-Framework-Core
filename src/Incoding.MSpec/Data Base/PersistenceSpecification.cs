@@ -1,9 +1,9 @@
 using System.Data;
 using Incoding.Core.Data;
 using Incoding.Core.Extensions;
-using Incoding.Core.Maybe;
+using Incoding.Core;
 
-namespace Incoding.MSpecContrib
+namespace Incoding.MSpec
 {
     #region << Using >>
 
@@ -13,7 +13,6 @@ namespace Incoding.MSpecContrib
     using System.Linq.Expressions;
     using System.Reflection;
     using Incoding.Data;
-    using Incoding.Extensions;
     using Machine.Specifications;
     //using NHibernate.Util;
 

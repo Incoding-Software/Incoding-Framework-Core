@@ -3,17 +3,8 @@ using System.Collections.Generic;
 using System.Text.Encodings.Web;
 using Incoding.Core.Block.IoC;
 using Incoding.Core.Extensions;
-using Incoding.Core.Maybe;
-using Incoding.Extensions;
-using Incoding.Mvc.MvcContrib.Extensions;
-using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Core;
-using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.JqueryHelper.Options;
-using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.JqueryHelper.Primitive;
-using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Selectors.Core;
-using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Selectors.Jquery;
-using Incoding.Mvc.MvcContrib.Primitive;
-using Incoding.Mvc.MvcContrib.Template;
-using Incoding.Mvc.MvcContrib.Template.Factory;
+using Incoding.Core;
+using Incoding.Web.Extensions;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -21,7 +12,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing;
 
-namespace Incoding.Web.MvcContrib.IncHtmlHelper
+namespace Incoding.Web.MvcContrib
 {
     public class IncodingHtmlHelper
     {

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Net;
 using Incoding.Core.Block.ExceptionHandling;
-using Incoding.Mvc.MvcContrib.Core;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Incoding.Web.MvcContrib.FiltersAttributes
+namespace Incoding.Web.MvcContrib
 {
     public class IncodingErrorHandlingFilter : ExceptionFilterAttribute
     {

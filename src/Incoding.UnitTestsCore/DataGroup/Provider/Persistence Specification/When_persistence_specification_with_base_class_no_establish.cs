@@ -4,7 +4,7 @@ namespace Incoding.UnitTest.MSpecGroup
 {
     #region << Using >>
 
-    using Incoding.MSpecContrib;
+    using Incoding.MSpec;
     using Machine.Specifications;    
 
     #endregion

@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Razor;
 
-namespace Incoding.Mvc.MvcContrib.Template.Syntax
+namespace Incoding.Web.MvcContrib
 {
     #region << Using >>
 

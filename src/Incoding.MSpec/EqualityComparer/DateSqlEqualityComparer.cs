@@ -1,12 +1,11 @@
 using Incoding.Core.Extensions;
 
-namespace Incoding.MSpecContrib
+namespace Incoding.MSpec
 {
     #region << Using >>
 
     using System;
     using System.Collections;
-    using Incoding.Extensions;
 
     #endregion
 

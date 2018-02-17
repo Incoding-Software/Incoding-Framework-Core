@@ -9,8 +9,7 @@ namespace Incoding.UnitTest
 
     using System;
     using Incoding.Data;
-    using Incoding.Extensions;
-    using Incoding.MSpecContrib;
+    using Incoding.MSpec;
     //using NHibernate;
 
     #endregion

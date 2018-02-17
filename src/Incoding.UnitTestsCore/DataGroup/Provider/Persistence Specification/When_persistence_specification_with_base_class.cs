@@ -2,7 +2,7 @@
 {
     #region << Using >>
 
-    using Incoding.MSpecContrib;
+    using Incoding.MSpec;
     using Machine.Specifications;    
 
     #endregion

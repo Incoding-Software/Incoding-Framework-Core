@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Incoding.Mvc.MvcContrib.MVD
+namespace Incoding.Web.MvcContrib
 {
     public class IncMvdException : Exception
     {

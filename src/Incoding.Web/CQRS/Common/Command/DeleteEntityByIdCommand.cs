@@ -1,17 +1,13 @@
+using System;
+using System.Linq;
 using Incoding.Core;
 using Incoding.Core.CQRS.Core;
 using Incoding.Core.Data;
 using Incoding.Core.Extensions;
 
-namespace Incoding.CQRS
+namespace Incoding.Web.CQRS.Common.Command
 {
     #region << Using >>
-
-    using System;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using Incoding.Extensions;
-    using JetBrains.Annotations;
 
     #endregion
 

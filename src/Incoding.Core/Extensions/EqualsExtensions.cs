@@ -1,5 +1,5 @@
 using System.Linq;
-using Incoding.Core.Maybe;
+using Incoding.Core;
 
 namespace Incoding.Core.Extensions
 {

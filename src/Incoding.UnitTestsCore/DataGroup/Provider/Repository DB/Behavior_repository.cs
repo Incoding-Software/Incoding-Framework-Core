@@ -2,7 +2,7 @@
 using Incoding.Core.Data;
 using Incoding.Core.Extensions;
 using Incoding.Core.Extensions.LinqSpecs;
-using Incoding.Core.Maybe;
+using Incoding.Core;
 using Incoding.Data.EF.Provider;
 using Incoding.Data.Mongo.Provider;
 using Incoding.Data.Raven.Provider;
@@ -15,8 +15,7 @@ namespace Incoding.UnitTest
     using System.Linq;
     using System.Linq.Expressions;
     using Incoding.Data;
-    using Incoding.Extensions;
-    using Incoding.MSpecContrib;
+    using Incoding.MSpec;
     using Machine.Specifications;
     using NCrunch.Framework;
     //using NHibernate;

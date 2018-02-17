@@ -1,10 +1,10 @@
 using Incoding.Core;
 using Incoding.Core.Extensions;
-using Incoding.Core.Maybe;
+using Incoding.Core;
 using Incoding.Core.Quality;
 using Incoding.Data;
 
-namespace Incoding.MSpecContrib
+namespace Incoding.MSpec
 {
     #region << Using >>
 
@@ -17,7 +17,6 @@ namespace Incoding.MSpecContrib
     using System.Linq.Expressions;
     using System.Reflection;
     using System.Text;
-    using Incoding.Extensions;
     using Machine.Specifications;
 
     #endregion

@@ -1,4 +1,4 @@
-namespace Incoding.Mvc.MvcContrib.Primitive
+namespace Incoding.Web.MvcContrib
 {
     public enum ModeOfRadio
     {

@@ -1,7 +1,7 @@
 ﻿using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Html;
 
-namespace Incoding.Extensions
+namespace Incoding.Web.Extensions
 {
     public static class WebStringExtensions
     {

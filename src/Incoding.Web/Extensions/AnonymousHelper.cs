@@ -1,12 +1,10 @@
+using System.Collections.Generic;
 using Incoding.Core.Extensions;
 using Microsoft.AspNetCore.Routing;
 
-namespace Incoding.Extensions
+namespace Incoding.Web.Extensions
 {
     #region << Using >>
-
-    using System.Collections.Generic;
-    using System.Diagnostics;
 
     #endregion
 

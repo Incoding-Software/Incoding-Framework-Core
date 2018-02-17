@@ -7,7 +7,7 @@ namespace Incoding.UnitTest.MSpecGroup
     using System;
     using System.Security.Permissions;
     using Incoding.Data;
-    using Incoding.MSpecContrib;
+    using Incoding.MSpec;
     using Machine.Specifications;
 
     #endregion

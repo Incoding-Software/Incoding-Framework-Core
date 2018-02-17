@@ -3,13 +3,11 @@ using Incoding.Core.Block.Caching.Core;
 using Incoding.Core.Block.Caching.Providers;
 using Incoding.Core.Extensions;
 
-namespace Incoding.MSpecContrib
+namespace Incoding.MSpec
 {
     #region << Using >>
 
     using System;
-    using Incoding.Block.Caching;
-    using Incoding.Extensions;
     using Machine.Specifications;
     using Moq;
 

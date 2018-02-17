@@ -4,9 +4,8 @@ using Incoding.Core.Block.Caching.Providers;
 namespace Incoding.UnitTest.Block
 {
     #region << Using >>
-
-    using Incoding.Block.Caching;
-    using Incoding.MSpecContrib;
+    
+    using Incoding.MSpec;
     using Machine.Specifications;
     using Moq;
     using It = Machine.Specifications.It;

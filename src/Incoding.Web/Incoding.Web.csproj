@@ -38,7 +38,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy  &quot;$(SolutionDir)Incoding.Web\MvcContrib\Incoding Meta Language\Client Framework\*.*&quot;   &quot;$(SolutionDir)Incoding.WebTest\wwwroot\&quot; /C /F /Y /S" />
+    <Exec Command="xcopy  &quot;$(SolutionDir)Incoding.Web\MvcContrib\MetaLanguage\Client Framework\*.*&quot;   &quot;$(SolutionDir)Incoding.WebTest\wwwroot\&quot; /C /F /Y /S" />
   </Target>
 
 </Project>

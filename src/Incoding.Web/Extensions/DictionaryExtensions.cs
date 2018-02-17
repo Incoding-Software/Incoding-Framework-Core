@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Incoding.Extensions
+namespace Incoding.Web.Extensions
 {
     public static class DictionaryExtensions
     {

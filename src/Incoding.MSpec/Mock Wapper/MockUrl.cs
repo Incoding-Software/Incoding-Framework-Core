@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Routing;
 
-namespace Incoding.MSpecContrib
+namespace Incoding.MSpec
 {
     #region << Using >>
 

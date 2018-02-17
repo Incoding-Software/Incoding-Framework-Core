@@ -1,6 +1,6 @@
 using Incoding.Core;
 
-namespace Incoding.MSpecContrib
+namespace Incoding.MSpec
 {
     #region << Using >>
 

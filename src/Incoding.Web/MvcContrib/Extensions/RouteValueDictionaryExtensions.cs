@@ -1,20 +1,12 @@
 ﻿using System;
-using System.Text.Encodings.Web;
 using Incoding.Core.Extensions;
-using Incoding.Core.Maybe;
-using Incoding.Extensions;
-using Incoding.Mvc.MvcContrib.Incoding_Meta_Language;
-using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.JqueryHelper.Options;
-using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.JqueryHelper.Primitive;
-using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Selectors.Core;
-using Incoding.Mvc.MvcContrib.Primitive;
-using Incoding.Web.MvcContrib.IncHtmlHelper;
+using Incoding.Core;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
 
-namespace Incoding.Mvc.MvcContrib.Extensions
+namespace Incoding.Web.MvcContrib
 {
     #region << Using >>
 

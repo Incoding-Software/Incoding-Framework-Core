@@ -1,13 +1,14 @@
 using Incoding.Core;
 using Incoding.Core.Data;
 using Incoding.Core.Extensions;
-using Incoding.Core.Maybe;
-using Incoding.Mvc.MvcContrib.Primitive;
+using Incoding.Core;
+using Incoding.Web.Extensions;
+using Incoding.Web.MvcContrib;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Routing;
 
-namespace Incoding.MSpecContrib
+namespace Incoding.MSpec
 {
     #region << Using >>
 
@@ -21,7 +22,6 @@ namespace Incoding.MSpecContrib
     using System.Threading;
     using System.Threading.Tasks;
     using Incoding.Data;
-    using Incoding.Extensions;
     using Machine.Specifications;
     using Moq;
     using It = Moq.It;

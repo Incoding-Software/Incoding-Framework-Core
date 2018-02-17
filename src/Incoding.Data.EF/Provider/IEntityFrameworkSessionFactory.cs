@@ -1,5 +1,4 @@
-﻿using Incoding.Data.Core;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Incoding.Data.EF.Provider
 {

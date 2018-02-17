@@ -1,29 +1,23 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
-using FluentValidation.AspNetCore;
-using Incoding.Core.Block.IoC;
 using Incoding.Core.CQRS;
 using Incoding.Core.CQRS.Core;
 using Incoding.Core.Extensions;
-using Incoding.CQRS;
-using Incoding.Extensions;
-using Incoding.Mvc.MvcContrib.Core;
+using Incoding.Web.CQRS.Common.Query;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Internal;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace Incoding.Mvc.MvcContrib.MVD.Core
+namespace Incoding.Web.MvcContrib
 {
     #region << Using >>
 

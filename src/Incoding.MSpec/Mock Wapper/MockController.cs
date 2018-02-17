@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using Incoding.Core.CQRS.Core;
 using Incoding.Core.Extensions;
-using Incoding.Mvc.MvcContrib.Core;
+using Incoding.Web.Extensions;
+using Incoding.Web.MvcContrib;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
@@ -14,14 +15,12 @@ using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Primitives;
 
-namespace Incoding.MSpecContrib
+namespace Incoding.MSpec
 {
     #region << Using >>
 
     using System;
     using System.Linq;
-    using Incoding.CQRS;
-    using Incoding.Extensions;
     using Moq;
 
     #endregion

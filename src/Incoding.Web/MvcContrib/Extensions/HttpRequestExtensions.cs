@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 
-namespace Incoding.Mvc.MvcContrib.Extensions
+namespace Incoding.Web.MvcContrib
 {
     public static class HttpRequestExtensions
     {

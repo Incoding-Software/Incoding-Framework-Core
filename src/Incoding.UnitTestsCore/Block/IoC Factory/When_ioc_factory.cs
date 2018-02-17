@@ -10,7 +10,7 @@ namespace Incoding.UnitTest.Block
     #region << Using >>
 
     using System.Collections.Generic;
-    using Incoding.MSpecContrib;
+    using Incoding.MSpec;
     using Machine.Specifications;
     using Moq;
     using It = Machine.Specifications.It;

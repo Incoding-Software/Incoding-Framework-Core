@@ -2,7 +2,7 @@ using System;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Incoding.Mvc.MvcContrib.Extensions
+namespace Incoding.Web.MvcContrib
 {
     #region << Using >>
 

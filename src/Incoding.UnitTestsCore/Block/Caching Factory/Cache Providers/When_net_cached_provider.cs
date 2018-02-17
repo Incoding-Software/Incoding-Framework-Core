@@ -1,10 +1,10 @@
+using Incoding.Core.Block.Caching.Providers;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Incoding.UnitTest.Block
 {
     #region << Using >>
 
-    using Incoding.Block.Caching;
     using Machine.Specifications;
 
     #endregion

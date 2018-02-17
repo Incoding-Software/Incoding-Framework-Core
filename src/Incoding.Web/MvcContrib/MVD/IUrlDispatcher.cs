@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 
-namespace Incoding.Mvc.MvcContrib.MVD
+namespace Incoding.Web.MvcContrib
 {
     public interface IUrlDispatcher
     {

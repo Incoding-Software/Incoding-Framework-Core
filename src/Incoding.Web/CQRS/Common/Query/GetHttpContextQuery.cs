@@ -1,7 +1,7 @@
 ﻿using Incoding.Core.CQRS.Core;
 using Microsoft.AspNetCore.Http;
 
-namespace Incoding.CQRS
+namespace Incoding.Web.CQRS.Common.Query
 {
     public class GetHttpContextQuery : QueryBase<HttpContext>
     {

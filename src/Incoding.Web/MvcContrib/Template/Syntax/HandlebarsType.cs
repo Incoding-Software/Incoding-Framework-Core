@@ -1,4 +1,4 @@
-namespace Incoding.Mvc.MvcContrib.Template.Syntax
+namespace Incoding.Web.MvcContrib
 {
     public enum HandlebarsType
     {

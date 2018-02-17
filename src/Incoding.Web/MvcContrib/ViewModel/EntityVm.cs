@@ -1,7 +1,7 @@
 ﻿using Incoding.Core.Data;
 using Incoding.Core.Quality;
 
-namespace Incoding.Mvc.MvcContrib.ViewModel
+namespace Incoding.Web.MvcContrib
 {
     #region << Using >>
 

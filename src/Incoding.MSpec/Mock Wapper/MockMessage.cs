@@ -5,17 +5,14 @@ using Incoding.Core.Data;
 using Incoding.Core.Extensions;
 using Incoding.Core.Extensions.LinqSpecs;
 
-namespace Incoding.MSpecContrib
+namespace Incoding.MSpec
 {
     #region << Using >>
 
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Incoding.CQRS;
     using Incoding.Data;
-    
-    using Incoding.Extensions;
     using Machine.Specifications;
     using Moq;
 

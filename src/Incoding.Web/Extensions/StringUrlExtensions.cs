@@ -1,15 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using Incoding.Core.Extensions;
-using Incoding.Core.Maybe;
-using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Selectors.Core;
+using Incoding.Core;
+using Incoding.Web.MvcContrib;
 
-namespace Incoding.Extensions
+namespace Incoding.Web.Extensions
 {
     #region << Using >>
-
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
 
     #endregion
 

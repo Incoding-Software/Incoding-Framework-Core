@@ -6,7 +6,6 @@ namespace Incoding.UnitTest.Block
 
     using System;
     using System.Threading;
-    using Incoding.Block.Caching;
     using Machine.Specifications;
 
     #endregion

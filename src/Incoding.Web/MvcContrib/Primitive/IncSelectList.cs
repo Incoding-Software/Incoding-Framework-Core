@@ -1,12 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Incoding.Core.Extensions;
-using Incoding.Core.Maybe;
-using Incoding.Extensions;
-using Incoding.Mvc.MvcContrib.ViewModel;
+using Incoding.Core;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Incoding.Mvc.MvcContrib.Primitive
+namespace Incoding.Web.MvcContrib
 {
     #region << Using >>
 

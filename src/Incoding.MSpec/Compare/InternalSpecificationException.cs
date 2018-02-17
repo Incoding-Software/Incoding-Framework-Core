@@ -1,4 +1,4 @@
-﻿namespace Incoding.MSpecContrib
+﻿namespace Incoding.MSpec
 {
     #region << Using >>
 

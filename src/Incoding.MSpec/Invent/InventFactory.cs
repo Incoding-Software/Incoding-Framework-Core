@@ -1,10 +1,10 @@
 using Incoding.Core.Extensions;
-using Incoding.Core.Maybe;
+using Incoding.Core;
 using Incoding.Core.Quality;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 
-namespace Incoding.MSpecContrib
+namespace Incoding.MSpec
 {
     #region << Using >>
 
@@ -17,7 +17,6 @@ namespace Incoding.MSpecContrib
     using System.Linq;
     using System.Reflection;
     using System.Web;
-    using Incoding.Extensions;
 
     #endregion
 

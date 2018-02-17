@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 
-namespace Incoding.MSpecContrib
+namespace Incoding.MSpec
 {
     using Machine.Specifications.Annotations;
 

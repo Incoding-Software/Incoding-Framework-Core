@@ -2,15 +2,14 @@
 using System.Web;
 using Incoding.Core;
 using Incoding.Core.Extensions;
-using Incoding.Core.Maybe;
-using Incoding.Extensions;
-using Incoding.Mvc.MvcContrib.MVD;
+using Incoding.Core;
+using Incoding.Web.Extensions;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 
-namespace Incoding.Mvc.MvcContrib.Extensions
+namespace Incoding.Web.MvcContrib
 {
     #region << Using >>
 

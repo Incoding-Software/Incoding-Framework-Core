@@ -4,13 +4,12 @@ using Incoding.Core.CQRS.Core;
 using Incoding.Core.Data;
 using Incoding.Core.Extensions.LinqSpecs;
 
-namespace Incoding.MSpecContrib
+namespace Incoding.MSpec
 {
     #region << Using >>
 
     using System;
     using System.Linq;
-    using Incoding.CQRS;
     using Incoding.Data;
     using Machine.Specifications;
     using Moq;

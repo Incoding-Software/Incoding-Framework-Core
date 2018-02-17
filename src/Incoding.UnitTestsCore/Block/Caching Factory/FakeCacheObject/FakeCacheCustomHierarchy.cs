@@ -2,12 +2,6 @@ using Incoding.Core.Block.Caching.Core;
 
 namespace Incoding.UnitTest.Block
 {
-    #region << Using >>
-
-    using Incoding.Block.Caching;
-
-    #endregion
-
     public class FakeCacheCustomHierarchy : ICacheKey
     {
         #region ICacheKey Members

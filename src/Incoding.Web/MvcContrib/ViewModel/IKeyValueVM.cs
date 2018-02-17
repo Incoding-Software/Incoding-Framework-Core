@@ -1,4 +1,4 @@
-namespace Incoding.Mvc.MvcContrib.ViewModel
+namespace Incoding.Web.MvcContrib
 {
     public interface IKeyValueVm
     {

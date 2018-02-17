@@ -9,7 +9,7 @@ namespace Incoding.UnitTest
     using System.Linq;
     using System.Threading;
     using Incoding.Data;
-    using Incoding.MSpecContrib;
+    using Incoding.MSpec;
     using Machine.Specifications;
     using Raven.Client.Document;
     using Raven.Client.Indexes;

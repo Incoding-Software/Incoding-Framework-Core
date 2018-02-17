@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Incoding.Core.Extensions;
-using Incoding.Extensions;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Incoding.Mvc.MvcContrib.Template.Syntax
+namespace Incoding.Web.MvcContrib
 {
     #region << Using >>
 

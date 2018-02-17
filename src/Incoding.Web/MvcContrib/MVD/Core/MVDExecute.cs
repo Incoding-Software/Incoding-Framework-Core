@@ -7,11 +7,10 @@ using Incoding.Core.CQRS;
 using Incoding.Core.CQRS.Common;
 using Incoding.Core.CQRS.Core;
 using Incoding.Core.Quality;
-using Incoding.CQRS;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Http;
 
-namespace Incoding.Mvc.MvcContrib.MVD.Core
+namespace Incoding.Web.MvcContrib
 {
     #region << Using >>
 

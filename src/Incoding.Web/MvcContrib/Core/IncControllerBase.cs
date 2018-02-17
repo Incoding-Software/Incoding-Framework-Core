@@ -1,23 +1,14 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Threading.Tasks;
 using Incoding.Core;
 using Incoding.Core.CQRS.Core;
-using Incoding.Core.Maybe;
-using Incoding.CQRS;
-using Incoding.Mvc.MvcContrib.Extensions;
-using Incoding.Web;
-using Incoding.Web.MvcContrib.Services;
+using Incoding.Core;
 using JetBrains.Annotations;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Mvc.Razor;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Incoding.Mvc.MvcContrib.Core
+namespace Incoding.Web.MvcContrib
 {
     #region << Using >>
 

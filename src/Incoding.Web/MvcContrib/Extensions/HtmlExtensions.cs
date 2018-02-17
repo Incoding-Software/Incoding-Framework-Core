@@ -1,29 +1,13 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using Incoding.Core.Block.IoC;
 using Incoding.Core.CQRS.Core;
 using Incoding.Core.Extensions;
-using Incoding.CQRS;
-using Incoding.Extensions;
-using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL;
-using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.DSL.Core;
-using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.JqueryHelper.Primitive;
-using Incoding.Mvc.MvcContrib.Incoding_Meta_Language.Selectors;
-using Incoding.Mvc.MvcContrib.MVD;
-using Incoding.Mvc.MvcContrib.Template.Factory;
-using Incoding.Web.MvcContrib;
-using Incoding.Web.MvcContrib.IncHtmlHelper;
-using Incoding.Web.MvcContrib.Services;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.Routing;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace Incoding.Mvc.MvcContrib.Extensions
+namespace Incoding.Web.MvcContrib
 {
     #region << Using >>
 

@@ -7,7 +7,7 @@ namespace Incoding.UnitTest.Block
 
     using System.Linq;
     using System.Threading;
-    using Incoding.MSpecContrib;
+    using Incoding.MSpec;
     using Machine.Specifications;
 
     #endregion

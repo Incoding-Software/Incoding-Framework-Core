@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Text;
 using System.Text.Encodings.Web;
-using System.Web;
 using Incoding.Core.Extensions;
-using Incoding.Extensions;
-using Incoding.Mvc.MvcContrib.Primitive;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
 
-namespace Incoding.Mvc.MvcContrib.Extensions
+namespace Incoding.Web.MvcContrib
 {
     #region << Using >>
 

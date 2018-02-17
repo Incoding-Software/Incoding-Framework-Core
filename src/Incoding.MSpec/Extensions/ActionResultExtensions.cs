@@ -1,8 +1,8 @@
 using Incoding.Core;
-using Incoding.Mvc.MvcContrib.Core;
+using Incoding.Web.MvcContrib;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Incoding.MSpecContrib
+namespace Incoding.MSpec
 {
     #region << Using >>
 

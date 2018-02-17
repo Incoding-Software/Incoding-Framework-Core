@@ -6,7 +6,7 @@ namespace Incoding.UnitTest
 
     using System.Reflection;
     using Incoding.Data;
-    using Incoding.MSpecContrib;
+    using Incoding.MSpec;
     using Machine.Specifications;
     using Raven.Client;
 

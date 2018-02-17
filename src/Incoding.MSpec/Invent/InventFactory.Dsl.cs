@@ -1,7 +1,8 @@
 using Incoding.Core;
 using Incoding.Core.Extensions;
+using Incoding.Web.Extensions;
 
-namespace Incoding.MSpecContrib
+namespace Incoding.MSpec
 {
     #region << Using >>
 
@@ -9,7 +10,6 @@ namespace Incoding.MSpecContrib
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-    using Incoding.Extensions;
 
     #endregion
 

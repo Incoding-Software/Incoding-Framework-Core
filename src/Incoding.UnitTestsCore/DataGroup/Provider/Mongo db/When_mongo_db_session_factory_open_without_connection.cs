@@ -8,7 +8,6 @@ namespace Incoding.UnitTest
 
     using System.Configuration;
     using Incoding.Data;
-    using Incoding.Extensions;
     using Machine.Specifications;
     using NCrunch.Framework;
 

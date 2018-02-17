@@ -4,17 +4,9 @@ using System.Threading.Tasks;
 using Incoding.Core;
 using Incoding.Core.CQRS.Core;
 using Incoding.Core.Extensions;
-using Incoding.CQRS;
-using Incoding.Extensions;
-using Incoding.Mvc.MvcContrib.Core;
-using Incoding.Mvc.MvcContrib.Extensions;
-using Incoding.Mvc.MvcContrib.MVD.Core;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace Incoding.Mvc.MvcContrib.MVD
+namespace Incoding.Web.MvcContrib
 {
     #region << Using >>
 

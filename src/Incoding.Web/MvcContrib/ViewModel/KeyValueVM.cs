@@ -1,11 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using Incoding.Core.Extensions;
-using Incoding.Core.Maybe;
+using Incoding.Core;
 using Incoding.Core.Quality;
-using Incoding.Extensions;
 using JetBrains.Annotations;
 
-namespace Incoding.Mvc.MvcContrib.ViewModel
+namespace Incoding.Web.MvcContrib
 {
     #region << Using >>
 

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Linq.Expressions;
-using Incoding.Core.Maybe;
-using Incoding.Mvc.MvcContrib.Incoding_Controls;
+using Incoding.Core;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Incoding.Web.MvcContrib.IncHtmlHelper
+namespace Incoding.Web.MvcContrib
 {
     #region << Using >>
 

@@ -6,7 +6,7 @@ using Incoding.Core.Block.IoC.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 
-namespace Incoding.MSpecContrib
+namespace Incoding.MSpec
 {
 
     public static class IoCFactoryTestEx

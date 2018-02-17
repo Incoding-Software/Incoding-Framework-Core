@@ -2,17 +2,12 @@
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Linq;
-using System.Threading.Tasks;
 using HandlebarsDotNet;
-using Incoding.CQRS;
-using Incoding.Extensions;
-using Incoding.Mvc.MvcContrib.Incoding_Meta_Language;
-using Incoding.Mvc.MvcContrib.Template.Syntax;
-using Incoding.Web.MvcContrib.Services;
+using Incoding.Web.Extensions;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Incoding.Mvc.MvcContrib.Template.Factory
+namespace Incoding.Web.MvcContrib
 {
     #region << Using >>
 

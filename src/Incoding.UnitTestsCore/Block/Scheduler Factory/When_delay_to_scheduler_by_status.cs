@@ -7,9 +7,7 @@ namespace Incoding.UnitTest
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Incoding.Block;
-    using Incoding.CQRS;
-    using Incoding.MSpecContrib;
+    using Incoding.MSpec;
     using Machine.Specifications;
 
     #endregion

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Incoding.Mvc.MvcContrib.ViewModel
+namespace Incoding.Web.MvcContrib
 {
     #region << Using >>
 

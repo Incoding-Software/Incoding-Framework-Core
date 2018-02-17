@@ -1,8 +1,5 @@
 ﻿using System;
-using Incoding.CQRS;
-using Incoding.Mvc.MvcContrib.MVD;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Incoding.Web.MvcContrib;
 
 namespace Incoding.WebTest.Controllers
 {

@@ -1,4 +1,4 @@
-﻿namespace Incoding.Mvc.MvcContrib.Primitive
+﻿namespace Incoding.Web.MvcContrib
 {
     // ReSharper disable UnusedMember.Global
     public enum KeyCode

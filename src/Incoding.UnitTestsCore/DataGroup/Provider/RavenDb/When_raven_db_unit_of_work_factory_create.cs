@@ -5,7 +5,7 @@ namespace Incoding.UnitTest
     #region << Using >>
 
     using Incoding.Data;
-    using Incoding.MSpecContrib;
+    using Incoding.MSpec;
     using Machine.Specifications;
     using Raven.Client;
 

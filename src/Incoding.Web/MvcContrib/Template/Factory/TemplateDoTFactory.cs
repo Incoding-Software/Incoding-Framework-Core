@@ -1,8 +1,7 @@
 ﻿using System;
-using Incoding.Mvc.MvcContrib.Template.Syntax;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Incoding.Mvc.MvcContrib.Template.Factory
+namespace Incoding.Web.MvcContrib
 {
     #region << Using >>
 

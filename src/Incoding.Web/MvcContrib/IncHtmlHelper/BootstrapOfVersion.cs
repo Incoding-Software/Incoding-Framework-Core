@@ -1,4 +1,4 @@
-namespace Incoding.Web.MvcContrib.IncHtmlHelper
+namespace Incoding.Web.MvcContrib
 {
     public enum BootstrapOfVersion
     {

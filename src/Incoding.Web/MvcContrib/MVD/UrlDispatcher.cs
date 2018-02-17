@@ -6,15 +6,14 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using Incoding.Core.Extensions;
-using Incoding.Core.Maybe;
+using Incoding.Core;
 using Incoding.Core.Quality;
-using Incoding.Extensions;
+using Incoding.Web.Extensions;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Routing;
 
-namespace Incoding.Mvc.MvcContrib.MVD
+namespace Incoding.Web.MvcContrib
 {
     #region << Using >>
 

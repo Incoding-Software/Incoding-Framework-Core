@@ -2,7 +2,7 @@
 using FluentValidation;
 using Incoding.Core.Block.IoC;
 
-namespace Incoding.Mvc.MvcContrib.Core
+namespace Incoding.Web.MvcContrib
 {
     #region << Using >>
 

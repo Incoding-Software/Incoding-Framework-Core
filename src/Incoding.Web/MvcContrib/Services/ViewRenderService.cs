@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing;
 
-namespace Incoding.Web.MvcContrib.Services
+namespace Incoding.Web.MvcContrib
 {
     public interface IViewRenderService
     {

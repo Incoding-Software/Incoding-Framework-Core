@@ -1,5 +1,4 @@
 using Incoding.Core.CQRS.Core;
-using Incoding.CQRS;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Incoding.Web.MvcContrib

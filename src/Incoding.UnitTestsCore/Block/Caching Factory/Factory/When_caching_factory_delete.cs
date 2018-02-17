@@ -6,8 +6,7 @@ namespace Incoding.UnitTest.Block
     #region << Using >>
 
     using System;
-    using Incoding.Block.Caching;
-    using Incoding.MSpecContrib;
+    using Incoding.MSpec;
     using Machine.Specifications;
 
     #endregion

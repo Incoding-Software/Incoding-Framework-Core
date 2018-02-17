@@ -2,7 +2,7 @@
 using Incoding.Core.Data;
 using Incoding.Core.Extensions;
 using Incoding.Core.Extensions.LinqSpecs;
-using Incoding.Core.Maybe;
+using Incoding.Core;
 using Incoding.Data.EF.Provider;
 
 namespace Incoding.Data

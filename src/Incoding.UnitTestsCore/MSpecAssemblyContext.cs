@@ -4,7 +4,6 @@ using Incoding.Core.Extensions;
 using Incoding.Core.Utilities;
 using Incoding.Data;
 using Incoding.Data.EF.Provider;
-using Incoding.Extensions;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -22,8 +21,8 @@ namespace Incoding.UnitTest
     using System.Threading;
     //using FluentNHibernate.Cfg;
     //using FluentNHibernate.Cfg.Db;
-    using Incoding.Block;
-    using Incoding.MSpecContrib;
+    
+    using Incoding.MSpec;
     using Machine.Specifications;
     using Machine.Specifications.Annotations;
     //using NHibernate.Tool.hbm2ddl;

@@ -7,7 +7,6 @@ namespace Incoding.UnitTest.Block
 {
     #region << Using >>
 
-    using Incoding.Block.Caching;
     using Machine.Specifications;
 
     #endregion

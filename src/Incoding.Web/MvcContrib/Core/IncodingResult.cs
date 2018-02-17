@@ -5,13 +5,12 @@ using System.Net;
 using System.Threading.Tasks;
 using Incoding.Core;
 using Incoding.Core.Extensions;
-using Incoding.Core.Maybe;
-using Incoding.Extensions;
+using Incoding.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Razor;
 
-namespace Incoding.Mvc.MvcContrib.Core
+namespace Incoding.Web.MvcContrib
 {
     #region << Using >>
 

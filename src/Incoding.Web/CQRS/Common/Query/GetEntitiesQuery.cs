@@ -1,13 +1,11 @@
+using System.Collections.Generic;
+using System.Linq;
 using Incoding.Core.CQRS.Core;
 using Incoding.Core.Data;
 
-namespace Incoding.CQRS
+namespace Incoding.Web.CQRS.Common.Query
 {
     #region << Using >>
-
-    using System.Collections.Generic;
-    using System.Linq;
-    using Incoding.Block;
 
     #endregion
 

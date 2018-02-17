@@ -7,8 +7,7 @@ namespace Incoding.UnitTest.Block
     using System;
     using System.Collections.Generic;
     using System.Runtime.Serialization;
-    using Incoding.Block.Caching;
-    using Incoding.MSpecContrib;
+    using Incoding.MSpec;
     using Machine.Specifications;
 
     #endregion

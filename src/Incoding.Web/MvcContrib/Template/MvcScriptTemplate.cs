@@ -1,9 +1,7 @@
 using Incoding.Core.Extensions;
-using Incoding.Extensions;
-using Incoding.Mvc.MvcContrib.Primitive;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Incoding.Mvc.MvcContrib.Template
+namespace Incoding.Web.MvcContrib
 {
     #region << Using >>
 

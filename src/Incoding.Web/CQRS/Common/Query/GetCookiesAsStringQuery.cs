@@ -1,15 +1,11 @@
-﻿using Incoding.Core.CQRS.Core;
-using Incoding.Core.Maybe;
+﻿using System.Diagnostics.CodeAnalysis;
+using Incoding.Core.CQRS.Core;
+using Incoding.Core;
+using JetBrains.Annotations;
 
-namespace Incoding.CQRS
+namespace Incoding.Web.CQRS.Common.Query
 {
     #region << Using >>
-
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Web;
-    using Incoding.Block;
-    using JetBrains.Annotations;
 
     #endregion
 

@@ -4,7 +4,7 @@
 
     using System.Collections.Generic;
     using Incoding.Data;
-    using Incoding.MSpecContrib;
+    using Incoding.MSpec;
     using Machine.Specifications;
 
     #endregion

@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace Incoding.Mvc.MvcContrib.Primitive
+namespace Incoding.Web.MvcContrib
 {
     #region << Using >>
 

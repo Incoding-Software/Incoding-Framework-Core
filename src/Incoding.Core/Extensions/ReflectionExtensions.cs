@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using Incoding.Core.Maybe;
+using Incoding.Core;
 
 namespace Incoding.Core.Extensions
 {

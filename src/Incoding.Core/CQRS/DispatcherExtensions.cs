@@ -1,6 +1,6 @@
 using System;
 using Incoding.Core.CQRS.Core;
-using Incoding.Core.Maybe;
+using Incoding.Core;
 
 namespace Incoding.Core.CQRS
 {

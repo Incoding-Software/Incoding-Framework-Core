@@ -1,10 +1,9 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.IO;
+﻿using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace Incoding.Mvc.MvcContrib.Primitive
+namespace Incoding.Web.MvcContrib
 {
     public class MemoryFormFile : IFormFile
     {

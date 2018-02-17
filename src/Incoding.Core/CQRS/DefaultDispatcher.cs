@@ -7,7 +7,7 @@ using Incoding.Core.Block.IoC;
 using Incoding.Core.CQRS.Common;
 using Incoding.Core.CQRS.Core;
 using Incoding.Core.Data;
-using Incoding.Core.Maybe;
+using Incoding.Core;
 
 namespace Incoding.Core.CQRS
 {

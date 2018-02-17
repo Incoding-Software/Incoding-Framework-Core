@@ -1,10 +1,8 @@
 using Incoding.Core.CQRS.Core;
 
-namespace Incoding.MSpecContrib
+namespace Incoding.MSpec
 {
     #region << Using >>
-
-    using Incoding.CQRS;
 
     #endregion
 

@@ -1,14 +1,13 @@
-﻿using Incoding.Core.CQRS.Core;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using Incoding.Core.CQRS.Core;
+using Incoding.Web.CQRS.Common.Query;
+using JetBrains.Annotations;
 using Microsoft.AspNetCore.Http;
 
-namespace Incoding.CQRS
+namespace Incoding.Web.CQRS.Common.Command
 {
     #region << Using >>
-
-    using System;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Web;
-    using JetBrains.Annotations;
 
     #endregion
 

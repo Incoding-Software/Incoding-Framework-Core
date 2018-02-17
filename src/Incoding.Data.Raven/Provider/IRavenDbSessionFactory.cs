@@ -1,5 +1,4 @@
-﻿using Incoding.Data.Core;
-using Raven.Client;
+﻿using Raven.Client;
 
 namespace Incoding.Data.Raven.Provider
 {
