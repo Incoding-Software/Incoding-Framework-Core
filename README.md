@@ -18,7 +18,19 @@ In framework you can find methods an classes for unit tests
 
 ## Getting Started
 
-Configuring:
+Adding [Javascripts](https://github.com/Incoding-Software/Incoding-Framework-Core/js) :
+```
+<script src="~/js/jquery-1.10.2.js"></script>
+<script src="~/js/underscore.js"></script>
+<script src="~/js/jquery.form.js"></script>
+<script src="~/js/jquery.history.js"></script>
+<script src="~/js/jquery.validate.js"></script>
+<script src="~/js/jquery.validate.unobtrusive.js"></script>
+<script src="~/js/handlebars.js"></script>
+<script src="~/js/incoding.framework.js"></script>
+```
+
+Configuring (replace your Startup.cs with this code):
 ```
 public class IncodingStartup
     {
