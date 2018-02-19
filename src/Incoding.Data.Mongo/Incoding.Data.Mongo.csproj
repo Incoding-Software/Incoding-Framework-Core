@@ -12,6 +12,7 @@
     <RepositoryUrl>https://github.com/Incoding-Software/Incoding-Framework-Core</RepositoryUrl>
     <PackageTags>framework, incoding, database, mongo db, core, provider</PackageTags>
     <PackageReleaseNotes>Incoding Framework library migrated to .NET Standard and .NET Core</PackageReleaseNotes>
+    <Product>Incoding.Data</Product>
   </PropertyGroup>
 
   <ItemGroup>
