@@ -2,7 +2,7 @@ namespace Incoding.UnitTest
 {
     using Incoding.Data;
     using Machine.Specifications;
-    using Incoding.MSpec;
+    using Incoding.UnitTests.MSpec;
 
     [Subject(typeof(DictionaryAsString))]
     public class When_dictionary_as_string_wiht_hard_value

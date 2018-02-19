@@ -6,7 +6,7 @@ namespace Incoding.UnitTest
     #region << Using >>
     
     using Incoding.Data;
-    using Incoding.MSpec;
+    using Incoding.UnitTests.MSpec;
     using Machine.Specifications;
 
     #endregion

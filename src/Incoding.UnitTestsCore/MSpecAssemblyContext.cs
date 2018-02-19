@@ -22,7 +22,7 @@ namespace Incoding.UnitTest
     //using FluentNHibernate.Cfg;
     //using FluentNHibernate.Cfg.Db;
     
-    using Incoding.MSpec;
+    using Incoding.UnitTests.MSpec;
     using Machine.Specifications;
     using Machine.Specifications.Annotations;
     //using NHibernate.Tool.hbm2ddl;

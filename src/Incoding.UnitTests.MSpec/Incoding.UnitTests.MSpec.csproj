@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Authors>Vlad Kopachinsky, Victor Gelmutdinov</Authors>
+    <Company>Incoding Software</Company>
+    <Product>Incoding.UnitTests.MSpec</Product>
+    <Description>MSpec helper library to write quick tests for projects using Incoding Framework</Description>
+    <Copyright>Incoding Software, 2018</Copyright>
+    <PackageLicenseUrl>https://github.com/Incoding-Software/Incoding-Framework-Core/blob/master/LICENSE.md</PackageLicenseUrl>
+    <PackageProjectUrl>http://incframework.com</PackageProjectUrl>
+    <PackageIconUrl>http://incframework.com/Content/ico/icon-144x144.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/Incoding-Software/Incoding-Framework-Core</RepositoryUrl>
+    <PackageTags>framework, incoding, machine specification, mspec, test, tests, unit tests</PackageTags>
+    <PackageReleaseNotes>Incoding Framework library migrated to .NET Standard and .NET Core</PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageId>Incoding.UnitTests.MSpec</PackageId>
+    <AssemblyName>Incoding.UnitTests.MSpec</AssemblyName>
+    <RootNamespace>Incoding.UnitTests.MSpec</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data Base\NHibernateSessionExtensions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Machine.Specifications" Version="0.12.0" />
+    <PackageReference Include="Machine.Specifications.Should" Version="0.11.0" />
+    <PackageReference Include="Moq" Version="4.8.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Incoding.Core\Incoding.Core.csproj" />
+    <ProjectReference Include="..\Incoding.Data\Incoding.Data.csproj" />
+    <ProjectReference Include="..\Incoding.Web\Incoding.Web.csproj" />
+  </ItemGroup>
+
+</Project>

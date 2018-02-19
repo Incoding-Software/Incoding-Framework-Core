@@ -3,7 +3,7 @@
     #region << Using >>
 
     using System.Linq;
-    using Incoding.MSpec;
+    using Incoding.UnitTests.MSpec;
     using Machine.Specifications;
 
     #endregion

@@ -21,8 +21,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.Data", "Incoding.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.WebTest", "Incoding.WebTest\Incoding.WebTest.csproj", "{FD898759-A664-4053-B750-B89BD5EBAD70}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.MSpec", "Incoding.MSpec\Incoding.MSpec.csproj", "{042FAB17-F5D6-4DEF-97B9-DB85FA7D831F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.UnitTestsCore", "Incoding.UnitTestsCore\Incoding.UnitTestsCore.csproj", "{5161D152-6803-46E4-B3E2-ABB8727C91E5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.Data.EF", "Incoding.Data.EF\Incoding.Data.EF.csproj", "{923ECD3D-3BF3-41EA-8359-1117C72AC9BD}"
@@ -38,6 +36,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Providers", "Providers", "{540D8C0B-630F-48A8-875B-8CFA62F498E2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{81999E6B-994A-4762-A4E3-AB5AC3BAE569}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.UnitTests.MSpec", "Incoding.UnitTests.MSpec\Incoding.UnitTests.MSpec.csproj", "{10BC0CA7-2CE3-4033-9C1E-9DCD05FCE628}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,12 +85,6 @@ Global
 		{FD898759-A664-4053-B750-B89BD5EBAD70}.Publish|Any CPU.Build.0 = Debug|Any CPU
 		{FD898759-A664-4053-B750-B89BD5EBAD70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD898759-A664-4053-B750-B89BD5EBAD70}.Release|Any CPU.Build.0 = Release|Any CPU
-		{042FAB17-F5D6-4DEF-97B9-DB85FA7D831F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{042FAB17-F5D6-4DEF-97B9-DB85FA7D831F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{042FAB17-F5D6-4DEF-97B9-DB85FA7D831F}.Publish|Any CPU.ActiveCfg = Debug|Any CPU
-		{042FAB17-F5D6-4DEF-97B9-DB85FA7D831F}.Publish|Any CPU.Build.0 = Debug|Any CPU
-		{042FAB17-F5D6-4DEF-97B9-DB85FA7D831F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{042FAB17-F5D6-4DEF-97B9-DB85FA7D831F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5161D152-6803-46E4-B3E2-ABB8727C91E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5161D152-6803-46E4-B3E2-ABB8727C91E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5161D152-6803-46E4-B3E2-ABB8727C91E5}.Publish|Any CPU.ActiveCfg = Debug|Any CPU
@@ -127,6 +121,12 @@ Global
 		{B44D9211-9916-4B60-A013-B89F433CA3F9}.Publish|Any CPU.Build.0 = Debug|Any CPU
 		{B44D9211-9916-4B60-A013-B89F433CA3F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B44D9211-9916-4B60-A013-B89F433CA3F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10BC0CA7-2CE3-4033-9C1E-9DCD05FCE628}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10BC0CA7-2CE3-4033-9C1E-9DCD05FCE628}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10BC0CA7-2CE3-4033-9C1E-9DCD05FCE628}.Publish|Any CPU.ActiveCfg = Debug|Any CPU
+		{10BC0CA7-2CE3-4033-9C1E-9DCD05FCE628}.Publish|Any CPU.Build.0 = Debug|Any CPU
+		{10BC0CA7-2CE3-4033-9C1E-9DCD05FCE628}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10BC0CA7-2CE3-4033-9C1E-9DCD05FCE628}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -139,7 +139,6 @@ Global
 		{A6C75E3B-28AC-4EA3-99B5-014C3541657B} = {506ED6C6-6671-43EC-98A9-5FBF14201B62}
 		{7FA0F901-5A61-4EBA-8D3F-739FE4394A7F} = {506ED6C6-6671-43EC-98A9-5FBF14201B62}
 		{FD898759-A664-4053-B750-B89BD5EBAD70} = {81999E6B-994A-4762-A4E3-AB5AC3BAE569}
-		{042FAB17-F5D6-4DEF-97B9-DB85FA7D831F} = {506ED6C6-6671-43EC-98A9-5FBF14201B62}
 		{5161D152-6803-46E4-B3E2-ABB8727C91E5} = {81999E6B-994A-4762-A4E3-AB5AC3BAE569}
 		{923ECD3D-3BF3-41EA-8359-1117C72AC9BD} = {540D8C0B-630F-48A8-875B-8CFA62F498E2}
 		{65546B67-1D7A-4127-8C33-197819DAD18F} = {540D8C0B-630F-48A8-875B-8CFA62F498E2}
@@ -147,16 +146,16 @@ Global
 		{D04DC0E2-D7B0-4CD8-A3B9-01465F730A09} = {540D8C0B-630F-48A8-875B-8CFA62F498E2}
 		{B44D9211-9916-4B60-A013-B89F433CA3F9} = {540D8C0B-630F-48A8-875B-8CFA62F498E2}
 		{540D8C0B-630F-48A8-875B-8CFA62F498E2} = {506ED6C6-6671-43EC-98A9-5FBF14201B62}
-		{81999E6B-994A-4762-A4E3-AB5AC3BAE569} = {506ED6C6-6671-43EC-98A9-5FBF14201B62}
+		{10BC0CA7-2CE3-4033-9C1E-9DCD05FCE628} = {506ED6C6-6671-43EC-98A9-5FBF14201B62}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {834D889F-F4B3-4006-83EC-584703FCCDA2}
-		BuildVersion_BuildVersioningStyle = None.None.None.None
-		BuildVersion_DetectChanges = True
-		BuildVersion_IncrementBeforeBuild = True
-		BuildVersion_BuildAction = ReBuild
-		BuildVersion_UpdateFileVersion = False
 		BuildVersion_UpdateAssemblyVersion = False
+		BuildVersion_UpdateFileVersion = False
+		BuildVersion_BuildAction = ReBuild
+		BuildVersion_IncrementBeforeBuild = True
+		BuildVersion_DetectChanges = True
+		BuildVersion_BuildVersioningStyle = None.None.None.None
+		SolutionGuid = {834D889F-F4B3-4006-83EC-584703FCCDA2}
 	EndGlobalSection
 	GlobalSection(NDepend) = preSolution
 		Project = ".\IncFramework.ndproj"

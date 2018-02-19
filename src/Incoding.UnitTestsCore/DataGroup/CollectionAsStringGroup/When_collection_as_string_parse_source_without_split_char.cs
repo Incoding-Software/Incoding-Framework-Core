@@ -5,7 +5,7 @@ namespace Incoding.UnitTest
     using System.Collections.Generic;
     using System.Linq;
     using Incoding.Data;
-    using Incoding.MSpec;
+    using Incoding.UnitTests.MSpec;
     using Machine.Specifications;
 
     #endregion

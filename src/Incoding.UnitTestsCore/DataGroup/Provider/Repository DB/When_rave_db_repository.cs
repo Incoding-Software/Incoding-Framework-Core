@@ -8,7 +8,7 @@ namespace Incoding.UnitTest
     using System.Configuration;
     using System.Linq;
     using Incoding.Data;
-    using Incoding.MSpec;
+    using Incoding.UnitTests.MSpec;
     using Machine.Specifications;
     using NCrunch.Framework;
     using Raven.Client;

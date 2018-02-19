@@ -15,7 +15,7 @@ namespace Incoding.UnitTest
     using System.Linq;
     using System.Linq.Expressions;
     using Incoding.Data;
-    using Incoding.MSpec;
+    using Incoding.UnitTests.MSpec;
     using Machine.Specifications;
     using NCrunch.Framework;
     //using NHibernate;

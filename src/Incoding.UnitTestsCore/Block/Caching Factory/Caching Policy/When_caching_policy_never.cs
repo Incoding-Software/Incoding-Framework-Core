@@ -4,7 +4,7 @@ namespace Incoding.UnitTest.Block
 {
     #region << Using >>
 
-    using Incoding.MSpec;
+    using Incoding.UnitTests.MSpec;
     using Machine.Specifications;
 
     #endregion

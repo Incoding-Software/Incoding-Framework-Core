@@ -12,7 +12,7 @@ namespace Incoding.UnitTest.MSpecGroup
 
     using System.Configuration;
     using Incoding.Data;
-    using Incoding.MSpec;
+    using Incoding.UnitTests.MSpec;
     using Machine.Specifications;
     using Raven.Client.Document;
 

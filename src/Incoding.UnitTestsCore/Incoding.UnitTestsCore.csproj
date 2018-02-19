@@ -56,7 +56,7 @@
     <ProjectReference Include="..\Incoding.Data.Mongo\Incoding.Data.Mongo.csproj" />
     <ProjectReference Include="..\Incoding.Data.Raven\Incoding.Data.Raven.csproj" />
     <ProjectReference Include="..\Incoding.Data\Incoding.Data.csproj" />
-    <ProjectReference Include="..\Incoding.MSpec\Incoding.MSpec.csproj" />
+    <ProjectReference Include="..\Incoding.UnitTests.MSpec\Incoding.UnitTests.MSpec.csproj" />
     <ProjectReference Include="..\Incoding.Web\Incoding.Web.csproj" />
   </ItemGroup>
 
