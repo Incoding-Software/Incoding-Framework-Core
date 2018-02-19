@@ -12,6 +12,8 @@
     <RepositoryUrl>https://github.com/Incoding-Software/Incoding-Framework-Core</RepositoryUrl>
     <PackageTags>framework, incoding, web, cqrs, mvd, incoding framework</PackageTags>
     <PackageReleaseNotes>Incoding Framework library migrated to .NET Standard and .NET Core</PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>

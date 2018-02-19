@@ -13,6 +13,8 @@
     <PackageTags>framework, incoding, database, raven db, core, provider</PackageTags>
     <PackageReleaseNotes>Incoding Framework library migrated to .NET Standard and .NET Core</PackageReleaseNotes>
     <Product>Incoding.Data</Product>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
