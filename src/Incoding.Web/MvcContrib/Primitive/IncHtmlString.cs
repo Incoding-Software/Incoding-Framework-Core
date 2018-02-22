@@ -1,4 +1,5 @@
 ﻿using System;
+using Incoding.Web.Extensions;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Razor;
 
@@ -10,16 +11,16 @@ namespace Incoding.Web.MvcContrib
 
     public struct IncHtmlString
     {
-        private readonly HtmlString result;
+        private readonly IHtmlContent result;
 
-        public IncHtmlString(HtmlString result)
+        public IncHtmlString(IHtmlContent result)
         {
             this.result = result;
         }
 
         public override string ToString()
         {
-            return this.result.Value;
+            return this.result.HtmlContentToString();
         }
 
         public static implicit operator string(IncHtmlString value)
@@ -29,7 +30,7 @@ namespace Incoding.Web.MvcContrib
 
         public static implicit operator HtmlString(IncHtmlString value)
         {
-            return value.result;
+            return new HtmlString(value.result.HtmlContentToString());
         }
 
         public static implicit operator IncHtmlString(string content)
@@ -42,9 +43,11 @@ namespace Incoding.Web.MvcContrib
             return new IncHtmlString(content);
         }
 
-        public static implicit operator IncHtmlString(Func<object, HelperResult> content)
+        public static implicit operator Selector(IncHtmlString content)
         {
-            return new IncHtmlString(new HtmlString(content.Invoke(null).ToString()));
+            return new Selector(content.ToString());
         }
+
+        
     }
 }

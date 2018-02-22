@@ -1,0 +1,222 @@
+﻿
+@using Incoding.Web.Grid.Components
+@using Incoding.Web.MvcContrib
+
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Column Options";
+}
+
+
+
+<div class="container">
+    <div class="row col-md-12" style="margin-top:50px;">
+        
+        <h1>Title</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .Id("TitleExample")
+                      .Styling(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Template(@<text>
+                                               <input type="checkbox" />
+                                           </text>)
+                              .Title(@<text>
+                                          @(Html.When(JqueryBind.Click)
+                                                .Direct()
+                                                .OnSuccess(dsl =>
+                                                {
+                                                    dsl.With(r => r.Custom(":checkbox")).JQuery.Attributes.SetAttr(HtmlAttribute.Checked).If(builder => builder.Is(() => Selector.Jquery.Self()));
+                                                    dsl.With(r => r.Custom(":checkbox")).JQuery.Attributes.RemoveAttr(HtmlAttribute.Checked).If(builder => builder.Is(() => !Selector.Jquery.Self()));
+                                                })
+                                                .AsHtmlAttributes()
+                                                .ToCheckBox(false))
+                                      </text>)
+                              .Width(50);
+                              
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .WidthPct(30);
+
+                          column.Bound(r => r.Price)
+                              .WidthPct(30);
+
+                          column.Bound(r => r.Date)
+                              .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+        </div>
+        <div class="sourceCode">
+            
+        </div>
+
+
+        <h1>Width</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .Id("WidthExample")
+                      .Styling(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Width(100);
+
+                          column.Bound(r => r.Price)
+                              .Width(500);
+
+                          column.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                    Html.Grid&lt;ProductVm&gt;()
+                      .Id("WidthExample")
+                      .Styling(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .Width(100);
+                          column.Bound(r => r.Price)
+                                .Width(500);
+                          column.Bound(r => r.Date)
+                                .Title("Date of made")
+                                .Width(150);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+        </div>
+
+
+        <h1>WidthPct</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .Id("WidthPctExample")
+                      .Styling(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .WidthPct(50);
+
+                          column.Bound(r => r.Price)
+                              .WidthPct(20);
+
+                          column.Bound(r => r.Date)
+                              .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid&lt;ProductVm&gt;()
+                      .Id("WidthPctExample")
+                      .Styling(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .WidthPct(50);
+                          column.Bound(r => r.Price)
+                                .WidthPct(20);
+                          column.Bound(r => r.Date)
+                                .Title("Date of made");
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+        </div>
+
+
+        <h1>Visible</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .Id("VisibleExample")
+                      .Styling(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .WidthPct(50);
+
+                          column.Bound(r => r.Price)
+                              .WidthPct(50);
+
+                          column.Bound(r => r.Date)
+                              .Title("Date of made")
+                              .Visible(false);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid&lt;ProductVm&gt;()
+                      .Id("VisibleExample")
+                      .Styling(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .WidthPct(50);
+                          column.Bound(r => r.Price)
+                                .WidthPct(20);
+                          column.Bound(r => r.Date)
+                                .Title("Date of made")
+                                .Visible(false);
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+        </div>
+
+
+        <h1>Raw</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .Id("RawExample")
+                      .Styling(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                              .Title("Product Name")
+                              .Width(500);
+
+                          column.Bound(r => r.Price)
+                              .Width(500);
+
+                          column.Bound(r => r.Comment)
+                              .Raw();
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+        </div>
+        <div class="sourceCode">
+            <pre>
+                      Html.Grid&lt;ProductVm&gt;()
+                      .Id("RawExample")
+                      .Styling(BootstrapTable.Hover)
+                      .Columns(column =>
+                      {
+                          column.Bound(r => r.Name)
+                                .Title("Product Name")
+                                .WidthPct(50);
+                          column.Bound(r => r.Price)
+                                .WidthPct(50);
+                          column.Bound(r => r.Comment)
+                                .Raw();
+                      })
+                      .AjaxGet(Url.Action("GetProducts", "Home"))
+                </pre>
+        </div>
+
+    </div>
+</div>

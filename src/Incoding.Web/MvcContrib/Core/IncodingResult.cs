@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Incoding.Core;
 using Incoding.Core.Extensions;
 using Incoding.Core;
+using Incoding.Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -101,8 +102,7 @@ namespace Incoding.Web.MvcContrib
         public static IncodingResult Success(Func<object, HelperResult> text)
         {
             string data = text
-                    .Invoke(null)
-                    .ToString()
+                    .Invoke(null).HtmlContentToString()
                     .Replace(Environment.NewLine, string.Empty);
             return Success(data);
         }

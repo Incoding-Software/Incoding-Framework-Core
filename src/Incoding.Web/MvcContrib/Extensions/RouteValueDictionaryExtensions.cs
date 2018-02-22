@@ -1,6 +1,7 @@
 ﻿using System;
 using Incoding.Core.Extensions;
 using Incoding.Core;
+using Incoding.Web.Extensions;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -67,10 +68,10 @@ namespace Incoding.Web.MvcContrib
 
         public static IHtmlContent ToButton(this RouteValueDictionary htmlAttributes, Func<object, HelperResult> text)
         {
-            return htmlAttributes.ToButton(Selector.FromHelperResult(text).ToString());
+            return htmlAttributes.ToButton(Selector.FromHelperResult(text));
         }
 
-        public static IHtmlContent ToButton(this RouteValueDictionary htmlAttributes, HtmlString value)
+        public static IHtmlContent ToButton(this RouteValueDictionary htmlAttributes, IHtmlContent value)
         {
             var tagBuilder = new TagBuilder(HtmlTag.Button.ToStringLower());
             tagBuilder.MergeAttributes(htmlAttributes, true);
@@ -105,7 +106,7 @@ namespace Incoding.Web.MvcContrib
             return ToTag(htmlAttributes, HtmlTag.Div, content);
         }
 
-        public static IHtmlContent ToDiv(this RouteValueDictionary htmlAttributes, HtmlString content)
+        public static IHtmlContent ToDiv(this RouteValueDictionary htmlAttributes, IHtmlContent content)
         {
             return htmlAttributes.ToTag(HtmlTag.Div, content);
         }
@@ -120,7 +121,7 @@ namespace Incoding.Web.MvcContrib
             return ToI(htmlAttributes, string.Empty);
         }
 
-        public static IHtmlContent ToI(this RouteValueDictionary htmlAttributes, HtmlString content)
+        public static IHtmlContent ToI(this RouteValueDictionary htmlAttributes, IHtmlContent content)
         {
             return htmlAttributes.ToTag(HtmlTag.I, content);
         }
@@ -132,7 +133,7 @@ namespace Incoding.Web.MvcContrib
 
         public static IHtmlContent ToI(this RouteValueDictionary htmlAttributes, Func<object, HelperResult> text)
         {
-            return htmlAttributes.ToI(Selector.FromHelperResult(text).ToString());
+            return htmlAttributes.ToI(Selector.FromHelperResult(text));
         }
 
         public static IHtmlContent ToImg(this RouteValueDictionary htmlAttributes)
@@ -145,14 +146,14 @@ namespace Incoding.Web.MvcContrib
             return htmlAttributes.ToImg(new HtmlString(content));
         }
 
-        public static IHtmlContent ToImg(this RouteValueDictionary htmlAttributes, HtmlString content)
+        public static IHtmlContent ToImg(this RouteValueDictionary htmlAttributes, IHtmlContent content)
         {
             return htmlAttributes.ToTag(HtmlTag.Img, content);
         }
 
         public static IHtmlContent ToImg(this RouteValueDictionary htmlAttributes, Func<object, HelperResult> text)
         {
-            return htmlAttributes.ToImg(Selector.FromHelperResult(text).ToString());
+            return htmlAttributes.ToImg(Selector.FromHelperResult(text));
         }
 
         public static IHtmlContent ToInput(this RouteValueDictionary htmlAttributes, HtmlInputType inputType, string value)
@@ -179,10 +180,10 @@ namespace Incoding.Web.MvcContrib
 
         public static IHtmlContent ToLabel(this RouteValueDictionary htmlAttributes, Func<object, HelperResult> text)
         {
-            return htmlAttributes.ToLabel(Selector.FromHelperResult(text).ToString());
+            return htmlAttributes.ToLabel(Selector.FromHelperResult(text));
         }
 
-        public static IHtmlContent ToLabel(this RouteValueDictionary htmlAttributes, HtmlString content)
+        public static IHtmlContent ToLabel(this RouteValueDictionary htmlAttributes, IHtmlContent content)
         {
             return htmlAttributes.ToTag(HtmlTag.Label, content);
         }
@@ -199,10 +200,10 @@ namespace Incoding.Web.MvcContrib
 
         public static IHtmlContent ToLink(this RouteValueDictionary htmlAttributes, Func<object, HelperResult> text)
         {
-            return htmlAttributes.ToLink(Selector.FromHelperResult(text).ToString());
+            return htmlAttributes.ToLink(Selector.FromHelperResult(text));
         }
 
-        public static IHtmlContent ToLink(this RouteValueDictionary htmlAttributes, HtmlString content)
+        public static IHtmlContent ToLink(this RouteValueDictionary htmlAttributes, IHtmlContent content)
         {
             var tagBuilder = new TagBuilder(HtmlTag.A.ToStringLower());
             tagBuilder.InnerHtml.AppendHtml(content);
@@ -235,12 +236,12 @@ namespace Incoding.Web.MvcContrib
 
         public static IHtmlContent ToTag(this RouteValueDictionary htmlAttributes, HtmlTag tag, Func<object, HelperResult> content)
         {
-            return htmlAttributes.ToTag(tag, Selector.FromHelperResult(content).ToString());
+            return htmlAttributes.ToTag(tag, Selector.FromHelperResult(content));
         }
 
-        public static IHtmlContent ToTag(this RouteValueDictionary htmlAttributes, HtmlTag tag, HtmlString content)
+        public static IHtmlContent ToTag(this RouteValueDictionary htmlAttributes, HtmlTag tag, IHtmlContent content)
         {
-            bool isContent = !string.IsNullOrWhiteSpace(content.With(r => r.ToString()));
+            bool isContent = !string.IsNullOrWhiteSpace(content.With(r => r.HtmlContentToString()));
             var tagBuilder = new TagBuilder(tag.ToStringLower());
             tagBuilder.MergeAttributes(htmlAttributes, true);
             if (isContent)

@@ -3,6 +3,8 @@ using System.IO;
 using System.Linq.Expressions;
 using System.Text.Encodings.Web;
 using Incoding.Core.Extensions;
+using Incoding.Web.Extensions;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 
@@ -58,9 +60,9 @@ namespace Incoding.Web.MvcContrib
             var spanAsLabel = new TagBuilder(HtmlTag.Span.ToStringLower());
             spanAsLabel.InnerHtml.AppendHtml(this.Label.Name);
             var label = new TagBuilder(HtmlTag.Label.ToStringLower());
-            label.InnerHtml.AppendHtml(this.htmlHelper.CheckBox(ExpressionHelper.GetExpressionText(this.property), isChecked, GetAttributes()).ToString()
-                                       + new TagBuilder(HtmlTag.I.ToStringLower())
-                                       + spanAsLabel);
+            label.InnerHtml.AppendHtml(this.htmlHelper.CheckBox(ExpressionHelper.GetExpressionText(this.property), isChecked, GetAttributes()).HtmlContentToString()
+                                        + new TagBuilder(HtmlTag.I.ToStringLower()).HtmlContentToString()
+                                       + spanAsLabel.HtmlContentToString());
             div.InnerHtml.AppendHtml(label);
             div.WriteTo(writer, encoder);
         }

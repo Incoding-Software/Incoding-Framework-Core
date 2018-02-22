@@ -20,7 +20,7 @@ namespace Incoding.Web.MvcContrib
 
         IIncodingMetaLanguageEventBuilderDsl Ajax<TMessage>(object message = null) where TMessage : IMessage, new();
 
-        IIncodingMetaLanguageEventBuilderDsl Ajax(HtmlString url);
+        IIncodingMetaLanguageEventBuilderDsl Ajax(IHtmlContent url);
 
         IIncodingMetaLanguageEventBuilderDsl Ajax(Func<IUrlDispatcher, string> url);
 
@@ -59,7 +59,7 @@ namespace Incoding.Web.MvcContrib
 
         IIncodingMetaLanguageEventBuilderDsl AjaxPost(string url);
 
-        IIncodingMetaLanguageEventBuilderDsl AjaxPost(HtmlString url);
+        IIncodingMetaLanguageEventBuilderDsl AjaxPost(IHtmlContent url);
 
         IIncodingMetaLanguageEventBuilderDsl AjaxPost(Func<IUrlDispatcher, string> url);
 

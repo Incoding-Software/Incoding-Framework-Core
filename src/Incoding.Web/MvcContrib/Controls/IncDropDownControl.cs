@@ -5,6 +5,8 @@ using System.Linq.Expressions;
 using System.Text.Encodings.Web;
 using Incoding.Core.Extensions;
 using Incoding.Core;
+using Incoding.Core.ViewModel;
+using Incoding.Web.Extensions;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
@@ -66,7 +68,7 @@ namespace Incoding.Web.MvcContrib
                         var option = new TagBuilder(HtmlTag.Option.ToStringLower());
                         option.InnerHtml.Append(vm.Text);
                         option.MergeAttribute(HtmlAttribute.Value.ToStringLower(), vm.Value);
-                        dsl.Self().JQuery.Dom.Use(new HtmlString(option.ToString()).ToString()).Prepend();
+                        dsl.Self().JQuery.Dom.Use(option.ToHtmlString()).Prepend();
                     }
                     dsl.Self().Insert.WithTemplate(Template).Append();
                 }

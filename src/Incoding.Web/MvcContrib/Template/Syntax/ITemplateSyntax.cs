@@ -14,25 +14,26 @@ namespace Incoding.Web.MvcContrib
     {
         ITemplateSyntax<TModel> Up();
 
-        string For(string field);
+        HtmlString For(string field);
+        HtmlString For(IHtmlContent field);
 
-        string For(Expression<Func<TModel, object>> field);
+        IncHtmlString For(Expression<Func<TModel, object>> field);
 
-        string For(Expression<Func<TModel, bool>> field);
+        IncHtmlString For(Expression<Func<TModel, bool>> field);
 
         HtmlString Inline(Expression<Func<TModel, object>> field, string isTrue, string isFalse);
 
-        HtmlString Inline(Expression<Func<TModel, object>> field, HtmlString isTrue, HtmlString isFalse);
+        HtmlString Inline(Expression<Func<TModel, object>> field, IHtmlContent isTrue, IHtmlContent isFalse);
 
-        HtmlString Inline(Expression<Func<TModel, object>> field, string isTrue, HtmlString isFalse);
+        HtmlString Inline(Expression<Func<TModel, object>> field, string isTrue, IHtmlContent isFalse);
 
-        HtmlString Inline(Expression<Func<TModel, object>> field, HtmlString isTrue, string isFalse);
+        HtmlString Inline(Expression<Func<TModel, object>> field, IHtmlContent isTrue, string isFalse);
 
         HtmlString Inline(Expression<Func<TModel, object>> field, Func<object, HelperResult> isTrue, Func<object, HelperResult> isFalse);
 
-        HtmlString Inline(Expression<Func<TModel, object>> field, Func<object, HelperResult> isTrue, HtmlString isFalse);
+        HtmlString Inline(Expression<Func<TModel, object>> field, Func<object, HelperResult> isTrue, IHtmlContent isFalse);
 
-        HtmlString Inline(Expression<Func<TModel, object>> field, HtmlString isTrue, Func<object, HelperResult> isFalse);
+        HtmlString Inline(Expression<Func<TModel, object>> field, IHtmlContent isTrue, Func<object, HelperResult> isFalse);
 
         HtmlString Inline(Expression<Func<TModel, object>> field, string isTrue, Func<object, HelperResult> isFalse);
 
@@ -40,13 +41,13 @@ namespace Incoding.Web.MvcContrib
 
         HtmlString IsInline(Expression<Func<TModel, object>> field, string content);
 
-        HtmlString IsInline(Expression<Func<TModel, object>> field, HtmlString content);
+        HtmlString IsInline(Expression<Func<TModel, object>> field, IHtmlContent content);
 
         HtmlString IsInline(Expression<Func<TModel, object>> field, Func<object, HelperResult> content);
 
         HtmlString NotInline(Expression<Func<TModel, object>> field, string content);
 
-        HtmlString NotInline(Expression<Func<TModel, object>> field, HtmlString content);
+        HtmlString NotInline(Expression<Func<TModel, object>> field, IHtmlContent content);
 
         HtmlString NotInline(Expression<Func<TModel, object>> field, Func<object, HelperResult> content);
 

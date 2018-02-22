@@ -30,8 +30,9 @@ namespace Incoding.UnitTest.Block
                                       cachingFactory.Initialize(caching => caching.WithProvider(provider.Object));
                                   };
 
-        Because of = () => Pleasure.MultiThread.Do10(() => cachingFactory.Set(new FakeCacheKey(), new FakeSerializeObject()));
+        Because of = () => Pleasure.MultiThread.Do10(() => cachingFactory.Set(new FakeCacheKey(), new FakeSerializeObject(), new CacheOptions()));
 
-        It should_be_call_set_cached_only_at_once = () => provider.Verify(r => r.Set(Pleasure.MockIt.IsStrong(new FakeCacheKey().GetName()), Pleasure.MockIt.IsStrong(new FakeSerializeObject()), null), Times.Exactly(10));
+        It should_be_call_set_cached_only_at_once = () => provider.Verify(r => r.Set(Pleasure.MockIt.IsStrong(nameof(FakeCacheKey)), 
+            Pleasure.MockIt.IsStrong(new FakeSerializeObject()), Pleasure.MockIt.IsStrong(new CacheOptions())), Times.Exactly(10));
     }
 }

@@ -1,0 +1,71 @@
+﻿@using GridUI
+@using JetBrains.Annotations
+@using Microsoft.AspNetCore.Html
+@{
+    Func<string, string, IHtmlContent> IsActive = (controller, action) =>
+    {
+        if (ViewContext.RouteData.Values["controller"].ToString().ToLower() == controller.ToLower()
+            && action != null && ViewContext.RouteData.Values["action"].ToString().ToLower() == action.ToLower())
+        {
+            return new HtmlString("active");
+        }
+        return HtmlString.Empty;
+    };
+}
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <link href="~/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/css/grid.css" rel="stylesheet" />
+        <title>@ViewBag.Title</title>
+        <script type="text/javascript" src="@Url.Content("~/js/jquery-1.8.3.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/js/underscore.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/js/jquery.form.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/js/jquery.history.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/js/jquery.validate.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/js/jquery.validate.unobtrusive.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/js/handlebars-1.1.2.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/js/incoding.framework.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/js/bootstrap.min.js")"></script>
+        <style>
+
+            .redbox {
+                border: 1px solid red;
+                background-color: #FF3300;
+                color: #fff;
+                text-align: center;
+                width: 100px;
+            }
+
+            .greenbox {
+                border: 1px solid green;
+                background-color: #00CC66;
+                text-align: center;
+                width: 100px;
+            }
+        </style>
+        <script>
+            TemplateFactory.Version = '@CurrentSettings.CurrentVersion';
+        </script>
+    </head>
+    <body>
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
+                    <ul class="nav navbar-nav">
+                        <li class="@IsActive("Home", "Basic")"><a href="@Url.Action("Basic", "Home")">Basic</a></li>
+                        <li class="@IsActive("Home", "Styling")"><a href="@Url.Action("Styling", "Home")">Styling</a></li>
+                        <li class="@IsActive("Home", "ColumnOptions")"><a href="@Url.Action("ColumnOptions", "Home")">Column Options</a></li>
+                        <li class="@IsActive("Home", "Sorting")"><a href="@Url.Action("Sorting", "Home")">Sorting</a></li>
+                        <li class="@IsActive("Home", "Paging")"><a href="@Url.Action("Paging", "Home")">Paging</a></li>
+                        <li class="@IsActive("Home", "GridOptions")"><a href="@Url.Action("GridOptions", "Home")">Grid Options</a></li>
+                        <li class="@IsActive("Home", "Hierarchy")"><a href="@Url.Action("Hierarchy", "Home")">Hierarchy</a></li>
+                        <li class="@IsActive("Home", "LiveTemplate")"><a href="@Url.Action("LiveTemplate", "Home")">Live Template</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        @RenderBody()
+    </body>
+</html>

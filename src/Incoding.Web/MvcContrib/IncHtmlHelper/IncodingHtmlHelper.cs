@@ -39,7 +39,7 @@ namespace Incoding.Web.MvcContrib
             this.htmlHelper = htmlHelper;
         }
 
-        internal static TagBuilder CreateScript(string id, HtmlType type, string src, HtmlString content)
+        internal static TagBuilder CreateScript(string id, HtmlType type, string src, IHtmlContent content)
         {
             var routeValueDictionary = new RouteValueDictionary(new { type = type.ToLocalization() });
             if (!string.IsNullOrWhiteSpace(src))
@@ -59,7 +59,7 @@ namespace Incoding.Web.MvcContrib
             return input;
         }
 
-        internal static TagBuilder CreateTag(HtmlTag tag, HtmlString content, RouteValueDictionary attributes)
+        internal static TagBuilder CreateTag(HtmlTag tag, IHtmlContent content, RouteValueDictionary attributes)
         {
             var tagBuilder = new TagBuilder(tag.ToStringLower());
             tagBuilder.InnerHtml.AppendHtml(content.ReturnOrDefault(r => r, HtmlString.Empty));
@@ -120,6 +120,152 @@ namespace Incoding.Web.MvcContrib
         public MvcTemplate<TModel> Template<TModel>()
         {
             return new MvcTemplate<TModel>(this.htmlHelper);
+        }
+
+        public IHtmlContent Script([PathReference] string src)
+        {
+            var script = IncodingHtmlHelper.CreateScript(string.Empty, HtmlType.TextJavaScript, src, HtmlString.Empty);
+            return script;
+        }
+
+        public IHtmlContent Link([PathReference] string href)
+        {
+            var tagBuilder = CreateTag(HtmlTag.Link, HtmlString.Empty, new RouteValueDictionary());
+            tagBuilder.MergeAttribute(HtmlAttribute.Href.ToStringLower(), href);
+            tagBuilder.MergeAttribute(HtmlAttribute.Rel.ToStringLower(), "stylesheet");
+            tagBuilder.MergeAttribute(HtmlAttribute.Type.ToStringLower(), HtmlType.TextCss.ToLocalization());
+
+            return tagBuilder;
+        }
+
+        public IHtmlContent Button(string value, object attributes = null)
+        {
+            var button = CreateTag(HtmlTag.Button, new HtmlString(value), AnonymousHelper.ToDictionary(attributes));
+            return button;
+        }
+
+        public IHtmlContent Submit(string value, object attributes = null)
+        {
+            var submit = CreateInput(value, HtmlInputType.Submit.ToStringLower(), attributes);
+            submit.TagRenderMode = TagRenderMode.SelfClosing;
+            return submit;
+        }
+
+        public IHtmlContent Img(string src, object attributes = null)
+        {
+            return Img(src, HtmlString.Empty, attributes);
+        }
+
+        public IHtmlContent Img(string src, IHtmlContent content, object attributes = null)
+        {
+            var routeValueDictionary = AnonymousHelper.ToDictionary(attributes);
+            routeValueDictionary.Merge(new { src });
+            var img = CreateTag(HtmlTag.Img, content, routeValueDictionary);
+            return img;
+        }
+
+        public IHtmlContent Anchor(string href, string content, object attributes = null)
+        {
+            return Anchor(href, new HtmlString(content), attributes);
+        }
+
+        public IHtmlContent Anchor(string href, IHtmlContent content, object attributes = null)
+        {
+            var routeValue = AnonymousHelper.ToDictionary(attributes);
+            routeValue.Set("href", href);
+            var a = CreateTag(HtmlTag.A, content, routeValue);
+            return a;
+        }
+
+        public IHtmlContent Div(IHtmlContent content, object attributes = null)
+        {
+            var div = CreateTag(HtmlTag.Div, content, AnonymousHelper.ToDictionary(attributes));
+            return div;
+        }
+
+        public IHtmlContent Div(string content, object attributes = null)
+        {
+            return Div(new HtmlString(content), attributes);
+        }
+
+        public IHtmlContent Span(IHtmlContent content, object attributes = null)
+        {
+            var tag = CreateTag(HtmlTag.Span, content, AnonymousHelper.ToDictionary(attributes));
+            return tag;
+        }
+
+        public IHtmlContent Span(string content, object attributes = null)
+        {
+            return Span(new HtmlString(content), attributes);
+        }
+
+        public IHtmlContent I(object attributes = null)
+        {
+            var tag = CreateTag(HtmlTag.I, HtmlString.Empty, AnonymousHelper.ToDictionary(attributes));
+            return tag;
+        }
+
+        public IHtmlContent P(IHtmlContent content, object attributes = null)
+        {
+            var tag = CreateTag(HtmlTag.P, content, AnonymousHelper.ToDictionary(attributes));
+            return tag;
+        }
+
+        public IHtmlContent P(string content, object attributes = null)
+        {
+            return P(new HtmlString(content), attributes);
+        }
+
+        public IHtmlContent Ul(IHtmlContent content, object attributes = null)
+        {
+            var tag = CreateTag(HtmlTag.Ul, content, AnonymousHelper.ToDictionary(attributes));
+            return tag;
+        }
+
+        public IHtmlContent Ul(string content, object attributes = null)
+        {
+            return Ul(new HtmlString(content), attributes);
+        }
+
+        public IHtmlContent Li(IHtmlContent content, object attributes = null)
+        {
+            var tag = CreateTag(HtmlTag.Li, content, AnonymousHelper.ToDictionary(attributes));
+            return tag;
+        }
+
+        public IHtmlContent Li(string content, object attributes = null)
+        {
+            return Li(new HtmlString(content), attributes);
+        }
+
+        public IHtmlContent Tag(HtmlTag tag, IHtmlContent content, object attributes = null)
+        {
+            var res = CreateTag(tag, content, AnonymousHelper.ToDictionary(attributes));
+            return res;
+        }
+
+        public BeginTag BeginTag(HtmlTag tag, object attributes = null)
+        {
+            return new BeginTag(htmlHelper, tag, AnonymousHelper.ToDictionary(attributes));
+        }
+
+        public IHtmlContent Tag(HtmlTag tag, string content, object attributes = null)
+        {
+            return Tag(tag, new HtmlString(content), attributes);
+        }
+
+        public IHtmlContent File(string value, object attributes = null)
+        {
+            var file = CreateInput(value, HtmlInputType.File.ToStringLower(), attributes);
+            file.TagRenderMode = TagRenderMode.SelfClosing;
+            return file;
+        }
+
+        public IHtmlContent RenderDropDownTemplate()
+        {
+            var templateFactory = IoCFactory.Instance.TryResolve<ITemplateFactory>() ?? new TemplateHandlebarsFactory();
+            string template = templateFactory.GetDropDownTemplate();
+            return CreateScript("incodingDropDownTemplate", HtmlType.TextTemplate, string.Empty, new HtmlString(template));
         }
 
         #endregion
@@ -203,177 +349,7 @@ namespace Incoding.Web.MvcContrib
             public FormMethod Method { get; set; }
             public Enctype EncType { get; set; }
         }
-    /*}
-
-    public class IncodingHtmlHelper
-    {
-        #region Fields
-
-        readonly IHtmlHelper htmlHelper;
-
-        #endregion
-
-        ////ncrunch: no coverage start
-
-        #region Constructors
-
-        public IncodingHtmlHelper(IHtmlHelper htmlHelper)
-        {
-            this.htmlHelper = htmlHelper;
-        }
-
-        #endregion
-        */
-        
-        #region Api Methods
-
-        public IHtmlContent Script([PathReference] string src)
-        {
-            var script = IncodingHtmlHelper.CreateScript(string.Empty, HtmlType.TextJavaScript, src, HtmlString.Empty);
-            return script;
-        }
-        
-        public IHtmlContent Link([PathReference] string href)
-        {
-            var tagBuilder = CreateTag(HtmlTag.Link, HtmlString.Empty, new RouteValueDictionary());
-            tagBuilder.MergeAttribute(HtmlAttribute.Href.ToStringLower(), href);
-            tagBuilder.MergeAttribute(HtmlAttribute.Rel.ToStringLower(), "stylesheet");
-            tagBuilder.MergeAttribute(HtmlAttribute.Type.ToStringLower(), HtmlType.TextCss.ToLocalization());
-
-            return tagBuilder;
-        }
-
-        public IHtmlContent Button(string value, object attributes = null)
-        {
-            var button = CreateTag(HtmlTag.Button, new HtmlString(value), AnonymousHelper.ToDictionary(attributes));
-            return button;
-        }
-
-        public IHtmlContent Submit(string value, object attributes = null)
-        {
-            var submit = CreateInput(value, HtmlInputType.Submit.ToStringLower(), attributes);
-            submit.TagRenderMode = TagRenderMode.SelfClosing;
-            return submit;
-        }
-
-        public IHtmlContent Img(string src, object attributes = null)
-        {
-            return Img(src, HtmlString.Empty, attributes);
-        }
-
-        public IHtmlContent Img(string src, HtmlString content, object attributes = null)
-        {
-            var routeValueDictionary = AnonymousHelper.ToDictionary(attributes);
-            routeValueDictionary.Merge(new { src });
-            var img = CreateTag(HtmlTag.Img, content, routeValueDictionary);
-            return img;
-        }
-
-        public IHtmlContent Anchor(string href, string content, object attributes = null)
-        {
-            return Anchor(href, new HtmlString(content), attributes);
-        }
-
-        public IHtmlContent Anchor(string href, HtmlString content, object attributes = null)
-        {
-            var routeValue = AnonymousHelper.ToDictionary(attributes);
-            routeValue.Set("href", href);
-            var a = CreateTag(HtmlTag.A, content, routeValue);
-            return a;
-        }
-
-        public IHtmlContent Div(HtmlString content, object attributes = null)
-        {
-            var div = CreateTag(HtmlTag.Div, content, AnonymousHelper.ToDictionary(attributes));
-            return div;
-        }
-
-        public IHtmlContent Div(string content, object attributes = null)
-        {
-            return Div(new HtmlString(content), attributes);
-        }
-
-        public IHtmlContent Span(HtmlString content, object attributes = null)
-        {
-            var tag = CreateTag(HtmlTag.Span, content, AnonymousHelper.ToDictionary(attributes));
-            return tag;
-        }
-
-        public IHtmlContent Span(string content, object attributes = null)
-        {
-            return Span(new HtmlString(content), attributes);
-        }
-
-        public IHtmlContent I(object attributes = null)
-        {
-            var tag = CreateTag(HtmlTag.I, HtmlString.Empty, AnonymousHelper.ToDictionary(attributes));
-            return tag;
-        }
-
-        public IHtmlContent P(HtmlString content, object attributes = null)
-        {
-            var tag = CreateTag(HtmlTag.P, content, AnonymousHelper.ToDictionary(attributes));
-            return tag;
-        }
-
-        public IHtmlContent P(string content, object attributes = null)
-        {
-            return P(new HtmlString(content), attributes);
-        }
-
-        public IHtmlContent Ul(HtmlString content, object attributes = null)
-        {
-            var tag = CreateTag(HtmlTag.Ul, content, AnonymousHelper.ToDictionary(attributes));
-            return tag;
-        }
-
-        public IHtmlContent Ul(string content, object attributes = null)
-        {
-            return Ul(new HtmlString(content), attributes);
-        }
-
-        public IHtmlContent Li(HtmlString content, object attributes = null)
-        {
-            var tag = CreateTag(HtmlTag.Li, content, AnonymousHelper.ToDictionary(attributes));
-            return tag;
-        }
-
-        public IHtmlContent Li(string content, object attributes = null)
-        {
-            return Li(new HtmlString(content), attributes);
-        }
-
-        public IHtmlContent Tag(HtmlTag tag, HtmlString content, object attributes = null)
-        {
-            var res = CreateTag(tag, content, AnonymousHelper.ToDictionary(attributes));
-            return res;
-        }
-
-        public BeginTag BeginTag(HtmlTag tag, object attributes = null)
-        {
-            return new BeginTag(htmlHelper, tag, AnonymousHelper.ToDictionary(attributes));
-        }
-
-        public IHtmlContent Tag(HtmlTag tag, string content, object attributes = null)
-        {
-            return Tag(tag, new HtmlString(content), attributes);
-        }
-
-        public IHtmlContent File(string value, object attributes = null)
-        {
-            var file = CreateInput(value, HtmlInputType.File.ToStringLower(), attributes);
-            file.TagRenderMode = TagRenderMode.SelfClosing;
-            return file;
-        }
-
-        public IHtmlContent RenderDropDownTemplate()
-        {
-            var templateFactory = IoCFactory.Instance.TryResolve<ITemplateFactory>() ?? new TemplateHandlebarsFactory();
-            string template = templateFactory.GetDropDownTemplate();
-            return CreateScript("incodingDropDownTemplate", HtmlType.TextTemplate, string.Empty, new HtmlString(template));
-        }
-
-        #endregion
+    
     }
 
 }

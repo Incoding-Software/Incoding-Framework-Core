@@ -3,6 +3,7 @@ using Incoding.Core;
 using Incoding.Core.CQRS.Core;
 using Incoding.Core.Extensions;
 using Incoding.Core;
+using Incoding.Web.Extensions;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -110,9 +111,9 @@ namespace Incoding.Web.MvcContrib
                         });
         }
 
-        public IIncodingMetaLanguageEventBuilderDsl AjaxPost(HtmlString url)
+        public IIncodingMetaLanguageEventBuilderDsl AjaxPost(IHtmlContent url)
         {
-            return AjaxPost((string) url.ToString());
+            return AjaxPost((string) url.HtmlContentToString());
         }
 
         public IIncodingMetaLanguageEventBuilderDsl Ajax([NotNull] Action<JqueryAjaxOptions> configuration)
@@ -152,9 +153,9 @@ namespace Incoding.Web.MvcContrib
             throw new ArgumentException("Use Command or Query", "message");
         }
 
-        public IIncodingMetaLanguageEventBuilderDsl Ajax(HtmlString url)
+        public IIncodingMetaLanguageEventBuilderDsl Ajax(IHtmlContent url)
         {
-            return Ajax((string) url.ToString());
+            return Ajax(url.HtmlContentToString());
         }
 
         public IIncodingMetaLanguageEventBuilderDsl AjaxHash(Action<JqueryAjaxOptions> configuration, string prefix = "root")

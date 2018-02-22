@@ -5,6 +5,7 @@ using System.Text.Encodings.Web;
 using Incoding.Core;
 using Incoding.Core.Extensions;
 using Incoding.Core;
+using Incoding.Web.Extensions;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -62,9 +63,9 @@ namespace Incoding.Web.MvcContrib
             if (!string.IsNullOrWhiteSpace(IconClass))
                 icon.AddCssClass(IconClass);
 
-            label.InnerHtml.AppendHtml(this.htmlHelper.RadioButtonFor(this.property, value, GetAttributes()).ToString()
-                                       + icon
-                                       + spanAsLabel);
+            label.InnerHtml.AppendHtml(this.htmlHelper.RadioButtonFor(this.property, value, GetAttributes()).HtmlContentToString()
+                                       + icon.HtmlContentToString()
+                                       + spanAsLabel.HtmlContentToString());
             div.InnerHtml.AppendHtml(label);
             div.WriteTo(writer, encoder);
         }

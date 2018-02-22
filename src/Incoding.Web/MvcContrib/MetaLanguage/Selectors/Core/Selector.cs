@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Incoding.Core.Extensions;
 using Incoding.Core;
+using Incoding.Web.Extensions;
 using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace Incoding.Web.MvcContrib
@@ -71,8 +72,7 @@ namespace Incoding.Web.MvcContrib
 
         internal static Selector FromHelperResult(Func<object, HelperResult> text)
         {
-            return text.Invoke(null)
-                       .ToString()
+            return text.Invoke(null).HtmlContentToString()
                        .Replace(Environment.NewLine, string.Empty);
         }
 

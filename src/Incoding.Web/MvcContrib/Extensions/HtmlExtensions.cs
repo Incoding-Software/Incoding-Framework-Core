@@ -48,6 +48,11 @@ namespace Incoding.Web.MvcContrib
             return new IncodingHtmlHelper<TModel>(htmlHelper);
         }
         
+        public static IncodingHtmlHelper Incoding(this IHtmlHelper htmlHelper)
+        {
+            return new IncodingHtmlHelper(htmlHelper);
+        }
+        
         public static SelectorHelper<TModel> Selector<TModel>(this IHtmlHelper<TModel> htmlHelper)
         {
             return new SelectorHelper<TModel>();

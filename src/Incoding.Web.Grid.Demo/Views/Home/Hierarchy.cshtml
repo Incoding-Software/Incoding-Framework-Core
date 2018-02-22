@@ -1,0 +1,93 @@
+﻿
+@using GridUI.Queries
+@using Incoding.Web.Grid.Components
+@using Incoding.Web.MvcContrib
+
+@{
+    ViewBag.Title = "Hierarchy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="row col-md-12" style="margin-top:50px;">
+        <h1>Hierarchy</h1>
+
+        <div class="example">
+            @(Html.Grid<ProductVm>()
+                      .Id("HierarchyExample")
+                      .Styling(BootstrapTable.Bordered)
+                      .SetTBodyAttrValue("data-id", @<text>@item.For(r => r.Id)</text>)
+                      .Columns(column =>
+                               {
+                                   column.Template(@<text>
+                                                       @(Html.When(JqueryBind.Click)
+                                                                 .OnSuccess(dsl =>
+                                                                            {
+                                                                                var subTableId = "sub-table" + item.For(i => i.Id);
+
+                                                                                dsl.With(r => r.Id(subTableId)).Trigger.Incoding()
+                                                                                        .If(() => Selector.Jquery.Self().HasClass("glyphicon-plus"));
+
+                                                                                dsl.With(selector => selector.Id(subTableId).Parent().Parent()).JQuery.Attr.ToggleClass("hide");
+
+                                                                                dsl.With(selector => selector.Self()).JQuery.Attr.RemoveClass("glyphicon-minus glyphicon-plus");
+
+                                                                                dsl.With(selector => selector.Self()).JQuery.Attr.AddClass("glyphicon-plus")
+                                                                                        .If(() => Selector.Jquery.Id(subTableId).Parent().Parent().HasClass("hide"));
+                                                                                dsl.With(selector => selector.Self()).JQuery.Attr.AddClass("glyphicon-minus")
+                                                                                        .If(() => !Selector.Jquery.Id(subTableId).Parent().Parent().HasClass("hide"));
+                                                                            })
+                                                                 .AsHtmlAttributes(new { @class = "glyphicon-plus", id = "control" + item.For(r => r.Id) })
+                                                                 .ToI())
+                                                    </text>)
+                                           .Width(50);
+
+                                   column.Bound(r => r.Name)
+                                           .Title("Product Name")
+                                           .Width(200);
+
+                                   column.Bound(r => r.Price)
+                                           .Width(200);
+
+                                   column.Bound(r => r.Date)
+                                           .Title("Date of made")
+                                           .Width(150);
+                               })
+                      .NextRow(row =>
+                               {
+                                   row.Content = @<text>
+                                                     <td></td>
+                                                     <td colspan="3">
+                                                         @(Html.When(JqueryBind.None)
+                                                                   .StopPropagation().PreventDefault()
+                                                                   .Ajax(Url.Dispatcher().Query(new GetUsersByProductQuery() { ProductId = item.For(r => r.Id) }).AsJson())
+                                                                   .OnSuccess(dsl => dsl.Self().Insert.WithTemplateByView("~/Views/Home/SubTableTemplate.cshtml").Html())
+                                                                   .AsHtmlAttributes(new { id = "sub-table" + item.For(r => r.Id) })
+                                                                   .ToTag(HtmlTag.Div))
+                                                     </td>
+                                                  </text>;
+                                   row.MetaAttribute = syntax => Html.When(JqueryBind.Click).OnSuccess(dsl => dsl.Self().JQuery.Attr.Val(syntax.IsInline(r => r.IsSoldOut, "sold")));
+                                   row.HtmlAttributes = @<text> @item.IsInline(r => r.IsSoldOut, " checked=\"checked\"")</text>;
+                                   row.AddClass(@<text>@item.IsInline(r => r.IsSoldOut, "active")</text>);
+                               })
+                      .NextRow(row =>
+                               {
+                                   row.Content = @<text>
+                                                     <td></td>
+                                                     <td colspan="3">
+                                                         @(Html.When(JqueryBind.None)
+                                                                   .PreventDefault().StopPropagation()
+                                                                   .Ajax(Url.Dispatcher().Query(new GetUsersByProductQuery() { ProductId = item.For(r => r.Id) }).AsJson())
+                                                                   .OnSuccess(dsl => dsl.Self().Insert.WithTemplateByView("~/Views/Home/SubTableTemplate.cshtml").Html())
+                                                                   .AsHtmlAttributes(new { id = "sub-table" + item.For(r => r.Id) })
+                                                                   .ToTag(HtmlTag.Div))
+                                                     </td>
+                                                  </text>;
+                                    row.AddClass("hide");
+                               })
+                      .AjaxGet(Url.Action("GetProducts", "Home")))
+        </div>
+    </div>
+</div>
+

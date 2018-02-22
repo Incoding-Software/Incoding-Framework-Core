@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Incoding.Core.Extensions;
+using Incoding.Web.Extensions;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -41,17 +42,22 @@ namespace Incoding.Web.MvcContrib
             throw new NotImplementedException();
         }
 
-        public string For(string field)
+        public HtmlString For(IHtmlContent field)
         {
-            return "{{=x." + field + "}}";
+            return new HtmlString("{{=x.").Concat(field).Concat("}}");
         }
 
-        public string For(Expression<Func<TModel, object>> field)
+        public HtmlString For(string field)
+        {
+            return For(new HtmlString(field));
+        }
+
+        public IncHtmlString For(Expression<Func<TModel, object>> field)
         {
             return For(ReflectionExtensions.GetMemberName(field));
         }
 
-        public string For(Expression<Func<TModel, bool>> field)
+        public IncHtmlString For(Expression<Func<TModel, bool>> field)
         {
             return For(ReflectionExtensions.GetMemberName(field));
         }
@@ -61,17 +67,17 @@ namespace Incoding.Web.MvcContrib
             throw new NotImplementedException();
         }
 
-        public HtmlString Inline(Expression<Func<TModel, object>> field, HtmlString isTrue, HtmlString isFalse)
+        public HtmlString Inline(Expression<Func<TModel, object>> field, IHtmlContent isTrue, IHtmlContent isFalse)
         {
             throw new NotImplementedException();
         }
 
-        public HtmlString Inline(Expression<Func<TModel, object>> field, string isTrue, HtmlString isFalse)
+        public HtmlString Inline(Expression<Func<TModel, object>> field, string isTrue, IHtmlContent isFalse)
         {
             throw new NotImplementedException();
         }
 
-        public HtmlString Inline(Expression<Func<TModel, object>> field, HtmlString isTrue, string isFalse)
+        public HtmlString Inline(Expression<Func<TModel, object>> field, IHtmlContent isTrue, string isFalse)
         {
             throw new NotImplementedException();
         }
@@ -81,12 +87,12 @@ namespace Incoding.Web.MvcContrib
             throw new NotImplementedException();
         }
 
-        public HtmlString Inline(Expression<Func<TModel, object>> field, Func<object, HelperResult> isTrue, HtmlString isFalse)
+        public HtmlString Inline(Expression<Func<TModel, object>> field, Func<object, HelperResult> isTrue, IHtmlContent isFalse)
         {
             throw new NotImplementedException();
         }
 
-        public HtmlString Inline(Expression<Func<TModel, object>> field, HtmlString isTrue, Func<object, HelperResult> isFalse)
+        public HtmlString Inline(Expression<Func<TModel, object>> field, IHtmlContent isTrue, Func<object, HelperResult> isFalse)
         {
             throw new NotImplementedException();
         }
@@ -106,7 +112,7 @@ namespace Incoding.Web.MvcContrib
             throw new NotImplementedException();
         }
 
-        public HtmlString IsInline(Expression<Func<TModel, object>> field, HtmlString content)
+        public HtmlString IsInline(Expression<Func<TModel, object>> field, IHtmlContent content)
         {
             throw new NotImplementedException();
         }
@@ -121,7 +127,7 @@ namespace Incoding.Web.MvcContrib
             throw new NotImplementedException();
         }
 
-        public HtmlString NotInline(Expression<Func<TModel, object>> field, HtmlString content)
+        public HtmlString NotInline(Expression<Func<TModel, object>> field, IHtmlContent content)
         {
             throw new NotImplementedException();
         }

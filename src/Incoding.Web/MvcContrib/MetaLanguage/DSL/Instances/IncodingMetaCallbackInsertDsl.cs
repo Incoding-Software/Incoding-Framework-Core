@@ -25,19 +25,8 @@ namespace Incoding.Web.MvcContrib
 
         #endregion
 
-#if DEBUG
-        [Obsolete("Please use selector as argument", false), ExcludeFromCodeCoverage]
-#endif
-#if !DEBUG
-        [Obsolete("Please use selector as argument", true), UsedImplicitly, ExcludeFromCodeCoverage]
-#endif
-        public IncodingMetaCallbackInsertDsl WithTemplate(string selector)
-        {
-            throw new ArgumentException("Argument should be type of Selector", "selector");
-        }
-
-        //[Obsolete("Please use WithTemplateByUrl/WithTemplateByView")]
-        internal IncodingMetaCallbackInsertDsl WithTemplate([NotNull] Selector selector)
+        [Obsolete("Please use WithTemplateByUrl/WithTemplateByView", false)]
+        public IncodingMetaCallbackInsertDsl WithTemplate([NotNull] Selector selector)
         {
             this.insertTemplateSelector = selector;
             return this;

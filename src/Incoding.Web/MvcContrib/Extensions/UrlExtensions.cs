@@ -19,7 +19,7 @@ namespace Incoding.Web.MvcContrib
     {
         #region Factory constructors
 
-        public static string ActionArea(this UrlHelper urlHelper, [AspMvcAction] string action, [AspMvcController] string controller, [AspMvcArea] string area, object routes = null)
+        public static string ActionArea(this IUrlHelper urlHelper, [AspMvcAction] string action, [AspMvcController] string controller, [AspMvcArea] string area, object routes = null)
         {
             Guard.NotNullOrWhiteSpace("action", action);
             Guard.NotNullOrWhiteSpace("controller", controller);
@@ -29,34 +29,34 @@ namespace Incoding.Web.MvcContrib
             return urlHelper.Action(action, controller, routeValues);
         }
 
-        public static UrlDispatcher Dispatcher(this UrlHelper urlHelper)
+        public static UrlDispatcher Dispatcher(this IUrlHelper urlHelper)
         {
             return new UrlDispatcher(urlHelper);
         }
 
-        public static string Hash(this UrlHelper urlHelper, [AspMvcAction] string action, [AspMvcController] string controller, object routes = null)
+        public static string Hash(this IUrlHelper urlHelper, [AspMvcAction] string action, [AspMvcController] string controller, object routes = null)
         {
             return InternalHash(urlHelper, action, controller, urlHelper.ActionContext.HttpContext.Request.GetUri(), string.Empty, routes);
         }
 
-        public static string HashArea(this UrlHelper urlHelper, [AspMvcAction] string action, [AspMvcController] string controller, [AspMvcArea] string area = "", object routes = null)
+        public static string HashArea(this IUrlHelper urlHelper, [AspMvcAction] string action, [AspMvcController] string controller, [AspMvcArea] string area = "", object routes = null)
         {
             return InternalHash(urlHelper, action, controller, urlHelper.ActionContext.HttpContext.Request.GetUri(), area, routes);
         }
 
-        public static string HashReferral(this UrlHelper urlHelper, [AspMvcAction] string action, [AspMvcController] string controller, object routes = null)
+        public static string HashReferral(this IUrlHelper urlHelper, [AspMvcAction] string action, [AspMvcController] string controller, object routes = null)
         {
             return InternalHash(urlHelper, action, controller, urlHelper.ActionContext.HttpContext.Request.GetUri(), string.Empty, routes);
         }
 
-        public static string HashReferralArea(this UrlHelper urlHelper, [AspMvcAction] string action, [AspMvcController] string controller, [AspMvcArea] string area = "", object routes = null)
+        public static string HashReferralArea(this IUrlHelper urlHelper, [AspMvcAction] string action, [AspMvcController] string controller, [AspMvcArea] string area = "", object routes = null)
         {
             return InternalHash(urlHelper, action, controller, urlHelper.ActionContext.HttpContext.Request.GetUri(), area, routes);
         }
 
         #endregion
 
-        static string InternalHash(this UrlHelper urlHelper, [AspMvcAction] string action, [AspMvcController] string controller, Uri uri, [AspMvcArea] string area = "", object routes = null)
+        static string InternalHash(this IUrlHelper urlHelper, [AspMvcAction] string action, [AspMvcController] string controller, Uri uri, [AspMvcArea] string area = "", object routes = null)
         {
             string baseUrl = "/";
 

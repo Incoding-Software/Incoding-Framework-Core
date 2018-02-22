@@ -1,5 +1,7 @@
 ﻿using Incoding.Core.Extensions;
+using Incoding.Web.Extensions;
 using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace Incoding.Web.MvcContrib
 {
@@ -37,7 +39,12 @@ namespace Incoding.Web.MvcContrib
 
         public static implicit operator Selector(HtmlString s)
         {
-            return s.ToString();
+            return s.HtmlContentToString();
+        }
+
+        public static implicit operator Selector(HelperResult s)
+        {
+            return s.HtmlContentToString();
         }
 
         public static implicit operator Selector(int s)

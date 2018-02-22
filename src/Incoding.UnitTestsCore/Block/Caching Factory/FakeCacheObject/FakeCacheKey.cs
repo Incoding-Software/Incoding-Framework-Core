@@ -39,7 +39,7 @@ namespace Incoding.UnitTest.Block
         {
             return this.secretKey
                        .If(r => !string.IsNullOrWhiteSpace(r))
-                       .ReturnOrDefault(r => r, GetType().Name);
+                       .ReturnOrDefault(r => r, nameof(FakeCacheKey));
         }
 
         #endregion

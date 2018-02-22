@@ -1,0 +1,46 @@
+
+.inc-grid .table { 
+    table-layout: fixed;
+    margin-bottom: 0;
+}
+
+.inc-grid .content-table .table {
+    min-height: 100px;
+}
+
+.inc-grid .table td {
+    overflow: hidden;
+    -moz-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+}
+
+.inc-grid .table > tbody + tbody {
+    border-top: 1px solid #DDDDDD;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    background-image: url("../images/sprites.png");
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 14px;
+    line-height: 14px;
+    vertical-align: text-top;
+    width: 14px;
+}
+
+.icon-arrow-up {
+    background-position: -27px 0;
+}
+
+.icon-arrow-down {
+    background-position: 1px 0;
+}
+
+.inc-grid .table-striped > tbody > tr:nth-child(odd) > td,
+.inc-grid .table-striped > tbody > tr:nth-child(odd) > th {
+    background: none;
+}
+
+.inc-grid .table-striped  > tbody:nth-child(odd)  {
+    background-color: #f9f9f9;
+}

@@ -39,6 +39,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{8199
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.UnitTests.MSpec", "Incoding.UnitTests.MSpec\Incoding.UnitTests.MSpec.csproj", "{10BC0CA7-2CE3-4033-9C1E-9DCD05FCE628}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Additions", "Additions", "{67D8F2AA-0AF2-433B-8BF4-8CFCC8C9AAD0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.Web.Grid", "Incoding.Web.Grid\Incoding.Web.Grid.csproj", "{27F511B9-B8F0-42D8-8D65-5BF69B0408D7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.Web.Grid.Demo", "Incoding.Web.Grid.Demo\Incoding.Web.Grid.Demo.csproj", "{919E169A-B7FF-4CB7-8638-AC3BC68F7E8A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -127,6 +133,18 @@ Global
 		{10BC0CA7-2CE3-4033-9C1E-9DCD05FCE628}.Publish|Any CPU.Build.0 = Debug|Any CPU
 		{10BC0CA7-2CE3-4033-9C1E-9DCD05FCE628}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10BC0CA7-2CE3-4033-9C1E-9DCD05FCE628}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27F511B9-B8F0-42D8-8D65-5BF69B0408D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27F511B9-B8F0-42D8-8D65-5BF69B0408D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27F511B9-B8F0-42D8-8D65-5BF69B0408D7}.Publish|Any CPU.ActiveCfg = Debug|Any CPU
+		{27F511B9-B8F0-42D8-8D65-5BF69B0408D7}.Publish|Any CPU.Build.0 = Debug|Any CPU
+		{27F511B9-B8F0-42D8-8D65-5BF69B0408D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27F511B9-B8F0-42D8-8D65-5BF69B0408D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{919E169A-B7FF-4CB7-8638-AC3BC68F7E8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{919E169A-B7FF-4CB7-8638-AC3BC68F7E8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{919E169A-B7FF-4CB7-8638-AC3BC68F7E8A}.Publish|Any CPU.ActiveCfg = Debug|Any CPU
+		{919E169A-B7FF-4CB7-8638-AC3BC68F7E8A}.Publish|Any CPU.Build.0 = Debug|Any CPU
+		{919E169A-B7FF-4CB7-8638-AC3BC68F7E8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{919E169A-B7FF-4CB7-8638-AC3BC68F7E8A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -147,15 +165,17 @@ Global
 		{B44D9211-9916-4B60-A013-B89F433CA3F9} = {540D8C0B-630F-48A8-875B-8CFA62F498E2}
 		{540D8C0B-630F-48A8-875B-8CFA62F498E2} = {506ED6C6-6671-43EC-98A9-5FBF14201B62}
 		{10BC0CA7-2CE3-4033-9C1E-9DCD05FCE628} = {506ED6C6-6671-43EC-98A9-5FBF14201B62}
+		{27F511B9-B8F0-42D8-8D65-5BF69B0408D7} = {67D8F2AA-0AF2-433B-8BF4-8CFCC8C9AAD0}
+		{919E169A-B7FF-4CB7-8638-AC3BC68F7E8A} = {67D8F2AA-0AF2-433B-8BF4-8CFCC8C9AAD0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_UpdateAssemblyVersion = False
-		BuildVersion_UpdateFileVersion = False
-		BuildVersion_BuildAction = ReBuild
-		BuildVersion_IncrementBeforeBuild = True
-		BuildVersion_DetectChanges = True
-		BuildVersion_BuildVersioningStyle = None.None.None.None
 		SolutionGuid = {834D889F-F4B3-4006-83EC-584703FCCDA2}
+		BuildVersion_BuildVersioningStyle = None.None.None.None
+		BuildVersion_DetectChanges = True
+		BuildVersion_IncrementBeforeBuild = True
+		BuildVersion_BuildAction = ReBuild
+		BuildVersion_UpdateFileVersion = False
+		BuildVersion_UpdateAssemblyVersion = False
 	EndGlobalSection
 	GlobalSection(NDepend) = preSolution
 		Project = ".\IncFramework.ndproj"
