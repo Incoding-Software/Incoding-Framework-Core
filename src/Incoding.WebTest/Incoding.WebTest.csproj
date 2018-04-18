@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Operations\ItemEntityForEF.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="7.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
   </ItemGroup>
@@ -65,7 +69,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Incoding.Core\Incoding.Core.csproj" />
-    <ProjectReference Include="..\Incoding.Data.EF\Incoding.Data.EF.csproj" />
+    <ProjectReference Include="..\Incoding.Data.NHibernate\Incoding.Data.NHibernate.csproj" />
     <ProjectReference Include="..\Incoding.Data\Incoding.Data.csproj" />
     <ProjectReference Include="..\Incoding.Web\Incoding.Web.csproj" />
   </ItemGroup>

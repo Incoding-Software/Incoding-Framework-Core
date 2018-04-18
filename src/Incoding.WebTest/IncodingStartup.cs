@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using FluentNHibernate.Cfg.Db;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Incoding.Core;
@@ -19,6 +21,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NHibernate.Tool.hbm2ddl;
 
 namespace Incoding.WebTest
 {
@@ -48,10 +51,25 @@ namespace Incoding.WebTest
                 });
             });
             services.ConfigureIncodingCoreServices();
-            services.ConfigureIncodingEFDataServices(typeof(ItemEntity), builder =>
+
+            // EF Core:
+            //services.ConfigureIncodingEFDataServices(typeof(ItemEntity), builder =>
+            //{
+            //    builder.UseSqlServer(Configuration.GetConnectionString("Main"));
+            //});
+
+            // NH Core:
+            string path = Path.Combine(AppContext.BaseDirectory, "fluently_" + ".cfg");
+            // serialization issues, do not pass path yet
+            services.ConfigureIncodingNhDataServices(typeof(ItemEntity), path, configuration =>
             {
-                builder.UseSqlServer(Configuration.GetConnectionString("Main"));
+                configuration = configuration.Database(MsSqlConfiguration.MsSql2012
+                        .ConnectionString(Configuration.GetConnectionString("Main"))
+                        .ShowSql())
+                    .ExposeConfiguration(cfg => new SchemaUpdate(cfg).Execute(false, true));
+                return configuration;
             });
+
             services.ConfigureIncodingWebServices();
         }
 
