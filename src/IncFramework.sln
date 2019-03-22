@@ -45,7 +45,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.Web.Grid", "Incodi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.Web.Grid.Demo", "Incoding.Web.Grid.Demo\Incoding.Web.Grid.Demo.csproj", "{919E169A-B7FF-4CB7-8638-AC3BC68F7E8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Incoding.Data.NHibernate", "Incoding.Data.NHibernate\Incoding.Data.NHibernate.csproj", "{5D9E0EB3-4339-42DA-B5C2-9D4FF667D7D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.Data.NHibernate", "Incoding.Data.NHibernate\Incoding.Data.NHibernate.csproj", "{5D9E0EB3-4339-42DA-B5C2-9D4FF667D7D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

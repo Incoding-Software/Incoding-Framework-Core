@@ -165,13 +165,13 @@ namespace Incoding.Web.MvcContrib
 
         public IIncodingMetaLanguageEventBuilderDsl Ajax([NotNull] Func<IUrlDispatcher, string> url)
         {
-            var urlDispatcher = new UrlDispatcher(new UrlHelper(_htmlHelper.ViewContext));
+            var urlDispatcher = new UrlDispatcher(new UrlHelper(Html.ViewContext));
             return Ajax(url(urlDispatcher));
         }
 
         public IIncodingMetaLanguageEventBuilderDsl AjaxPost([NotNull] Func<IUrlDispatcher, string> url)
         {
-            var urlDispatcher = new UrlDispatcher(new UrlHelper(_htmlHelper.ViewContext));
+            var urlDispatcher = new UrlDispatcher(new UrlHelper(Html.ViewContext));
             return AjaxPost(url(urlDispatcher));
         }
 

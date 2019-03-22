@@ -14,7 +14,7 @@ namespace Incoding.Web.MvcContrib
 
     public partial class IncodingMetaLanguageDsl : IncodingMetaLanguageCoreDsl, IIncodingMetaLanguageBindingDsl, IIncodingMetaLanguageCallbackBodyDsl, IIncodingMetaLanguageCallbackInstancesDsl, IIncodingMetaLanguageSettingEventDsl
     {
-        private readonly IHtmlHelper _htmlHelper;
+        public IHtmlHelper Html { get; }
 
         public override string ToString()
         {
@@ -48,7 +48,7 @@ namespace Incoding.Web.MvcContrib
         public IncodingMetaLanguageDsl(IHtmlHelper htmlHelper, string currentBind)
                 : base(htmlHelper, null)
         {
-            _htmlHelper = htmlHelper;
+            Html = htmlHelper;
             plugIn = this;
             meta = new IncodingMetaContainer();
             When(currentBind);
@@ -121,7 +121,7 @@ namespace Incoding.Web.MvcContrib
 
         public HtmlRouteValueDictionary AsHtmlAttributes(object htmlAttributes)
         {
-            return meta.AsHtmlAttributes(_htmlHelper, htmlAttributes);
+            return meta.AsHtmlAttributes(Html, htmlAttributes);
         }
 
         public HtmlRouteValueDictionary AsHtmlAttributes()
@@ -148,12 +148,12 @@ namespace Incoding.Web.MvcContrib
             if (autocomplete)
                 routes.Add(HtmlAttribute.AutoComplete.ToStringLower(), HtmlAttribute.AutoComplete.ToStringLower());
 
-            return meta.AsHtmlAttributes(_htmlHelper, routes);
+            return meta.AsHtmlAttributes(Html, routes);
         }
 
         public string AsStringAttributes(object htmlAttributes = null)
         {
-            return meta.AsHtmlAttributes(_htmlHelper, htmlAttributes).Aggregate(string.Empty, (s, pair) => s += " {0}=\"{1}\" ".F(pair.Key, HttpUtility.HtmlEncode(pair.Value)));
+            return meta.AsHtmlAttributes(Html, htmlAttributes).Aggregate(string.Empty, (s, pair) => s += " {0}=\"{1}\" ".F(pair.Key, HttpUtility.HtmlEncode(pair.Value)));
         }
 
         public IIncodingMetaLanguageBindingDsl When(JqueryBind nextBind)

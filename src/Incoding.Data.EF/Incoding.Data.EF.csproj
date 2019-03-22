@@ -6,7 +6,7 @@
     <Company>Incoding Software</Company>
     <Product>Incoding.Data</Product>
     <Description>Entity Framework Core database provider for Incoding Software</Description>
-    <Copyright>Incoding Software, 2018</Copyright>
+    <Copyright>Incoding Software, 2019</Copyright>
     <PackageLicenseUrl>https://github.com/Incoding-Software/Incoding-Framework-Core/blob/master/LICENSE.md</PackageLicenseUrl>
     <PackageProjectUrl>http://incframework.com</PackageProjectUrl>
     <PackageIconUrl>http://incframework.com/Content/ico/icon-144x144.png</PackageIconUrl>
@@ -15,6 +15,9 @@
     <PackageReleaseNotes>Incoding Framework library migrated to .NET Standard and .NET Core</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <FileVersion>1.0.2.0</FileVersion>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>

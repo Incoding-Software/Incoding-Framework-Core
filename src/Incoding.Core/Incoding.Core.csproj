@@ -5,7 +5,7 @@
     <Authors>Vlad Kopachinsky, Victor Gelmutdinov</Authors>
     <Company>Incoding Software</Company>
     <Description>Core library for Incoding Framework</Description>
-    <Copyright>Incoding Software, 2018</Copyright>
+    <Copyright>Incoding Software, 2019</Copyright>
     <PackageProjectUrl>http://incframework.com</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Incoding-Software/Incoding-Framework-Core</RepositoryUrl>
     <PackageTags>framework, incoding</PackageTags>
@@ -15,9 +15,9 @@
     <NeutralLanguage></NeutralLanguage>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
-    <FileVersion>1.0.1.0</FileVersion>
-    <Version>1.0.1</Version>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <FileVersion>1.0.2.0</FileVersion>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

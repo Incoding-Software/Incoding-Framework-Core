@@ -24,7 +24,8 @@ namespace Incoding.Web.MvcContrib
 
         #region Static Fields
 
-        public static Selector DropDownTemplateId = "incodingDropDownTemplate".ToId();
+        private const string DropDownTemplateIdName = "incodingDropDownTemplate";
+        public static Selector DropDownTemplateId = DropDownTemplateIdName.ToId();
 
         public static JqueryAjaxOptions DropDownOption = new JqueryAjaxOptions(JqueryAjaxOptions.Default);
 
@@ -33,6 +34,10 @@ namespace Incoding.Web.MvcContrib
         public static B Def_Label_Class = B.Col_xs_5;
 
         public static B Def_Control_Class = B.Col_xs_7;
+
+        public static string Def_Label_CustomClass = null;
+
+        public static string Def_Control_CustomClass = null;
 
         internal IncodingHtmlHelper(IHtmlHelper htmlHelper)
         {
@@ -265,7 +270,7 @@ namespace Incoding.Web.MvcContrib
         {
             var templateFactory = IoCFactory.Instance.TryResolve<ITemplateFactory>() ?? new TemplateHandlebarsFactory();
             string template = templateFactory.GetDropDownTemplate();
-            return CreateScript("incodingDropDownTemplate", HtmlType.TextTemplate, string.Empty, new HtmlString(template));
+            return CreateScript(DropDownTemplateIdName, HtmlType.TextTemplate, string.Empty, new HtmlString(template));
         }
 
         #endregion

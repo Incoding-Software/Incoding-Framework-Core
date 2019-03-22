@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
+using System.Web;
 using Incoding.Core.Extensions;
 using Incoding.Core;
 using Incoding.Core.Quality;
@@ -98,14 +99,15 @@ namespace Incoding.Web.MvcContrib
 
         static string GetTypeName(Type type)
         {
-            string mainName = duplicates.GetOrAdd(type.Name, (i) =>
+            string mainName = type.IsNested ? type.FullName : (duplicates.GetOrAdd(type.Name, (i) =>
                                                              {
                                                                  return AppDomain.CurrentDomain.GetAssemblies()
                                                                                  .Select(r => ReflectionExtensions.GetLoadableTypes(r))
                                                                                  .SelectMany(r => r)
                                                                                  .Count(s => s.Name == type.Name) > 1;
-                                                             }) ? type.FullName : type.Name;
-            return type.IsGenericType ? "{0}{1}{2}".F(mainName, separatorByPair, StringExtensions.AsString(type.GetGenericArguments().Select(GetTypeName), separatorByGeneric)) : mainName;
+                                                             }) ? type.FullName : type.Name);
+            return (type.IsGenericType ? "{0}{1}{2}".F(mainName, separatorByPair, StringExtensions.AsString(type.GetGenericArguments().Select(GetTypeName), separatorByGeneric)) : mainName)
+                .Replace("+", "-"); // Url safety replacing
         }
 
         public interface IUrlQuery<TQuery>

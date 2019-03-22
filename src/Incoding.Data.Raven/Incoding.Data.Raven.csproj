@@ -5,7 +5,7 @@
     <Authors>Vlad Kopachinsky, Victor Gelmutdinov</Authors>
     <Company>Incoding Software</Company>
     <Description>Raven database provider for Incoding Software</Description>
-    <Copyright>Incoding Software, 2018</Copyright>
+    <Copyright>Incoding Software, 2019</Copyright>
     <PackageLicenseUrl>https://github.com/Incoding-Software/Incoding-Framework-Core/blob/master/LICENSE.md</PackageLicenseUrl>
     <PackageProjectUrl>http://incframework.com</PackageProjectUrl>
     <PackageIconUrl>http://incframework.com/Content/ico/icon-144x144.png</PackageIconUrl>
@@ -15,6 +15,7 @@
     <Product>Incoding.Data</Product>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>

@@ -50,7 +50,7 @@ namespace Incoding.Web.MvcContrib
 
             Label.AddClass(B.Control_label);
             if (isV3orMore && isForDefClass(Label))
-                Label.AddClass(IncodingHtmlHelper.Def_Label_Class.ToLocalization());
+                Label.AddClass(IncodingHtmlHelper.Def_Label_CustomClass ?? IncodingHtmlHelper.Def_Label_Class.ToLocalization());
 
             if (!isV3orMore)
                 Control.AddClass("controls");
@@ -58,7 +58,7 @@ namespace Incoding.Web.MvcContrib
             if (string.IsNullOrWhiteSpace(Control.GetAttr(HtmlAttribute.Class)))
             {
                 Control.AddClass(isV3orMore
-                    ? IncodingHtmlHelper.Def_Control_Class.ToLocalization()
+                    ? (IncodingHtmlHelper.Def_Control_CustomClass ?? IncodingHtmlHelper.Def_Control_Class.ToLocalization())
                     : isStatic ? string.Empty : "control-group");
             }
 

@@ -13,7 +13,7 @@ namespace Incoding.Web.MvcContrib
                 defaults: new {controller = "Dispatcher", action = "Query"});
             routeBuilder.MapRoute(
                 name: "incodingCqrsValidate",
-                template: "Cqrs/Query/{incType}",
+                template: "Cqrs/Validate/{incType}",
                 defaults: new {controller = "Dispatcher", action = "Validate" });
             routeBuilder.MapRoute(
                 name: "incodingCqrsCommand",

@@ -24,9 +24,10 @@ namespace Incoding.Web.MvcContrib
             bool.TryParse(Params["incIsCompositeAsArray"], out isCompositeArray);
 
             var contentType = Params["incContentType"];
+            var incType = (Params["incType"] ?? Params["incTypes"]);
             return new Response()
                    {
-                           Type = Params["incType"] ?? Params["incTypes"],
+                           Type = incType?.Replace("-", "+"), // Url safety reverse-replacing
                            IsModel = incIsModel,
                            View = HttpUtility.UrlDecode(Params["incView"]),
                            IsValidate = isValidate,

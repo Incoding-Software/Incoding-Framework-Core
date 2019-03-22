@@ -5,7 +5,7 @@
     <Authors>Vlad Kopachinsky, Victor Gelmutdinov</Authors>
     <Company>Incoding Software</Company>
     <Description>Web library containing abstractions, helpers and MVD/CQRS controller functions of Incoding Framework</Description>
-    <Copyright>Incoding Software, 2018</Copyright>
+    <Copyright>Incoding Software, 2019</Copyright>
     <PackageLicenseUrl>https://github.com/Incoding-Software/Incoding-Framework-Core/blob/master/LICENSE.md</PackageLicenseUrl>
     <PackageProjectUrl>http://incframework.com</PackageProjectUrl>
     <PackageIconUrl>http://incframework.com/Content/ico/icon-144x144.png</PackageIconUrl>
@@ -14,9 +14,9 @@
     <PackageReleaseNotes>Incoding Framework library migrated to .NET Standard and .NET Core</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Version>1.0.1</Version>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
-    <FileVersion>1.0.1.0</FileVersion>
+    <Version>1.0.2</Version>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <FileVersion>1.0.2.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

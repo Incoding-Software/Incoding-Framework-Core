@@ -70,5 +70,13 @@ namespace Incoding.WebTest.Operations
         {
             return nameof(GetItemsQuery);
         }
+
+        public class AsView : QueryBase<List<GetItemsQuery.Response>>
+        {
+            protected override List<Response> ExecuteResult()
+            {
+                return Dispatcher.Query(new GetItemsQuery());
+            }
+        }
     }
 }

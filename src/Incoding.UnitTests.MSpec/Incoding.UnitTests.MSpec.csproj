@@ -6,7 +6,7 @@
     <Company>Incoding Software</Company>
     <Product>Incoding.UnitTests.MSpec</Product>
     <Description>MSpec helper library to write quick tests for projects using Incoding Framework</Description>
-    <Copyright>Incoding Software, 2018</Copyright>
+    <Copyright>Incoding Software, 2019</Copyright>
     <PackageLicenseUrl>https://github.com/Incoding-Software/Incoding-Framework-Core/blob/master/LICENSE.md</PackageLicenseUrl>
     <PackageProjectUrl>http://incframework.com</PackageProjectUrl>
     <PackageIconUrl>http://incframework.com/Content/ico/icon-144x144.png</PackageIconUrl>
@@ -18,6 +18,9 @@
     <PackageId>Incoding.UnitTests.MSpec</PackageId>
     <AssemblyName>Incoding.UnitTests.MSpec</AssemblyName>
     <RootNamespace>Incoding.UnitTests.MSpec</RootNamespace>
+    <Version>1.0.2</Version>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <FileVersion>1.0.2.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

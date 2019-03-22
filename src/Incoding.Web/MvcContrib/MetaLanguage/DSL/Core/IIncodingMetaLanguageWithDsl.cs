@@ -1,5 +1,6 @@
 using System;
 using System.Linq.Expressions;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Incoding.Web.MvcContrib
 {
@@ -9,6 +10,8 @@ namespace Incoding.Web.MvcContrib
 
     public interface IIncodingMetaLanguageWithDsl
     {
+        IHtmlHelper Html { get; }
+
         IIncodingMetaLanguageCallbackInstancesDsl With(Func<JquerySelector, JquerySelectorExtend> selector);
 
         IIncodingMetaLanguageCallbackInstancesDsl With(JquerySelectorExtend selector);

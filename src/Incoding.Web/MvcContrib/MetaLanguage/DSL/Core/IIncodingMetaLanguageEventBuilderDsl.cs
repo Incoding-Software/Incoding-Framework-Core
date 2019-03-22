@@ -1,6 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Incoding.Web.MvcContrib
 {
@@ -10,6 +11,8 @@ namespace Incoding.Web.MvcContrib
 
     public interface IIncodingMetaLanguageEventBuilderDsl
     {
+        IHtmlHelper Html { get; }
+
         IIncodingMetaLanguageEventBuilderDsl Where<TModel>([NotNull] Expression<Func<TModel, bool>> expression);
 
         IIncodingMetaLanguageEventBuilderDsl OnSuccess([NotNull] Action<IIncodingMetaLanguageCallbackBodyDsl> action);

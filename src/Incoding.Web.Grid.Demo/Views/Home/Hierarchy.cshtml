@@ -61,7 +61,7 @@
                                                      <td colspan="3">
                                                          @(Html.When(JqueryBind.None)
                                                                    .StopPropagation().PreventDefault()
-                                                                   .Ajax(Url.Dispatcher().Query(new GetUsersByProductQuery() { ProductId = item.For(r => r.Id) }).AsJson())
+                                                                   .Ajax(Url.Dispatcher().Query(new UserByProduct.AsView { ProductId = item.For(r => r.Id) }).AsJson())
                                                                    .OnSuccess(dsl => dsl.Self().Insert.WithTemplateByView("~/Views/Home/SubTableTemplate.cshtml").Html())
                                                                    .AsHtmlAttributes(new { id = "sub-table" + item.For(r => r.Id) })
                                                                    .ToTag(HtmlTag.Div))
@@ -78,7 +78,7 @@
                                                      <td colspan="3">
                                                          @(Html.When(JqueryBind.None)
                                                                    .PreventDefault().StopPropagation()
-                                                                   .Ajax(Url.Dispatcher().Query(new GetUsersByProductQuery() { ProductId = item.For(r => r.Id) }).AsJson())
+                                                                   .Ajax(Url.Dispatcher().Query(new UserByProduct.AsView() { ProductId = item.For(r => r.Id) }).AsJson())
                                                                    .OnSuccess(dsl => dsl.Self().Insert.WithTemplateByView("~/Views/Home/SubTableTemplate.cshtml").Html())
                                                                    .AsHtmlAttributes(new { id = "sub-table" + item.For(r => r.Id) })
                                                                    .ToTag(HtmlTag.Div))

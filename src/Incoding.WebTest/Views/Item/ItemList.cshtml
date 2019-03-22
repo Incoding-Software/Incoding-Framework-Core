@@ -6,7 +6,7 @@
 }
 
 @using (Html.When(JqueryBind.None)
-    .Ajax(new GetItemsQuery())
+    .Ajax(new GetItemsQuery.AsView())
     .OnSuccess(dsl => dsl.Self().JQuery.Dom.Use(Selector.Result).WithTemplateByView("~/Views/Item/ItemTmpl.cshtml").Html())
     .AsHtmlAttributes(new {id = nameof(GetItemsQuery)})
     .ToBeginTag(HtmlTag.Div))
