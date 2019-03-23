@@ -19,85 +19,23 @@ using Microsoft.Extensions.Options;
 
 namespace Incoding.Web.MvcContrib
 {
-    #region << Using >>
-
-    #endregion
-
-
-    public class MessageModelBinder : IModelBinder
+    public class CreateMessageByType2
     {
-        public string Type { get; set; }
+        //public IServiceProvider Provider { get; set; }
 
-        public bool IsGroup { get; set; }
-
-        public bool IsModel { get; set; }
-
-        public ModelStateDictionary ModelState { get; set; }
-
-        public ControllerContext ControllerContext { get; set; }
-
-        public Task BindModelAsync(ModelBindingContext bindingContext)
-        {
-            object model = null;
-            var byPair = Type.Split(UrlDispatcher.separatorByPair.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            string genericType = byPair.ElementAtOrDefault(1);
-
-            var inst = new DefaultDispatcher().Query(new CreateMessageByType.FindTypeByName()
-            {
-                Type = byPair[0],
-            });
-            var formCollection = new DefaultDispatcher().Query(new CreateMessageByType.GetFormCollectionsQuery());
-            var instanceType = IsGroup ? typeof(List<>).MakeGenericType(inst) : inst;
-            if (instanceType.IsTypicalType() && IsModel)
-            {
-                string str = formCollection["incValue"];
-                if (instanceType == typeof(string))
-                    model = str;
-                if (instanceType == typeof(bool))
-                    model = bool.Parse(str);
-                if (instanceType == typeof(DateTime))
-                    model = DateTime.Parse(str);
-                if (instanceType == typeof(int))
-                    model = int.Parse(str);
-                if (instanceType.IsEnum)
-                    model = Enum.Parse(instanceType, str);
-                if (model != null)
-                {
-                    bindingContext.Result = ModelBindingResult.Success(model);
-                    return Task.CompletedTask;
-                }
-            }
-            else if (!string.IsNullOrWhiteSpace(genericType))
-            {
-                instanceType = instanceType.MakeGenericType(genericType.Split(UrlDispatcher.separatorByGeneric.ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
-                                                                       .Select(name => new DefaultDispatcher().Query(new CreateMessageByType.FindTypeByName()
-                                                                       {
-                                                                           Type = name,
-                                                                       }))
-                                                                       .ToArray());
-            }
-
-            
-            bindingContext.Result = ModelBindingResult.Success(model);
-            return Task.CompletedTask;
-        }
-    }
-
-    public class CreateMessageByType
-    {
-        public IServiceProvider Provider { get; set; }
+        public Controller Controller { get; set; }
 
         public async Task<object> Execute()
         {
-            IModelMetadataProvider modelMetataMetadataProvider = Provider.GetRequiredService<IModelMetadataProvider>();
+            //IModelMetadataProvider modelMetataMetadataProvider = Provider.GetRequiredService<IModelMetadataProvider>();
             
-        var byPair = Type.Split(UrlDispatcher.separatorByPair.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            var byPair = Type.Split(UrlDispatcher.separatorByPair.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             string genericType = byPair.ElementAtOrDefault(1);
 
             var inst = new DefaultDispatcher().Query(new FindTypeByName()
-                                        {
-                                                Type = byPair[0],
-                                        });
+            {
+                Type = byPair[0],
+            });
             var formCollection = new DefaultDispatcher().Query(new GetFormCollectionsQuery());
             var instanceType = IsGroup ? typeof(List<>).MakeGenericType(inst) : inst;
             if (instanceType.IsTypicalType() && IsModel)
@@ -117,15 +55,18 @@ namespace Incoding.Web.MvcContrib
             else if (!string.IsNullOrWhiteSpace(genericType))
             {
                 instanceType = instanceType.MakeGenericType(genericType.Split(UrlDispatcher.separatorByGeneric.ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
-                                                                       .Select(name => new DefaultDispatcher().Query(new FindTypeByName()
-                                                                                                        {
-                                                                                                                Type = name,
-                                                                                                        }))
-                                                                       .ToArray());
+                    .Select(name => new DefaultDispatcher().Query(new FindTypeByName()
+                    {
+                        Type = name,
+                    }))
+                    .ToArray());
             }
 
             var obj = Activator.CreateInstance(instanceType);
 
+            await Controller.TryUpdateModelAsync(obj, instanceType, "");
+
+            /*
             var modelMetadata = modelMetataMetadataProvider.GetMetadataForType(instanceType);
             
             MvcOptions mvcOptions = Provider.GetRequiredService<IOptions<MvcOptions>>().Value;
@@ -139,30 +80,8 @@ namespace Incoding.Web.MvcContrib
             mvcOptions.ModelBinderProviders.Add(new FloatingPointTypeModelBinderProvider());
         
             var modelBinderFactory = new ModelBinderFactory(modelMetadata,
-                new OptionsWrapper<MvcOptions>(mvcOptions)
-                /*new OptionsWrapper<MvcOptions>(
-                new MvcOptions()
-                {
-                    AllowEmptyInputInBodyModelBinding = true,
-                    ValueProviderFactories =
-                    {
-                        new FormValueProviderFactory(),
-                        new QueryStringValueProviderFactory(),
-                        new RouteValueProviderFactory()
-                    },
-                    ModelValidatorProviders = mvcOptions.ModelValidatorProviders,
-                    ModelBinderProviders =
-                    {
-                        new FormCollectionModelBinderProvider(),
-                        new ComplexTypeModelBinderProvider(),
-                        new SimpleTypeModelBinderProvider(),
-                        new ArrayModelBinderProvider(),
-                        new CollectionModelBinderProvider(),
-                        new DictionaryModelBinderProvider(),
-                        new FloatingPointTypeModelBinderProvider()
-                    }
-                })*/
-                );
+                new OptionsWrapper<MvcOptions>(mvcOptions)                
+            );
             
             var valueProviderFactoryContext = new ValueProviderFactoryContext(ControllerContext);
 
@@ -175,21 +94,9 @@ namespace Incoding.Web.MvcContrib
                 modelMetataMetadataProvider,
                 modelBinderFactory, new CompositeValueProvider(valueProviderFactoryContext.ValueProviders), 
                 Provider.GetService<IObjectModelValidator>());
-            /*
-            var modelBinder = modelBinderFactory.CreateBinder(new ModelBinderFactoryContext
-            {
-                Metadata = modelMetadata,
-                BindingInfo = new BindingInfo()
-                {
-                    BinderModelName = modelMetadata.BinderModelName,
-                    BinderType = instanceType,
-                    BindingSource = BindingSource.Custom
-                },
-            });
-            
-            await modelBinder.BindModelAsync(defaultModelBindingContext);*/
-            
+                        
             return obj;
+            */
             // ModelMetadataProviders.Current.GetMetadataForType(() => Activator.CreateInstance(instanceType), instanceType))().
             //return new ComplexTypeModelBinder().BindModelAsync(ControllerContext ?? new ControllerContext(), new ModelBindingContext()
             //                                                                                        {
@@ -199,6 +106,7 @@ namespace Incoding.Web.MvcContrib
             //                                                                                                                        ? ValueProviderFactories.Factories.GetValueProvider(ControllerContext)
             //                                                                                                                        : formCollection,
             //                                                                                        });
+            return obj;
         }
 
         public class AsCommands
@@ -207,9 +115,9 @@ namespace Incoding.Web.MvcContrib
 
             public bool? IsComposite { get; set; }
 
-            public ModelStateDictionary ModelState { get; set; }
+            //public ModelStateDictionary ModelState { get; set; }
 
-            public ControllerContext ControllerContext { get; set; }
+            public Controller Controller { get; set; }
 
             public IServiceProvider Provider { get; set; }
 
@@ -218,18 +126,17 @@ namespace Incoding.Web.MvcContrib
                 var splitByType = IncTypes.Split(UrlDispatcher.separatorByType.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                 bool isCompositeAsArray = splitByType.Count() == 1 && IsComposite.GetValueOrDefault();
                 if(isCompositeAsArray)
-                    return ((IEnumerable<CommandBase>) await new CreateMessageByType()
-                {
-                    Type = splitByType[0],
-                    ControllerContext = this.ControllerContext,
-                    ModelState = ModelState,
-                    IsGroup = true
-                }.Execute()).ToArray();
+                    return ((IEnumerable<CommandBase>) await new CreateMessageByType2()
+                    {
+                        Type = splitByType[0],
+                        Controller = this.Controller,
+                        IsGroup = true
+                    }.Execute()).ToArray();
 
                 List<CommandBase> cbs = new List<CommandBase>();
                 foreach (var r in splitByType)
                 {
-                    CommandBase cb = (CommandBase)await new CreateMessageByType() { Provider = Provider, Type = r, ControllerContext = this.ControllerContext, ModelState = ModelState }.Execute();
+                    CommandBase cb = (CommandBase)await new CreateMessageByType2() { Type = r, Controller = this.Controller }.Execute();
                     cbs.Add(cb);
                 }
                 return cbs.ToArray();
@@ -256,17 +163,17 @@ namespace Incoding.Web.MvcContrib
             {
                 string name = HttpUtility.UrlDecode(Type).Replace(" ", "+");
                 var assmelbyName = cache.GetOrAdd(name, (i) =>
-                                                        {
-                                                            var clearName = name.Contains("`") ? name.Split('`')[0] + "`1" : name;
-                                                            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
-                                                            {
-                                                                var findType = ReflectionExtensions.GetLoadableTypes(assembly).FirstOrDefault(type => type.Name == clearName || type.FullName == clearName);
-                                                                if (findType != null)
-                                                                    return findType.AssemblyQualifiedName;
-                                                            }
+                {
+                    var clearName = name.Contains("`") ? name.Split('`')[0] + "`1" : name;
+                    foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+                    {
+                        var findType = ReflectionExtensions.GetLoadableTypes(assembly).FirstOrDefault(type => type.Name == clearName || type.FullName == clearName);
+                        if (findType != null)
+                            return findType.AssemblyQualifiedName;
+                    }
 
-                                                            throw new IncMvdException("Not found any type {0}".F(name));
-                                                        });
+                    throw new IncMvdException("Not found any type {0}".F(name));
+                });
                 return System.Type.GetType(assmelbyName);
             }
         }
@@ -299,10 +206,72 @@ namespace Incoding.Web.MvcContrib
 
         public bool IsModel { get; set; }
 
-        public ModelStateDictionary ModelState { get; set; }
-
-        public ControllerContext ControllerContext { get; set; }
+        //public ModelStateDictionary ModelState { get; set; }
         
         #endregion
     }
+
+    #region << Using >>
+
+    #endregion
+
+
+    //public class MessageModelBinder : IModelBinder
+    //{
+    //    public string Type { get; set; }
+
+    //    public bool IsGroup { get; set; }
+
+    //    public bool IsModel { get; set; }
+
+    //    public ModelStateDictionary ModelState { get; set; }
+
+    //    public ControllerContext ControllerContext { get; set; }
+
+    //    public Task BindModelAsync(ModelBindingContext bindingContext)
+    //    {
+    //        object model = null;
+    //        var byPair = Type.Split(UrlDispatcher.separatorByPair.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+    //        string genericType = byPair.ElementAtOrDefault(1);
+
+    //        var inst = new DefaultDispatcher().Query(new CreateMessageByType.FindTypeByName()
+    //        {
+    //            Type = byPair[0],
+    //        });
+    //        var formCollection = new DefaultDispatcher().Query(new CreateMessageByType.GetFormCollectionsQuery());
+    //        var instanceType = IsGroup ? typeof(List<>).MakeGenericType(inst) : inst;
+    //        if (instanceType.IsTypicalType() && IsModel)
+    //        {
+    //            string str = formCollection["incValue"];
+    //            if (instanceType == typeof(string))
+    //                model = str;
+    //            if (instanceType == typeof(bool))
+    //                model = bool.Parse(str);
+    //            if (instanceType == typeof(DateTime))
+    //                model = DateTime.Parse(str);
+    //            if (instanceType == typeof(int))
+    //                model = int.Parse(str);
+    //            if (instanceType.IsEnum)
+    //                model = Enum.Parse(instanceType, str);
+    //            if (model != null)
+    //            {
+    //                bindingContext.Result = ModelBindingResult.Success(model);
+    //                return Task.CompletedTask;
+    //            }
+    //        }
+    //        else if (!string.IsNullOrWhiteSpace(genericType))
+    //        {
+    //            instanceType = instanceType.MakeGenericType(genericType.Split(UrlDispatcher.separatorByGeneric.ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+    //                                                                   .Select(name => new DefaultDispatcher().Query(new CreateMessageByType.FindTypeByName()
+    //                                                                   {
+    //                                                                       Type = name,
+    //                                                                   }))
+    //                                                                   .ToArray());
+    //        }
+
+            
+    //        bindingContext.Result = ModelBindingResult.Success(model);
+    //        return Task.CompletedTask;
+    //    }
+    //}
 }

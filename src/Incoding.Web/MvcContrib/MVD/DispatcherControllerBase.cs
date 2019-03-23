@@ -29,12 +29,10 @@ namespace Incoding.Web.MvcContrib
                 Params = ControllerContext.GetNameValueCollection()
             });
             // ReSharper disable once UnusedVariable
-            var instance = await new CreateMessageByType()
+            var instance = await new CreateMessageByType2()
             {
-                Provider = _serviceProvider,
                 Type = parameter.Type,
-                ControllerContext = this.ControllerContext,
-                ModelState = ModelState
+                Controller = this
             }.Execute();
             return ModelState.IsValid ? IncodingResult.Success() : IncodingResult.Error(ModelState);
         }
@@ -45,7 +43,7 @@ namespace Incoding.Web.MvcContrib
             {
                 Params = ControllerContext.GetNameValueCollection()
             });
-            var query = await new CreateMessageByType() { Provider = _serviceProvider, Type = parameter.Type, ControllerContext = this.ControllerContext, ModelState = ModelState }.Execute();
+            var query = await new CreateMessageByType2() { Type = parameter.Type, Controller = this }.Execute();
 
             if (parameter.IsValidate && !ModelState.IsValid)
                 return IncodingResult.Error(ModelState);
@@ -63,12 +61,10 @@ namespace Incoding.Web.MvcContrib
             object model = null;
             if (!string.IsNullOrWhiteSpace(parameter.Type))
             {
-                var instance = await new CreateMessageByType()
+                var instance = await new CreateMessageByType2()
                 {
-                    Provider = _serviceProvider,
                     Type = parameter.Type,
-                    ControllerContext = ControllerContext,
-                    ModelState = ModelState,
+                    Controller = this,
                     IsModel = parameter.IsModel
                 }.Execute();
 
@@ -93,12 +89,11 @@ namespace Incoding.Web.MvcContrib
                 Params = ControllerContext.GetNameValueCollection()
             });
 
-            var commands = await new CreateMessageByType.AsCommands
+            var commands = await new CreateMessageByType2.AsCommands
             {
                 Provider = _serviceProvider,
                 IncTypes = parameter.Type,
-                ModelState = ModelState,
-                ControllerContext = ControllerContext,
+                Controller = this,
                 IsComposite = parameter.IsCompositeArray
             }.Execute();
 
@@ -116,11 +111,10 @@ namespace Incoding.Web.MvcContrib
             {
                 Params = ControllerContext.GetNameValueCollection()
             });
-            var instance = await new CreateMessageByType()
+            var instance = await new CreateMessageByType2()
             {
                 Type = parameter.Type,
-                ControllerContext = ControllerContext,
-                ModelState = ModelState
+                Controller = this
             }.Execute();
             var result = dispatcher.Query(new MVDExecute(HttpContext)
             {
