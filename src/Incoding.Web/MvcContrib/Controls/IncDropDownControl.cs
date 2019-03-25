@@ -88,7 +88,7 @@ namespace Incoding.Web.MvcContrib
                              })
                              .AsHtmlAttributes(this.attributes);
 
-            var tag = this.htmlHelper.DropDownListFor(this.property, isAjax ? new SelectList(new string[] { }) : (SelectList)Data, string.Empty, this.attributes);
+            var tag = this.htmlHelper.DropDownListFor(this.property, isAjax ? new SelectList(new string[] { }) : (SelectList)Data, null, this.attributes);
             tag.WriteTo(writer, encoder);
         }
     }

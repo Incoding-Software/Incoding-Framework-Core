@@ -10,6 +10,7 @@ namespace Incoding.WebTest.Operations
     public class AddItemCommand : CommandBase
     {
         public string OriginalValue { get; set; }
+        public List<int> ItemId { get; set; }
 
         public class Validator : AbstractValidator<AddItemCommand>
         {
