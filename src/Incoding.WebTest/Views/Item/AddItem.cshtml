@@ -6,14 +6,22 @@
 @using (Html.Incoding().BeginPush(setting =>
 {
     setting.OnSuccess = dsl => dsl.WithId(nameof(GetItemsQuery)).Trigger.Incoding();
-}))
+})) 
 {
     @Html.For(r => r.ItemId).DropDown(control =>
     {
         control.Data = Html.Dispatcher().Query(new GetDDEntitiesQuery {SelectedValues = new List<Guid>()}).Items.ToSelectList(vm => vm.Value, vm => vm.Text); // Url.Dispatcher().Query(new GetDDEntitiesQuery<UserRole> {SelectedValues = Model.RoleIds}).AsJson();
         //control.Attr(new RouteValueDictionary {{"multiple", "multiple"}, { "data-plugin-multiselect", "data-plugin-multiselect" } });
     })
-    @Html.ForGroup(r => r.OriginalValue).TextBox(control => control.Label.Name = "Value:")
+    @Html.ForGroup(r => r.OriginalValue).TextBox(control =>
+    {
+        control.Label.Name = "Value:";
+    })
+    @Html.ForGroup(r => r.OriginalValue).TextBox(control =>
+    {
+        control.Label.Name = "Value:";
+        control.NestedValidationWithControl = true;
+    })
     @Html.Incoding().Submit("Save")
 }
 

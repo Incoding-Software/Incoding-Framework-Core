@@ -27,8 +27,8 @@ namespace Incoding.Web.MvcContrib
 
         #region IExecutableSetting Members
 
-        [Obsolete("Please use If(() => expression) instead of this method")]
-        public IExecutableSetting If(Action<IConditionalBuilder> configuration)
+        //[Obsolete("Please use If(() => expression) instead of this method")]
+        internal IExecutableSetting If(Action<IConditionalBuilder> configuration)
         {
             var builder = new ConditionalBuilder();
             configuration(builder);

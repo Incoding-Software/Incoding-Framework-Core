@@ -38,6 +38,8 @@ namespace Incoding.Web.MvcContrib
 
         public IncHelpBlockControl<TModel> HelpBlock { get; set; }
 
+        public bool? NestedValidationWithControl { get; set; }
+
         #endregion
         
         public override void WriteTo(TextWriter writer, HtmlEncoder encoder)
@@ -47,6 +49,8 @@ namespace Incoding.Web.MvcContrib
             bool isStatic = Input.GetType().Name.Contains("IncStaticControl");
 
             AddClass(isV3orMore ? B.Form_group.ToLocalization() : "control-group");
+            if(IncodingHtmlHelper.FormGroupClass != null)
+                AddClass(IncodingHtmlHelper.FormGroupClass);
 
             Label.AddClass(B.Control_label);
             if (isV3orMore && isForDefClass(Label))
@@ -61,17 +65,26 @@ namespace Incoding.Web.MvcContrib
                     ? (IncodingHtmlHelper.Def_Control_CustomClass ?? IncodingHtmlHelper.Def_Control_Class.ToLocalization())
                     : isStatic ? string.Empty : "control-group");
             }
-
             
             if (isV3orMore && !typeof(TInput).Name.Contains("IncCheckBoxControl"))
                 Input.AddClass(isStatic ? B.Form_static_control.ToLocalization() : B.Form_control.ToLocalization());
-            Control.Content = Input;
+
+            var nestedValidationWithControl =
+                NestedValidationWithControl ?? IncodingHtmlHelper.IsNestedValidationWithControl ?? false;
+
+            Control.BuildContent = builder =>
+            {
+                builder.AppendHtml(Input);
+                if (nestedValidationWithControl)
+                    builder.AppendHtml(Validation);
+            };
             
             TagBuilder div = new TagBuilder(HtmlTag.Div.ToStringLower());
             div.MergeAttributes(GetAttributes(), true);
             div.InnerHtml.AppendHtml(Label);
             div.InnerHtml.AppendHtml(Control);
-            div.InnerHtml.AppendHtml(Validation);
+            if(!nestedValidationWithControl)
+                div.InnerHtml.AppendHtml(Validation);
             div.InnerHtml.AppendHtml(HelpBlock);
 
             div.WriteTo(writer, encoder);

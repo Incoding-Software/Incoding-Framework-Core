@@ -9,8 +9,8 @@ namespace Incoding.Web.MvcContrib
 
     public interface IExecutableSetting
     {
-        [Obsolete("Use If with expression")]
-        IExecutableSetting If(Action<IConditionalBuilder> configuration);
+        //[Obsolete("Use If with expression")]
+        //IExecutableSetting If(Action<IConditionalBuilder> configuration);
 
         IExecutableSetting If(Expression<Func<bool>> expression);
 

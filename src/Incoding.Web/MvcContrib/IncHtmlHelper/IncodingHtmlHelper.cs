@@ -39,10 +39,14 @@ namespace Incoding.Web.MvcContrib
 
         public static string Def_Control_CustomClass = null;
 
+        public static bool? IsNestedValidationWithControl = null;
+
         internal IncodingHtmlHelper(IHtmlHelper htmlHelper)
         {
             this.htmlHelper = htmlHelper;
         }
+
+        public static string FormGroupClass = null;
 
         internal static TagBuilder CreateScript(string id, HtmlType type, string src, IHtmlContent content)
         {
