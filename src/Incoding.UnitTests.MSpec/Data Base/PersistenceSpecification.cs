@@ -117,7 +117,14 @@ namespace Incoding.UnitTests.MSpec
                     object invent;
                     if (missing.PropertyType.IsImplement<IEntity>())
                     {
-                        invent = ((IQueryable)Repository.GetType().GetMethod("Query").MakeGenericMethod(missing.PropertyType).Invoke(Repository, new object[] { null, null, null, null }));
+                        var queryable = ((IQueryable)Repository.GetType().GetMethod("Query").MakeGenericMethod(missing.PropertyType).Invoke(Repository, new object[] { null, null, null, null }));
+
+                        var firstOrDefaultMethod = typeof(System.Linq.Queryable).GetMethods(BindingFlags.Static | BindingFlags.Public)
+                            .FirstOrDefault(m => m.Name == "FirstOrDefault" && m.GetParameters().Count() == 1);
+
+                        
+                        firstOrDefaultMethod = firstOrDefaultMethod.MakeGenericMethod(missing.PropertyType);
+                        invent = firstOrDefaultMethod.Invoke(null, new object[] {queryable});
                         if (invent == null)
                             throw new SpecificationException("No elements at database for type '{0}'".F(missing.PropertyType.Name));
                     }

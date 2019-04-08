@@ -38,6 +38,18 @@ namespace Incoding.Core.CQRS
             return dispatcher.Query(message, setting);
         }
 
+        public static T Push<T>(this IDispatcher dispatcher, CommandBase<T> message)
+        {
+            dispatcher.Push(message, (MessageExecuteSetting)null);
+            return message.Result;
+        }
+
+        public static T Push<T>(this IDispatcher dispatcher, CommandBase message) where T : class
+        {
+            dispatcher.Push(message);
+            return message.Result as T;
+        }
+
         #endregion
     }
 }

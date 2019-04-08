@@ -1,38 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using FluentValidation;
 using Incoding.Core.Block.Caching;
 using Incoding.Core.Block.Caching.Core;
 using Incoding.Core.CQRS.Core;
 
 namespace Incoding.WebTest.Operations
 {
-    public class AddItemCommand : CommandBase
-    {
-        public string OriginalValue { get; set; }
-        public List<int> ItemId { get; set; }
-
-        public class Validator : AbstractValidator<AddItemCommand>
-        {
-            public Validator()
-            {
-                RuleFor(r => r.OriginalValue).NotEmpty().Must(r =>
-                {
-                    int val;
-                    return r != null && int.TryParse(r, out val) && val > 15;
-                }).WithMessage("Value must be greater than 15");
-            }
-        }
-
-        protected override void Execute()
-        {
-            Repository.Save(new ItemEntity()
-            {
-                Name = OriginalValue
-            });
-        }
-    }
-
     public class ClearItemCacheCommand : CommandBase
     {
         protected override void Execute()

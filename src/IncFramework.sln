@@ -178,13 +178,13 @@ Global
 		{5D9E0EB3-4339-42DA-B5C2-9D4FF667D7D9} = {540D8C0B-630F-48A8-875B-8CFA62F498E2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_UpdateAssemblyVersion = False
-		BuildVersion_UpdateFileVersion = False
-		BuildVersion_BuildAction = ReBuild
-		BuildVersion_IncrementBeforeBuild = True
-		BuildVersion_DetectChanges = True
-		BuildVersion_BuildVersioningStyle = None.None.None.None
 		SolutionGuid = {834D889F-F4B3-4006-83EC-584703FCCDA2}
+		BuildVersion_BuildVersioningStyle = None.None.None.None
+		BuildVersion_DetectChanges = True
+		BuildVersion_IncrementBeforeBuild = True
+		BuildVersion_BuildAction = ReBuild
+		BuildVersion_UpdateFileVersion = False
+		BuildVersion_UpdateAssemblyVersion = False
 	EndGlobalSection
 	GlobalSection(NDepend) = preSolution
 		Project = ".\IncFramework.ndproj"

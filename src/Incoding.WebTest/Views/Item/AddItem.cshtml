@@ -16,10 +16,6 @@
     @Html.ForGroup(r => r.OriginalValue).TextBox(control =>
     {
         control.Label.Name = "Value:";
-    })
-    @Html.ForGroup(r => r.OriginalValue).TextBox(control =>
-    {
-        control.Label.Name = "Value:";
         control.NestedValidationWithControl = true;
     })
     @Html.Incoding().Submit("Save")

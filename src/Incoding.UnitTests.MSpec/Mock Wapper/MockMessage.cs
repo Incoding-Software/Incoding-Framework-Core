@@ -301,12 +301,13 @@ namespace Incoding.UnitTests.MSpec
             return Stub(message => message.repository.StubGetById(id, res));
         }
 
-        public MockMessage<TMessage, TResult> StubSave<TEntity>(TEntity res, object id) where TEntity : class, IEntity, new()
+        public MockMessage<TMessage, TResult> StubSave<TEntity>(TEntity res, object id = null) where TEntity : class, IEntity, new()
         {
             Action<TEntity> verify = entity =>
                                      {
                                          entity.ShouldEqualWeak(res, null);
-                                         entity.SetValue("Id", id);
+                                         if(id != null)
+                                             entity.SetValue("Id", id);
                                      };
             return Stub(message => message.repository.Setup(r => r.Save(Pleasure.MockIt.Is<TEntity>(verify))));
         }
