@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 using Incoding.Core.Data;
+using Incoding.Core.Extensions;
 using Incoding.Core.Extensions.LinqSpecs;
 using Incoding.Data;
 using Incoding.Data.NHibernate;
@@ -9,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Incoding.WebTest.Operations
 {
-    public class ItemEntity : IncEntityBase
+    public class ItemEntity : IncEntityBase, IName
     {
         public new virtual Guid Id { get; set; }
 
@@ -58,6 +59,26 @@ namespace Incoding.WebTest.Operations
                     return specification => specification.OrderBy(r => r.Name);
                 }
             }
+        }
+    }
+
+    public interface IName : IEntity
+    {
+        string Name { get; set; }
+    }
+
+    public class NameEntity : IName
+    {
+        public object Id { get; set; }
+        public string Name { get; set; }
+    }
+    public class NameSpec<T> : Specification<T> where T : IName
+    {
+        public override Expression<Func<T, bool>> IsSatisfiedBy()
+        {
+            Specification<ItemEntity> spec = new ItemEntity.Where.ByStringLongerThan(10);
+            spec.And(new NameSpec<ItemEntity>());
+            return name => name.Name != null;
         }
     }
 }

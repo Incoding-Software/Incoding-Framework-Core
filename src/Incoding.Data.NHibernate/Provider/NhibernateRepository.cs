@@ -26,6 +26,13 @@ namespace Incoding.Data.NHibernate
 
         #region Constructors
 
+        static readonly List<Func<IRepositoryInterception>> interceptions = new List<Func<IRepositoryInterception>>();
+
+        public static void SetInterception(Func<IRepositoryInterception> create)
+        {
+            interceptions.Add(create);
+        }
+
         public NhibernateRepository(ISession session)
         {
             this.session = session;
@@ -61,7 +68,7 @@ namespace Incoding.Data.NHibernate
 
         public void Flush()
         {
-            session.Flush();            
+            session.Flush();
         }
 
         public void SaveOrUpdate<TEntity>(TEntity entity) where TEntity : class, IEntity, new()
@@ -112,17 +119,29 @@ namespace Incoding.Data.NHibernate
             return session.Load<TEntity>(id);
         }
 
-        public IQueryable<TEntity> Query<TEntity>(OrderSpecification<TEntity> orderSpecification = null, Specification<TEntity> whereSpecification = null, FetchSpecification<TEntity> fetchSpecification = null, PaginatedSpecification paginatedSpecification = null) where TEntity : class, IEntity, new()
+        public IQueryable<TEntity> Query<TEntity>(Specification<TEntity> whereSpecification = null, OrderSpecification<TEntity> orderSpecification = null, FetchSpecification<TEntity> fetchSpecification = null, PaginatedSpecification paginatedSpecification = null, bool skipInterceptions = false) where TEntity : class, IEntity, new()
         {
-            return session.Query<TEntity>().Query(orderSpecification, whereSpecification, fetchSpecification, paginatedSpecification);
+            Specification<TEntity> where = whereSpecification;
+            if (!skipInterceptions)
+                foreach (var interception in interceptions)
+                {
+                    where = interception().WhereSpec(where);
+                }
+            return session.Query<TEntity>().Query(orderSpecification, where, fetchSpecification, paginatedSpecification);
         }
 
-        public IncPaginatedResult<TEntity> Paginated<TEntity>(PaginatedSpecification paginatedSpecification, OrderSpecification<TEntity> orderSpecification = null, Specification<TEntity> whereSpecification = null, FetchSpecification<TEntity> fetchSpecification = null) where TEntity : class, IEntity, new()
+        public IncPaginatedResult<TEntity> Paginated<TEntity>(PaginatedSpecification paginatedSpecification, Specification<TEntity> whereSpecification = null, OrderSpecification<TEntity> orderSpecification = null, FetchSpecification<TEntity> fetchSpecification = null, bool skipInterceptions = false) where TEntity : class, IEntity, new()
         {
+            Specification<TEntity> where = whereSpecification;
+            if (!skipInterceptions)
+                foreach (var interception in interceptions)
+                {
+                    where = interception().WhereSpec(where);
+                }
             return session.Query<TEntity>().Paginated(orderSpecification, whereSpecification, fetchSpecification, paginatedSpecification);
         }
 
-        
+
         public void Clear()
         {
             this.session.Clear();

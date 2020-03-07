@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using FluentNHibernate.Cfg.Db;
+using FluentNHibernate.Utils;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Incoding.Core;
@@ -10,13 +11,20 @@ using Incoding.Core.Block.IoC;
 using Incoding.Core.Block.IoC.Provider;
 using Incoding.Core.Block.Scheduler;
 using Incoding.Core.CQRS;
+using Incoding.Core.Data;
+using Incoding.Core.Extensions;
+using Incoding.Core.Extensions.LinqSpecs;
 using Incoding.Core.Tasks;
+using Incoding.Data;
 using Incoding.Data.EF;
+using Incoding.Data.NHibernate;
 using Incoding.Web;
 using Incoding.Web.MvcContrib;
 using Incoding.WebTest.Operations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
@@ -40,7 +48,21 @@ namespace Incoding.WebTest
             services.AddMvc(options =>
             {
                 options.Filters.Add(new IncodingErrorHandlingFilter());
-            }).AddFluentValidation(configuration =>
+            })
+                .AddMvcOptions(options =>
+                {
+                    options.ModelBinderProviders.Clear();
+                    options.ModelBinderProviders.Add(new FormFileModelBinderProvider());
+                    options.ModelBinderProviders.Add(new FormCollectionModelBinderProvider());
+                    options.ModelBinderProviders.Add(new ComplexTypeModelBinderProvider());
+                    options.ModelBinderProviders.Add(new SimpleTypeModelBinderProvider());
+                    options.ModelBinderProviders.Add(new ArrayModelBinderProvider());
+                    options.ModelBinderProviders.Add(new CollectionModelBinderProvider());
+                    options.ModelBinderProviders.Add(new DictionaryModelBinderProvider());
+                    options.ModelBinderProviders.Add(new FloatingPointTypeModelBinderProvider());
+                    //options.ModelBinderProviders.Add(new BinderTypeModelBinderProvider());
+                })
+            .AddFluentValidation(configuration =>
             {
                 configuration.ValidatorFactory = new IncValidatorFactory();
 
@@ -50,6 +72,7 @@ namespace Incoding.WebTest
                     services.Add(ServiceDescriptor.Transient(result.ValidatorType, result.ValidatorType));
                 });
             });
+
             services.ConfigureIncodingCoreServices();
 
             // EF Core:
@@ -69,6 +92,8 @@ namespace Incoding.WebTest
                     .ExposeConfiguration(cfg => new SchemaUpdate(cfg).Execute(false, true));
                 return configuration;
             });
+
+            NhibernateRepository.SetInterception(() => new WhereSpecInterception());
 
             services.ConfigureIncodingWebServices();
         }
@@ -129,6 +154,28 @@ namespace Incoding.WebTest
             {
                 BackgroundTaskFactory.Instance.StopAll();
             });
+        }
+    }
+
+    public class WhereSpecInterception : IRepositoryInterception
+    {
+        public Specification<TEntity> WhereSpec<TEntity>(Specification<TEntity> spec) where TEntity : class, IEntity, new()
+        {
+            if (typeof(TEntity).HasInterface(typeof(IName)))
+            {
+                spec = ValidSpec(spec);
+            }
+
+            return spec;
+        }
+
+        public Specification<TEntity> ValidSpec<TEntity>(Specification<TEntity> spec) where TEntity : class, IEntity, new()
+        {
+            var nameSpecType = typeof(NameSpec<>).MakeGenericType(typeof(TEntity));
+            var nameSpec = Activator.CreateInstance(nameSpecType);
+            //Specification<TEntity> nameSpec = (Specification<TEntity>)(object)new NameSpec<TEntity>();
+            var newSpec = nameSpec as Specification<TEntity>;
+            return spec.And(newSpec);
         }
     }
 }

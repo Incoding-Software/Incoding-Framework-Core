@@ -135,17 +135,17 @@ namespace Incoding.UnitTests.MSpec
                     .Returns(entity);
         }
 
-        public static void StubPaginated<TEntity>(this Mock<IRepository> repository, PaginatedSpecification paginatedSpecification, OrderSpecification<TEntity> orderSpecification = null, Specification<TEntity> whereSpecification = null, FetchSpecification<TEntity> fetchSpecification = null, IncPaginatedResult<TEntity> result = null)
+        public static void StubPaginated<TEntity>(this Mock<IRepository> repository, PaginatedSpecification paginatedSpecification, OrderSpecification<TEntity> orderSpecification = null, Specification<TEntity> whereSpecification = null, FetchSpecification<TEntity> fetchSpecification = null, bool skipInterceptions = false, IncPaginatedResult<TEntity> result = null)
                 where TEntity : class, IEntity, new()
         {
-            repository.Setup(r => r.Paginated(Pleasure.MockIt.IsStrong(paginatedSpecification), orderSpecification, Pleasure.MockIt.IsStrong(whereSpecification, dsl => dsl.IncludeAllFields()), fetchSpecification))
+            repository.Setup(r => r.Paginated(Pleasure.MockIt.IsStrong(paginatedSpecification), Pleasure.MockIt.IsStrong(whereSpecification, dsl => dsl.IncludeAllFields()), orderSpecification, fetchSpecification, skipInterceptions))
                       .Returns(result);
         }
 
-        public static void StubQuery<TEntity>(this Mock<IRepository> repository, OrderSpecification<TEntity> orderSpecification = null, Specification<TEntity> whereSpecification = null, FetchSpecification<TEntity> fetchSpecification = null, PaginatedSpecification paginatedSpecification = null, params TEntity[] entities) where TEntity : class, IEntity, new()
+        public static void StubQuery<TEntity>(this Mock<IRepository> repository, OrderSpecification<TEntity> orderSpecification = null, Specification<TEntity> whereSpecification = null, FetchSpecification<TEntity> fetchSpecification = null, PaginatedSpecification paginatedSpecification = null, bool skipInterceptions = false, params TEntity[] entities) where TEntity : class, IEntity, new()
         {
             repository
-                    .Setup(r => r.Query(orderSpecification, Pleasure.MockIt.IsStrong(whereSpecification, dsl => dsl.IncludeAllFields()), fetchSpecification, Pleasure.MockIt.IsStrong(paginatedSpecification, dsl => dsl.IncludeAllFields())))
+                    .Setup(r => r.Query(Pleasure.MockIt.IsStrong(whereSpecification, dsl => dsl.IncludeAllFields()), orderSpecification, fetchSpecification, Pleasure.MockIt.IsStrong(paginatedSpecification, dsl => dsl.IncludeAllFields()), skipInterceptions))
                     .Returns(Pleasure.ToQueryable(entities));
         }
 

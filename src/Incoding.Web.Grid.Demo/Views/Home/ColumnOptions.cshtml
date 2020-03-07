@@ -27,11 +27,10 @@
                                            </text>)
                               .Title(@<text>
                                           @(Html.When(JqueryBind.Click)
-                                                .Direct()
                                                 .OnSuccess(dsl =>
                                                 {
-                                                    dsl.With(r => r.Custom(":checkbox")).JQuery.Attributes.SetAttr(HtmlAttribute.Checked).If(builder => builder.Is(() => Selector.Jquery.Self()));
-                                                    dsl.With(r => r.Custom(":checkbox")).JQuery.Attributes.RemoveAttr(HtmlAttribute.Checked).If(builder => builder.Is(() => !Selector.Jquery.Self()));
+                                                    dsl.With(r => r.Custom(":checkbox")).JQuery.Attr.Set(HtmlAttribute.Checked).If(() => Selector.Jquery.Self());
+                                                    dsl.With(r => r.Custom(":checkbox")).JQuery.Attr.Remove(HtmlAttribute.Checked).If(() => !Selector.Jquery.Self());
                                                 })
                                                 .AsHtmlAttributes()
                                                 .ToCheckBox(false))

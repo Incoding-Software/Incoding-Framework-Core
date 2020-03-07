@@ -5,9 +5,13 @@
 
 @using (Html.Incoding().BeginPush(setting =>
 {
+    //setting.Url = Url.Action("AddItemFile", "Home");
     setting.OnSuccess = dsl => dsl.WithId(nameof(GetItemsQuery)).Trigger.Incoding();
+    setting.EncType = Enctype.MultipartFormData;
+    setting.Method = FormMethod.Post;
 })) 
 {
+@*<form action="@Url.Action("AddItemFile", "Home")" method="post" enctype="multipart/form-data">*@
     @Html.For(r => r.ItemId).DropDown(control =>
     {
         control.Data = Html.Dispatcher().Query(new GetDDEntitiesQuery {SelectedValues = new List<Guid>()}).Items.ToSelectList(vm => vm.Value, vm => vm.Text); // Url.Dispatcher().Query(new GetDDEntitiesQuery<UserRole> {SelectedValues = Model.RoleIds}).AsJson();
@@ -18,9 +22,10 @@
         control.Label.Name = "Value:";
         control.NestedValidationWithControl = true;
     })
+    @Html.ForGroup(r => r.F1).File(control => control.Label.Name = "File:")
     @Html.Incoding().Submit("Save")
 }
-
+@*</form>*@
 
 
 

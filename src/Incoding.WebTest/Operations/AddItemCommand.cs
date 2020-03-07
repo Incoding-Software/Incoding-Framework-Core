@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using FluentValidation;
+using Incoding.Core.Block.IoC;
 using Incoding.Core.CQRS;
 using Incoding.Core.CQRS.Core;
+using Microsoft.AspNetCore.Http;
 
 namespace Incoding.WebTest.Operations
 {
@@ -11,6 +13,7 @@ namespace Incoding.WebTest.Operations
     {
         public string OriginalValue { get; set; }
         public List<Guid> ItemId { get; set; }
+        public IFormFile F1 { get; set; }
 
         public class Validator : AbstractValidator<AddItemCommand>
         {
@@ -37,6 +40,7 @@ namespace Incoding.WebTest.Operations
         {
             var dateTime = Dispatcher.Push(new TestGenericCommand());
             Debug.WriteLine(dateTime);
+            Debug.WriteLine(F1);
             Repository.Save(new ItemEntity()
             {
                 Name = OriginalValue
