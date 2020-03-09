@@ -138,7 +138,7 @@ namespace Incoding.Data.NHibernate
                 {
                     where = interception().WhereSpec(where);
                 }
-            return session.Query<TEntity>().Paginated(orderSpecification, whereSpecification, fetchSpecification, paginatedSpecification);
+            return session.Query<TEntity>().Paginated(orderSpecification, where, fetchSpecification, paginatedSpecification);
         }
 
 

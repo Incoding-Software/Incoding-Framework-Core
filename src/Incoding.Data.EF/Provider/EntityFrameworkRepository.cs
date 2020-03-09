@@ -159,7 +159,7 @@ namespace Incoding.Data.EF.Provider
                 {
                     where = interception().WhereSpec(where);
                 }
-            return session.Set<TEntity>().AsQueryable().Query(orderSpecification, whereSpecification, fetchSpecification, paginatedSpecification);
+            return session.Set<TEntity>().AsQueryable().Query(orderSpecification, where, fetchSpecification, paginatedSpecification);
         }
 
         public IncPaginatedResult<TEntity> Paginated<TEntity>(PaginatedSpecification paginatedSpecification, Specification<TEntity> whereSpecification = null, OrderSpecification<TEntity> orderSpecification = null, FetchSpecification<TEntity> fetchSpecification = null, bool skipInterceptions = false) where TEntity : class, IEntity, new()
@@ -170,7 +170,7 @@ namespace Incoding.Data.EF.Provider
                 {
                     where = interception().WhereSpec(where);
                 }
-            return session.Set<TEntity>().AsQueryable().Paginated(orderSpecification, whereSpecification, fetchSpecification, paginatedSpecification);
+            return session.Set<TEntity>().AsQueryable().Paginated(orderSpecification, where, fetchSpecification, paginatedSpecification);
         }
 
         public void Clear()
