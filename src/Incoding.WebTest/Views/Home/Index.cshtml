@@ -4,7 +4,7 @@
     ViewData["Title"] = "Home Page";
 }
 @*@Html.Incoding().Link(Url.Content("~/Content/bootstrap.css"))
-@Html.Incoding().Link(Url.Content("~/Content/bootstrap-theme.css"))*@
+    @Html.Incoding().Link(Url.Content("~/Content/bootstrap-theme.css"))*@
 
 
 @Html.Incoding().Script(Url.Content("~/js/jquery-1.7.2.min.js"))
@@ -24,12 +24,20 @@
 @Html.Incoding().Script(Url.Content("~/js/incoding.meta.executable.js"))
 @Html.Incoding().Script(Url.Content("~/js/incoding.meta.conditional.js"))
 
-@Html.Partial("~/Views/Item/AddItem.cshtml")
+@(Html.When(JqueryBind.InitIncoding)
+    .Ajax(options => options.Url = Url.Dispatcher().Query<AddItemCommand.AsView>().AsView("~/Views/Item/AddItem.cshtml"))
+    .OnSuccess(dsl => dsl.Self().JQuery.Dom.Html())
+    .AsHtmlAttributes()
+    .ToDiv())
 
-<hr/>
+
+@*@Html.Partial("~/Views/Item/AddItem.cshtml")*@
+
+<hr />
 
 @Html.Partial("~/Views/Item/ItemList.cshtml")
 
+@Html.Incoding().RenderDropDownTemplate()
 
 <div class="clearfix"></div>
 

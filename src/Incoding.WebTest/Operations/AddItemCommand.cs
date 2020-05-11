@@ -14,6 +14,7 @@ namespace Incoding.WebTest.Operations
         public string OriginalValue { get; set; }
         public List<Guid> ItemId { get; set; }
         public IFormFile F1 { get; set; }
+        public List<int> TargetIds { get; set; }
 
         public class Validator : AbstractValidator<AddItemCommand>
         {
@@ -45,6 +46,17 @@ namespace Incoding.WebTest.Operations
             {
                 Name = OriginalValue
             });
+        }
+
+        public class AsView : QueryBase<AddItemCommand>
+        {
+            protected override AddItemCommand ExecuteResult()
+            {
+                return new AddItemCommand
+                {
+                    TargetIds = new List<int> {1555, 1777}
+                };
+            }
         }
     }
 }

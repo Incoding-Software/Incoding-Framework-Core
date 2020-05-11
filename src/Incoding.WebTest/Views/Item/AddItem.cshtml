@@ -3,18 +3,31 @@
 @using Microsoft.AspNetCore.Routing
 @model Incoding.WebTest.Operations.AddItemCommand
 
+@{
+    var selectedTargets = "selectedTarget";
+}
+
+<div style="display: none;">
+    <select id="@selectedTargets" multiple="multiple">
+        @foreach (var target in Model.TargetIds)
+        {
+            <option value="@target" selected="selected"></option>
+        }
+    </select>
+</div>
+
 @using (Html.Incoding().BeginPush(setting =>
 {
-    //setting.Url = Url.Action("AddItemFile", "Home");
-    setting.OnSuccess = dsl => dsl.WithId(nameof(GetItemsQuery)).Trigger.Incoding();
-    setting.EncType = Enctype.MultipartFormData;
-    setting.Method = FormMethod.Post;
-})) 
+//setting.Url = Url.Action("AddItemFile", "Home");
+setting.OnSuccess = dsl => dsl.WithId(nameof(GetItemsQuery)).Trigger.Incoding();
+   setting.EncType = Enctype.MultipartFormData;
+   setting.Method = FormMethod.Post;
+}))
 {
-@*<form action="@Url.Action("AddItemFile", "Home")" method="post" enctype="multipart/form-data">*@
+    @*<form action="@Url.Action("AddItemFile", "Home")" method="post" enctype="multipart/form-data">*@
     @Html.For(r => r.ItemId).DropDown(control =>
     {
-        control.Data = Html.Dispatcher().Query(new GetDDEntitiesQuery {SelectedValues = new List<Guid>()}).Items.ToSelectList(vm => vm.Value, vm => vm.Text); // Url.Dispatcher().Query(new GetDDEntitiesQuery<UserRole> {SelectedValues = Model.RoleIds}).AsJson();
+        control.Data = Html.Dispatcher().Query(new GetDDEntitiesQuery { SelectedValues = new List<Guid>() }).Items.ToSelectList(vm => vm.Value, vm => vm.Text); // Url.Dispatcher().Query(new GetDDEntitiesQuery<UserRole> {SelectedValues = Model.RoleIds}).AsJson();
         //control.Attr(new RouteValueDictionary {{"multiple", "multiple"}, { "data-plugin-multiselect", "data-plugin-multiselect" } });
     })
     @Html.ForGroup(r => r.OriginalValue).TextBox(control =>
@@ -22,6 +35,18 @@
         control.Label.Name = "Value:";
         control.NestedValidationWithControl = true;
     })
+
+    @Html.ForGroup(r => r.TargetIds).DropDown(control =>
+           {
+               control.Input.Data = Url.Dispatcher().Query<GetWithParams>(new
+                   {
+                       SelectedValues = Selector.Jquery.Id(selectedTargets),
+                   InvestorId = Html.Selector().Name(r => r.OriginalValue),
+               }).AsJson();
+               control.Input.Attr(new RouteValueDictionary { { "multiple", "multiple" }, { "data-plugin-multiselect", "data-plugin-multiselect" } });
+               control.Label.Name = "Targets";
+           })
+
     @Html.ForGroup(r => r.F1).File(control => control.Label.Name = "File:")
     @Html.Incoding().Submit("Save")
 }

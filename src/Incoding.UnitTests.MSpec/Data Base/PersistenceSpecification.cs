@@ -117,7 +117,7 @@ namespace Incoding.UnitTests.MSpec
                     object invent;
                     if (missing.PropertyType.IsImplement<IEntity>())
                     {
-                        var queryable = ((IQueryable)Repository.GetType().GetMethod("Query").MakeGenericMethod(missing.PropertyType).Invoke(Repository, new object[] { null, null, null, null }));
+                        var queryable = ((IQueryable)Repository.GetType().GetMethod("Query").MakeGenericMethod(missing.PropertyType).Invoke(Repository, new object[] { null, null, null, null, true }));
 
                         var firstOrDefaultMethod = typeof(System.Linq.Queryable).GetMethods(BindingFlags.Static | BindingFlags.Public)
                             .FirstOrDefault(m => m.Name == "FirstOrDefault" && m.GetParameters().Count() == 1);

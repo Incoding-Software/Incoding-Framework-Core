@@ -2,7 +2,10 @@
 using System.Linq;
 using Incoding.Core.Block.Caching;
 using Incoding.Core.Block.Caching.Core;
+using Incoding.Core.Block.IoC;
 using Incoding.Core.CQRS.Core;
+using Incoding.Core.ViewModel;
+using Microsoft.Extensions.Configuration;
 
 namespace Incoding.WebTest.Operations
 {
@@ -14,8 +17,20 @@ namespace Incoding.WebTest.Operations
         }
     }
 
+    public class GetWithParams : QueryBase<OptGroupVm>
+    {
+        public int SomeId { get; set; }
+        public List<int> Ids { get; set; }
+        protected override OptGroupVm ExecuteResult()
+        {
+            return new OptGroupVm(new List<KeyValueVm> { new KeyValueVm(1555, "Item1")});
+        }
+    }
+
+
     public class GetItemsQuery : QueryBase<List<GetItemsQuery.Response>>, ICacheKey
     {
+        
         public class Response
         {
             public string Key { get; set; }
@@ -49,7 +64,11 @@ namespace Incoding.WebTest.Operations
         {
             protected override List<Response> ExecuteResult()
             {
-                return Dispatcher.Query(new GetItemsQuery());
+                var connection = IoCFactory.Instance.TryResolve<IConfiguration>().GetConnectionString("Main");
+
+                return Dispatcher.Query(new GetItemsQuery(), new MessageExecuteSetting {
+                    Connection = connection
+                    });
             }
         }
     }

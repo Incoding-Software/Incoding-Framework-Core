@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using FluentNHibernate.Utils;
 using FluentValidation;
@@ -20,6 +21,7 @@ using Incoding.Data.EF;
 using Incoding.Data.NHibernate;
 using Incoding.Web;
 using Incoding.Web.MvcContrib;
+using Incoding.WebTest.Models;
 using Incoding.WebTest.Operations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,6 +31,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
 
 namespace Incoding.WebTest
@@ -84,14 +87,40 @@ namespace Incoding.WebTest
             // NH Core:
             string path = Path.Combine(AppContext.BaseDirectory, "fluently_" + ".cfg");
             // serialization issues, do not pass path yet
-            services.ConfigureIncodingNhDataServices(typeof(ItemEntity), path, configuration =>
+            Func<FluentConfiguration, FluentConfiguration> builderConfigure = configuration =>
             {
                 configuration = configuration.Database(MsSqlConfiguration.MsSql2012
                         .ConnectionString(Configuration.GetConnectionString("Main"))
                         .ShowSql())
                     .ExposeConfiguration(cfg => new SchemaUpdate(cfg).Execute(false, true));
                 return configuration;
-            });
+            };
+            //services.ConfigureIncodingNhDataServices(typeof(ItemEntity), path, builderConfigure);
+
+            services.AddSingleton<IUnitOfWorkFactory, NhibernateUnitOfWorkFactory>();
+
+            Func<Configuration> config = () =>
+            {
+                FluentConfiguration fluently = Fluently.Configure();
+                fluently = builderConfigure(fluently);
+                fluently = fluently
+                    .Mappings(configuration => configuration.FluentMappings
+                        .Add(typeof(DelayToSchedulerNhMap))
+                        .AddFromAssembly(typeof(ItemEntity).Assembly));
+
+                return fluently.BuildConfiguration();
+            };
+
+            NhibernateSessionFactoryForMultipleConnections.GetConnection = connectionString =>
+            {
+                var sqlConnection = new System.Data.SqlClient.SqlConnection(connectionString);
+                sqlConnection.Open();
+                return sqlConnection;
+            };
+
+            NhibernateSessionFactoryForMultipleConnections sessionFactory = new NhibernateSessionFactoryForMultipleConnections(config, path);
+
+            services.AddSingleton<INhibernateSessionFactory>(sessionFactory);
 
             NhibernateRepository.SetInterception(() => new WhereSpecInterception());
 

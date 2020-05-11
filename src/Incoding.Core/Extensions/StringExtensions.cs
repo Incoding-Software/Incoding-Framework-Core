@@ -13,7 +13,15 @@ namespace Incoding.Core.Extensions
     {
         #region Factory constructors
 
-        
+        public static string[] SplitByFirst(this string str, char splitChar)
+        {
+            int index = str.IndexOf(splitChar);
+            if (index < 0 || index > str.Length)
+                return new string[]{};
+            var first = str.Substring(0, index);
+            var last = str.Substring(index + 1, str.Length - index - 1);
+            return new [] { first, last };
+        }
         public static bool EqualsWithInvariant(this string left, string right)
         {
             return left.Equals(right, StringComparison.InvariantCultureIgnoreCase);

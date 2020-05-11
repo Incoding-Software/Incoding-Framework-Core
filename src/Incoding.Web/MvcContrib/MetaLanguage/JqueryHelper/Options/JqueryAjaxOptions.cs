@@ -145,7 +145,8 @@ namespace Incoding.Web.MvcContrib
 
                     var existsQueryString = byQueryString[1]
                             .Split('&')
-                            .Select(r => r.Split('='))
+                            .Select(r => r.SplitByFirst('='))
+                                //return r.Split('=');
                             .Select(r =>
                                     {
                                         string val = r[1];
