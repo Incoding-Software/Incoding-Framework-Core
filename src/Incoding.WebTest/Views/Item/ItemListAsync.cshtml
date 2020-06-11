@@ -1,0 +1,17 @@
+﻿@using Incoding.Web.MvcContrib
+@using Incoding.WebTest.Operations
+@using (Html.BeginForm())
+{
+    
+}
+
+@using (Html.When(JqueryBind.None)
+    .Ajax(new GetItems1Query.AsView())
+    .OnSuccess(dsl => dsl.Self().JQuery.Dom.Use(Selector.Result).WithTemplateByView("~/Views/Item/ItemTmpl.cshtml").Html())
+    .AsHtmlAttributes(new {id = nameof(GetItems1Query)})
+    .ToBeginTag(HtmlTag.Div))
+{
+    @await Html.Dispatcher().AsViewFromQueryAsync(new GetItems1Query(), "~/Views/Item/ItemTmpl.cshtml")
+}
+
+

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Incoding.Core.Data
 {
@@ -9,9 +10,11 @@ namespace Incoding.Core.Data
     public interface IUnitOfWork : IDisposable            
     {
         void Flush();
+        Task FlushAsync();
 
         IRepository GetRepository();
 
         void Commit();
+        Task CommitAsync();
     }
 }

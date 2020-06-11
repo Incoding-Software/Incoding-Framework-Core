@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading.Tasks;
 using Incoding.Core;
 using Incoding.Core.CQRS;
 using Incoding.Core.CQRS.Common;
 using Incoding.Core.CQRS.Core;
-using Incoding.Core.Quality;
-using JetBrains.Annotations;
-using Microsoft.AspNetCore.Http;
 
 namespace Incoding.Web.MvcContrib
 {
@@ -16,29 +12,27 @@ namespace Incoding.Web.MvcContrib
 
     #endregion
 
-    public sealed class MVDExecute : QueryBase<object>
+    public sealed class MVDExecuteAsync : QueryBaseAsync<object>
     {
-        internal static readonly List<Func<IMessageInterception>> interceptions = new List<Func<IMessageInterception>>();
-
         public CommandComposite Instance { get; set; }
 
         public static void SetInterception(Func<IMessageInterception> create)
         {
-            interceptions.Add(create);
+            MVDExecute.SetInterception(create);
         }
 
-        protected override object ExecuteResult()
+        protected override async Task<object> ExecuteResult()
         {
             Guard.NotNull("Instance", "Instance query can't be null");
-            foreach (var interception in interceptions)
+            foreach (var interception in MVDExecute.interceptions)
             {
                 foreach (var message in Instance.Parts)
                     interception().OnBefore(message);
             }
 
-            new DefaultDispatcher().Push(Instance);
+            await new DefaultDispatcher().PushAsyncInternal(Instance);
 
-            foreach (var interception in interceptions)
+            foreach (var interception in MVDExecute.interceptions)
             {
                 foreach (var message in Instance.Parts)
                     interception().OnAfter(message);

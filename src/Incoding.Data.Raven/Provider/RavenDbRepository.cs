@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Incoding.Core.Block.Core;
 using Incoding.Core.Data;
 using Incoding.Core.Extensions;
@@ -65,6 +66,12 @@ namespace Incoding.Data.Raven.Provider
             throw new NotImplementedException();
         }
 
+        [UsedImplicitly, Obsolete(ObsoleteMessage.NotSupportForThisImplement, true), ExcludeFromCodeCoverage]
+        public Task ExecuteSqlAsync(string sql)
+        {
+            throw new NotImplementedException();
+        }
+
         public TProvider GetProvider<TProvider>() where TProvider : class
         {
             return session as TProvider;
@@ -93,10 +100,42 @@ namespace Incoding.Data.Raven.Provider
             }
         }
 
+        public async Task SaveAsync<TEntity>(TEntity entity) where TEntity : class, IEntity, new()
+        {
+            if (session.Advanced.HasChanged(entity))
+                return;
+
+            session.Store(entity);
+            foreach (var propertyInfo in cache.GetOrAdd(typeof(TEntity), type => type.GetProperties()
+                                                                                     .Where(r => r.HasAttribute<JsonIgnoreAttribute>() &&
+                                                                                                 r.CanRead && r.CanWrite)))
+            {
+                var value = propertyInfo.GetValue(entity, null);
+                if (value == null)
+                    continue;
+
+                bool isEnumerableValue = value is IEnumerable;
+                var entityType = isEnumerableValue ? propertyInfo.PropertyType.GetGenericArguments()[0] : propertyInfo.PropertyType;
+
+                await Task.Run(() =>
+                {
+                    (isEnumerableValue ? saves : save)
+                        .MakeGenericMethod(entityType)
+                        .Invoke(this, new[] {value});
+                });
+            }
+        }
+
         public void Saves<TEntity>(IEnumerable<TEntity> entities) where TEntity : class, IEntity, new()
         {
             foreach (var entity in entities)
                 Save(entity);
+        }
+
+        public async Task SavesAsync<TEntity>(IEnumerable<TEntity> entities) where TEntity : class, IEntity, new()
+        {
+            foreach (var entity in entities)
+                await SaveAsync(entity);
         }
 
         public void Flush()
@@ -104,9 +143,19 @@ namespace Incoding.Data.Raven.Provider
             session.SaveChanges();
         }
 
+        public async Task FlushAsync()
+        {
+            await Task.Run(() => session.SaveChanges());
+        }
+
         public void SaveOrUpdate<TEntity>(TEntity entity) where TEntity : class, IEntity, new()
         {
             session.Store(entity);
+        }
+        
+        public async Task SaveOrUpdateAsync<TEntity>(TEntity entity) where TEntity : class, IEntity, new()
+        {
+            await Task.Run(() => session.Store(entity));
         }
 
         public void Delete<TEntity>(object id) where TEntity : class, IEntity, new()
@@ -114,9 +163,19 @@ namespace Incoding.Data.Raven.Provider
             Delete(LoadById<TEntity>(id));
         }
 
+        public async Task DeleteAsync<TEntity>(object id) where TEntity : class, IEntity, new()
+        {
+            await DeleteAsync(LoadById<TEntity>(id));
+        }
+
         public void Delete<TEntity>(TEntity entity) where TEntity : class, IEntity, new()
         {
             session.Delete(entity);
+        }
+
+        public async Task DeleteAsync<TEntity>(TEntity entity) where TEntity : class, IEntity, new()
+        {
+            await Task.Run(() => session.Delete(entity));
         }
 
         public void DeleteAll<TEntity>() where TEntity : class, IEntity, new()
@@ -129,6 +188,18 @@ namespace Incoding.Data.Raven.Provider
                                                                           new BulkOperationOptions(){AllowStale = true});
         }
 
+        public async Task DeleteAllAsync<TEntity>() where TEntity : class, IEntity, new()
+        {
+            await Task.Run(() =>
+                session.Advanced.DocumentStore.DatabaseCommands.DeleteByIndex("Raven/DocumentsByEntityName",
+                    new IndexQuery
+                    {
+                        Query = "Tag:" + session.Advanced.DocumentStore.Conventions.GetTypeTagName(typeof(TEntity)),
+                    },
+                    new BulkOperationOptions() {AllowStale = true})
+            );
+        }
+
         public TEntity GetById<TEntity>(object id) where TEntity : class, IEntity, new()
         {
             if (id == null)
@@ -139,9 +210,23 @@ namespace Incoding.Data.Raven.Provider
                            : session.Load<TEntity>((ValueType)id);
         }
 
+        public async Task<TEntity> GetByIdAsync<TEntity>(object id) where TEntity : class, IEntity, new()
+        {
+            if (id == null)
+                return null;
+
+            return await Task.Run(() => id is string
+                           ? session.Load<TEntity>(id.ToString())
+                           : session.Load<TEntity>((ValueType)id));
+        }
+
         public TEntity LoadById<TEntity>(object id) where TEntity : class, IEntity, new()
         {
             return GetById<TEntity>(id);
+        }
+        public async Task<TEntity> LoadByIdAsync<TEntity>(object id) where TEntity : class, IEntity, new()
+        {
+            return await GetByIdAsync<TEntity>(id);
         }
 
         public IQueryable<TEntity> Query<TEntity>(Specification<TEntity> whereSpecification = null, OrderSpecification<TEntity> orderSpecification = null, FetchSpecification<TEntity> fetchSpecification = null, PaginatedSpecification paginatedSpecification = null, bool skipInterceptions = false) where TEntity : class, IEntity, new()
@@ -177,6 +262,11 @@ namespace Incoding.Data.Raven.Provider
         {
             foreach (var id in ids)
                 Delete<TEntity>(id);
+        }
+        public async Task DeleteByIdsAsync<TEntity>(IEnumerable<object> ids) where TEntity : class, IEntity, new()
+        {
+            foreach (var id in ids)
+                await DeleteAsync<TEntity>(id);
         }
 
         #endregion

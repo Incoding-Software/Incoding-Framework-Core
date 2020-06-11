@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Incoding.Core.Data;
 
 namespace Incoding.Data
@@ -33,8 +34,10 @@ namespace Incoding.Data
         protected abstract void InternalSubmit();
 
         protected abstract void InternalFlush();
+        protected abstract Task InternalFlushAsync();
 
         protected abstract void InternalCommit();
+        protected abstract Task InternalCommitAsync();
 
         #region Fields
 
@@ -57,11 +60,21 @@ namespace Incoding.Data
         {
             InternalCommit();
         }
+        
+        public async Task CommitAsync()
+        {
+            await InternalCommitAsync();
+        }
 
         public void Flush()
         {
             if (!disposed)
                 InternalFlush();
+        }
+        public async Task FlushAsync()
+        {
+            if (!disposed)
+                await InternalFlushAsync();
         }
 
         #endregion

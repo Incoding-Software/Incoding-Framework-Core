@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Data;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
@@ -36,7 +37,18 @@ namespace Incoding.Data.EF.Provider
             session.SaveChanges();
         }
 
+        protected override async Task InternalFlushAsync()
+        {
+            await session.SaveChangesAsync();
+        }
+
         protected override void InternalCommit()
+        {
+            transaction.Commit();
+            isWasCommit = true;
+        }
+
+        protected override async Task InternalCommitAsync()
         {
             transaction.Commit();
             isWasCommit = true;

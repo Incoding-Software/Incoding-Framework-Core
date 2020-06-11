@@ -15,7 +15,15 @@
     <Product>Incoding.Data</Product>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Version>1.0.4</Version>
+    <Version>1.0.7</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\Work\Projects\Projects\Incoding-Framework-Core\src\Incoding.Data.Mongo\Incoding.Data.Mongo.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>D:\Work\Projects\Projects\Incoding-Framework-Core\src\Incoding.Data.Mongo\Incoding.Data.Mongo.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

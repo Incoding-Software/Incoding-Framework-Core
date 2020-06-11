@@ -12,9 +12,9 @@ namespace Incoding.Core.CQRS.Core
     #endregion
 
     /// <summary>
-    /// Base Message class
+    /// Base Async Message class
     /// </summary>
-    public abstract class MessageBase : IMessage
+    public abstract class MessageBaseAsync : IMessage
     {
         #region Fields
 
@@ -51,23 +51,23 @@ namespace Incoding.Core.CQRS.Core
             Result = null;
             lazyRepository = new Lazy<IRepository>(() => unitOfWork.Value.GetRepository());
             messageDispatcher = current;
-            Execute();
+            Task.Run(ExecuteAsync).Wait(TimeSpan.MaxValue);
         }
 
         /// <inheritdoc />
         public async Task OnExecuteAsync(IDispatcher current, Lazy<IUnitOfWork> unitOfWork)
         {
-            OnExecute(current, unitOfWork);
+            Result = null;
+            lazyRepository = new Lazy<IRepository>(() => unitOfWork.Value.GetRepository());
+            messageDispatcher = current;
+            await ExecuteAsync();
         }
 
         #endregion
 
         #region Api Methods
 
-        /// <summary>
-        /// Execute Message function
-        /// </summary>
-        protected abstract void Execute();
+        protected abstract Task ExecuteAsync();
 
         #endregion
 

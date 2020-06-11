@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Incoding.Core.Block.Core;
 using Incoding.Core.Data;
 using Incoding.Core.Extensions;
@@ -48,6 +49,12 @@ namespace Incoding.Data.EF.Provider
             //using(DbConnection conn = new SqlCommand())session.Database.CurrentTransaction.;
         }
 
+        public Task ExecuteSqlAsync(string sql)
+        {
+            throw new NotImplementedException("Use GetProvider() to execute Raw queries");
+            //using(DbConnection conn = new SqlCommand())session.Database.CurrentTransaction.;
+        }
+
         public TProvider GetProvider<TProvider>() where TProvider : class
         {
             return session as TProvider;
@@ -58,10 +65,19 @@ namespace Incoding.Data.EF.Provider
             session.Set<TEntity>().Add(entity);
         }
 
+        public async Task SaveAsync<TEntity>(TEntity entity) where TEntity : class, IEntity, new()
+        {
+            await session.Set<TEntity>().AddAsync(entity);
+        }
+
         public void Saves<TEntity>(IEnumerable<TEntity> entities) where TEntity : class, IEntity, new()
         {
-            foreach (var entity in entities)
-                Save(entity);
+            session.Set<TEntity>().AddRange(entities);
+        }
+
+        public async Task SavesAsync<TEntity>(IEnumerable<TEntity> entities) where TEntity : class, IEntity, new()
+        {
+            await session.Set<TEntity>().AddRangeAsync(entities);
         }
 
         public void Flush()
@@ -106,15 +122,31 @@ namespace Incoding.Data.EF.Provider
 
         }
 
+        public async Task FlushAsync()
+        {
+            await session.SaveChangesAsync();
+        }
+
         public void SaveOrUpdate<TEntity>(TEntity entity) where TEntity : class, IEntity, new()
         {
             if (session.Entry(entity).State == EntityState.Detached)
                 session.Set<TEntity>().Add(entity);
         }
 
+        public async Task SaveOrUpdateAsync<TEntity>(TEntity entity) where TEntity : class, IEntity, new()
+        {
+            if (session.Entry(entity).State == EntityState.Detached)
+                await session.Set<TEntity>().AddAsync(entity);
+        }
+
         public void Delete<TEntity>(object id) where TEntity : class, IEntity, new()
         {
             Delete(GetById<TEntity>(id));
+        }
+
+        public async Task DeleteAsync<TEntity>(object id) where TEntity : class, IEntity, new()
+        {
+            await DeleteAsync(GetById<TEntity>(id));
         }
 
         public void DeleteByIds<TEntity>(IEnumerable<object> ids) where TEntity : class, IEntity, new()
@@ -129,14 +161,36 @@ namespace Incoding.Data.EF.Provider
             //session.Database.ExecuteSqlCommand(queryString);
         }
 
+        public async Task DeleteByIdsAsync<TEntity>(IEnumerable<object> ids) where TEntity : class, IEntity, new()
+        {
+            ids.DoEach(async r =>
+            {
+                var entity = session.Set<TEntity>().Find(r);
+                await DeleteAsync(entity);
+            });
+            //string idsAsString = ids.Select(o => o.GetType().IsAnyEquals(typeof(string), typeof(Guid)) ? "'{0}'".F(o.ToString()) : o.ToString()).AsString(",");
+            //string queryString = "DELETE FROM {0} WHERE {1} IN ({2})".F(session.GetTableName<TEntity>(), "Id", idsAsString);
+            //session.Database.ExecuteSqlCommand(queryString);
+        }
+
         public void Delete<TEntity>(TEntity entity) where TEntity : class, IEntity, new()
         {
             session.Set<TEntity>().Remove(entity);
         }
 
+        public async Task DeleteAsync<TEntity>(TEntity entity) where TEntity : class, IEntity, new()
+        {
+            await Task.Run(() => session.Set<TEntity>().Remove(entity));
+        }
+
         public void DeleteAll<TEntity>() where TEntity : class, IEntity, new()
         {
             session.Database.ExecuteSqlCommand("DELETE {0}".F(session.GetTableName<TEntity>()));
+        }
+
+        public async Task DeleteAllAsync<TEntity>() where TEntity : class, IEntity, new()
+        {
+            await session.Database.ExecuteSqlCommandAsync("DELETE {0}".F(session.GetTableName<TEntity>()));
         }
 
         public TEntity GetById<TEntity>(object id) where TEntity : class, IEntity, new()
@@ -146,9 +200,19 @@ namespace Incoding.Data.EF.Provider
             return entity;
         }
 
+        public async Task<TEntity> GetByIdAsync<TEntity>(object id) where TEntity : class, IEntity, new()
+        {
+            var dbSet = session.Set<TEntity>();
+            return await dbSet.FindAsync(id);
+        }
+
         public TEntity LoadById<TEntity>(object id) where TEntity : class, IEntity, new()
         {
             return session.Set<TEntity>().Find(id);
+        }
+        public async Task<TEntity> LoadByIdAsync<TEntity>(object id) where TEntity : class, IEntity, new()
+        {
+            return await session.Set<TEntity>().FindAsync(id);
         }
 
         public IQueryable<TEntity> Query<TEntity>(Specification<TEntity> whereSpecification = null, OrderSpecification<TEntity> orderSpecification = null, FetchSpecification<TEntity> fetchSpecification = null, PaginatedSpecification paginatedSpecification = null, bool skipInterceptions = false) where TEntity : class, IEntity, new()

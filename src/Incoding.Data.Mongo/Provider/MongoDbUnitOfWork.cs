@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using MongoDB.Driver;
 
@@ -25,7 +26,13 @@ namespace Incoding.Data.Mongo.Provider
         protected override void InternalSubmit() { }
 
         protected override void InternalFlush() { }
+        protected override async Task InternalFlushAsync()
+        {
+        }
 
         protected override void InternalCommit() { }
+        protected override async Task InternalCommitAsync()
+        {
+        }
     }
 }

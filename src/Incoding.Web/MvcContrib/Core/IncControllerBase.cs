@@ -80,6 +80,11 @@ namespace Incoding.Web.MvcContrib
             return TryPush((Action<CommandComposite>) (composite => composite.Quote(input)), action);
         }
 
+        protected async Task<ActionResult> TryPushAsync(Action<CommandComposite> push, CommandComposite commandComposite, Action<IncTryPushSetting> action = null)
+        {
+            return TryPush(push, commandComposite, action);
+        }
+
         protected ActionResult TryPush(Action<CommandComposite> configuration, Action<IncTryPushSetting> action = null)
         {
             var composite = new CommandComposite();
@@ -127,7 +132,7 @@ namespace Incoding.Web.MvcContrib
                 return error(exception);
             }
         }
-
+        
         #region Nested classes
 
         protected class IncTryPushSetting

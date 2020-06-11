@@ -143,9 +143,9 @@ namespace Incoding.Web.MvcContrib
             var baseType = typeof(TMessage).BaseType;
             while (baseType != typeof(object))
             {
-                if (baseType == typeof(CommandBase))
+                if (baseType == typeof(CommandBase) || baseType == typeof(CommandBaseAsync))
                     return AjaxPost(r => r.Push<TMessage>(message));
-                if (baseType.Name == "QueryBase`1")
+                if (baseType.Name == "QueryBase`1" || baseType.Name == "QueryBaseAsync`1")
                     return Ajax(r => r.Query<TMessage>(message).AsJson());
 
                 baseType = baseType.BaseType;

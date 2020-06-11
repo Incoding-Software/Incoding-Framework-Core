@@ -14,8 +14,16 @@
     <PackageReleaseNotes>Incoding Framework library migrated to .NET Standard and .NET Core</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Version>1.0.5</Version>
-    <FileVersion>1.0.5.0</FileVersion>
+    <Version>1.0.8</Version>
+    <FileVersion>1.0.8.0</FileVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\Work\Projects\Projects\Incoding-Framework-Core\src\Incoding.Data.NHibernate\Incoding.Data.NHibernate.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>D:\Work\Projects\Projects\Incoding-Framework-Core\src\Incoding.Data.NHibernate\Incoding.Data.NHibernate.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

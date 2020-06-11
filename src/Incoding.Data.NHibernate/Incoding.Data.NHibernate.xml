@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Incoding.Data.NHibernate</name>
+    </assembly>
+    <members>
+        <member name="M:Incoding.Data.NHibernate.NHibernateEntityMap`1.IdGenerateByGuid(System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <summary>
+            See sample
+            <code>
+            Id(property).CustomType(typeof(string)).GeneratedBy.Custom(typeof(GuidStringGenerator)).Length(36);
+            </code>
+            </summary>
+            <param name="property"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

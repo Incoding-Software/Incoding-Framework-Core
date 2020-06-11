@@ -1,0 +1,629 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Incoding.Core</name>
+    </assembly>
+    <members>
+        <member name="T:Incoding.Core.Block.Caching.Core.ICacheKey">
+            <summary>
+            Caching Key interface
+            </summary>
+        </member>
+        <member name="M:Incoding.Core.Block.Caching.Core.ICacheKey.GetName">
+            <summary>
+            Unique key
+            </summary>
+        </member>
+        <member name="M:Incoding.Core.Block.Caching.Policy.CachingPolicyFluentEx.AlwaysExpires(Incoding.Core.Block.Core.IsSatisfied{Incoding.Core.Block.Caching.Core.ICacheKey})">
+            <summary>
+                Reset cache each get
+            </summary>
+        </member>
+        <member name="M:Incoding.Core.Block.Caching.Policy.CachingPolicyFluentEx.EndAbsolute(Incoding.Core.Block.Core.IsSatisfied{Incoding.Core.Block.Caching.Core.ICacheKey},System.Func{System.DateTime})">
+            <summary>
+                Set expires to <paramref name="generateEndDt" />
+            </summary>
+            <param name="satisfied">
+                See <see cref="T:Incoding.Core.Block.Core.IsSatisfied`1" />
+            </param>
+            <param name="generateEndDt"> Date end caching key </param>
+        </member>
+        <member name="M:Incoding.Core.Block.Caching.Policy.CachingPolicyFluentEx.EndSliding(Incoding.Core.Block.Core.IsSatisfied{Incoding.Core.Block.Caching.Core.ICacheKey},System.Func{System.DateTime})">
+            <summary>
+                Set expires to <paramref name="generateEndDt" /> and reset each try get value by caching key
+            </summary>
+            <param name="satisfied">
+                See <see cref="T:Incoding.Core.Block.Core.IsSatisfied`1" />
+            </param>
+            <param name="generateEndDt"> Date end caching key </param>
+        </member>
+        <member name="M:Incoding.Core.Block.Caching.Policy.CachingPolicyFluentEx.NeverExpires(Incoding.Core.Block.Core.IsSatisfied{Incoding.Core.Block.Caching.Core.ICacheKey})">
+            <summary>
+                Set always expires
+            </summary>
+            <param name="satisfied">
+                See <see cref="T:Incoding.Core.Block.Core.IsSatisfied`1" />
+            </param>
+        </member>
+        <member name="M:Incoding.Core.Block.Caching.Policy.CachingPolicyFluentEx.SetExpires(Incoding.Core.Block.Core.IsSatisfied{Incoding.Core.Block.Caching.Core.ICacheKey},Incoding.Core.Block.Caching.Policy.IsCacheExpires)">
+            <summary>
+                Set custom<c>expires</c>s
+            </summary>
+            <param name="satisfied"> Filter for caching key </param>
+            <param name="expires">
+                Predicate for <c>expires</c>
+            </param>
+            <returns> Instance caching policy </returns>
+        </member>
+        <member name="T:Incoding.Core.Block.Caching.Providers.ICachedProvider">
+            <summary>
+                All <c>lock</c> implement in <see cref="T:Incoding.Core.Block.Caching.CachingFactory" /> then not need added lock or any multi-threaded.
+            </summary>
+        </member>
+        <member name="M:Incoding.Core.Block.Caching.Providers.ICachedProvider.Delete(System.String)">
+            <summary>
+                Delete all assign value for <c>key</c>
+            </summary>
+            <param name="key">
+                Caching <c>key</c>
+            </param>
+        </member>
+        <member name="M:Incoding.Core.Block.Caching.Providers.ICachedProvider.DeleteAll">
+            <summary>
+                <c>Delete</c> all keys
+            </summary>
+        </member>
+        <member name="M:Incoding.Core.Block.Caching.Providers.ICachedProvider.Set``1(System.String,``0,Incoding.Core.Block.Caching.Providers.CacheOptions)">
+            <summary>
+                Add or replace if value is exists
+            </summary>
+        </member>
+        <member name="M:Incoding.Core.Block.Caching.Providers.ICachedProvider.Get``1(System.String)">
+            <summary>
+                Get value by caching <c>key</c>.
+                If value not exists return default(<c>T</c>)
+            </summary>
+        </member>
+        <member name="M:Incoding.Core.Block.ExceptionHandling.Policy.ExceptionPolicy.Filter(System.Func{System.Exception,System.Boolean})">
+            <summary>
+                See <see cref="T:Incoding.Core.Block.Core.SatisfiedSyntax" />
+            </summary>
+        </member>
+        <member name="M:Incoding.Core.Block.ExceptionHandling.Policy.ExceptionPolicy.For``1">
+            <summary>
+                See <see cref="T:Incoding.Core.Block.Core.SatisfiedSyntax" />
+            </summary>
+        </member>
+        <member name="M:Incoding.Core.Block.ExceptionHandling.Policy.ExceptionPolicy.ForDeepDerived``1">
+            <summary>
+                See <see cref="T:Incoding.Core.Block.Core.SatisfiedSyntax" />
+            </summary>
+        </member>
+        <member name="M:Incoding.Core.Block.ExceptionHandling.Policy.ExceptionPolicy.ForFirstDerived``1">
+            <summary>
+                See <see cref="T:Incoding.Core.Block.Core.SatisfiedSyntax" />
+            </summary>
+        </member>
+        <member name="M:Incoding.Core.Block.ExceptionHandling.Policy.ExceptionPolicy.ForAll">
+            <summary>
+                See <see cref="T:Incoding.Core.Block.Core.SatisfiedSyntax" />
+            </summary>
+        </member>
+        <member name="T:Incoding.Core.Block.Logging.Loggers.ActionLogger">
+            <summary>
+                Imp <see cref="T:Incoding.Core.Block.Logging.Loggers.ILogger" /> for action
+            </summary>
+        </member>
+        <member name="T:Incoding.Core.Block.Logging.Loggers.ConsoleLogger">
+            <summary>
+                Imp <see cref="T:Incoding.Core.Block.Logging.Loggers.ILogger" /> for console.
+            </summary>
+        </member>
+        <member name="T:Incoding.Core.Block.Logging.Loggers.FileLogger">
+            <summary>
+                Imp <see cref="T:Incoding.Core.Block.Logging.Loggers.ILogger" /> for stream file writer
+            </summary>
+        </member>
+        <member name="T:Incoding.Core.Block.Logging.Loggers.TraceLogger">
+            <summary>
+                Imp <see cref="T:Incoding.Core.Block.Logging.Loggers.ILogger" /> for <see cref="T:System.Diagnostics.Trace" />
+            </summary>
+        </member>
+        <member name="T:Incoding.Core.Block.Scheduler.Query.GetRecurrencyDateQuery">
+            <summary>
+                Query returns next date for Scheduler by provided settings.
+            </summary>
+        </member>
+        <member name="T:Incoding.Core.ContractAbbreviateAttribute">
+            <summary>
+                Enables writing abbreviations for contracts that get copied to other methods
+            </summary>
+        </member>
+        <member name="T:Incoding.Core.ContractOptionAttribute">
+            <summary>
+                Allows setting contract and tool options at assembly, type, or method granularity.
+            </summary>
+        </member>
+        <member name="T:Incoding.Core.CQRS.Core.CommandBase">
+            <summary>
+            Command class
+            </summary>
+        </member>
+        <member name="T:Incoding.Core.CQRS.Core.CommandBaseAsync">
+            <summary>
+            Async Command
+            </summary>
+        </member>
+        <member name="T:Incoding.Core.CQRS.Core.CommandBaseAsync`1">
+            <summary>
+            Async Command with Typed Result
+            </summary>
+            <typeparam name="T">Result</typeparam>
+        </member>
+        <member name="M:Incoding.Core.CQRS.Core.CommandBaseAsync`1.ExecuteResult">
+            <summary>
+            Execute Command
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Incoding.Core.CQRS.Core.CommandBase`1">
+            <summary>
+            Command Typed class
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Incoding.Core.CQRS.Core.CommandBase`1.ExecuteResult">
+            <summary>
+            Execute Command
+            </summary>
+            <returns>Result</returns>
+        </member>
+        <member name="T:Incoding.Core.CQRS.Core.CommandComposite">
+            <summary>
+            Composing Messages class
+            </summary>
+        </member>
+        <member name="T:Incoding.Core.CQRS.Core.IDispatcher">
+            <summary>
+                Interface Dispatcher
+            </summary>
+        </member>
+        <member name="T:Incoding.Core.CQRS.Core.IMessage">
+            <summary>
+            Base interface for CQRS Messages
+            </summary>
+        </member>
+        <member name="P:Incoding.Core.CQRS.Core.IMessage.Result">
+            <summary>
+            Message Result
+            </summary>
+        </member>
+        <member name="P:Incoding.Core.CQRS.Core.IMessage.Setting">
+            <summary>
+            Message Settings
+            </summary>
+        </member>
+        <member name="M:Incoding.Core.CQRS.Core.IMessage.OnExecute(Incoding.Core.CQRS.Core.IDispatcher,System.Lazy{Incoding.Core.Data.IUnitOfWork})">
+            <summary>
+            On Message Execute
+            </summary>
+            <param name="current">Current Dispatcher</param>
+            <param name="unitOfWork">Unit of Work</param>
+        </member>
+        <member name="M:Incoding.Core.CQRS.Core.IMessage.OnExecuteAsync(Incoding.Core.CQRS.Core.IDispatcher,System.Lazy{Incoding.Core.Data.IUnitOfWork})">
+            <summary>
+            On Message Execute Async
+            </summary>
+            <param name="current">Current Dispatcher</param>
+            <param name="unitOfWork">Unit of Work</param>
+            <returns></returns>
+        </member>
+        <member name="T:Incoding.Core.CQRS.Core.MessageBase">
+            <summary>
+            Base Message class
+            </summary>
+        </member>
+        <member name="P:Incoding.Core.CQRS.Core.MessageBase.Result">
+            <inheritdoc />
+        </member>
+        <member name="P:Incoding.Core.CQRS.Core.MessageBase.Setting">
+            <inheritdoc />
+        </member>
+        <member name="M:Incoding.Core.CQRS.Core.MessageBase.OnExecute(Incoding.Core.CQRS.Core.IDispatcher,System.Lazy{Incoding.Core.Data.IUnitOfWork})">
+            <inheritdoc />
+        </member>
+        <member name="M:Incoding.Core.CQRS.Core.MessageBase.OnExecuteAsync(Incoding.Core.CQRS.Core.IDispatcher,System.Lazy{Incoding.Core.Data.IUnitOfWork})">
+            <inheritdoc />
+        </member>
+        <member name="M:Incoding.Core.CQRS.Core.MessageBase.Execute">
+            <summary>
+            Execute Message function
+            </summary>
+        </member>
+        <member name="T:Incoding.Core.CQRS.Core.MessageBaseAsync">
+            <summary>
+            Base Async Message class
+            </summary>
+        </member>
+        <member name="P:Incoding.Core.CQRS.Core.MessageBaseAsync.Result">
+            <inheritdoc />
+        </member>
+        <member name="P:Incoding.Core.CQRS.Core.MessageBaseAsync.Setting">
+            <inheritdoc />
+        </member>
+        <member name="M:Incoding.Core.CQRS.Core.MessageBaseAsync.OnExecute(Incoding.Core.CQRS.Core.IDispatcher,System.Lazy{Incoding.Core.Data.IUnitOfWork})">
+            <inheritdoc />
+        </member>
+        <member name="M:Incoding.Core.CQRS.Core.MessageBaseAsync.OnExecuteAsync(Incoding.Core.CQRS.Core.IDispatcher,System.Lazy{Incoding.Core.Data.IUnitOfWork})">
+            <inheritdoc />
+        </member>
+        <member name="T:Incoding.Core.CQRS.Core.QueryBase`1">
+            <summary>
+            Base class for Query Message
+            </summary>
+            <typeparam name="TResult">Result</typeparam>
+        </member>
+        <member name="M:Incoding.Core.CQRS.Core.QueryBase`1.Execute">
+            <inheritdoc />
+        </member>
+        <member name="T:Incoding.Core.CQRS.Core.QueryBaseAsync`1">
+            <summary>
+            Async Query
+            </summary>
+            <typeparam name="TResult">Result</typeparam>
+        </member>
+        <member name="M:Incoding.Core.CQRS.Core.QueryBaseAsync`1.ExecuteAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:Incoding.Core.CQRS.Core.QueryBaseAsync`1.ExecuteResult">
+            <summary>
+            Execute Result
+            </summary>
+            <returns>Result</returns>
+        </member>
+        <member name="M:Incoding.Core.Data.AdHocFetchSpecificationBase`1.Equals(Incoding.Core.Data.AdHocFetchSpecificationBase{`0})">
+            
+        </member>
+        <member name="M:Incoding.Core.Data.IRepository.ExecuteSql(System.String)">
+            <summary>
+            Execute raw SQL code
+            </summary>
+            <param name="sql">Sql string</param>
+        </member>
+        <member name="M:Incoding.Core.Data.IRepository.ExecuteSqlAsync(System.String)">
+            <summary>
+            Execute raw SQL code
+            </summary>
+            <param name="sql">Sql string</param>
+        </member>
+        <member name="M:Incoding.Core.Data.IRepository.Save``1(``0)">
+            <summary>
+                Persist the given entity instance
+            </summary>
+            <typeparam name="TEntity">Strong type entity</typeparam>
+            <param name="entity">Entity instance</param>
+        </member>
+        <member name="M:Incoding.Core.Data.IRepository.SaveAsync``1(``0)">
+            <summary>
+                Persist the given entity instance
+            </summary>
+            <typeparam name="TEntity">Strong type entity</typeparam>
+            <param name="entity">Entity instance</param>
+        </member>
+        <member name="M:Incoding.Core.Data.IRepository.Saves``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+                Persist the given entity instance
+            </summary>
+            <typeparam name="TEntity">Strong type entity</typeparam>
+            <param name="entities">Entities instance</param>
+        </member>
+        <member name="M:Incoding.Core.Data.IRepository.SavesAsync``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+                Persist the given entity instance
+            </summary>
+            <typeparam name="TEntity">Strong type entity</typeparam>
+            <param name="entities">Entities instance</param>
+        </member>
+        <member name="M:Incoding.Core.Data.IRepository.Flush">
+            <summary>
+                Flushed if a query is requested for some entity type and there are dirty local entity instances
+            </summary>
+        </member>
+        <member name="M:Incoding.Core.Data.IRepository.FlushAsync">
+            <summary>
+                Flushed if a query is requested for some entity type and there are dirty local entity instances
+            </summary>
+        </member>
+        <member name="M:Incoding.Core.Data.IRepository.SaveOrUpdate``1(``0)">
+            <summary>
+                <see cref="M:Incoding.Core.Data.IRepository.Saves``1(System.Collections.Generic.IEnumerable{``0})" /> or update
+            </summary>
+            <typeparam name="TEntity">Type entity</typeparam>
+            <param name="entity">Entity instance</param>
+        </member>
+        <member name="M:Incoding.Core.Data.IRepository.SaveOrUpdateAsync``1(``0)">
+            <summary>
+                <see cref="M:Incoding.Core.Data.IRepository.SavesAsync``1(System.Collections.Generic.IEnumerable{``0})" /> or update
+            </summary>
+            <typeparam name="TEntity">Type entity</typeparam>
+            <param name="entity">Entity instance</param>
+        </member>
+        <member name="M:Incoding.Core.Data.IRepository.Delete``1(System.Object)">
+            <summary>
+                Delete a entity from the datastore  by id
+            </summary>
+            <typeparam name="TEntity">Type entity</typeparam>
+            <param name="id">Id</param>
+        </member>
+        <member name="M:Incoding.Core.Data.IRepository.DeleteAsync``1(System.Object)">
+            <summary>
+                Delete a entity from the datastore  by id
+            </summary>
+            <typeparam name="TEntity">Type entity</typeparam>
+            <param name="id">Id</param>
+        </member>
+        <member name="M:Incoding.Core.Data.IRepository.DeleteByIds``1(System.Collections.Generic.IEnumerable{System.Object})">
+            <summary>
+                Delete a entity from the datastore  by ids ( don't support cascade )
+            </summary>
+            <typeparam name="TEntity">Type entity</typeparam>
+            <param name="ids">Ids</param>
+        </member>
+        <member name="M:Incoding.Core.Data.IRepository.DeleteByIdsAsync``1(System.Collections.Generic.IEnumerable{System.Object})">
+            <summary>
+                Delete a entity from the datastore  by ids ( don't support cascade )
+            </summary>
+            <typeparam name="TEntity">Type entity</typeparam>
+            <param name="ids">Ids</param>
+        </member>
+        <member name="M:Incoding.Core.Data.IRepository.Delete``1(``0)">
+            <summary>
+                Delete a entity instance from the datastore
+            </summary>
+            <typeparam name="TEntity">Type entity</typeparam>
+            <param name="entity">Persistence instance</param>
+        </member>
+        <member name="M:Incoding.Core.Data.IRepository.DeleteAsync``1(``0)">
+            <summary>
+                Delete a entity instance from the datastore
+            </summary>
+            <typeparam name="TEntity">Type entity</typeparam>
+            <param name="entity">Persistence instance</param>
+        </member>
+        <member name="M:Incoding.Core.Data.IRepository.DeleteAll``1">
+            <summary>
+                Delete all entities
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+        </member>
+        <member name="M:Incoding.Core.Data.IRepository.DeleteAllAsync``1">
+            <summary>
+                Delete all entities
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+        </member>
+        <member name="M:Incoding.Core.Data.IRepository.GetById``1(System.Object)">
+            <summary>
+                Getting entity instance from persist
+            </summary>
+            <typeparam name="TEntity">Strong type entity</typeparam>
+            <param name="id">Primary key</param>
+            <returns> Instance entity </returns>
+        </member>
+        <member name="M:Incoding.Core.Data.IRepository.GetByIdAsync``1(System.Object)">
+            <summary>
+                Getting entity instance from persist
+            </summary>
+            <typeparam name="TEntity">Strong type entity</typeparam>
+            <param name="id">Primary key</param>
+            <returns> Instance entity </returns>
+        </member>
+        <member name="M:Incoding.Core.Data.IRepository.LoadById``1(System.Object)">
+            <summary>
+                Getting entity instance from persist or cache
+            </summary>
+            <typeparam name="TEntity">Strong type entity</typeparam>
+            <param name="id">Primary key</param>
+            <returns> Instance entity </returns>
+        </member>
+        <member name="M:Incoding.Core.Data.IRepository.LoadByIdAsync``1(System.Object)">
+            <summary>
+                Getting entity instance from persist or cache
+            </summary>
+            <typeparam name="TEntity">Strong type entity</typeparam>
+            <param name="id">Primary key</param>
+            <returns> Instance entity </returns>
+        </member>
+        <member name="M:Incoding.Core.Data.IRepository.Query``1(Incoding.Core.Extensions.LinqSpecs.Specification{``0},Incoding.Core.Data.OrderSpecification{``0},Incoding.Core.Data.FetchSpecification{``0},Incoding.Core.Block.Core.PaginatedSpecification,System.Boolean)">
+            <summary>
+                Query entities with specifications
+            </summary>
+            <typeparam name="TEntity">
+                Strong type entity
+            </typeparam>
+            <param name="orderSpecification">
+                Specification how sort entities
+            </param>
+            <param name="whereSpecification">
+                Specification how filter entities
+            </param>
+            <param name="fetchSpecification">
+                Specification why join with entities ( many to many , many to one , one to one )
+            </param>
+            <param name="paginatedSpecification">
+                Specification how much skip and take entities
+            </param>
+            <returns>
+                Queryable collections ( pending request )
+            </returns>
+        </member>
+        <member name="M:Incoding.Core.Data.IRepository.Paginated``1(Incoding.Core.Block.Core.PaginatedSpecification,Incoding.Core.Extensions.LinqSpecs.Specification{``0},Incoding.Core.Data.OrderSpecification{``0},Incoding.Core.Data.FetchSpecification{``0},System.Boolean)">
+            <summary>
+                Query page by page
+            </summary>
+            <typeparam name="TEntity">
+                Strong type entity
+            </typeparam>
+            <param name="paginatedSpecification">
+                Specification how much skip and take entities
+            </param>
+            <param name="orderSpecification">
+                Specification how sort entities
+            </param>
+            <param name="whereSpecification">
+                Specification how filter entities
+            </param>
+            <param name="fetchSpecification">
+                Specification why join with entities ( many to many , many to one , one to one )
+            </param>
+            <returns>
+                <see cref="T:Incoding.Core.Data.IncPaginatedResult`1" />
+            </returns>
+        </member>
+        <member name="M:Incoding.Core.Data.IRepository.Clear">
+            <summary>
+            Completely clear the session. Evict all loaded instances and cancel all pending
+            </summary>
+        </member>
+        <member name="M:Incoding.Core.Data.OrderSpecification`1.SortedBy">
+            <summary>
+            Action to provide sorting Specification for linq or sql provider
+            </summary>
+            <returns>Order Specification expression action</returns>
+        </member>
+        <member name="T:Incoding.Core.Extensions.LinqSpecs.AndSpecification`1">
+            <summary>
+                The and specification.
+            </summary>
+            <typeparam name="T">
+            </typeparam>
+        </member>
+        <member name="M:Incoding.Core.Extensions.LinqSpecs.AndSpecification`1.IsSatisfiedBy">
+            <inheritdoc />
+        </member>
+        <member name="T:Incoding.Core.Extensions.LinqSpecs.ExpressionSerialization.ExpressionUtility">
+            <summary>
+                ExpressionUtility
+            </summary>
+        </member>
+        <member name="M:Incoding.Core.Extensions.LinqSpecs.ExpressionSerialization.ExpressionUtility.Ensure(System.Linq.Expressions.Expression)">
+            <summary>
+                Ensure
+            </summary>
+            <param name="expression"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Incoding.Core.Extensions.LinqSpecs.NegateSpecification`1.IsSatisfiedBy">
+            <inheritdoc />
+        </member>
+        <member name="T:Incoding.Core.Extensions.LinqSpecs.OrSpecification`1">
+            <summary>
+                The or specification.
+            </summary>
+            <typeparam name="T">
+            </typeparam>
+        </member>
+        <member name="M:Incoding.Core.Extensions.LinqSpecs.OrSpecification`1.IsSatisfiedBy">
+            <inheritdoc />
+        </member>
+        <member name="T:Incoding.Core.Extensions.LinqSpecs.Specification`1">
+            <summary>
+            Specification for Linq or Sql Provider filtering
+            </summary>
+            <typeparam name="T">Entity Type</typeparam>
+        </member>
+        <member name="M:Incoding.Core.Extensions.LinqSpecs.Specification`1.IsSatisfiedBy">
+            <summary>
+            Specification Expression to check if satisfied by filter (Execute linq or translate to sql)
+            </summary>
+            <returns>Expression</returns>
+        </member>
+        <member name="M:Incoding.Core.Extensions.ReflectionExtensions.FirstOrDefaultAttribute``1(System.Reflection.MemberInfo)">
+            <summary>
+                Try find first attribute by T (type attribute)
+            </summary>
+            <typeparam name="TAttribute"> Type attribute for found </typeparam>
+            <param name="methodInfo"> The method for search </param>
+            <returns>
+                If method has attribute will be return attribute else <c>null</c>
+            </returns>
+        </member>
+        <member name="T:Incoding.Core.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Incoding.Core.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Incoding.Core.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Incoding.Core.Resources.AdHocFetchSpecification_Equal_diffrent_count_expressions">
+            <summary>
+              Looks up a localized string similar to Actual count expressions {0} but expected {1}.
+            </summary>
+        </member>
+        <member name="P:Incoding.Core.Resources.AdHocFetchSpecification_Equal_diffrent_expressions">
+            <summary>
+              Looks up a localized string similar to Actual expression {0} but expected {1}.
+            </summary>
+        </member>
+        <member name="P:Incoding.Core.Resources.AdHocOrderSpecification_Equal_diffrent_count_expressions">
+            <summary>
+              Looks up a localized string similar to Actual count expressions {0} but expected {1}.
+            </summary>
+        </member>
+        <member name="P:Incoding.Core.Resources.AdHocOrderSpecification_Equal_diffrent_expressions">
+            <summary>
+              Looks up a localized string similar to Actual expression {0} but expected {1}.
+            </summary>
+        </member>
+        <member name="P:Incoding.Core.Resources.AdHocOrderSpecification_Equal_diffrent_type">
+            <summary>
+              Looks up a localized string similar to Actual type {0} but expected {1}.
+            </summary>
+        </member>
+        <member name="P:Incoding.Core.Resources.CompareFactory_Actual_Null_Or_Expected_Null">
+            <summary>
+              Looks up a localized string similar to Actual {0} null but Expected {1} null.
+            </summary>
+        </member>
+        <member name="P:Incoding.Core.Resources.CompareFactory_Has_Many_Configuration">
+            <summary>
+              Looks up a localized string similar to Property {0} should be has configuration one once.
+            </summary>
+        </member>
+        <member name="P:Incoding.Core.Resources.CompareFactory_Not_Found_Property">
+            <summary>
+              Looks up a localized string similar to Not found property {0} in class {1}.
+            </summary>
+        </member>
+        <member name="P:Incoding.Core.Resources.Exception_Handlerbars_Only_Member_Access">
+            <summary>
+              Looks up a localized string similar to You can use only MemberAccess model =&gt; model.Prop.
+            </summary>
+        </member>
+        <member name="P:Incoding.Core.Resources.Exception_Reflection_Not_Found_Member">
+            <summary>
+              Looks up a localized string similar to Not found property or field {0}&quot;.
+            </summary>
+        </member>
+        <member name="P:Incoding.Core.Resources.Session_Factory_Not_Open">
+            <summary>
+              Looks up a localized string similar to &quot;Database access logic cannot be used, if session not opened. Implicitly session usage not allowed now. Please open session&quot;.
+            </summary>
+        </member>
+        <member name="T:Incoding.ContractArgumentValidatorAttribute">
+            <summary>
+                Enables factoring legacy if-then-<c>throw</c> into separate methods for reuse and full control over
+                thrown exception and arguments
+            </summary>
+        </member>
+    </members>
+</doc>

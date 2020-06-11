@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Threading.Tasks;
 using Raven.Client;
 
 namespace Incoding.Data.Raven.Provider
@@ -28,7 +29,17 @@ namespace Incoding.Data.Raven.Provider
             session.SaveChanges();
         }
 
+        protected override async Task InternalFlushAsync()
+        {
+            session.SaveChanges();
+        }
+
         protected override void InternalCommit()
+        {
+            transaction.Complete();
+        }
+
+        protected override async Task InternalCommitAsync()
         {
             transaction.Complete();
         }

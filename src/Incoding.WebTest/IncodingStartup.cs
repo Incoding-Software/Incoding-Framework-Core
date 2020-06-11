@@ -204,7 +204,7 @@ namespace Incoding.WebTest
             var nameSpec = Activator.CreateInstance(nameSpecType);
             //Specification<TEntity> nameSpec = (Specification<TEntity>)(object)new NameSpec<TEntity>();
             var newSpec = nameSpec as Specification<TEntity>;
-            return spec.And(newSpec);
+            return spec == null ? newSpec : spec.And(newSpec);
         }
     }
 }

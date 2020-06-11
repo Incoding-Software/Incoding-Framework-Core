@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Incoding.Core.Block.Caching;
 using Incoding.Core.Block.Caching.Core;
 using Incoding.Core.Block.IoC;
@@ -9,27 +11,8 @@ using Microsoft.Extensions.Configuration;
 
 namespace Incoding.WebTest.Operations
 {
-    public class ClearItemCacheCommand : CommandBase
-    {
-        protected override void Execute()
-        {
-            CachingFactory.Instance.Delete(new GetItemsQuery());
-            CachingFactory.Instance.Delete(new GetItems1Query());
-        }
-    }
-
-    public class GetWithParams : QueryBase<OptGroupVm>
-    {
-        public int SomeId { get; set; }
-        public List<int> Ids { get; set; }
-        protected override OptGroupVm ExecuteResult()
-        {
-            return new OptGroupVm(new List<KeyValueVm> { new KeyValueVm(1555, "Item1")});
-        }
-    }
-
-
-    public class GetItemsQuery : QueryBase<List<GetItemsQuery.Response>>, ICacheKey
+   
+    public class GetItems1Query : QueryBaseAsync<List<GetItems1Query.Response>>, ICacheKey
     {
         
         public class Response
@@ -40,8 +23,10 @@ namespace Incoding.WebTest.Operations
 
         }
 
-        protected override List<Response> ExecuteResult()
+        protected override async Task<List<Response>> ExecuteResult()
         {
+            var ent = await Repository.GetByIdAsync<ItemEntity>(Repository.Query<ItemEntity>().FirstOrDefault()?.Id ?? Guid.NewGuid());
+
             var result = CachingFactory.Instance.Retrieve(this, () =>
             {
                 var names = Repository.Query(whereSpecification: new ItemEntity.Where.ByStringLongerThan(3),
@@ -58,16 +43,16 @@ namespace Incoding.WebTest.Operations
 
         public string GetName()
         {
-            return nameof(GetItemsQuery);
+            return nameof(GetItems1Query);
         }
 
-        public class AsView : QueryBase<List<GetItemsQuery.Response>>
+        public class AsView : QueryBaseAsync<List<GetItems1Query.Response>>
         {
-            protected override List<Response> ExecuteResult()
+            protected override async Task<List<Response>> ExecuteResult()
             {
                 var connection = IoCFactory.Instance.TryResolve<IConfiguration>().GetConnectionString("Main");
 
-                return Dispatcher.Query(new GetItemsQuery(), new MessageExecuteSetting {
+                return await Dispatcher.QueryAsync(new GetItems1Query(), new MessageExecuteSetting {
                     Connection = connection
                     });
             }

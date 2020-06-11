@@ -30,12 +30,15 @@
     .AsHtmlAttributes()
     .ToDiv())
 
-
-@*@Html.Partial("~/Views/Item/AddItem.cshtml")*@
+@Html.Partial("~/Views/Item/ItemList.cshtml")
 
 <hr />
 
-@Html.Partial("~/Views/Item/ItemList.cshtml")
+@Html.Partial("~/Views/Item/AddItemAsync.cshtml")
+
+@Html.Partial("~/Views/Item/ItemListAsync.cshtml")
+
+
 
 @Html.Incoding().RenderDropDownTemplate()
 

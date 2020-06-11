@@ -121,22 +121,22 @@ namespace Incoding.Web.MvcContrib
 
             public IServiceProvider Provider { get; set; }
 
-            public async Task<CommandBase[]> Execute()
+            public async Task<IMessage[]> Execute()
             {
                 var splitByType = IncTypes.Split(UrlDispatcher.separatorByType.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                 bool isCompositeAsArray = splitByType.Count() == 1 && IsComposite.GetValueOrDefault();
                 if(isCompositeAsArray)
-                    return ((IEnumerable<CommandBase>) await new CreateMessageByType2()
+                    return ((IEnumerable<IMessage>) await new CreateMessageByType2()
                     {
                         Type = splitByType[0],
                         Controller = this.Controller,
                         IsGroup = true
                     }.Execute()).ToArray();
 
-                List<CommandBase> cbs = new List<CommandBase>();
+                List<IMessage> cbs = new List<IMessage>();
                 foreach (var r in splitByType)
                 {
-                    CommandBase cb = (CommandBase)await new CreateMessageByType2() { Type = r, Controller = this.Controller }.Execute();
+                    IMessage cb = (IMessage)await new CreateMessageByType2() { Type = r, Controller = this.Controller }.Execute();
                     cbs.Add(cb);
                 }
                 return cbs.ToArray();

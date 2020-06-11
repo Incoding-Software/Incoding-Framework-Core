@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Incoding.Data</name>
+    </assembly>
+    <members>
+        <member name="M:Incoding.Data.EntityByIdSpec`1.IsSatisfiedBy">
+            <inheritdoc />
+        </member>
+        <member name="M:Incoding.Data.EntityContainIdSpec`1.IsSatisfiedBy">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

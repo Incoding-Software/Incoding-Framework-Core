@@ -10,7 +10,10 @@ namespace Incoding.Core.Data
     public abstract class OrderSpecification<TEntity>
     {
         #region Api Methods
-
+        /// <summary>
+        /// Action to provide sorting Specification for linq or sql provider
+        /// </summary>
+        /// <returns>Order Specification expression action</returns>
         public abstract Action<AdHocOrderSpecification<TEntity>> SortedBy();
 
         #endregion

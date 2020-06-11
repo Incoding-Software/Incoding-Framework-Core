@@ -44,6 +44,7 @@ namespace Incoding.Data
 
         #endregion
 
+        /// <inheritdoc />
         public override Expression<Func<TEntity, bool>> IsSatisfiedBy()
         {
             return r => r.Id == this.id;

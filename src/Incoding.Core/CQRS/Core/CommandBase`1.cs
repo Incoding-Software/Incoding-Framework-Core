@@ -4,6 +4,10 @@ using Newtonsoft.Json;
 
 namespace Incoding.Core.CQRS.Core
 {
+    /// <summary>
+    /// Command Typed class
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public abstract class CommandBase<T> : CommandBase
     {
         [IgnoreCompare("Design fixed")]
@@ -14,8 +18,13 @@ namespace Incoding.Core.CQRS.Core
         protected sealed override void Execute()
         {
             Result = ExecuteResult();
+            base.Result = Result;
         }
 
+        /// <summary>
+        /// Execute Command
+        /// </summary>
+        /// <returns>Result</returns>
         protected abstract T ExecuteResult();
     }
 }

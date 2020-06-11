@@ -7,11 +7,19 @@ namespace Incoding.Core.Extensions.LinqSpecs
 
     #endregion
 
+    /// <summary>
+    /// Specification for Linq or Sql Provider filtering
+    /// </summary>
+    /// <typeparam name="T">Entity Type</typeparam>
     [Serializable]
     public abstract class Specification<T>
     {
         #region Api Methods
 
+        /// <summary>
+        /// Specification Expression to check if satisfied by filter (Execute linq or translate to sql)
+        /// </summary>
+        /// <returns>Expression</returns>
         public abstract Expression<Func<T, bool>> IsSatisfiedBy();
 
         #endregion

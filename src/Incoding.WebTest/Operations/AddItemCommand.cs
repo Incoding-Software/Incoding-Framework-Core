@@ -46,6 +46,7 @@ namespace Incoding.WebTest.Operations
             {
                 Name = OriginalValue
             });
+            Result = 5;
         }
 
         public class AsView : QueryBase<AddItemCommand>

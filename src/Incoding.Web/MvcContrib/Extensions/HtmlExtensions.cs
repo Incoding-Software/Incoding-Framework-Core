@@ -1,5 +1,6 @@
 using System;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Incoding.Core.Block.IoC;
 using Incoding.Core.CQRS.Core;
 using Incoding.Core.Extensions;
@@ -31,6 +32,10 @@ namespace Incoding.Web.MvcContrib
         public static IHtmlContent AsViewFromQuery<TResult>(this HtmlDispatcher dispatcher, QueryBase<TResult> query, [AspMvcPartialView] string view, object model = null) where TResult : class
         {
             return dispatcher.AsView(dispatcher.Query(query), view, model);
+        }
+        public static async Task<IHtmlContent> AsViewFromQueryAsync<TResult>(this HtmlDispatcher dispatcher, QueryBaseAsync<TResult> query, [AspMvcPartialView] string view, object model = null) where TResult : class
+        {
+            return dispatcher.AsView(await dispatcher.QueryAsync(query), view, model);
         }
         
         public static IncodingHtmlHelperFor<TModel, TProperty> For<TModel, TProperty>(this IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> property) where TModel : new()

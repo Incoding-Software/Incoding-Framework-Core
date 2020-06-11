@@ -25,6 +25,7 @@ namespace Incoding.Core.Extensions.LinqSpecs
 
         #endregion
 
+        /// <inheritdoc />
         public override Expression<Func<T, bool>> IsSatisfiedBy()
         {
             var isSatisfiedBy = this.spec.IsSatisfiedBy();

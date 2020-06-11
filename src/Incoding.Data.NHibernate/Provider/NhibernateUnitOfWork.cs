@@ -1,4 +1,5 @@
 using System.Data;
+using System.Threading.Tasks;
 using NHibernate;
 
 namespace Incoding.Data.NHibernate
@@ -24,7 +25,7 @@ namespace Incoding.Data.NHibernate
             bool isReadonly = !isFlush;
             session.DefaultReadOnly = isReadonly;
             if (isReadonly)
-                session.FlushMode = FlushMode.Never;
+                session.FlushMode = FlushMode.Manual;
             repository = new NhibernateRepository(session);
         }
 
@@ -34,10 +35,18 @@ namespace Incoding.Data.NHibernate
         {
             session.Flush();
         }
+        protected override async Task InternalFlushAsync()
+        {
+            await session.FlushAsync();
+        }
 
         protected override void InternalCommit()
         {
             transaction.Commit();
+        }
+        protected override async Task InternalCommitAsync()
+        {
+            await transaction.CommitAsync();
         }
 
         protected override void InternalSubmit()

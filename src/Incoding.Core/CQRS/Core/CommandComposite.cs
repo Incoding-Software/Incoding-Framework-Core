@@ -9,6 +9,9 @@ namespace Incoding.Core.CQRS.Core
 
     #endregion
 
+    /// <summary>
+    /// Composing Messages class
+    /// </summary>
     public class CommandComposite : ISettingCommandComposite
     {
         public CommandComposite() { }
@@ -18,7 +21,7 @@ namespace Incoding.Core.CQRS.Core
             Quote(message, executeSetting);
         }
 
-        public CommandComposite(CommandBase[] commands)
+        public CommandComposite(IMessage[] commands)
         {
             foreach (var commandBase in commands)
                 Quote(commandBase);
