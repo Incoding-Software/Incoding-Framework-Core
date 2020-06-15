@@ -31,6 +31,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
 
@@ -97,8 +98,6 @@ namespace Incoding.WebTest
             };
             //services.ConfigureIncodingNhDataServices(typeof(ItemEntity), path, builderConfigure);
 
-            services.AddSingleton<IUnitOfWorkFactory, NhibernateUnitOfWorkFactory>();
-
             Func<Configuration> config = () =>
             {
                 FluentConfiguration fluently = Fluently.Configure();
@@ -111,16 +110,41 @@ namespace Incoding.WebTest
                 return fluently.BuildConfiguration();
             };
 
-            NhibernateSessionFactoryForMultipleConnections.GetConnection = connectionString =>
-            {
-                var sqlConnection = new System.Data.SqlClient.SqlConnection(connectionString);
-                sqlConnection.Open();
-                return sqlConnection;
-            };
+            NhibernateSessionFactory sessionFactory = new NhibernateSessionFactory(config, path);
 
-            NhibernateSessionFactoryForMultipleConnections sessionFactory = new NhibernateSessionFactoryForMultipleConnections(config, path);
+            services.AddSingleton<IUnitOfWorkFactory>(provider => new NhibernateUnitOfWorkFactory(sessionFactory));
 
             services.AddSingleton<INhibernateSessionFactory>(sessionFactory);
+
+            //second config
+
+            //Func<FluentConfiguration, FluentConfiguration> builderConfigure2 = configuration =>
+            //{
+            //    configuration = configuration.Database(MsSqlConfiguration.MsSql2012
+            //            .ConnectionString(Configuration.GetConnectionString("Main1"))
+            //            .ShowSql())
+            //        .ExposeConfiguration(cfg => new SchemaUpdate(cfg).Execute(false, true));
+            //    return configuration;
+            //};
+            //services.ConfigureIncodingNhDataServices(typeof(ItemEntity), path, builderConfigure);
+
+            //services.AddSingleton<IUnitOfWorkFactory, NhibernateUnitOfWorkFactory>();
+
+            //Func<Configuration> config2 = () =>
+            //{
+            //    FluentConfiguration fluently = Fluently.Configure();
+            //    fluently = builderConfigure2(fluently);
+            //    fluently = fluently
+            //        .Mappings(configuration => configuration.FluentMappings
+            //            .Add(typeof(DelayToSchedulerNhMap))
+            //            .AddFromAssembly(typeof(ItemEntity).Assembly));
+
+            //    return fluently.BuildConfiguration();
+            //};
+
+            //NhibernateSessionFactory sessionFactory2 = new NhibernateSessionFactory(config2, null);
+
+            //services.AddScoped<INhibernateSessionFactory, INhibernateSessionFactory>("Main1");
 
             NhibernateRepository.SetInterception(() => new WhereSpecInterception());
 

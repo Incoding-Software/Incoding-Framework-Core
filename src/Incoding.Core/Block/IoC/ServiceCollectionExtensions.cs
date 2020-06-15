@@ -8,14 +8,20 @@ namespace Incoding.Core.Block.IoC
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddScoped<TService, TImplementation>(this IServiceCollection services, string name)
+        public static IServiceCollection AddNamedScoped<TService, TImplementation>(this IServiceCollection services, string name)
             where TService : class
             where TImplementation : class, TService
         {
             return services.Add(typeof(TService), typeof(TImplementation), ServiceLifetime.Scoped, name);
         }
-
-        private static IServiceCollection Add(this IServiceCollection services, Type serviceType, Type implementationType, ServiceLifetime lifetime, string name)
+        public static IServiceCollection AddNamedSingleton<TService, TImplementation>(this IServiceCollection services, TImplementation implementation, string name)
+            where TService : class
+            where TImplementation : class, TService
+        {
+            return services.Add(typeof(TService), typeof(TImplementation), ServiceLifetime.Singleton, name);
+        }
+        
+        private static IServiceCollection Add<TImplementation>(this IServiceCollection services, Type serviceType, TImplementation implementation, ServiceLifetime lifetime, string name)
         {
             var namedServiceProvider = services.GetOrCreateNamedServiceProvider();
 

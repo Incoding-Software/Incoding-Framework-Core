@@ -14,8 +14,9 @@
     <PackageReleaseNotes>Incoding Framework library migrated to .NET Standard and .NET Core</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Version>1.0.8</Version>
-    <FileVersion>1.0.8.0</FileVersion>
+    <Version>1.1.0</Version>
+    <FileVersion>1.1.0.0</FileVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -25,6 +26,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>D:\Work\Projects\Projects\Incoding-Framework-Core\src\Incoding.Data.NHibernate\Incoding.Data.NHibernate.xml</DocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Provider\NhibernateSessionFactoryForMultipleConnections.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentNHibernate" Version="2.1.2" />

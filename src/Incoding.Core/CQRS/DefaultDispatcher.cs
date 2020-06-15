@@ -43,7 +43,9 @@ namespace Incoding.Core.CQRS
                     .DoEach(r =>
                             {
                                 if (r.IsValueCreated)
+                                {
                                     r.Value.Dispose();
+                                }
                             });
                 Clear();
             }

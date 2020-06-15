@@ -28,6 +28,8 @@ namespace Incoding.WebTest.Operations
 
         protected override async Task ExecuteAsync()
         {
+            await Task.Delay(10000);
+
             await Repository.SaveAsync(new ItemEntity()
             {
                 Name = OriginalValue1

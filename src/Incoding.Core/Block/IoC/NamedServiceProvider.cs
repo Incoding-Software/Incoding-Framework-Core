@@ -6,10 +6,10 @@ namespace Incoding.Core.Block.IoC
 {
     public class NamedServiceProvider
     {
-        private readonly Dictionary<Type, Dictionary<object, Type>> serviceNameMap =
-            new Dictionary<Type, Dictionary<object, Type>>();
+        private readonly Dictionary<Type, Dictionary<string, object>> serviceNameMap =
+            new Dictionary<Type, Dictionary<string, object>>();
 
-        public void RegisterType(Type service, Type implementation, object name)
+        public void RegisterType<TImplementation>(Type service, object implementation, string name)
         {
             if (this.serviceNameMap.ContainsKey(service))
             {
@@ -26,14 +26,14 @@ namespace Incoding.Core.Block.IoC
             }
             else
             {
-                this.serviceNameMap.Add(service, new Dictionary<object, Type>
+                this.serviceNameMap.Add(service, new Dictionary<string, object>
                 {
                     [name] = implementation
                 });
             }
         }
 
-        public TService Resolve<TService>(IServiceProvider serviceProvider, Type serviceType, object name) where TService : class
+        public TService Resolve<TService>(IServiceProvider serviceProvider, Type serviceType, string name) where TService : class
         {
             var service = serviceType;
             //if (service.GetTypeInfo().IsGenericType)
@@ -47,7 +47,7 @@ namespace Incoding.Core.Block.IoC
             {
                 return null;
             }
-            return serviceProvider.GetService(this.serviceNameMap[service][name]) as TService;
+            return serviceProvider.GetService<TService>(this.serviceNameMap[service][name]) as TService;
         }
     }
 }

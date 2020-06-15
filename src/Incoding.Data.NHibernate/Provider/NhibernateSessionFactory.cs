@@ -26,8 +26,8 @@ namespace Incoding.Data.NHibernate
         public ISession Open(string connectionString)
         {
             var session = sessionFactory.Value.OpenSession();
-            if (!string.IsNullOrWhiteSpace(connectionString))
-                session.Connection.ConnectionString = connectionString;
+            //if (!string.IsNullOrWhiteSpace(connectionString))
+            //    session.Connection.ConnectionString = connectionString;
 
             return session;
         }

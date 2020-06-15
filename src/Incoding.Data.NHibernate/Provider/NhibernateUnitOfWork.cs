@@ -51,6 +51,8 @@ namespace Incoding.Data.NHibernate
 
         protected override void InternalSubmit()
         {
+            //if(session.Connection != null && session.Connection.State != ConnectionState.Closed)
+            //    session.Connection.Close();
             transaction.Dispose();
         }
     }

@@ -80,7 +80,8 @@ namespace Incoding.Core.Block.IoC.Provider
 
         public TInstance TryGetByNamed<TInstance>(object named) where TInstance : class
         {
-            return this.container.GetService<TInstance>(named);
+            throw new NotImplementedException("Not implemented resolve by name yet");
+            //return this.container.GetService<TInstance>(named);
         }
     }
 }

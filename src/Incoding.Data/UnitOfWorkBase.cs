@@ -65,7 +65,7 @@ namespace Incoding.Data
         {
             await InternalCommitAsync();
         }
-
+        
         public void Flush()
         {
             if (!disposed)

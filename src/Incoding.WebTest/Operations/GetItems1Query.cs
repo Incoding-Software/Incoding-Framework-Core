@@ -27,8 +27,8 @@ namespace Incoding.WebTest.Operations
         {
             var ent = await Repository.GetByIdAsync<ItemEntity>(Repository.Query<ItemEntity>().FirstOrDefault()?.Id ?? Guid.NewGuid());
 
-            var result = CachingFactory.Instance.Retrieve(this, () =>
-            {
+            await Task.Delay(5000);
+            
                 var names = Repository.Query(whereSpecification: new ItemEntity.Where.ByStringLongerThan(3),
                     orderSpecification: new ItemEntity.Order.ByName()).Select(r => new Response
                 {
@@ -36,9 +36,6 @@ namespace Incoding.WebTest.Operations
                     StringPresentation = "The value is: " + r.Name
                 }).ToList();
                 return names;
-            });
-            
-            return result;
         }
 
         public string GetName()
@@ -50,7 +47,7 @@ namespace Incoding.WebTest.Operations
         {
             protected override async Task<List<Response>> ExecuteResult()
             {
-                var connection = IoCFactory.Instance.TryResolve<IConfiguration>().GetConnectionString("Main");
+                var connection = IoCFactory.Instance.TryResolve<IConfiguration>().GetConnectionString("Main1");
 
                 return await Dispatcher.QueryAsync(new GetItems1Query(), new MessageExecuteSetting {
                     Connection = connection

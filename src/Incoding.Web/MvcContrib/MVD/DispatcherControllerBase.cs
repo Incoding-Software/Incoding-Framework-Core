@@ -49,7 +49,7 @@ namespace Incoding.Web.MvcContrib
                 return IncodingResult.Error(ModelState);
 
             var composite = new CommandComposite((IMessage)query);
-            return TryPush(async commandComposite => await dispatcher.QueryAsync(new MVDExecuteAsync() { Instance = composite }), composite, setting => setting.SuccessResult = () => IncodingResult.Success(composite.Parts[0].Result), isAjax: true);
+            return await TryPushAsync(async commandComposite => await dispatcher.QueryAsync(new MVDExecuteAsync() { Instance = composite }), composite, setting => setting.SuccessResult = () => IncodingResult.Success(composite.Parts[0].Result), isAjax: true);
         }
 
         public virtual async Task<ActionResult> Render()

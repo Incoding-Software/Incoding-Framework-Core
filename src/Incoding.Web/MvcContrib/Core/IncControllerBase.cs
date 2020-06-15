@@ -80,10 +80,6 @@ namespace Incoding.Web.MvcContrib
             return TryPush((Action<CommandComposite>) (composite => composite.Quote(input)), action);
         }
 
-        protected async Task<ActionResult> TryPushAsync(Action<CommandComposite> push, CommandComposite commandComposite, Action<IncTryPushSetting> action = null)
-        {
-            return TryPush(push, commandComposite, action);
-        }
 
         protected ActionResult TryPush(Action<CommandComposite> configuration, Action<IncTryPushSetting> action = null)
         {
@@ -95,6 +91,42 @@ namespace Incoding.Web.MvcContrib
         protected ActionResult TryPush(CommandComposite composite, Action<IncTryPushSetting> action = null)
         {
             return TryPush(commandComposite => dispatcher.Push(commandComposite), composite, action);
+        }
+
+        protected async Task<ActionResult> TryPushAsync(Func<CommandComposite, Task> push, CommandComposite composite, Action<IncTryPushSetting> action = null, bool? isAjax = null)
+        {
+            var setting = new IncTryPushSetting();
+            action.Do(r => r(setting));
+
+            Func<ActionResult> defaultSuccess = () => View(composite.Parts[0]);
+            var isActualAjax = isAjax.GetValueOrDefault(HttpContext.Request.IsAjaxRequest());
+            if (isActualAjax)
+                defaultSuccess = () => IncodingResult.Success();
+            var success = setting.SuccessResult ?? defaultSuccess;
+
+            Func<IncWebException, ActionResult> defaultError = (ex) => View(composite.Parts[0]);
+            if (isActualAjax)
+                defaultError = (ex) => IncodingResult.Error((ModelStateDictionary)ModelState);
+            var error = setting.ErrorResult ?? defaultError;
+
+            if (!ModelState.IsValid)
+                return error(IncWebException.For(string.Empty, string.Empty));
+
+            try
+            {
+                await push(composite);
+                return success();
+            }
+            catch (IncWebException exception)
+            {
+                foreach (var pairError in exception.Errors)
+                {
+                    foreach (var errorMessage in pairError.Value)
+                        ModelState.AddModelError(pairError.Key, errorMessage);
+                }
+
+                return error(exception);
+            }
         }
 
         protected ActionResult TryPush(Action<CommandComposite> push, CommandComposite composite, Action<IncTryPushSetting> action = null, bool? isAjax = null)

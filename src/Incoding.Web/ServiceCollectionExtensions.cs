@@ -11,6 +11,7 @@ namespace Incoding.Web
             services.AddMemoryCache();
             services.AddTransient<ITemplateFactory, TemplateHandlebarsFactory>();
             IncodingHtmlHelper.BootstrapVersion = BootstrapOfVersion.v3;
+
         }
     }
 }

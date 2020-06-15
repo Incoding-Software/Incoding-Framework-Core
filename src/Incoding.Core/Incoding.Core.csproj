@@ -15,9 +15,9 @@
     <NeutralLanguage></NeutralLanguage>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>1.0.8.0</AssemblyVersion>
-    <FileVersion>1.0.8.0</FileVersion>
-    <Version>1.0.8</Version>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -39,6 +39,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Block\IoC\NamedServiceProvider.cs" />
+    <Compile Remove="Block\IoC\ServiceCollectionExtensions.cs" />
+    <Compile Remove="Block\IoC\ServiceProviderExtensions.cs" />
     <Compile Remove="Block\Logging\Loggers\EventLogger.cs" />
     <Compile Remove="Extensions\LinqSpecs\ExpressionSerialization\TypeResolver.cs" />
   </ItemGroup>

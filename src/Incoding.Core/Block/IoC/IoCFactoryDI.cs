@@ -31,8 +31,9 @@ namespace Incoding.Core.Block.IoC
         }
         public TInstance TryResolveByNamed<TInstance>(string name) where TInstance : class
         {
-            var resolve = this.serviceProvider.GetService<TInstance>(name);
-            return resolve;
+            throw new NotImplementedException("No Named instance resolving yet");
+            //var resolve = this.serviceProvider.GetService<TInstance>(name);
+            //return resolve;
         }
         
         public TInstance TryResolve<TInstance>([NotNull] Type typeInstance) where TInstance : class
