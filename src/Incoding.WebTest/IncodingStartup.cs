@@ -11,6 +11,8 @@ using Incoding.Core.Block.Caching.Providers;
 using Incoding.Core.Block.IoC;
 using Incoding.Core.Block.IoC.Provider;
 using Incoding.Core.Block.Scheduler;
+using Incoding.Core.Block.Scheduler.Command;
+using Incoding.Core.Block.Scheduler.Query;
 using Incoding.Core.CQRS;
 using Incoding.Core.Data;
 using Incoding.Core.Extensions;
@@ -188,6 +190,19 @@ namespace Incoding.WebTest
 
             IoCFactory.Instance.Initialize(init => init.WithProvider(new MSDependencyInjectionIoCProvider(app.ApplicationServices)));
             CachingFactory.Instance.Initialize(init => init.WithProvider(new NetCachedProvider(() => app.ApplicationServices.GetRequiredService<IMemoryCache>())));
+
+            //new DefaultDispatcher().Push(new ScheduleCommand()
+            //{
+            //    Command = new AddItemCommand
+            //    {
+            //        OriginalValue = "456"
+            //    },
+            //    Recurrency = new GetRecurrencyDateQuery
+            //    {
+            //        Type = GetRecurrencyDateQuery.RepeatType.Once,
+            //        StartDate = DateTime.UtcNow
+            //    }
+            //});
 
             BackgroundTaskFactory.Instance.AddScheduler();
 

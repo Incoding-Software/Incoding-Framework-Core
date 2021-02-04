@@ -17,7 +17,12 @@ namespace Incoding.Core.Block.Scheduler
         {
             options(_options);
             Command = (item) => new RunSchedulerCommand() { Item = item };
-            Query = () => new GetSchedulersQuery();
+            Query = () => new GetSchedulersQuery()
+            {
+                Async = _options.Async,
+                Date = (_options.Async ? GetSchedulersQuery.LastDateAsync : GetSchedulersQuery.LastDate).GetValueOrDefault(DateTime.UtcNow),
+                FetchSize = 5
+            };
             AfterExecution = () =>
             {
                 var date = IoCFactory.Instance.TryResolve<IDispatcher>().Query(new GetSchedulersQuery.GetLastDateQuery()
@@ -42,7 +47,7 @@ namespace Incoding.Core.Block.Scheduler
         {
             factory.AddSequentalExecutor("Scheduler",
                 new SchedulerTask(options => options.Async = false));
-            factory.AddSequentalExecutor("Scheduler",
+            factory.AddSequentalExecutor("SchedulerAsync",
                 new SchedulerTask(options => options.Async = true));
         }
     }

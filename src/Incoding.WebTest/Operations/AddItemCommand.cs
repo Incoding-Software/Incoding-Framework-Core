@@ -39,7 +39,7 @@ namespace Incoding.WebTest.Operations
 
         protected override void Execute()
         {
-            var dateTime = Dispatcher.Push(new TestGenericCommand());
+            var dateTime = Dispatcher.Push<TestGenericCommand>(new TestGenericCommand());
             Debug.WriteLine(dateTime);
             Debug.WriteLine(F1);
             Repository.Save(new ItemEntity()

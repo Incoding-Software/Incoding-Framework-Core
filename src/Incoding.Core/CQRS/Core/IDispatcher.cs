@@ -24,4 +24,5 @@ namespace Incoding.Core.CQRS.Core
         TResult Query<TResult>(QueryBase<TResult> message, MessageExecuteSetting executeSetting = null);
         Task<TResult> QueryAsync<TResult>(QueryBaseAsync<TResult> message, MessageExecuteSetting executeSetting = null);
     }
+
 }

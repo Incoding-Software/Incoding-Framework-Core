@@ -634,7 +634,7 @@ ExecutableStoreFetch.prototype.internalExecute = function() {
     if (isHash) {
         params = $.url(window.location.href).fparam();
     }
-    else if (this.jsonData.type = 'queryString') {
+    else if (this.jsonData.type == 'queryString') {
         params = $.url(window.location.href).param();
     }
 

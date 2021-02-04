@@ -44,6 +44,7 @@ namespace Incoding.UnitTests.MSpec
 
             dispatcher = Pleasure.MockStrict<IDispatcher>();
             dispatcher.Setup(r => r.Push(Pleasure.MockIt.Is<CommandComposite>(composite => composite.Parts.Any(message => this.predcatesStubs.Any(func => func(message))).ShouldBeTrue())));
+            dispatcher.Setup(r => r.Push(Pleasure.MockIt.Is<CommandBase>(command => this.predcatesStubs.Any(func => func(command)).ShouldBeTrue())));
             IoCFactory.Instance.StubTryResolve(dispatcher.Object);
         }
 
@@ -138,7 +139,44 @@ namespace Incoding.UnitTests.MSpec
                                });
             return this;
         }
+        public MockMessage<TMessage, TResult> StubPushT<TCommand, T>(TCommand command, T result, Action<ICompareFactoryDsl<TCommand, TCommand>> dsl = null, MessageExecuteSetting setting = null) where TCommand : CommandBase<T>
+        {
+            command.Setting = command.Setting ?? (setting ?? new MessageExecuteSetting());
+            var type = typeof(TCommand);
+            Action<TCommand> verify = cmd =>
+            {
+                bool isAny = false;
+                try
+                {
+                    cmd.ShouldEqualWeak(command as TCommand, factoryDsl =>
+                    {
+                        factoryDsl.ForwardToAction(r => r.Setting, a =>
+                        {
+                            if (a.Setting != null)
+                                a.Setting.ShouldEqualWeak(command.Setting);
+                        });
+                        if (dsl != null)
+                            dsl(factoryDsl);
+                    });
+                    isAny = true;
+                    command.SetValue("Result", result);
+                    if (this.stubsOfSuccess.ContainsKey(type))
+                        this.stubsOfSuccess[type]++;
+                    else
+                        this.stubsOfSuccess.Add(type, 1);
+                }
+                catch (InternalSpecificationException ex)
+                {
+                    Console.WriteLine(ex);
+                }
 
+                isAny.ShouldBeTrue();
+            };
+            dispatcher.Setup(x => x.Push<T>(Pleasure.MockIt.Is<TCommand>(verify))).Returns(result);
+
+            return this;
+        }
+        
         public MockMessage<TMessage, TResult> StubPush<TCommand>(Action<IInventFactoryDsl<TCommand>> configure, Action<ICompareFactoryDsl<TCommand, TCommand>> dsl = null) where TCommand : CommandBase
         {
             return StubPush(Pleasure.Generator.Invent(configure), dsl);
@@ -343,4 +381,5 @@ namespace Incoding.UnitTests.MSpec
 
         #endregion
     }
+    
 }

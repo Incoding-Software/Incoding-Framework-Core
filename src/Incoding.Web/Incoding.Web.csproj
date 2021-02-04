@@ -6,9 +6,9 @@
     <Company>Incoding Software</Company>
     <Description>Web library containing abstractions, helpers and MVD/CQRS controller functions of Incoding Framework</Description>
     <Copyright>Incoding Software, 2019</Copyright>
-    <PackageLicenseUrl>https://github.com/Incoding-Software/Incoding-Framework-Core/blob/master/LICENSE.md</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>http://incframework.com</PackageProjectUrl>
-    <PackageIconUrl>http://incframework.com/Content/ico/icon-144x144.png</PackageIconUrl>
+    <PackageIconUrl></PackageIconUrl>
     <RepositoryUrl>https://github.com/Incoding-Software/Incoding-Framework-Core</RepositoryUrl>
     <PackageTags>framework, incoding, web, cqrs, mvd, incoding framework</PackageTags>
     <PackageReleaseNotes>Incoding Framework library migrated to .NET Standard and .NET Core</PackageReleaseNotes>
@@ -17,6 +17,8 @@
     <Version>1.1.0</Version>
     <AssemblyVersion>1.1.0.0</AssemblyVersion>
     <FileVersion>1.1.0.0</FileVersion>
+    <PackageIcon>Incoding.png</PackageIcon>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -31,6 +33,14 @@
     <Compile Remove="MvcContrib\MVD\Handlers\**" />
     <EmbeddedResource Remove="MvcContrib\MVD\Handlers\**" />
     <None Remove="MvcContrib\MVD\Handlers\**" />
+    <None Include="..\..\LICENSE.md">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\Incoding.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

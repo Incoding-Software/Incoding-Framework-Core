@@ -17,27 +17,35 @@ namespace Incoding.Core.Block.Scheduler.Command
             delay.Status = Status;
             delay.Description = Description;
 
-            if (Status == DelayOfStatus.Success && delay.Recurrence != null)
+            if (Status == DelayOfStatus.Success)
             {
-                var recurrency = new GetRecurrencyDateQuery
+                if (delay.Recurrence != null)
                 {
-                    EndDate = delay.Recurrence.EndDate,
-                    RepeatCount = delay.Recurrence.RepeatCount - 1,
-                    RepeatDays = delay.Recurrence.RepeatDays,
-                    RepeatInterval = delay.Recurrence.RepeatInterval,
-                    StartDate = delay.StartsOn,
-                    Type = delay.Recurrence.Type
-                };
-                recurrency.NowDate = delay.StartsOn; // calculate next start depending on previously calculated start (to run every day at exactly same time for example)
-                recurrency.StartDate = Dispatcher.Query(recurrency);
-                if (!recurrency.StartDate.HasValue)
-                    return;
-                Dispatcher.Push(new ScheduleCommand(delay)
-                                {
-                                        UID = delay.UID,
-                                        Priority = delay.Priority,                                                                               
-                                        Recurrency = recurrency,
-                                });
+                    var recurrency = new GetRecurrencyDateQuery
+                    {
+                        EndDate = delay.Recurrence.EndDate,
+                        RepeatCount = delay.Recurrence.RepeatCount - 1,
+                        RepeatDays = delay.Recurrence.RepeatDays,
+                        RepeatInterval = delay.Recurrence.RepeatInterval,
+                        StartDate = delay.StartsOn,
+                        Type = delay.Recurrence.Type
+                    };
+                    recurrency.NowDate =
+                        delay.StartsOn; // calculate next start depending on previously calculated start (to run every day at exactly same time for example)
+                    recurrency.StartDate = Dispatcher.Query(recurrency);
+                    if (recurrency.StartDate.HasValue)
+                    {
+                        Dispatcher.Push(new ScheduleCommand(delay)
+                        {
+                            UID = delay.UID,
+                            Priority = delay.Priority,
+                            Recurrency = recurrency,
+                        });
+                        return;
+                    }
+                }
+                if(DelayToScheduler.RemoveAfterSuccess)
+                    Repository.Delete(delay);
             }
         }
 

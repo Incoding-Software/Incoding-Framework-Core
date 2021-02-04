@@ -71,6 +71,7 @@
     <ProjectReference Include="..\Incoding.Core\Incoding.Core.csproj" />
     <ProjectReference Include="..\Incoding.Data.NHibernate\Incoding.Data.NHibernate.csproj" />
     <ProjectReference Include="..\Incoding.Data\Incoding.Data.csproj" />
+    <ProjectReference Include="..\Incoding.UnitTests.MSpec\Incoding.UnitTests.MSpec.csproj" />
     <ProjectReference Include="..\Incoding.Web\Incoding.Web.csproj" />
   </ItemGroup>
 

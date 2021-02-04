@@ -158,6 +158,8 @@ namespace Incoding.Core.Block.Scheduler.Persistence
 
         public virtual DateTime? CreateDt { get; set; }
 
+        public static bool RemoveAfterSuccess { get; set; }
+
         #endregion
 
         #region Nested classes
