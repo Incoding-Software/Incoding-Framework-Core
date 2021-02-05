@@ -45,10 +45,12 @@ namespace Incoding.Core.Block.Scheduler
     {
         public static void AddScheduler(this BackgroundTaskFactory factory)
         {
+            var syncTask = new SchedulerTask(options => options.Async = false);
             factory.AddSequentalExecutor("Scheduler",
-                new SchedulerTask(options => options.Async = false));
-            factory.AddSequentalExecutor("SchedulerAsync",
-                new SchedulerTask(options => options.Async = true));
+                syncTask, options => options.AfterExecution = syncTask.AfterExecution);
+            var asyncTask = new SchedulerTask(options => options.Async = true);
+            factory.AddSequentalExecutor("SchedulerAsync", 
+                asyncTask, options => options.AfterExecution = asyncTask.AfterExecution);
         }
     }
 }

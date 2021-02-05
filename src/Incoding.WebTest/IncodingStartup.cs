@@ -191,18 +191,18 @@ namespace Incoding.WebTest
             IoCFactory.Instance.Initialize(init => init.WithProvider(new MSDependencyInjectionIoCProvider(app.ApplicationServices)));
             CachingFactory.Instance.Initialize(init => init.WithProvider(new NetCachedProvider(() => app.ApplicationServices.GetRequiredService<IMemoryCache>())));
 
-            //new DefaultDispatcher().Push(new ScheduleCommand()
-            //{
-            //    Command = new AddItemCommand
-            //    {
-            //        OriginalValue = "456"
-            //    },
-            //    Recurrency = new GetRecurrencyDateQuery
-            //    {
-            //        Type = GetRecurrencyDateQuery.RepeatType.Once,
-            //        StartDate = DateTime.UtcNow
-            //    }
-            //});
+            new DefaultDispatcher().Push(new ScheduleCommand()
+            {
+                Command = new AddItemCommand
+                {
+                    OriginalValue = "456"
+                },
+                Recurrency = new GetRecurrencyDateQuery
+                {
+                    Type = GetRecurrencyDateQuery.RepeatType.Once,
+                    StartDate = DateTime.UtcNow.AddDays(2)
+                }
+            });
 
             BackgroundTaskFactory.Instance.AddScheduler();
 

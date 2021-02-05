@@ -20,6 +20,7 @@ namespace Incoding.Core.Block.Scheduler.Command
                                        };
             var type = Command.GetType();
             var option = type.FirstOrDefaultAttribute<OptionOfDelayAttribute>() ?? new OptionOfDelayAttribute();
+            var startsOn = Recurrency.StartDate.GetValueOrDefault(DateTime.UtcNow);
             Repository.Save(new DelayToScheduler
                             {
                                     Command = Command.ToJsonString(),
@@ -29,13 +30,18 @@ namespace Incoding.Core.Block.Scheduler.Command
                                     Priority = Priority,
                                     Status = DelayOfStatus.New,
                                     Recurrence = Recurrency,
-                                    StartsOn = Recurrency.StartDate.GetValueOrDefault(DateTime.UtcNow),
+                                    StartsOn = startsOn,
                                     Option = new DelayToScheduler.OptionOfDelay()
                                              {
                                                      Async = option.Async,
                                                      TimeOut = option.TimeOutOfMillisecond
                                              }
                             });
+            if (option.Async)
+                GetSchedulersQuery.LastDateAsync = startsOn < GetSchedulersQuery.LastDateAsync ? startsOn : GetSchedulersQuery.LastDateAsync;
+            else
+                GetSchedulersQuery.LastDate = startsOn < GetSchedulersQuery.LastDate ? startsOn : GetSchedulersQuery.LastDate;
+
         }
 
         #region Constructors

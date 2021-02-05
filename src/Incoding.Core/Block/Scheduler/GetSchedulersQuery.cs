@@ -14,8 +14,8 @@ namespace Incoding.Core.Block.Scheduler
     {
         private static bool FirstRun = true;
 
-        internal static DateTime? LastDateAsync { get; set; }
-        internal static DateTime? LastDate { get; set; }
+        public static DateTime? LastDateAsync { get; set; }
+        public static DateTime? LastDate { get; set; }
         
         public int FetchSize { get; set; }
 
@@ -70,10 +70,10 @@ namespace Incoding.Core.Block.Scheduler
             
             protected override DateTime? ExecuteResult()
             {
-                return Repository.Query(whereSpecification: new DelayToScheduler.Where.ByStatus(new[] { DelayOfStatus.New, DelayOfStatus.Error }.ToArray())
-                        .And(new DelayToScheduler.Where.ByAsync(Async))
-                        .And(new DelayToScheduler.Where.AvailableStartsOn(DateTime.UtcNow)))
-                    .Min(s => s.StartsOn);
+                var delayToSchedulers = Repository.Query(whereSpecification: new DelayToScheduler.Where.ByStatus(new[] { DelayOfStatus.New, DelayOfStatus.Error }.ToArray())
+                    .And(new DelayToScheduler.Where.ByAsync(Async))
+                    .And(new DelayToScheduler.Where.AvailableStartsOn(DateTime.UtcNow)));
+                return delayToSchedulers.Any() ? delayToSchedulers.Min(s => s.StartsOn) : (DateTime?) null;
             }
         }
     }
