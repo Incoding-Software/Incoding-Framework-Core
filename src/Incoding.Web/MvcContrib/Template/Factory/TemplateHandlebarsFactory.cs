@@ -57,9 +57,8 @@ namespace Incoding.Web.MvcContrib
 
             return cache.GetOrAdd(fullPathToView + GetVersion(), (i) =>
                                                                  {
-                                                                     var viewRenderService = htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<IViewRenderService>();
-                                                                     var tmpl = viewRenderService
-                                                                        .RenderToStringAsync(htmlHelper.ViewContext, pathToView, modelForView).Result;
+                                                                     //var viewRenderService = htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<IViewRenderService>();
+                                                                     var tmpl = htmlHelper.PartialAsync(pathToView, modelForView).Result.HtmlContentToString();
                                                                      return Handlebars.Compile(tmpl);
                                                                  })(new { data = correctData });
         }

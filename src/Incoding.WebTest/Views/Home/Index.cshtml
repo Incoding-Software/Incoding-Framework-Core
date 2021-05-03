@@ -25,7 +25,8 @@
 @Html.Incoding().Script(Url.Content("~/js/incoding.meta.conditional.js"))
 
 @(Html.When(JqueryBind.InitIncoding)
-    .Ajax(options => options.Url = Url.Dispatcher().Query<AddItemCommand.AsView>().AsView("~/Views/Item/AddItem.cshtml"))
+    //.Ajax(options => options.Url = Url.Dispatcher().Query<AddItemCommand.AsView>().AsView("~/Views/Item/AddItem.cshtml"))
+    .Ajax(options => options.Url = Url.Dispatcher().Query<AddItemCommand.AsView>().AsView("AddItem2"))
     .OnSuccess(dsl => dsl.Self().JQuery.Dom.Html())
     .AsHtmlAttributes()
     .ToDiv())
