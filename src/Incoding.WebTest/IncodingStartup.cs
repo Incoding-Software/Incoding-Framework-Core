@@ -107,8 +107,10 @@ namespace Incoding.WebTest
                 fluently = fluently
                     .Mappings(configuration => configuration.FluentMappings
                         .Add(typeof(DelayToSchedulerNhMap))
-                        .AddFromAssembly(typeof(ItemEntity).Assembly));
-
+                        .AddFromAssembly(typeof(ItemEntity).Assembly))
+                    .ExposeConfiguration(cfg => new SchemaUpdate(cfg).Execute(true, true))
+                    ;
+                        
                 return fluently.BuildConfiguration();
             };
 
@@ -199,8 +201,7 @@ namespace Incoding.WebTest
                 },
                 Recurrency = new GetRecurrencyDateQuery
                 {
-                    Type = GetRecurrencyDateQuery.RepeatType.Once,
-                    StartDate = DateTime.UtcNow.AddDays(2)
+                    StartDate = DateTime.UtcNow.AddMinutes(5)
                 }
             });
 

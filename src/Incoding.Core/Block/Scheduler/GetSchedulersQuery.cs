@@ -38,7 +38,7 @@ namespace Incoding.Core.Block.Scheduler
             if (FirstRun)
                 delayOfStatuses.Add(DelayOfStatus.InProgress);
             
-            var nowInFeature = Date.AddMinutes(2);
+            var nowInFeature = Date.AddSeconds(2);
             var isHaveForDo = Async ? (!LastDateAsync.HasValue || LastDateAsync <= nowInFeature) : (!LastDate.HasValue || LastDate <= nowInFeature);
             if (!isHaveForDo)
                 return new List<Response>();

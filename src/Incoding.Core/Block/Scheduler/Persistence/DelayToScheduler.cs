@@ -86,7 +86,7 @@ namespace Incoding.Core.Block.Scheduler.Persistence
 
                 public override Expression<Func<DelayToScheduler, bool>> IsSatisfiedBy()
                 {
-                    var faultAbove = this.date.AddMinutes(2);
+                    var faultAbove = this.date.AddSeconds(2);
                     return scheduler => scheduler.StartsOn <= faultAbove;
                 }
             }
