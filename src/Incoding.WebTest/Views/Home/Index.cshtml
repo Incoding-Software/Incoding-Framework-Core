@@ -31,13 +31,13 @@
     .AsHtmlAttributes()
     .ToDiv())
 
-@Html.Partial("~/Views/Item/ItemList.cshtml")
+@await Html.PartialAsync("~/Views/Item/ItemList.cshtml")
 
 <hr />
 
-@Html.Partial("~/Views/Item/AddItemAsync.cshtml")
+@await Html.PartialAsync("~/Views/Item/AddItemAsync.cshtml")
 
-@Html.Partial("~/Views/Item/ItemListAsync.cshtml")
+@await Html.PartialAsync("~/Views/Item/ItemListAsync.cshtml")
 
 
 

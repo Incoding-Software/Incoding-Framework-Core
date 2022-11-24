@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{506ED6C6-6671-43EC-98A9-5FBF14201B62}"
 EndProject
@@ -46,6 +46,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.Web.Grid.Demo", "Incoding.Web.Grid.Demo\Incoding.Web.Grid.Demo.csproj", "{919E169A-B7FF-4CB7-8638-AC3BC68F7E8A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.Data.NHibernate", "Incoding.Data.NHibernate\Incoding.Data.NHibernate.csproj", "{5D9E0EB3-4339-42DA-B5C2-9D4FF667D7D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Incoding.WebTest30", "Incoding.WebTest30\Incoding.WebTest30.csproj", "{1034B194-0FC0-42E9-9863-759E24ED591E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -153,6 +155,12 @@ Global
 		{5D9E0EB3-4339-42DA-B5C2-9D4FF667D7D9}.Publish|Any CPU.Build.0 = Debug|Any CPU
 		{5D9E0EB3-4339-42DA-B5C2-9D4FF667D7D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D9E0EB3-4339-42DA-B5C2-9D4FF667D7D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1034B194-0FC0-42E9-9863-759E24ED591E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1034B194-0FC0-42E9-9863-759E24ED591E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1034B194-0FC0-42E9-9863-759E24ED591E}.Publish|Any CPU.ActiveCfg = Debug|Any CPU
+		{1034B194-0FC0-42E9-9863-759E24ED591E}.Publish|Any CPU.Build.0 = Debug|Any CPU
+		{1034B194-0FC0-42E9-9863-759E24ED591E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1034B194-0FC0-42E9-9863-759E24ED591E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -176,15 +184,16 @@ Global
 		{27F511B9-B8F0-42D8-8D65-5BF69B0408D7} = {67D8F2AA-0AF2-433B-8BF4-8CFCC8C9AAD0}
 		{919E169A-B7FF-4CB7-8638-AC3BC68F7E8A} = {67D8F2AA-0AF2-433B-8BF4-8CFCC8C9AAD0}
 		{5D9E0EB3-4339-42DA-B5C2-9D4FF667D7D9} = {540D8C0B-630F-48A8-875B-8CFA62F498E2}
+		{1034B194-0FC0-42E9-9863-759E24ED591E} = {81999E6B-994A-4762-A4E3-AB5AC3BAE569}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {834D889F-F4B3-4006-83EC-584703FCCDA2}
-		BuildVersion_BuildVersioningStyle = None.None.None.None
-		BuildVersion_DetectChanges = True
-		BuildVersion_IncrementBeforeBuild = True
-		BuildVersion_BuildAction = ReBuild
-		BuildVersion_UpdateFileVersion = False
 		BuildVersion_UpdateAssemblyVersion = False
+		BuildVersion_UpdateFileVersion = False
+		BuildVersion_BuildAction = ReBuild
+		BuildVersion_IncrementBeforeBuild = True
+		BuildVersion_DetectChanges = True
+		BuildVersion_BuildVersioningStyle = None.None.None.None
+		SolutionGuid = {834D889F-F4B3-4006-83EC-584703FCCDA2}
 	EndGlobalSection
 	GlobalSection(NDepend) = preSolution
 		Project = ".\IncFramework.ndproj"

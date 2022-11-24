@@ -7,7 +7,9 @@ using Incoding.Core.Extensions;
 using Incoding.Web.Extensions;
 using Incoding.Web.MvcContrib;
 using Microsoft.AspNetCore.Http;
+#if netcoreapp2_1
 using Microsoft.AspNetCore.Http.Internal;
+#endif
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.ModelBinding;

@@ -3,8 +3,13 @@ using System.IO;
 using System.Linq.Expressions;
 using System.Text.Encodings.Web;
 using Incoding.Core;
+using Incoding.Core.Block.IoC;
 using Microsoft.AspNetCore.Mvc.Rendering;
+#if netcoreapp3_1
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+#elif netcoreapp2_1
 using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
+#endif
 
 namespace Incoding.Web.MvcContrib
 {
@@ -29,9 +34,13 @@ namespace Incoding.Web.MvcContrib
         {
             var tagBuilder = new TagBuilder("p");
 
-            tagBuilder.InnerHtml.AppendHtml(ExpressionMetadataProvider
-                .FromLambdaExpression(property, htmlHelper.ViewData, htmlHelper.MetadataProvider)
-                .Model.With(r => r.ToString()));
+            tagBuilder.InnerHtml.AppendHtml(
+#if netcoreapp3_1
+                    IoCFactory.Instance.TryResolve<IModelExpressionProvider>().CreateModelExpression(htmlHelper.ViewData, property).Model
+#elif netcoreapp2_1
+                ExpressionMetadataProvider.FromLambdaExpression(property, htmlHelper.ViewData, htmlHelper.MetadataProvider).Model
+#endif
+                .With(r => r.ToString()));
 
             tagBuilder.MergeAttributes(attributes, true);
             tagBuilder.WriteTo(writer, encoder);

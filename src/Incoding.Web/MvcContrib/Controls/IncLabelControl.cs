@@ -2,9 +2,13 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text.Encodings.Web;
+using Incoding.Core.Block.IoC;
 using Incoding.Core.Extensions;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+#if netcoreapp2_1
 using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
+#endif
 
 namespace Incoding.Web.MvcContrib
 {
@@ -40,8 +44,15 @@ namespace Incoding.Web.MvcContrib
             var tagBuilder = new TagBuilder("label");
             tagBuilder.Attributes.Add("for", TagBuilder.CreateSanitizedId(htmlHelper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(property), "_"));
 
-            var metadata = ExpressionMetadataProvider.FromStringExpression(property, htmlHelper.ViewData, htmlHelper.MetadataProvider);
+#if netcoreapp3_1
+            var metadata = IoCFactory.Instance.TryResolve<ModelExpressionProvider>()
+                .CreateModelExpression(htmlHelper.ViewData, property).ModelExplorer;
             string innerText = Name ?? metadata.Metadata.DisplayName ?? property;
+#elif netcoreapp2_1
+                var metadata = ExpressionMetadataProvider.FromStringExpression(property, htmlHelper.ViewData, htmlHelper.MetadataProvider);
+            string innerText = Name ?? metadata.Metadata.DisplayName ?? property;
+#endif
+
             tagBuilder.InnerHtml.Append(innerText);
 
             tagBuilder.MergeAttributes(attributes, true);

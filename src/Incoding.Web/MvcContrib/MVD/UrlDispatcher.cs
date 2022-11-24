@@ -8,10 +8,14 @@ using System.Runtime.Serialization;
 using System.Web;
 using Incoding.Core.Extensions;
 using Incoding.Core;
+using Incoding.Core.Block.IoC;
 using Incoding.Core.Quality;
 using Incoding.Web.Extensions;
 using JetBrains.Annotations;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Routing;
 
 namespace Incoding.Web.MvcContrib
@@ -33,14 +37,16 @@ namespace Incoding.Web.MvcContrib
         #region Fields
 
         readonly IUrlHelper urlHelper;
+        readonly HttpContext httpContext;
 
         #endregion
 
         #region Constructors
 
-        public UrlDispatcher(IUrlHelper urlHelper)
+        public UrlDispatcher(IUrlHelper urlHelper, HttpContext httpContext)
         {
             this.urlHelper = urlHelper;
+            this.httpContext = httpContext;
         }
 
         #endregion
@@ -120,7 +126,7 @@ namespace Incoding.Web.MvcContrib
 
             string AsJson();
 
-            string AsView([AspMvcPartialView, NotNull] string incView);
+            string AsView([AspMvcPartialView, JetBrains.Annotations.NotNull] string incView);
         }
 
         #region Constants
@@ -138,7 +144,7 @@ namespace Incoding.Web.MvcContrib
         public IUrlQuery<TQuery> Query<TQuery>(object routes = null) where TQuery : new()
         {
             VerifySchema<TQuery>(routes);
-            return new UrlQuery<TQuery>(urlHelper, routes);
+            return new UrlQuery<TQuery>(urlHelper, httpContext, routes);
         }
 
         public IUrlQuery<TQuery> Query<TQuery>(TQuery routes) where TQuery : new()
@@ -154,25 +160,34 @@ namespace Incoding.Web.MvcContrib
         public UrlPush Push<TCommand>(object routes = null) where TCommand : new()
         {
             VerifySchema<TCommand>(routes);
-            var res = new UrlPush(urlHelper);
+            var res = new UrlPush(urlHelper, httpContext);
             return res.Push<TCommand>(routes);
         }
 
         public string AsView([AspMvcPartialView] string incView)
         {
+#if netcoreapp2_1
             // ReSharper disable once Mvc.ActionNotResolved
-            // ReSharper disable once Mvc.ControllerNotResolved
-            return urlHelper.Action("Render", "Dispatcher", new
+                // ReSharper disable once Mvc.ControllerNotResolved
+            string url = urlHelper.Action("Render", "Dispatcher", new
                                                             {
                                                                     incView = incView,
                                                             });
+#elif netcoreapp3_1
+            string url = IoCFactory.Instance.TryResolve<LinkGenerator>().GetUriByAction(httpContext, "Render", "Dispatcher", new RouteValueDictionary(
+            new {
+                incView = incView,
+            }));
+#endif
+            
+            return url;
         }
 
         public UrlModel<TModel> Model<TModel>(object routes = null)
         {
             VerifySchema<TModel>(routes);
             var type = routes == null ? typeof(TModel) : routes.GetType();
-            return new UrlModel<TModel>(urlHelper, type.IsTypicalType() ? new { incValue = routes } : routes);
+            return new UrlModel<TModel>(urlHelper, httpContext, type.IsTypicalType() ? new { incValue = routes } : routes);
         }
 
         public UrlModel<TModel> Model<TModel>(TModel routes)
@@ -188,7 +203,7 @@ namespace Incoding.Web.MvcContrib
         {
             #region Constructors
 
-            public UrlModel(IUrlHelper urlHelper, object model)
+            public UrlModel(IUrlHelper urlHelper, HttpContext httpContext, object model)
             {
                 defaultRoutes = new RouteValueDictionary
                                 {
@@ -197,6 +212,7 @@ namespace Incoding.Web.MvcContrib
                                 };
 
                 this.urlHelper = urlHelper;
+                this.httpContext = httpContext;
                 this.model = model;
             }
 
@@ -204,12 +220,20 @@ namespace Incoding.Web.MvcContrib
 
             #region Api Methods
 
-            public string AsView([AspMvcPartialView, NotNull] string incView)
+            public string AsView([AspMvcPartialView, JetBrains.Annotations.NotNull] string incView)
             {
                 defaultRoutes.Add("incView", incView);
+
+#if netcoreapp2_1
                 // ReSharper disable once Mvc.ActionNotResolved
                 // ReSharper disable once Mvc.ControllerNotResolved
-                return StringUrlExtensions.AppendToQueryString(urlHelper.Action("Render", "Dispatcher", defaultRoutes), GetQueryString(new Dictionary<Type, List<object>>() { { typeof(TModel), new List<object>() { this.model } } }));
+                string url = urlHelper.Action("Render", "Dispatcher", defaultRoutes);
+#elif netcoreapp3_1
+                string url = IoCFactory.Instance.TryResolve<LinkGenerator>().GetUriByAction(httpContext, "Render", "Dispatcher", defaultRoutes);
+#endif
+
+                
+                return StringUrlExtensions.AppendToQueryString(url, GetQueryString(new Dictionary<Type, List<object>>() { { typeof(TModel), new List<object>() { this.model } } }));
             }
 
             #endregion
@@ -217,6 +241,7 @@ namespace Incoding.Web.MvcContrib
             #region Fields
 
             readonly IUrlHelper urlHelper;
+            readonly HttpContext httpContext;
 
             readonly object model;
 
@@ -229,11 +254,12 @@ namespace Incoding.Web.MvcContrib
         {
             #region Constructors
 
-            public UrlQuery(IUrlHelper urlHelper, object query)
+            public UrlQuery(IUrlHelper urlHelper, HttpContext httpContext, object query)
             {
                 defaultRoutes = new RouteValueDictionary();
                 defaultRoutes.Add("incType", GetTypeName(typeof(TQuery)));
                 this.urlHelper = urlHelper;
+                this.httpContext = httpContext;
                 this.query = GetQueryString(new Dictionary<Type, List<object>>()
                                             {
                                                     { typeof(TQuery), new List<object>() { query } }
@@ -250,6 +276,7 @@ namespace Incoding.Web.MvcContrib
             #region Fields
 
             readonly IUrlHelper urlHelper;
+            readonly HttpContext httpContext;
 
             readonly RouteValueDictionary query;
 
@@ -261,9 +288,15 @@ namespace Incoding.Web.MvcContrib
 
             public string Validate()
             {
+#if netcoreapp2_1
                 // ReSharper disable once Mvc.ActionNotResolved
                 // ReSharper disable once Mvc.ControllerNotResolved
-                return urlHelper.Action("Validate", "Dispatcher", defaultRoutes);
+                string url = urlHelper.Action("Validate", "Dispatcher", defaultRoutes);
+#elif netcoreapp3_1
+                string url = IoCFactory.Instance.TryResolve<LinkGenerator>()
+                    .GetUriByAction(httpContext, "Validate", "Dispatcher", defaultRoutes);
+#endif
+                return url;
             }
 
             public UrlQuery<TQuery> EnableValidate()
@@ -274,29 +307,47 @@ namespace Incoding.Web.MvcContrib
 
             public string AsFile(string incContentType = "", string incFileDownloadName = "")
             {
+#if netcoreapp2_1
                 // ReSharper disable once Mvc.ActionNotResolved
                 // ReSharper disable once Mvc.ControllerNotResolved
-                return StringUrlExtensions.AppendToQueryString(urlHelper.Action("QueryToFile", "Dispatcher", defaultRoutes), new
-                                                     {
-                                                             incContentType = incContentType,
-                                                             incFileDownloadName = incFileDownloadName
-                                                     })
+                string url = urlHelper.Action("QueryToFile", "Dispatcher", defaultRoutes);
+#elif netcoreapp3_1
+                string url = IoCFactory.Instance.TryResolve<LinkGenerator>().GetUriByAction(httpContext,
+                    "QueryToFile", "Dispatcher", defaultRoutes);
+#endif
+                
+                return StringUrlExtensions.AppendToQueryString(url, new
+                    {
+                        incContentType = incContentType,
+                        incFileDownloadName = incFileDownloadName
+                    })
                                 .AppendToQueryString(query);
             }
 
             public string AsJson()
             {
+#if netcoreapp2_1
                 // ReSharper disable once Mvc.ActionNotResolved
                 // ReSharper disable once Mvc.ControllerNotResolved
-                return StringUrlExtensions.AppendToQueryString(urlHelper.Action("Query", "Dispatcher", defaultRoutes), query);
+                string url = StringUrlExtensions.AppendToQueryString(urlHelper.Action("Query", "Dispatcher", defaultRoutes), query);
+#elif netcoreapp3_1
+                string url = IoCFactory.Instance.TryResolve<LinkGenerator>().GetUriByAction(httpContext, "Query", "Dispatcher", defaultRoutes);
+#endif
+                return url;
             }
 
             public string AsView(string incView)
             {
                 defaultRoutes.Add("incView", incView);
+#if netcoreapp2_1
                 // ReSharper disable once Mvc.ActionNotResolved
                 // ReSharper disable once Mvc.ControllerNotResolved
-                return StringUrlExtensions.AppendToQueryString(urlHelper.Action("Render", "Dispatcher", defaultRoutes), query);
+                string url = urlHelper.Action("Render", "Dispatcher", defaultRoutes);
+#elif netcoreapp3_1
+                string url = IoCFactory.Instance.TryResolve<LinkGenerator>().GetUriByAction(httpContext, "Render", "Dispatcher", defaultRoutes);
+#endif
+
+                return StringUrlExtensions.AppendToQueryString(url, query);
             }
 
             #endregion
@@ -311,9 +362,16 @@ namespace Incoding.Web.MvcContrib
                     routeValues.Add("incIsCompositeAsArray", true);
                 if (onlyValidate)
                     routeValues.Add("incOnlyValidate", true);
+
+#if netcoreapp2_1
                 // ReSharper disable once Mvc.ActionNotResolved
                 // ReSharper disable once Mvc.ControllerNotResolved
-                return StringUrlExtensions.AppendToQueryString(urlHelper.Action("Push", "Dispatcher", routeValues), GetQueryString(this.dictionary));
+                string url = urlHelper.Action("Push", "Dispatcher", routeValues);
+#elif netcoreapp3_1
+                string url = IoCFactory.Instance.TryResolve<LinkGenerator>().GetUriByAction(httpContext, "Push", "Dispatcher", routeValues);
+#endif
+
+                return StringUrlExtensions.AppendToQueryString(url, GetQueryString(this.dictionary));
             }
 
             public static implicit operator string(UrlPush s)
@@ -324,6 +382,7 @@ namespace Incoding.Web.MvcContrib
             #region Fields
 
             readonly IUrlHelper urlHelper;
+            readonly HttpContext httpContext;
 
             readonly Dictionary<Type, List<object>> dictionary = new Dictionary<Type, List<object>>();
 
@@ -338,9 +397,10 @@ namespace Incoding.Web.MvcContrib
             [UsedImplicitly, Obsolete(ObsoleteMessage.SerializeConstructor, true), ExcludeFromCodeCoverage]
             public UrlPush() { }
 
-            public UrlPush(IUrlHelper urlHelper)
+            public UrlPush(IUrlHelper urlHelper, HttpContext httpContext)
             {
                 this.urlHelper = urlHelper;
+                this.httpContext = httpContext;
             }
 
             #endregion

@@ -1,0 +1,424 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\js\benchmark.js" />
+    <Content Remove="wwwroot\js\blanket.jasmine.adapter.js" />
+    <Content Remove="wwwroot\js\blanket.min.js" />
+    <Content Remove="wwwroot\js\bootstrap.js" />
+    <Content Remove="wwwroot\js\bootstrap.min.js" />
+    <Content Remove="wwwroot\js\dot.js" />
+    <Content Remove="wwwroot\js\dust-full-0.3.0.js" />
+    <Content Remove="wwwroot\js\handlebars.js" />
+    <Content Remove="wwwroot\js\inc-performance.js" />
+    <Content Remove="wwwroot\js\inc-specifications.js" />
+    <Content Remove="wwwroot\js\incoding.core.js" />
+    <Content Remove="wwwroot\js\incoding.framework.js" />
+    <Content Remove="wwwroot\js\incoding.meta.conditional.js" />
+    <Content Remove="wwwroot\js\incoding.meta.engine.js" />
+    <Content Remove="wwwroot\js\incoding.meta.executable.js" />
+    <Content Remove="wwwroot\js\incoding.meta.helper.js" />
+    <Content Remove="wwwroot\js\incoding.meta.trace.js" />
+    <Content Remove="wwwroot\js\incoding.url.js" />
+    <Content Remove="wwwroot\js\jasmine-html.js" />
+    <Content Remove="wwwroot\js\jasmine-jquery.js" />
+    <Content Remove="wwwroot\js\jasmine.js" />
+    <Content Remove="wwwroot\js\jquery-1.7.2.min.js" />
+    <Content Remove="wwwroot\js\jquery-1.7.min.js" />
+    <Content Remove="wwwroot\js\jquery-1.8.0.min.js" />
+    <Content Remove="wwwroot\js\jquery-1.8.1.min.js" />
+    <Content Remove="wwwroot\js\jquery-1.8.2.min.js" />
+    <Content Remove="wwwroot\js\jquery-1.8.3.min.js" />
+    <Content Remove="wwwroot\js\jquery-1.9.0.min.js" />
+    <Content Remove="wwwroot\js\jquery-1.9.1.min.js" />
+    <Content Remove="wwwroot\js\jquery-2.0.0.intellisense.js" />
+    <Content Remove="wwwroot\js\jquery-2.0.0.js" />
+    <Content Remove="wwwroot\js\jquery-2.0.0.min.js" />
+    <Content Remove="wwwroot\js\jquery-2.0.0.min.map" />
+    <Content Remove="wwwroot\js\jquery.form.js" />
+    <Content Remove="wwwroot\js\jquery.form.min.js" />
+    <Content Remove="wwwroot\js\jquery.history.js" />
+    <Content Remove="wwwroot\js\jquery.mockjax.js" />
+    <Content Remove="wwwroot\js\jquery.validate-vsdoc.js" />
+    <Content Remove="wwwroot\js\jquery.validate.js" />
+    <Content Remove="wwwroot\js\jquery.validate.min.js" />
+    <Content Remove="wwwroot\js\jquery.validate.unobtrusive.js" />
+    <Content Remove="wwwroot\js\jquery.validate.unobtrusive.min.js" />
+    <Content Remove="wwwroot\js\JSON2.js" />
+    <Content Remove="wwwroot\js\mustache.js" />
+    <Content Remove="wwwroot\js\platform.js" />
+    <Content Remove="wwwroot\js\underscore.js" />
+    <Content Remove="wwwroot\js\underscore.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.15" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Incoding.Data.NHibernate\Incoding.Data.NHibernate.csproj" />
+    <ProjectReference Include="..\Incoding.UnitTests.MSpec\Incoding.UnitTests.MSpec.csproj" />
+    <ProjectReference Include="..\Incoding.Web\Incoding.Web.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Home\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\AddItem2.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\Error.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\_Layout.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\_ValidationScriptsPartial.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\_ViewImports.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\_ViewStart.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\css\site.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\css\site.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\favicon.ico">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\images\banner1.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\images\banner2.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\images\banner3.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\images\banner4.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\incoding.core.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\incoding.meta.conditional.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\incoding.meta.engine.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\incoding.meta.executable.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\incoding.meta.helper.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\incoding.meta.trace.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\incoding.url.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\site.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\site.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\.bower.json">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\css\bootstrap-theme.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\css\bootstrap-theme.css.map">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\css\bootstrap-theme.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\css\bootstrap-theme.min.css.map">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\css\bootstrap.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.eot">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.ttf">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.woff">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.woff2">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\js\bootstrap.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\js\npm.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\LICENSE">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\jquery-validation-unobtrusive\.bower.json">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\jquery-validation\.bower.json">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\jquery-validation\dist\additional-methods.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\jquery-validation\dist\additional-methods.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\jquery-validation\dist\jquery.validate.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\jquery-validation\dist\jquery.validate.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\jquery-validation\LICENSE.md">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\jquery\.bower.json">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\jquery\dist\jquery.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\jquery\dist\jquery.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\jquery\dist\jquery.min.map">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\jquery\LICENSE.txt">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Home\About.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Home\About.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Home\Contact.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Item\AddItem.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Item\AddItemAsync.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Item\ItemList.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Item\ItemListAsync.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Item\ItemTmpl.cshtml" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\benchmark.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\blanket.jasmine.adapter.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\blanket.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\bootstrap.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\bootstrap.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\dot.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\dust-full-0.3.0.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\handlebars.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\inc-performance.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\inc-specifications.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\incoding.core.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\incoding.framework.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\incoding.meta.conditional.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\incoding.meta.engine.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\incoding.meta.executable.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\incoding.meta.helper.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\incoding.meta.trace.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\incoding.url.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\jasmine-html.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\jasmine-jquery.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\jasmine.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\jquery-1.7.2.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\jquery-1.7.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\jquery-1.8.0.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\jquery-1.8.1.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\jquery-1.8.2.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\jquery-1.8.3.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\jquery-1.9.0.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\jquery-1.9.1.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\jquery-2.0.0.intellisense.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\jquery-2.0.0.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\jquery-2.0.0.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\jquery-2.0.0.min.map" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\jquery.form.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\jquery.form.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\jquery.history.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\jquery.mockjax.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\jquery.validate-vsdoc.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\jquery.validate.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\jquery.validate.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\jquery.validate.unobtrusive.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\jquery.validate.unobtrusive.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\JSON2.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\mustache.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\platform.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Home\Contact.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Item\AddItem.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Item\AddItemAsync.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Item\ItemList.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Item\ItemListAsync.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Item\ItemTmpl.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\benchmark.js" />
+    <None Include="wwwroot\js\blanket.jasmine.adapter.js" />
+    <None Include="wwwroot\js\blanket.min.js" />
+    <None Include="wwwroot\js\bootstrap.js" />
+    <None Include="wwwroot\js\bootstrap.min.js" />
+    <None Include="wwwroot\js\dot.js" />
+    <None Include="wwwroot\js\dust-full-0.3.0.js" />
+    <None Include="wwwroot\js\handlebars.js" />
+    <None Include="wwwroot\js\inc-performance.js" />
+    <None Include="wwwroot\js\inc-specifications.js" />
+    <None Include="wwwroot\js\incoding.core.js" />
+    <None Include="wwwroot\js\incoding.framework.js" />
+    <None Include="wwwroot\js\incoding.meta.conditional.js" />
+    <None Include="wwwroot\js\incoding.meta.engine.js" />
+    <None Include="wwwroot\js\incoding.meta.executable.js" />
+    <None Include="wwwroot\js\incoding.meta.helper.js" />
+    <None Include="wwwroot\js\incoding.meta.trace.js" />
+    <None Include="wwwroot\js\incoding.url.js" />
+    <None Include="wwwroot\js\jasmine-html.js" />
+    <None Include="wwwroot\js\jasmine-jquery.js" />
+    <None Include="wwwroot\js\jasmine.js" />
+    <None Include="wwwroot\js\jquery-1.7.2.min.js" />
+    <None Include="wwwroot\js\jquery-1.7.min.js" />
+    <None Include="wwwroot\js\jquery-1.8.0.min.js" />
+    <None Include="wwwroot\js\jquery-1.8.1.min.js" />
+    <None Include="wwwroot\js\jquery-1.8.2.min.js" />
+    <None Include="wwwroot\js\jquery-1.8.3.min.js" />
+    <None Include="wwwroot\js\jquery-1.9.0.min.js" />
+    <None Include="wwwroot\js\jquery-1.9.1.min.js" />
+    <None Include="wwwroot\js\jquery-2.0.0.intellisense.js" />
+    <None Include="wwwroot\js\jquery-2.0.0.js" />
+    <None Include="wwwroot\js\jquery-2.0.0.min.js" />
+    <None Include="wwwroot\js\jquery-2.0.0.min.map" />
+    <None Include="wwwroot\js\jquery.form.js" />
+    <None Include="wwwroot\js\jquery.form.min.js" />
+    <None Include="wwwroot\js\jquery.history.js" />
+    <None Include="wwwroot\js\jquery.mockjax.js" />
+    <None Include="wwwroot\js\jquery.validate-vsdoc.js" />
+    <None Include="wwwroot\js\jquery.validate.js" />
+    <None Include="wwwroot\js\jquery.validate.min.js" />
+    <None Include="wwwroot\js\jquery.validate.unobtrusive.js" />
+    <None Include="wwwroot\js\jquery.validate.unobtrusive.min.js" />
+    <None Include="wwwroot\js\JSON2.js" />
+    <None Include="wwwroot\js\mustache.js" />
+    <None Include="wwwroot\js\platform.js" />
+    <None Include="wwwroot\js\underscore.js" />
+    <None Include="wwwroot\js\underscore.min.js" />
+  </ItemGroup>
+
+</Project>

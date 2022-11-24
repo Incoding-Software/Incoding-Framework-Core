@@ -7,6 +7,7 @@ using Incoding.Web.Extensions;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Incoding.Web.MvcContrib
 {
@@ -30,7 +31,7 @@ namespace Incoding.Web.MvcContrib
 
         public static UrlDispatcher Dispatcher(this IUrlHelper urlHelper)
         {
-            return new UrlDispatcher(urlHelper);
+            return new UrlDispatcher(urlHelper, urlHelper.ActionContext.HttpContext);
         }
 
         public static string Hash(this IUrlHelper urlHelper, [AspMvcAction] string action, [AspMvcController] string controller, object routes = null)
@@ -53,7 +54,7 @@ namespace Incoding.Web.MvcContrib
             return InternalHash(urlHelper, action, controller, urlHelper.ActionContext.HttpContext.Request.GetUri(), area, routes);
         }
 
-        #endregion
+#endregion
 
         static string InternalHash(this IUrlHelper urlHelper, [AspMvcAction] string action, [AspMvcController] string controller, Uri uri, [AspMvcArea] string area = "", object routes = null)
         {

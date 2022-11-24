@@ -5,11 +5,16 @@ using System.Linq.Expressions;
 using System.Text.Encodings.Web;
 using Incoding.Core.Extensions;
 using Incoding.Core;
+using Incoding.Core.Block.IoC;
 using Incoding.Core.ViewModel;
 using Incoding.Web.Extensions;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
+#if netcoreapp3_1
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+#elif netcoreapp2_1
 using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
+#endif
 
 namespace Incoding.Web.MvcContrib
 {
@@ -72,8 +77,11 @@ namespace Incoding.Web.MvcContrib
                     }
                     dsl.Self().Insert.WithTemplate(Template).Append();
                 }
-
+#if netcoreapp3_1
+                var selected = IoCFactory.Instance.TryResolve<IModelExpressionProvider>().CreateModelExpression(htmlHelper.ViewData, property).Model;
+#elif netcoreapp2_1
                 var selected = ExpressionMetadataProvider.FromLambdaExpression(property, htmlHelper.ViewData, htmlHelper.MetadataProvider).Model;
+#endif
                 if (selected != null)
                     dsl.Self().JQuery.Attr.Val(selected);
 
