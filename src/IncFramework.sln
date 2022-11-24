@@ -47,7 +47,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.Web.Grid.Demo", "I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.Data.NHibernate", "Incoding.Data.NHibernate\Incoding.Data.NHibernate.csproj", "{5D9E0EB3-4339-42DA-B5C2-9D4FF667D7D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Incoding.WebTest30", "Incoding.WebTest30\Incoding.WebTest30.csproj", "{1034B194-0FC0-42E9-9863-759E24ED591E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.WebTest30", "Incoding.WebTest30\Incoding.WebTest30.csproj", "{1034B194-0FC0-42E9-9863-759E24ED591E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -187,13 +187,13 @@ Global
 		{1034B194-0FC0-42E9-9863-759E24ED591E} = {81999E6B-994A-4762-A4E3-AB5AC3BAE569}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_UpdateAssemblyVersion = False
-		BuildVersion_UpdateFileVersion = False
-		BuildVersion_BuildAction = ReBuild
-		BuildVersion_IncrementBeforeBuild = True
-		BuildVersion_DetectChanges = True
-		BuildVersion_BuildVersioningStyle = None.None.None.None
 		SolutionGuid = {834D889F-F4B3-4006-83EC-584703FCCDA2}
+		BuildVersion_BuildVersioningStyle = None.None.None.None
+		BuildVersion_DetectChanges = True
+		BuildVersion_IncrementBeforeBuild = True
+		BuildVersion_BuildAction = ReBuild
+		BuildVersion_UpdateFileVersion = False
+		BuildVersion_UpdateAssemblyVersion = False
 	EndGlobalSection
 	GlobalSection(NDepend) = preSolution
 		Project = ".\IncFramework.ndproj"

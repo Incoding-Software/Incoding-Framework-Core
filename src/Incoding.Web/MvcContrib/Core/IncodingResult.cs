@@ -7,6 +7,7 @@ using Incoding.Core;
 using Incoding.Core.Extensions;
 using Incoding.Core;
 using Incoding.Web.Extensions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -36,22 +37,23 @@ namespace Incoding.Web.MvcContrib
             bool? isMultiPart = context.HttpContext.Request.ContentType?.Contains("multipart/form-data");
             var isIe = EqualsExtensions.IsAnyEqualsIgnoreCase("IE");
             response.ContentType = isMultiPart.GetValueOrDefault() && isIe ? "text/html" : "application/json";
-            using (StreamWriter tw = new StreamWriter(response.Body))
-            {
-                await tw.WriteAsync(Data.ToJsonString());
-            }
+
+            //var buffer = new ReadOnlyMemory<byte>(Encoding.UTF8.GetBytes(Data.ToJsonString()));
+            //await response.Body.WriteAsync(buffer);
+            await response.WriteAsync(Data.ToJsonString());
         }
 
         public override void ExecuteResult(ActionContext context)
         {
-            var response = context.HttpContext.Response;
-            var isMultiPart = context.HttpContext.Request.ContentType.Contains("multipart/form-data");
-            var isIe = EqualsExtensions.IsAnyEqualsIgnoreCase("IE");
-            response.ContentType = isMultiPart && isIe ? "text/html" : "application/json";
-            using (StreamWriter tw = new StreamWriter(response.Body))
-            {
-                tw.Write(Data.ToJsonString());
-            }
+            ExecuteResultAsync(context).GetAwaiter().GetResult();
+            //var response = context.HttpContext.Response;
+            //var isMultiPart = context.HttpContext.Request.ContentType.Contains("multipart/form-data");
+            //var isIe = EqualsExtensions.IsAnyEqualsIgnoreCase("IE");
+            //response.ContentType = isMultiPart && isIe ? "text/html" : "application/json";
+            //using (StreamWriter tw = new StreamWriter(response.Body))
+            //{
+            //    tw.Write(Data.ToJsonString());
+            //}
         }
         
         #region Factory constructors
