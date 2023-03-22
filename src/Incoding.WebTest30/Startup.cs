@@ -1,14 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using FluentValidation;
@@ -60,6 +56,13 @@ namespace Incoding.WebTest30
                     options.ModelBinderProviders.Add(new CollectionModelBinderProvider());
                     options.ModelBinderProviders.Add(new DictionaryModelBinderProvider());
                     options.ModelBinderProviders.Add(new FloatingPointTypeModelBinderProvider());
+                    //options.ModelBinderProviders.Add(new JsonModelBinder(new OptionsManager<MvcNewtonsoftJsonOptions>(new OptionsFactory<MvcNewtonsoftJsonOptions>(
+                    //    new IConfigureOptions<MvcNewtonsoftJsonOptions>[]
+                    //    {
+                    //        new ConfigureOptions<MvcNewtonsoftJsonOptions>(jsonOptions => {})
+                    //    },
+                    //    new IPostConfigureOptions<MvcNewtonsoftJsonOptions>[]  { }
+                    //    ))));
                     //options.ModelBinderProviders.Add(new BinderTypeModelBinderProvider());
                 })
                 .AddFluentValidation(configuration =>

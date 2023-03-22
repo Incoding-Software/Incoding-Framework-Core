@@ -14,9 +14,9 @@
     <RepositoryUrl>https://github.com/Incoding-Software/Incoding-Framework-Core</RepositoryUrl>
     <PackageTags>framework, incoding, web, grid, razor, helper</PackageTags>
     <PackageReleaseNotes>Web Grid component using Incoding Framework</PackageReleaseNotes>
-    <AssemblyVersion>1.2.5.0</AssemblyVersion>
-    <FileVersion>1.2.5.0</FileVersion>
-    <Version>1.2.5</Version>
+    <AssemblyVersion>1.2.7.0</AssemblyVersion>
+    <FileVersion>1.2.7.0</FileVersion>
+    <Version>1.2.7</Version>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
   </PropertyGroup>
 

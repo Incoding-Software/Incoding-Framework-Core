@@ -75,7 +75,7 @@
                               .Width(150);
                       })
                       .AjaxGet(Url.Action("GetNullProducts", "Home"))
-                      .NoRecords(new UrlDispatcher(Url).AsView("~/Views/Home/NoRecordsTemplate.cshtml").ToAjaxGet()))
+                      .NoRecords(new UrlDispatcher(Url, Context).AsView("~/Views/Home/NoRecordsTemplate.cshtml").ToAjaxGet()))
         </div>
         <div class="sourceCode">
             <pre>
