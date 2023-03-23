@@ -13,8 +13,9 @@ namespace Incoding.WebTest30.Operations
     {
         protected override void Execute()
         {
-            CachingFactory.Instance.Delete(new GetItemsQuery());
-            CachingFactory.Instance.Delete(new GetItems1Query());
+            //CachingFactory.Instance.Delete(new GetItemsQuery());
+            //CachingFactory.Instance.Delete(new GetItems1Query());
+            CachingFactory.Instance.DeleteAll();
         }
     }
 
