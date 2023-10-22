@@ -5,7 +5,7 @@
     <Authors>Vlad Kopachinsky, Victor Gelmutdinov</Authors>
     <Company>Incoding Software</Company>
     <Description>Web library containing abstractions, helpers and MVD/CQRS controller functions of Incoding Framework</Description>
-    <Copyright>Incoding Software, 2010-2022</Copyright>
+    <Copyright>Incoding Software, 2010-2023</Copyright>
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl></PackageProjectUrl>
     <PackageIconUrl></PackageIconUrl>
@@ -14,11 +14,12 @@
     <PackageReleaseNotes>Incoding Framework library migrated to .NET Standard and .NET Core</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Version>1.2.6</Version>
-    <AssemblyVersion>1.2.6.0</AssemblyVersion>
-    <FileVersion>1.2.6.0</FileVersion>
+    <Version>1.2.7</Version>
+    <AssemblyVersion>1.2.7.0</AssemblyVersion>
+    <FileVersion>1.2.7.0</FileVersion>
     <PackageIcon>Incoding.png</PackageIcon>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <Title>Incoding Web</Title>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp2.1'">
@@ -27,6 +28,9 @@
   <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
     <DefineConstants>$(DefineConstants);netcoreapp3_1</DefineConstants>
   </PropertyGroup>
+  <!--<PropertyGroup Condition="'$(TargetFramework)'=='net6.0'">
+    <DefineConstants>$(DefineConstants);netcoreapp6_0</DefineConstants>
+  </PropertyGroup>-->
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>D:\Work\Projects\Projects\Incoding-Framework-Core\src\Incoding.Web\Incoding.Web.xml</DocumentationFile>

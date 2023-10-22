@@ -264,6 +264,7 @@ namespace Incoding.Web.MvcContrib
                                             {
                                                     { typeof(TQuery), new List<object>() { query } }
                                             });
+                //this.query.Add("incType", GetTypeName(typeof(TQuery)));
             }
 
             #endregion
@@ -331,7 +332,8 @@ namespace Incoding.Web.MvcContrib
                 // ReSharper disable once Mvc.ControllerNotResolved
                 string url = StringUrlExtensions.AppendToQueryString(urlHelper.Action("Query", "Dispatcher", defaultRoutes), query);
 #elif netcoreapp3_1
-                string url = IoCFactory.Instance.TryResolve<LinkGenerator>().GetUriByAction(httpContext, "Query", "Dispatcher", defaultRoutes);
+                string url = IoCFactory.Instance.TryResolve<LinkGenerator>().GetUriByAction(httpContext, "Query", "Dispatcher", defaultRoutes)
+                    .AppendToQueryString(query);
 #endif
                 return url;
             }
