@@ -14,10 +14,11 @@
     <PackageReleaseNotes>Incoding Framework library migrated to .NET Standard and .NET Core</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Version>1.2.5</Version>
-    <FileVersion>1.2.5.0</FileVersion>
-    <AssemblyVersion>1.2.5.0</AssemblyVersion>
+    <Version>1.2.6</Version>
+    <FileVersion>1.2.6.0</FileVersion>
+    <AssemblyVersion>1.2.6.0</AssemblyVersion>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <Title>Incoding Software Data Nhibernate</Title>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -33,8 +34,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentNHibernate" Version="2.1.2" />
-    <PackageReference Include="NHibernate" Version="5.1.1" />
+    <PackageReference Include="FluentNHibernate" Version="3.3.0" />
+    <PackageReference Include="NHibernate" Version="5.4.6" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
   </ItemGroup>
 
