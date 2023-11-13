@@ -55,7 +55,7 @@ namespace Incoding.Web.MvcContrib
         }
 
         //[Obsolete(@"Use Submit with option.Selector = selector ")]
-        internal IIncodingMetaLanguageEventBuilderDsl SubmitOn(Func<JquerySelector, JquerySelector> action, Action<JqueryAjaxFormOptions> configuration = null)
+        public IIncodingMetaLanguageEventBuilderDsl SubmitOn(Func<JquerySelector, JquerySelector> action, Action<JqueryAjaxFormOptions> configuration = null)
         {
             var options = new JqueryAjaxFormOptions(JqueryAjaxFormOptions.Default);
             MaybeObject.Do(configuration, r => r(options));
