@@ -333,7 +333,7 @@ namespace Incoding.Web.MvcContrib
                 .ToMvcForm(setting.Url ?? new UrlDispatcher(
 #if netcoreapp2_1
                     new UrlHelper(htmlHelper.ViewContext)
-#elif netcoreapp3_1
+#else
                     null
 #endif
                     ,htmlHelper.ViewContext.HttpContext).Push<TModel>(), setting.Method, setting.EncType);

@@ -7,10 +7,11 @@ using Incoding.Core.Extensions;
 using Incoding.Web.Extensions;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
-#if netcoreapp3_1
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-#elif netcoreapp2_1
+
+#if netcoreapp2_1
 using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
+#else
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 #endif
 
 namespace Incoding.Web.MvcContrib
@@ -51,11 +52,11 @@ namespace Incoding.Web.MvcContrib
             bool isChecked = this.attributes.ContainsKey(HtmlAttribute.Checked.ToStringLower());
             if (!isChecked)
             {
-#if netcoreapp3_1
+#if netcoreapp2_1
+                var metadata = ExpressionMetadataProvider.FromLambdaExpression(this.property, this.htmlHelper.ViewData, htmlHelper.MetadataProvider);
+#else
                 var metadata = IoCFactory.Instance.TryResolve<IModelExpressionProvider>()
                     .CreateModelExpression(this.htmlHelper.ViewData, this.property);
-#elif netcoreapp2_1
-                var metadata = ExpressionMetadataProvider.FromLambdaExpression(this.property, this.htmlHelper.ViewData, htmlHelper.MetadataProvider);
 #endif
                 bool result;
                 if (metadata.Model != null && bool.TryParse(metadata.Model.ToString(), out result))
@@ -70,10 +71,11 @@ namespace Incoding.Web.MvcContrib
             spanAsLabel.InnerHtml.AppendHtml(this.Label.Name);
             var label = new TagBuilder(HtmlTag.Label.ToStringLower());
             label.InnerHtml.AppendHtml(this.htmlHelper.CheckBox(
-#if netcoreapp3_1
+#if netcoreapp2_1
+ExpressionHelper.GetExpressionText(this.property)
+                                           
+#else
                                            IoCFactory.Instance.TryResolve<ModelExpressionProvider>().GetExpressionText(this.property)
-#elif netcoreapp2_1
-                                           ExpressionHelper.GetExpressionText(this.property)
 #endif
                                            , isChecked, GetAttributes()).HtmlContentToString()
                                         + new TagBuilder(HtmlTag.I.ToStringLower()).HtmlContentToString()

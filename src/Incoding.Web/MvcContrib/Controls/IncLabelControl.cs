@@ -44,12 +44,13 @@ namespace Incoding.Web.MvcContrib
             var tagBuilder = new TagBuilder("label");
             tagBuilder.Attributes.Add("for", TagBuilder.CreateSanitizedId(htmlHelper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(property), "_"));
 
-#if netcoreapp3_1
+
+#if netcoreapp2_1
+                var metadata = ExpressionMetadataProvider.FromStringExpression(property, htmlHelper.ViewData, htmlHelper.MetadataProvider);
+            string innerText = Name ?? metadata.Metadata.DisplayName ?? property;
+#else
             var metadata = IoCFactory.Instance.TryResolve<ModelExpressionProvider>()
                 .CreateModelExpression(htmlHelper.ViewData, property).ModelExplorer;
-            string innerText = Name ?? metadata.Metadata.DisplayName ?? property;
-#elif netcoreapp2_1
-                var metadata = ExpressionMetadataProvider.FromStringExpression(property, htmlHelper.ViewData, htmlHelper.MetadataProvider);
             string innerText = Name ?? metadata.Metadata.DisplayName ?? property;
 #endif
 

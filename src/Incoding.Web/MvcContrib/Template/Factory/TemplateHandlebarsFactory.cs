@@ -15,11 +15,11 @@ namespace Incoding.Web.MvcContrib
 
     public class TemplateHandlebarsFactory : ITemplateFactory
     {
-#if netcoreapp2_1
-        internal static readonly ConcurrentDictionary<string, Func<object, string>> cache = new ConcurrentDictionary<string, Func<object, string>>();
-#else
+//#if netcoreapp2_1
+//        internal static readonly ConcurrentDictionary<string, Func<object, string>> cache = new ConcurrentDictionary<string, Func<object, string>>();
+//#else
         internal static readonly ConcurrentDictionary<string, HandlebarsTemplate<object, object>> cache = new ConcurrentDictionary<string, HandlebarsTemplate<object, object>>();
-#endif
+//#endif
         public static Func<string> GetVersion = () => { return string.Empty; };
 
 #region ITemplateFactory Members

@@ -85,12 +85,11 @@ namespace Incoding.Core.CQRS
             //}
             public async Task CommitAsync()
             {
-                this.Select(r => r.Value)
-                    .DoEach(async r =>
-                            {
-                                if (r.IsValueCreated)
-                                    await r.Value.CommitAsync();
-                            });
+                foreach (var r in this.Select(r => r.Value))
+                {
+                    if (r.IsValueCreated)
+                        await r.Value.CommitAsync();
+                }
             }
         }
 

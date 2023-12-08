@@ -67,7 +67,7 @@ namespace Incoding.Web.Grid.Demo
         {
             if (env.IsDevelopment())
             {
-                app.UseBrowserLink();
+                //app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
             }
             else

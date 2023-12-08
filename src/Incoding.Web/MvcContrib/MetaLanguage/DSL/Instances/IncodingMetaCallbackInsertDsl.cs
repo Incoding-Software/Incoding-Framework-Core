@@ -61,7 +61,7 @@ namespace Incoding.Web.MvcContrib
             var dispatcher = new UrlDispatcher(
 #if netcoreapp2_1
                 new UrlHelper(_htmlHelper.ViewContext)
-#elif netcoreapp3_1
+#else
                     null
 #endif
                 ,_htmlHelper.ViewContext.HttpContext);

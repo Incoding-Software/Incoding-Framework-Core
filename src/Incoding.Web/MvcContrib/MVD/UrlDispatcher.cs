@@ -166,14 +166,15 @@ namespace Incoding.Web.MvcContrib
 
         public string AsView([AspMvcPartialView] string incView)
         {
-#if netcoreapp2_1
             // ReSharper disable once Mvc.ActionNotResolved
-                // ReSharper disable once Mvc.ControllerNotResolved
+            // ReSharper disable once Mvc.ControllerNotResolved
+#if netcoreapp2_1
+            
             string url = urlHelper.Action("Render", "Dispatcher", new
                                                             {
                                                                     incView = incView,
                                                             });
-#elif netcoreapp3_1
+#else
             string url = IoCFactory.Instance.TryResolve<LinkGenerator>().GetUriByAction(httpContext, "Render", "Dispatcher", new RouteValueDictionary(
             new {
                 incView = incView,
@@ -223,12 +224,12 @@ namespace Incoding.Web.MvcContrib
             public string AsView([AspMvcPartialView, JetBrains.Annotations.NotNull] string incView)
             {
                 defaultRoutes.Add("incView", incView);
-
-#if netcoreapp2_1
                 // ReSharper disable once Mvc.ActionNotResolved
                 // ReSharper disable once Mvc.ControllerNotResolved
+#if netcoreapp2_1
+                
                 string url = urlHelper.Action("Render", "Dispatcher", defaultRoutes);
-#elif netcoreapp3_1
+#else
                 string url = IoCFactory.Instance.TryResolve<LinkGenerator>().GetUriByAction(httpContext, "Render", "Dispatcher", defaultRoutes);
 #endif
 
@@ -289,11 +290,11 @@ namespace Incoding.Web.MvcContrib
 
             public string Validate()
             {
-#if netcoreapp2_1
                 // ReSharper disable once Mvc.ActionNotResolved
                 // ReSharper disable once Mvc.ControllerNotResolved
+#if netcoreapp2_1
                 string url = urlHelper.Action("Validate", "Dispatcher", defaultRoutes);
-#elif netcoreapp3_1
+#else
                 string url = IoCFactory.Instance.TryResolve<LinkGenerator>()
                     .GetUriByAction(httpContext, "Validate", "Dispatcher", defaultRoutes);
 #endif
@@ -308,11 +309,11 @@ namespace Incoding.Web.MvcContrib
 
             public string AsFile(string incContentType = "", string incFileDownloadName = "")
             {
-#if netcoreapp2_1
                 // ReSharper disable once Mvc.ActionNotResolved
                 // ReSharper disable once Mvc.ControllerNotResolved
+#if netcoreapp2_1
                 string url = urlHelper.Action("QueryToFile", "Dispatcher", defaultRoutes);
-#elif netcoreapp3_1
+#else
                 string url = IoCFactory.Instance.TryResolve<LinkGenerator>().GetUriByAction(httpContext,
                     "QueryToFile", "Dispatcher", defaultRoutes);
 #endif
@@ -327,11 +328,11 @@ namespace Incoding.Web.MvcContrib
 
             public string AsJson()
             {
-#if netcoreapp2_1
                 // ReSharper disable once Mvc.ActionNotResolved
                 // ReSharper disable once Mvc.ControllerNotResolved
+#if netcoreapp2_1
                 string url = StringUrlExtensions.AppendToQueryString(urlHelper.Action("Query", "Dispatcher", defaultRoutes), query);
-#elif netcoreapp3_1
+#else
                 string url = IoCFactory.Instance.TryResolve<LinkGenerator>().GetUriByAction(httpContext, "Query", "Dispatcher", defaultRoutes)
                     .AppendToQueryString(query);
 #endif
@@ -341,11 +342,11 @@ namespace Incoding.Web.MvcContrib
             public string AsView(string incView)
             {
                 defaultRoutes.Add("incView", incView);
-#if netcoreapp2_1
                 // ReSharper disable once Mvc.ActionNotResolved
                 // ReSharper disable once Mvc.ControllerNotResolved
+#if netcoreapp2_1
                 string url = urlHelper.Action("Render", "Dispatcher", defaultRoutes);
-#elif netcoreapp3_1
+#else
                 string url = IoCFactory.Instance.TryResolve<LinkGenerator>().GetUriByAction(httpContext, "Render", "Dispatcher", defaultRoutes);
 #endif
 
@@ -365,11 +366,11 @@ namespace Incoding.Web.MvcContrib
                 if (onlyValidate)
                     routeValues.Add("incOnlyValidate", true);
 
-#if netcoreapp2_1
                 // ReSharper disable once Mvc.ActionNotResolved
                 // ReSharper disable once Mvc.ControllerNotResolved
+#if netcoreapp2_1
                 string url = urlHelper.Action("Push", "Dispatcher", routeValues);
-#elif netcoreapp3_1
+#else
                 string url = IoCFactory.Instance.TryResolve<LinkGenerator>().GetUriByAction(httpContext, "Push", "Dispatcher", routeValues);
 #endif
 
