@@ -1,17 +1,21 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Incoding.Core.Block.Core;
-using Incoding.Core.Block.IoC;
-using Incoding.Core.CQRS.Core;
-using Incoding.Core.Data;
-using Incoding.Core.Extensions;
-using Incoding.Core.Extensions.LinqSpecs;
-using Machine.Specifications;
-using Moq;
-
 namespace Incoding.UnitTests.MSpec
 {
+    #region << Using >>
+
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Incoding.Core.Block.Core;
+    using Incoding.Core.Block.IoC;
+    using Incoding.Core.CQRS.Core;
+    using Incoding.Core.Data;
+    using Incoding.Core.Extensions;
+    using Incoding.Core.Extensions.LinqSpecs;
+    using Machine.Specifications;
+    using Moq;
+
+    #endregion
+
     #region << Using >>
 
     #endregion
@@ -22,7 +26,10 @@ namespace Incoding.UnitTests.MSpec
 
         public static void Execute(this IMessage message)
         {
-            message.OnExecute(IoCFactory.Instance.TryResolve<IDispatcher>(), new Lazy<IUnitOfWork>(() => IoCFactory.Instance.TryResolve<IUnitOfWork>()));
+            if (message is MessageBase messageBase)
+                message.OnExecute(IoCFactory.Instance.TryResolve<IDispatcher>(), new Lazy<IUnitOfWork>(() => IoCFactory.Instance.TryResolve<IUnitOfWork>()));
+            else
+                message.OnExecuteAsync(IoCFactory.Instance.TryResolve<IDispatcher>(), new Lazy<IUnitOfWork>(() => IoCFactory.Instance.TryResolve<IUnitOfWork>())).ConfigureAwait(false);
         }
 
         #endregion
@@ -40,7 +47,6 @@ namespace Incoding.UnitTests.MSpec
 
             var unitOfWork = Pleasure.MockStrictAsObject<IUnitOfWork>(mock => mock.Setup(x => x.GetRepository()).Returns(repository.Object));
             IoCFactory.Instance.StubTryResolve(unitOfWork);
-            
 
             dispatcher = Pleasure.MockStrict<IDispatcher>();
             dispatcher.Setup(r => r.Push(Pleasure.MockIt.Is<CommandComposite>(composite => composite.Parts.Any(message => this.predcatesStubs.Any(func => func(message))).ShouldBeTrue())));
@@ -63,12 +69,14 @@ namespace Incoding.UnitTests.MSpec
 
         readonly Dictionary<Type, List<CommandBase>> stubs = new Dictionary<Type, List<CommandBase>>();
 
+        readonly Dictionary<Type, List<CommandBaseAsync>> stubsAsync = new Dictionary<Type, List<CommandBaseAsync>>();
+
         readonly Dictionary<Type, int> stubsOfSuccess = new Dictionary<Type, int>();
 
         readonly Mock<IRepository> repository;
-        
+
         private readonly List<Func<IMessage, bool>> predcatesStubs = new List<Func<IMessage, bool>>();
-        
+
         #endregion
 
         #region Api Methods
@@ -111,16 +119,18 @@ namespace Incoding.UnitTests.MSpec
                                        try
                                        {
                                            var sAsT = s as TCommand;
-                                           sAsT.ShouldEqualWeak(pair as TCommand, factoryDsl =>
-                                                                                  {
-                                                                                      factoryDsl.ForwardToAction(r => r.Setting, a =>
-                                                                                                                                 {
-                                                                                                                                     if (a.Setting != null)
-                                                                                                                                         a.Setting.ShouldEqualWeak(sAsT.Setting);
-                                                                                                                                 });
-                                                                                      if (dsl != null)
-                                                                                          dsl(factoryDsl);
-                                                                                  });
+                                           sAsT.ShouldEqualWeak(pair as TCommand,
+                                                                factoryDsl =>
+                                                                {
+                                                                    factoryDsl.ForwardToAction(r => r.Setting,
+                                                                                               a =>
+                                                                                               {
+                                                                                                   if (a.Setting != null)
+                                                                                                       a.Setting.ShouldEqualWeak(sAsT.Setting);
+                                                                                               });
+                                                                    if (dsl != null)
+                                                                        dsl(factoryDsl);
+                                                                });
                                            isAny = true;
                                            s.SetValue("Result", result);
                                            if (this.stubsOfSuccess.ContainsKey(type))
@@ -139,47 +149,62 @@ namespace Incoding.UnitTests.MSpec
                                });
             return this;
         }
-        public MockMessage<TMessage, TResult> StubPushT<TCommand, T>(TCommand command, T result, Action<ICompareFactoryDsl<TCommand, TCommand>> dsl = null, MessageExecuteSetting setting = null) where TCommand : CommandBase<T>
+
+        public MockMessage<TMessage, TResult> StubPushAsync<TCommand>(TCommand command, Action<ICompareFactoryDsl<TCommand, TCommand>> dsl = null, MessageExecuteSetting setting = null, object result = null) where TCommand : CommandBaseAsync
         {
             command.Setting = command.Setting ?? (setting ?? new MessageExecuteSetting());
             var type = typeof(TCommand);
-            Action<TCommand> verify = cmd =>
-            {
-                bool isAny = false;
-                try
-                {
-                    cmd.ShouldEqualWeak(command as TCommand, factoryDsl =>
-                    {
-                        factoryDsl.ForwardToAction(r => r.Setting, a =>
-                        {
-                            if (a.Setting != null)
-                                a.Setting.ShouldEqualWeak(command.Setting);
-                        });
-                        if (dsl != null)
-                            dsl(factoryDsl);
-                    });
-                    isAny = true;
-                    command.SetValue("Result", result);
-                    if (this.stubsOfSuccess.ContainsKey(type))
-                        this.stubsOfSuccess[type]++;
-                    else
-                        this.stubsOfSuccess.Add(type, 1);
-                }
-                catch (InternalSpecificationException ex)
-                {
-                    Console.WriteLine(ex);
-                }
+            var value = stubsAsync.GetOrDefault(type, new List<CommandBaseAsync>());
+            value.Add(command);
+            if (!stubsAsync.ContainsKey(type))
+                stubsAsync.Add(type, value);
+            predcatesStubs.Add(s =>
+                               {
+                                   bool isAny = false;
+                                   foreach (var pair in this.stubs[type])
+                                   {
+                                       try
+                                       {
+                                           var sAsT = s as TCommand;
+                                           sAsT.ShouldEqualWeak(pair as TCommand,
+                                                                factoryDsl =>
+                                                                {
+                                                                    factoryDsl.ForwardToAction(r => r.Setting,
+                                                                                               a =>
+                                                                                               {
+                                                                                                   if (a.Setting != null)
+                                                                                                       a.Setting.ShouldEqualWeak(sAsT.Setting);
+                                                                                               });
+                                                                    if (dsl != null)
+                                                                        dsl(factoryDsl);
+                                                                });
+                                           isAny = true;
+                                           s.SetValue("Result", result);
+                                           if (this.stubsOfSuccess.ContainsKey(type))
+                                               this.stubsOfSuccess[type]++;
+                                           else
+                                               this.stubsOfSuccess.Add(type, 1);
+                                           break;
+                                       }
+                                       catch (InternalSpecificationException ex)
+                                       {
+                                           Console.WriteLine(ex);
+                                       }
+                                   }
 
-                isAny.ShouldBeTrue();
-            };
-            dispatcher.Setup(x => x.Push<T>(Pleasure.MockIt.Is<TCommand>(verify))).Returns(result);
-
+                                   return isAny;
+                               });
             return this;
         }
-        
+
         public MockMessage<TMessage, TResult> StubPush<TCommand>(Action<IInventFactoryDsl<TCommand>> configure, Action<ICompareFactoryDsl<TCommand, TCommand>> dsl = null) where TCommand : CommandBase
         {
             return StubPush(Pleasure.Generator.Invent(configure), dsl);
+        }
+
+        public MockMessage<TMessage, TResult> StubPushAsync<TCommand>(Action<IInventFactoryDsl<TCommand>> configure, Action<ICompareFactoryDsl<TCommand, TCommand>> dsl = null) where TCommand : CommandBaseAsync
+        {
+            return StubPushAsync(Pleasure.Generator.Invent(configure), dsl);
         }
 
         public void ShouldBeDeleteByIds<TEntity>(IEnumerable<object> ids) where TEntity : class, IEntity, new()
@@ -267,6 +292,12 @@ namespace Incoding.UnitTests.MSpec
             return this;
         }
 
+        public MockMessage<TMessage, TResult> StubQueryAsync<TQuery, TNextResult>(TQuery query, TNextResult result) where TQuery : QueryBaseAsync<TNextResult>
+        {
+            dispatcher.StubQueryAsync(query, result, new MessageExecuteSetting());
+            dispatcher.StubQueryAsync(query, result, null);
+            return this;
+        }
 
         public MockMessage<TMessage, TResult> StubQuery<TQuery, TNextResult>(TQuery query, Action<ICompareFactoryDsl<TQuery, TQuery>> dsl, TNextResult result, MessageExecuteSetting executeSetting = null) where TQuery : QueryBase<TNextResult>
         {
@@ -279,6 +310,11 @@ namespace Incoding.UnitTests.MSpec
             return StubQuery(Pleasure.Generator.Invent<TQuery>(), result);
         }
 
+        public MockMessage<TMessage, TResult> StubQueryAsync<TQuery, TNextResult>(TNextResult result) where TQuery : QueryBaseAsync<TNextResult>
+        {
+            return StubQueryAsync(Pleasure.Generator.Invent<TQuery>(), result);
+        }
+
         public MockMessage<TMessage, TResult> StubQueryAsNull<TQuery, TNextResult>() where TQuery : QueryBase<TNextResult>
         {
             return StubQuery<TQuery, TNextResult>(default(TNextResult));
@@ -287,6 +323,11 @@ namespace Incoding.UnitTests.MSpec
         public MockMessage<TMessage, TResult> StubQuery<TQuery, TNextResult>(Action<IInventFactoryDsl<TQuery>> configure, TNextResult result) where TQuery : QueryBase<TNextResult>
         {
             return StubQuery(Pleasure.Generator.Invent(configure), result);
+        }
+
+        public MockMessage<TMessage, TResult> StubQueryAsync<TQuery, TNextResult>(Action<IInventFactoryDsl<TQuery>> configure, TNextResult result) where TQuery : QueryBaseAsync<TNextResult>
+        {
+            return StubQueryAsync(Pleasure.Generator.Invent(configure), result);
         }
 
         #endregion
@@ -304,7 +345,6 @@ namespace Incoding.UnitTests.MSpec
         }
 
         #endregion
-
 
         #region Stubs
 
@@ -338,13 +378,17 @@ namespace Incoding.UnitTests.MSpec
         {
             return Stub(message => message.repository.StubGetById(id, res));
         }
+        public MockMessage<TMessage, TResult> StubGetByIdAsync<TEntity>(object id, TEntity res) where TEntity : class, IEntity, new()
+        {
+            return Stub(message => message.repository.StubGetByIdAsync(id, res));
+        }
 
         public MockMessage<TMessage, TResult> StubSave<TEntity>(TEntity res, object id = null) where TEntity : class, IEntity, new()
         {
             Action<TEntity> verify = entity =>
                                      {
                                          entity.ShouldEqualWeak(res, null);
-                                         if(id != null)
+                                         if (id != null)
                                              entity.SetValue("Id", id);
                                      };
             return Stub(message => message.repository.Setup(r => r.Save(Pleasure.MockIt.Is<TEntity>(verify))));
@@ -381,5 +425,4 @@ namespace Incoding.UnitTests.MSpec
 
         #endregion
     }
-    
 }

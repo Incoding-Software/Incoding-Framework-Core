@@ -6,7 +6,7 @@ namespace Incoding.UnitTests.MSpec
 
     #endregion
 
-    public class MockCommand<TMessage> : MockMessage<TMessage, object> where TMessage : CommandBase
+    public class MockCommand<TMessage> : MockMessage<TMessage, object> where TMessage : IMessage
     {
         #region Constructors
 
