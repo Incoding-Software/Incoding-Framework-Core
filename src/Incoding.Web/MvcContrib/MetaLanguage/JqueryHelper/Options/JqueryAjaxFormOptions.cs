@@ -2,7 +2,9 @@ using Incoding.Core.Extensions;
 using Incoding.Core;
 using Incoding.Web.Extensions;
 using JetBrains.Annotations;
+#if !NET6_0_OR_GREATER
 using Microsoft.AspNetCore.Routing;
+#endif
 
 namespace Incoding.Web.MvcContrib
 {
@@ -22,11 +24,15 @@ namespace Incoding.Web.MvcContrib
 
         #endregion
 
-        #region Fields
+#region Fields
 
+#if NET6_0_OR_GREATER
+        private HtmlRouteValueDictionary data = new HtmlRouteValueDictionary();
+#else
         RouteValueDictionary data = new RouteValueDictionary();
+#endif
 
-        #endregion
+#endregion
 
         ////ncrunch: no coverage end
         #region Constructors
@@ -80,7 +86,11 @@ namespace Incoding.Web.MvcContrib
         /// </summary>
         public string Url { get { return this.GetOrDefault("url").Recovery(string.Empty).With(r => r.ToString()); } set { this.Set("url", value.AppendOnlyToQueryString(data)); } }
 
+#if NET6_0_OR_GREATER
+        public HtmlRouteValueDictionary Data
+#else
         public RouteValueDictionary Data
+#endif
         {
             get { return data; }
             set
@@ -90,6 +100,6 @@ namespace Incoding.Web.MvcContrib
             }
         }
 
-        #endregion
+#endregion
     }
 }

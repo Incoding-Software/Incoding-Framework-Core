@@ -3,9 +3,11 @@ using Incoding.Core;
 using Incoding.Core.CQRS.Core;
 using Incoding.Core.Extensions;
 using Incoding.Core;
+using Incoding.Core.Block.IoC;
 using Incoding.Web.Extensions;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace Incoding.Web.MvcContrib
@@ -53,7 +55,7 @@ namespace Incoding.Web.MvcContrib
         }
 
         //[Obsolete(@"Use Submit with option.Selector = selector ")]
-        internal IIncodingMetaLanguageEventBuilderDsl SubmitOn(Func<JquerySelector, JquerySelector> action, Action<JqueryAjaxFormOptions> configuration = null)
+        public IIncodingMetaLanguageEventBuilderDsl SubmitOn(Func<JquerySelector, JquerySelector> action, Action<JqueryAjaxFormOptions> configuration = null)
         {
             var options = new JqueryAjaxFormOptions(JqueryAjaxFormOptions.Default);
             MaybeObject.Do(configuration, r => r(options));
@@ -165,13 +167,26 @@ namespace Incoding.Web.MvcContrib
 
         public IIncodingMetaLanguageEventBuilderDsl Ajax([NotNull] Func<IUrlDispatcher, string> url)
         {
-            var urlDispatcher = new UrlDispatcher(new UrlHelper(Html.ViewContext));
+            var urlDispatcher = new UrlDispatcher(
+#if netcoreapp2_1
+                new UrlHelper(Html.ViewContext)
+#else
+                    null
+#endif
+                ,Html.ViewContext.HttpContext
+                );
             return Ajax(url(urlDispatcher));
         }
 
         public IIncodingMetaLanguageEventBuilderDsl AjaxPost([NotNull] Func<IUrlDispatcher, string> url)
         {
-            var urlDispatcher = new UrlDispatcher(new UrlHelper(Html.ViewContext));
+            var urlDispatcher = new UrlDispatcher(
+#if netcoreapp2_1
+                new UrlHelper(Html.ViewContext)
+#else
+                    null
+#endif
+                , Html.ViewContext.HttpContext);
             return AjaxPost(url(urlDispatcher));
         }
 

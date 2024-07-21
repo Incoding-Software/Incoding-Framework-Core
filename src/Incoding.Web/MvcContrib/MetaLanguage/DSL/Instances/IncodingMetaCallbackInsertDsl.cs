@@ -26,7 +26,7 @@ namespace Incoding.Web.MvcContrib
         #endregion
 
         [Obsolete("Please use WithTemplateByUrl/WithTemplateByView", false)]
-        public IncodingMetaCallbackInsertDsl WithTemplate([NotNull] Selector selector)
+        public IncodingMetaCallbackInsertDsl WithTemplate([JetBrains.Annotations.NotNull] Selector selector)
         {
             this.insertTemplateSelector = selector;
             return this;
@@ -44,7 +44,7 @@ namespace Incoding.Web.MvcContrib
         //    return WithTemplate(id.ToId() as Selector);
         //}
 
-        public IncodingMetaCallbackInsertDsl WithTemplateByUrl([NotNull] string url)
+        public IncodingMetaCallbackInsertDsl WithTemplateByUrl([JetBrains.Annotations.NotNull] string url)
         {
             if (url.StartsWith("||"))
                 throw new ArgumentException("Please use Url instead of Selector", "url");
@@ -58,12 +58,18 @@ namespace Incoding.Web.MvcContrib
         [ExcludeFromCodeCoverage]
         public IncodingMetaCallbackInsertDsl WithTemplateByUrl(Func<UrlDispatcher, string> evaluated)
         {
-            var dispatcher = new UrlDispatcher(new UrlHelper(_htmlHelper.ViewContext));
+            var dispatcher = new UrlDispatcher(
+#if netcoreapp2_1
+                new UrlHelper(_htmlHelper.ViewContext)
+#else
+                    null
+#endif
+                ,_htmlHelper.ViewContext.HttpContext);
             return WithTemplateByUrl(evaluated(dispatcher));
         }
 
         [ExcludeFromCodeCoverage]
-        public IncodingMetaCallbackInsertDsl WithTemplateByView([AspMvcPartialView, NotNull] string view)
+        public IncodingMetaCallbackInsertDsl WithTemplateByView([AspMvcPartialView, JetBrains.Annotations.NotNull] string view)
         {
             return WithTemplateByUrl((Func<UrlDispatcher, string>) (r => r.AsView(view)));
         }

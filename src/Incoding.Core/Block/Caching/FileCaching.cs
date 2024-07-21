@@ -1,9 +1,8 @@
 ﻿using System;
 using System.IO;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using Incoding.Core.Block.Logging;
 using Incoding.Core.Block.Logging.Core;
+using ProtoBuf;
 
 namespace Incoding.Core.Block.Caching
 {
@@ -12,14 +11,13 @@ namespace Incoding.Core.Block.Caching
         public static TInstance Evaluate<TInstance>(string path, Func<TInstance> eval) where TInstance : class
         {
             TInstance instance = default(TInstance);
-
-            IFormatter serializer = new BinaryFormatter();
+            
             if (File.Exists(path))
             {
                 try
                 {
-                    using (Stream stream = File.OpenRead(path))
-                        instance = serializer.Deserialize(stream) as TInstance;
+                    using (FileStream stream = File.OpenRead(path))
+                        instance = Serializer.Deserialize<TInstance>(stream);
                 }
                 catch (Exception exLoad)
                 {
@@ -32,8 +30,8 @@ namespace Incoding.Core.Block.Caching
 
                 try
                 {
-                    using (Stream stream = File.OpenWrite(path))
-                        serializer.Serialize(stream, instance);
+                    using (FileStream stream = File.Open(path, FileMode.Create))
+                        Serializer.Serialize(stream, instance);
                 }
                 catch (Exception exSave)
                 {

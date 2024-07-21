@@ -1,0 +1,32 @@
+﻿@using Incoding.Web.MvcContrib
+@using Incoding.WebTest80.Operations
+@using Microsoft.AspNetCore.Routing
+@model Incoding.WebTest80.Operations.AddItemAsyncCommand
+
+@using (Html.Incoding().BeginPush(setting =>
+{
+//setting.Url = Url.Action("AddItemFile", "Home");
+setting.OnSuccess = dsl => dsl.WithId(nameof(GetItems1Query)).Trigger.Incoding();
+   setting.EncType = Enctype.MultipartFormData;
+   setting.Method = FormMethod.Post;
+}))
+{
+    @*<form action="@Url.Action("AddItemFile", "Home")" method="post" enctype="multipart/form-data">*@
+    
+    @Html.ForGroup(r => r.OriginalValue1).TextBox(control =>
+    {
+        control.Label.Name = "Value 1:";
+        control.NestedValidationWithControl = true;
+    })
+
+    @Html.Incoding().Submit("Save 1")
+}
+@*</form>*@
+
+
+
+@(Html.When(JqueryBind.Click)
+      .AjaxPost(dispatcher => dispatcher.Push<ClearItemCacheCommand>())
+      .OnSuccess(dsl => dsl.WithId(nameof(GetItems1Query)).Trigger.Incoding())
+      .AsHtmlAttributes()
+      .ToButton("Clear Cache and Refresh"))

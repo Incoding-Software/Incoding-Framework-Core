@@ -5,7 +5,7 @@ namespace Incoding.Core.Block.Caching.Providers
 {
     public sealed class NetCachedProvider : ICachedProvider
     {
-        private IMemoryCache _memoryCache;
+        private MemoryCache _memoryCache;
 
         private Func<IMemoryCache> _getCache;
 
@@ -15,7 +15,7 @@ namespace Incoding.Core.Block.Caching.Providers
         {
             if (_getCache == null)
                 _getCache = () => new MemoryCache(new MemoryCacheOptions());
-            _memoryCache = _getCache();
+            _memoryCache = (MemoryCache)_getCache();
         }
 
         public NetCachedProvider(Func<IMemoryCache> getCache) : this()
@@ -35,8 +35,8 @@ namespace Incoding.Core.Block.Caching.Providers
 
         public void DeleteAll()
         {
-            _memoryCache.Dispose();
-            _memoryCache = _getCache();
+            _memoryCache.Compact(1.0);
+            //_memoryCache = (MemoryCache)_getCache();
         }
 
         public void Delete(string key)

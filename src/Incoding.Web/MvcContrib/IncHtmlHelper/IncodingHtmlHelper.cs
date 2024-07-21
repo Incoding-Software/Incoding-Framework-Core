@@ -330,7 +330,13 @@ namespace Incoding.Web.MvcContrib
                 })
 
                 .AsHtmlAttributes(routes)
-                .ToMvcForm(setting.Url ?? new UrlHelper(this.htmlHelper.ViewContext).Dispatcher().Push<TModel>(), setting.Method, setting.EncType);
+                .ToMvcForm(setting.Url ?? new UrlDispatcher(
+#if netcoreapp2_1
+                    new UrlHelper(htmlHelper.ViewContext)
+#else
+                    null
+#endif
+                    ,htmlHelper.ViewContext.HttpContext).Push<TModel>(), setting.Method, setting.EncType);
         }
 
         

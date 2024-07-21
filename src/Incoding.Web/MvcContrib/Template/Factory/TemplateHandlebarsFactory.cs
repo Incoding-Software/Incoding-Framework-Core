@@ -15,11 +15,14 @@ namespace Incoding.Web.MvcContrib
 
     public class TemplateHandlebarsFactory : ITemplateFactory
     {
-        internal static readonly ConcurrentDictionary<string, Func<object, string>> cache = new ConcurrentDictionary<string, Func<object, string>>();
-
+//#if netcoreapp2_1
+//        internal static readonly ConcurrentDictionary<string, Func<object, string>> cache = new ConcurrentDictionary<string, Func<object, string>>();
+//#else
+        internal static readonly ConcurrentDictionary<string, HandlebarsTemplate<object, object>> cache = new ConcurrentDictionary<string, HandlebarsTemplate<object, object>>();
+//#endif
         public static Func<string> GetVersion = () => { return string.Empty; };
 
-        #region ITemplateFactory Members
+#region ITemplateFactory Members
 
         public ITemplateSyntax<TModel> ForEach<TModel>(IHtmlHelper htmlHelper)
         {
@@ -63,6 +66,6 @@ namespace Incoding.Web.MvcContrib
                                                                  })(new { data = correctData });
         }
 
-        #endregion
+#endregion
     }
 }

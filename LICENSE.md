@@ -1,4 +1,4 @@
-Copyright 2009 - 2018 Incoding Software. http://incoding.biz/
+Copyright 2009 - 2022 Incoding Software. http://incoding.biz/
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 

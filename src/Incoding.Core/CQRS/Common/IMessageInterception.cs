@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Incoding.Core.CQRS.Core;
 
 namespace Incoding.Core.CQRS.Common
@@ -8,8 +9,8 @@ namespace Incoding.Core.CQRS.Common
 
     public interface IMessageInterception
     {
-        void OnBefore(IMessage message);
+        Task OnBefore(IMessage message);
 
-        void OnAfter(IMessage message);
+        Task OnAfter(IMessage message);
     }
 }

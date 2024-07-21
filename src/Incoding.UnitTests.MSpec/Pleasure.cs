@@ -14,7 +14,9 @@ using Incoding.Web.Extensions;
 using Incoding.Web.MvcContrib;
 using Machine.Specifications;
 using Microsoft.AspNetCore.Http;
+#if netcoreapp2_1
 using Microsoft.AspNetCore.Http.Internal;
+#endif
 using Microsoft.AspNetCore.Routing;
 using Moq;
 

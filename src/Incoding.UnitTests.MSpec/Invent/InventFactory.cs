@@ -10,8 +10,9 @@ using Incoding.Core;
 using Incoding.Core.Extensions;
 using Incoding.Core.Quality;
 using Microsoft.AspNetCore.Http;
+#if netcoreapp2_1
 using Microsoft.AspNetCore.Http.Internal;
-
+#endif
 namespace Incoding.UnitTests.MSpec
 {
     #region << Using >>

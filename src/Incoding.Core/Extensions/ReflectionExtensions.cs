@@ -49,18 +49,33 @@ namespace Incoding.Core.Extensions
 
         public static string GetMemberName(this LambdaExpression lambdaExpression)
         {
-            MemberExpression memberExpr = null;
+            MemberExpression memberExpression = null;
             if (lambdaExpression.Body.NodeType == ExpressionType.Convert)
             {
-                memberExpr =
-                    ((UnaryExpression)lambdaExpression.Body).Operand as MemberExpression;
+                memberExpression = ((UnaryExpression)lambdaExpression.Body).Operand as MemberExpression;
             }
             else if (lambdaExpression.Body.NodeType == ExpressionType.MemberAccess)
             {
-                memberExpr = lambdaExpression.Body as MemberExpression;
+                memberExpression = lambdaExpression.Body as MemberExpression;
             }
-            if (memberExpr != null)
-                return memberExpr.Member.Name;
+
+            if (memberExpression != null)
+            {
+                string path = "";
+                MemberExpression memberExpressionOrg = memberExpression;
+
+                while (memberExpression.Expression.NodeType == ExpressionType.MemberAccess)
+                {
+                    var propInfo = memberExpression.Expression
+                        .GetType().GetProperty("Member");
+                    var propValue = propInfo.GetValue(memberExpression.Expression, null)
+                        as PropertyInfo;
+                    path = propValue.Name + "." + path;
+
+                    memberExpression = memberExpression.Expression as MemberExpression;
+                }
+                return path + memberExpressionOrg.Member.Name;
+            }
 
             string toDebugString = ((UnaryExpression)lambdaExpression.Body).Operand.ToString();
             int firstDot = toDebugString.IndexOf(".", StringComparison.InvariantCultureIgnoreCase) + 1;

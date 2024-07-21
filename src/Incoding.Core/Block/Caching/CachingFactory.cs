@@ -34,6 +34,10 @@ namespace Incoding.Core.Block.Caching
         {
             this.init.Provider.Delete(key.GetName());
         }
+        public void DeleteAll()
+        {
+            this.init.Provider.DeleteAll();
+        }
 
         public void Set<TKey, TInstance>(TKey key, TInstance value, CacheOptions cacheOptions = null)
                 where TInstance : new()

@@ -37,7 +37,7 @@ namespace Incoding.Web.MvcContrib
         IIncodingMetaLanguageEventBuilderDsl Submit(Action<JqueryAjaxFormOptions> configuration = null);
 
         //[Obsolete(@"Use Submit with option.Selector = selector ")]
-        //IIncodingMetaLanguageEventBuilderDsl SubmitOn(Func<JquerySelector, JquerySelector> action, Action<JqueryAjaxFormOptions> configuration = null);
+        IIncodingMetaLanguageEventBuilderDsl SubmitOn(Func<JquerySelector, JquerySelector> action, Action<JqueryAjaxFormOptions> configuration = null);
 
         IIncodingMetaLanguageEventBuilderDsl Hash(string url = "", string prefix = "root");
 

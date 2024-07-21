@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Infrastructure;
+using Newtonsoft.Json;
 using NHibernate;
 using NHibernate.Cfg;
 
@@ -26,8 +27,8 @@ namespace Incoding.Data.NHibernate.Provider
         public ISession Open(string connectionString)
         {
             var session = sessionFactory.Value.OpenSession();
-            //if (!string.IsNullOrWhiteSpace(connectionString))
-            //    session.Connection.ConnectionString = connectionString;
+            if (!string.IsNullOrWhiteSpace(connectionString))
+                session.Connection.ConnectionString = connectionString;
 
             return session;
         }
@@ -46,16 +47,13 @@ namespace Incoding.Data.NHibernate.Provider
         public NhibernateSessionFactory(Func<Configuration> atOnce, string path)
         {
             Configuration cfg = null;
-            IFormatter serializer = new  BinaryFormatter(new NetStandardSerialization.SurrogateSelector(), new StreamingContext());
-
-
-
+            
             if (path != null && File.Exists(path))
             {
                 try
                 {
-                    using (Stream stream = File.OpenRead(path))
-                        cfg = serializer.Deserialize(stream) as Configuration;
+                    using (FileStream stream = File.OpenRead(path))
+                        cfg = ProtoBuf.Serializer.Deserialize<Configuration>(stream);
                 }
                 catch (Exception ex)
                 {
@@ -70,8 +68,8 @@ namespace Incoding.Data.NHibernate.Provider
                 {
                     try
                     {
-                        using (Stream stream = File.OpenWrite(path))
-                            serializer.Serialize(stream, cfg);
+                        using (FileStream stream = File.Open(path, FileMode.Create))
+                            ProtoBuf.Serializer.Serialize(stream, cfg);
                     }
                     catch (Exception ex)
                     {

@@ -11,6 +11,8 @@ using Moq.Language;
 
 namespace Incoding.UnitTests.MSpec
 {
+    using System.Threading.Tasks;
+
     #region << Using >>
 
     #endregion
@@ -70,6 +72,13 @@ namespace Incoding.UnitTests.MSpec
             dispatcher
                     .Setup(r => r.Query(Pleasure.MockIt.IsStrong(query), Pleasure.MockIt.IsStrong(executeSetting)))
                     .Returns(result);
+        }  
+        
+        public static void StubQueryAsync<TQuery, TResult>(this Mock<IDispatcher> dispatcher, TQuery query, TResult result, MessageExecuteSetting executeSetting = null) where TQuery : QueryBaseAsync<TResult>
+        {
+            dispatcher
+                    .Setup(r => r.QueryAsync(Pleasure.MockIt.IsStrong(query), Pleasure.MockIt.IsStrong(executeSetting)))
+                    .Returns(Task.FromResult(result));
         }
 
 
@@ -126,6 +135,13 @@ namespace Incoding.UnitTests.MSpec
             repository
                     .Setup(r => r.GetById<TEntity>(id))
                     .Returns(entity);
+        }
+
+        public static void StubGetByIdAsync<TEntity>(this Mock<IRepository> repository, object id, TEntity entity) where TEntity : class, IEntity, new()
+        {
+            repository
+                    .Setup(r => r.GetByIdAsync<TEntity>(id))
+                    .Returns(Task.FromResult(entity));
         }
 
         public static void StubLoadById<TEntity>(this Mock<IRepository> repository, object id, TEntity entity) where TEntity : class, IEntity, new()
