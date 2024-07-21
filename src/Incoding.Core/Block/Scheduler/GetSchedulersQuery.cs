@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Incoding.Core.Block.Core;
+using Incoding.Core.Block.IoC;
 using Incoding.Core.Block.Scheduler.Persistence;
 using Incoding.Core.Block.Scheduler.Query;
 using Incoding.Core.CQRS.Core;
@@ -27,12 +29,12 @@ namespace Incoding.Core.Block.Scheduler
         {
             public string Id { get; set; }
 
-            public CommandBase Instance { get; set; }
+            public IMessage Instance { get; set; }
 
             public int TimeOut { get; set; }
         }
 
-        protected override IEnumerable<Response> ExecuteResult()
+        protected override async Task<IEnumerable<Response>> ExecuteResult()
         {
             var delayOfStatuses = new[] { DelayOfStatus.New, DelayOfStatus.Error }.ToList();
             if (FirstRun)
@@ -43,7 +45,8 @@ namespace Incoding.Core.Block.Scheduler
             if (!isHaveForDo)
                 return new List<Response>();
 
-            return Repository.Query(whereSpecification: new DelayToScheduler.Where.ByStatus(delayOfStatuses.ToArray())
+            var items = Repository.Query(
+                    whereSpecification: new DelayToScheduler.Where.ByStatus(delayOfStatuses.ToArray())
                         .And(new DelayToScheduler.Where.ByAsync(Async))
                         .And(new DelayToScheduler.Where.AvailableStartsOn(Date)),
                     orderSpecification: new DelayToScheduler.Sort.Default(),
@@ -55,25 +58,38 @@ namespace Incoding.Core.Block.Scheduler
                     Timeout = s.Option.TimeOut,
                     Type = s.Type
                 })
-                .Select(s => new Response()
+                .Select(s => new
                 {
                     Id = s.Id,
-                    Instance = s.Command.DeserializeFromJson(Type.GetType(s.Type)) as CommandBase,
+                    Type = s.Type,
+                    Command = s.Command,
+                    Timeout = s.Timeout
+                });
+
+            var list = await items.ToProviderList();
+
+            return list.Select(s =>
+            {
+                var command = s.Command.DeserializeFromJson(Type.GetType(s.Type)) as IMessage;
+                return new Response()
+                {
+                    Id = s.Id,
+                    Instance = command,
                     TimeOut = s.Timeout
-                })
-                .ToList();
+                };
+            }).ToArray();
         }
         
-        public class GetLastDateQuery : QueryBase<DateTime?>
+        public class GetLastDateQuery : QueryBaseAsync<DateTime?>
         {
             public bool Async { get; set; }
             
-            protected override DateTime? ExecuteResult()
+            protected override async Task<DateTime?> ExecuteResult()
             {
                 var delayToSchedulers = Repository.Query(whereSpecification: new DelayToScheduler.Where.ByStatus(new[] { DelayOfStatus.New, DelayOfStatus.Error }.ToArray())
                     .And(new DelayToScheduler.Where.ByAsync(Async))
                     .And(new DelayToScheduler.Where.AvailableStartsOn(DateTime.UtcNow)));
-                return delayToSchedulers.Any() ? delayToSchedulers.Min(s => s.StartsOn) : (DateTime?) null;
+                return await delayToSchedulers.ToProviderAny() ? await delayToSchedulers.ToProviderMin(s => s.StartsOn) : (DateTime?) null;
             }
         }
     }

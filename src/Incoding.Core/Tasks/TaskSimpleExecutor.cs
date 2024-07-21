@@ -1,23 +1,24 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Timers;
 
 namespace Incoding.Core.Tasks
 {
     public class TaskSimpleExecutor : TaskExecutorBase
     {
-        private Action _action;
+        private Func<Task> _action;
 
-        public TaskSimpleExecutor SetAction(Action action)
+        public TaskSimpleExecutor SetAction(Func<Task> action)
         {
             this._action = action;
             return this;
         }
 
-        protected override void Execute()
+        protected override async Task Execute()
         {
             if (StopImmediately)
                 return;
-            _action();
+            await _action();
         }
     }
 }

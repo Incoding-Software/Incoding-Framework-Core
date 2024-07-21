@@ -7,7 +7,7 @@ using FluentNHibernate.Infrastructure;
 using NHibernate;
 using NHibernate.Cfg;
 
-namespace Incoding.Data.NHibernate
+namespace Incoding.Data.NHibernate.Provider
 {
     #region << Using >>
 

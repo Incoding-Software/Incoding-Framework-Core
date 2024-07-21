@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using GridUI.Operations;
 using GridUI.Persistance;
 using Incoding.Core.CQRS;
@@ -9,9 +10,9 @@ using Incoding.Web.CQRS.Common.Query;
 
 namespace GridUI.Setups
 {
-    public class ProductsSetupCommand : CommandBase
+    public class ProductsSetupCommand : CommandBaseAsync
     {
-        protected override void Execute()
+        protected override async Task ExecuteAsync()
         {
             if (this.Dispatcher.Query(new GetEntitiesQuery<Product>()).Any())
                 return;
@@ -37,13 +38,13 @@ namespace GridUI.Setups
                                   LastName = "Gelmutdinov"
                               };
 
-            Dispatcher.Push(IgorCmd);
-            Dispatcher.Push(VictorCmd);
-            Dispatcher.Push(VladCmd);
+            await Dispatcher.PushAsync(IgorCmd);
+            await Dispatcher.PushAsync(VictorCmd);
+            await Dispatcher.PushAsync(VladCmd);
 
             for (int i = 0; i < 50; i++)
             {
-                Dispatcher.Push(new AddProductCommand
+                await Dispatcher.PushAsync(new AddProductCommand
                                      {
                                              Name = "Продукт " + i,
                                              Price = (decimal)55.5 + (decimal)i,

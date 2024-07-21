@@ -4,7 +4,7 @@
         <name>Incoding.Data.NHibernate</name>
     </assembly>
     <members>
-        <member name="M:Incoding.Data.NHibernate.NHibernateEntityMap`1.IdGenerateByGuid(System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+        <member name="M:Incoding.Data.NHibernate.Provider.NHibernateEntityMap`1.IdGenerateByGuid(System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
             <summary>
             See sample
             <code>
@@ -13,6 +13,37 @@
             </summary>
             <param name="property"></param>
             <returns></returns>
+        </member>
+        <member name="T:Incoding.Data.NHibernate.Provider.ProviderExtension">
+            <summary>
+            Extensions with selected DB Provider
+            </summary>
+        </member>
+        <member name="M:Incoding.Data.NHibernate.Provider.ProviderExtension.ToProviderList``1(System.Linq.IQueryable{``0})">
+            <summary>
+            To List with selected Provider
+            </summary>
+            <param name="items"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Incoding.Data.NHibernate.Provider.ProviderExtension.ToProviderAny``1(System.Linq.IQueryable{``0})">
+            <summary>
+            Any with selected Provider
+            </summary>
+            <param name="items"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Incoding.Data.NHibernate.Provider.ProviderExtension.ToProviderMin``2(System.Linq.IQueryable{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Min with selected Provider
+            </summary>
+            <param name="items"></param>
+            <param name="selector"></param>
+            <typeparam name="TSource"></typeparam>
+            <typeparam name="TResult"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
         </member>
     </members>
 </doc>

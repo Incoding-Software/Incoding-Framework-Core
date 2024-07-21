@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 using NHibernate;
 using NHibernate.Persister.Entity;
 
-namespace Incoding.Data.NHibernate
+namespace Incoding.Data.NHibernate.Provider
 {
     #region << Using >>
 

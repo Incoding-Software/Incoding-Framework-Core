@@ -4,8 +4,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using FluentNHibernate.Mapping;
 using Incoding.Core.Extensions;
+using Incoding.Data.NHibernate.Provider.HqGenerator;
 
-namespace Incoding.Data.NHibernate
+namespace Incoding.Data.NHibernate.Provider
 {
     #region << Using >>
 

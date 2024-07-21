@@ -1,7 +1,7 @@
 using System.Data;
 using Incoding.Core.Data;
 
-namespace Incoding.Data.NHibernate
+namespace Incoding.Data.NHibernate.Provider
 {
     #region << Using >>
 

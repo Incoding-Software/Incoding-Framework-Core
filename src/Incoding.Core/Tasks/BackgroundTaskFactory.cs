@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Threading.Tasks;
 using Incoding.Core;
 
 namespace Incoding.Core.Tasks
@@ -16,8 +17,8 @@ namespace Incoding.Core.Tasks
 
         public void Initialize()
         {
-            initialized = true;
             Tasks.DoEach(pair => pair.Value.Start());
+            initialized = true;
         }
 
         public void StopAll()
@@ -30,7 +31,7 @@ namespace Incoding.Core.Tasks
 
         public bool IsInitialized { get { return initialized; } }
 
-        public TaskSimpleExecutor AddExecutor(string key, Action action, Action<TaskExecutorBase.TaskExecutorOptions> executorOptions = null)
+        public TaskSimpleExecutor AddExecutor(string key, Func<Task> action, Action<TaskExecutorBase.TaskExecutorOptions> executorOptions = null)
         {
             var taskExecutor = new TaskSimpleExecutor().SetAction(action).SetOptions(executorOptions);
             if (Tasks.TryAdd(key, taskExecutor))
@@ -38,7 +39,7 @@ namespace Incoding.Core.Tasks
             return null;
         }
 
-        public TaskSequentialExecutor<TItem> AddSequentalExecutor<TItem>(string key, Func<SequentialTaskQueryBase<TItem>> query, Func<TItem, SequentialTaskCommandBase<TItem>> createCommand, Action<TaskExecutorBase.TaskExecutorOptions> executorOptions = null)
+        public TaskSequentialExecutor<TItem> AddSequentialExecutor<TItem>(string key, Func<SequentialTaskQueryBase<TItem>> query, Func<TItem, SequentialTaskCommandBase<TItem>> createCommand, Action<TaskExecutorBase.TaskExecutorOptions> executorOptions = null)
         {
             var taskExecutor = new TaskSequentialExecutor<TItem>(query, createCommand).SetOptions(executorOptions);
             if (Tasks.TryAdd(key, taskExecutor))
@@ -46,7 +47,7 @@ namespace Incoding.Core.Tasks
             return null;
         }
 
-        public TaskSequentialExecutor<TItem> AddSequentalExecutor<TItem>(string key, SequentialTask<TItem> task, Action<TaskExecutorBase.TaskExecutorOptions> executorOptions = null)
+        public TaskSequentialExecutor<TItem> AddSequentialExecutor<TItem>(string key, SequentialTask<TItem> task, Action<TaskExecutorBase.TaskExecutorOptions> executorOptions = null)
         {
             var taskExecutor = new TaskSequentialExecutor<TItem>(task.Query, task.Command).SetOptions(executorOptions);
             if (Tasks.TryAdd(key, taskExecutor))

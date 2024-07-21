@@ -27,7 +27,7 @@ namespace Incoding.Core.Tasks
 
         public static TaskExecutorOptions DefaultOptions = new TaskExecutorOptions
         {
-            OnError = exception => LoggingFactory.Instance.LogException(LogType.Debug, exception),
+            OnError = async exception => await LoggingFactory.Instance.LogExceptionAsync(LogType.Debug, exception),
             Interval = TimeSpan.FromSeconds(10),
             DelayToStart = TimeSpan.FromSeconds(30),
             DelayBetweenSequencesMs = 10
@@ -35,7 +35,7 @@ namespace Incoding.Core.Tasks
 
         public class TaskExecutorOptions
         {
-            private Action<Exception> _onError;
+            private Func<Exception, Task> _onError;
             private TimeSpan? _interval;
             private TimeSpan? _delayToStart;
             private int? _delayBetweenSequencesMs;
@@ -46,7 +46,7 @@ namespace Incoding.Core.Tasks
                 set { _delayToStart = value; }
             }
 
-            public Action<Exception> OnError
+            public Func<Exception, Task> OnError
             {
                 get { return _onError ?? DefaultOptions.OnError; }
                 set { _onError = value; }
@@ -66,7 +66,7 @@ namespace Incoding.Core.Tasks
                 set { _delayBetweenSequencesMs = value; }
             }
 
-            public Action AfterExecution { get; set; }
+            public Func<Task> AfterExecution { get; set; }
         }
 
         private Timer _timer;
@@ -82,12 +82,12 @@ namespace Incoding.Core.Tasks
             get { return _lastRunning; }
         }
 
-        protected abstract void Execute();
+        protected abstract Task Execute();
 
-        public void Start()
+        public async Task Start()
         {
             _timer = new Timer(Options.Interval.TotalMilliseconds);
-            _timer.Elapsed += (sender, args) =>
+            _timer.Elapsed += async (sender, args) =>
             {
                 if (_executing)
                     return;
@@ -95,14 +95,15 @@ namespace Incoding.Core.Tasks
                     return;
                 try
                 {
-                    lock (_lock)
-                    {
+                    //lock (_lock)
+                    //{
                         _executing = true;
-                        Execute();
-                        Options.AfterExecution?.Invoke();
+                        await Execute();
+                        if(Options.AfterExecution != null)
+                            await Options.AfterExecution.Invoke();
                         _lastRunning = DateTime.UtcNow;
                         _executing = false;
-                    }
+                    //}
                 }
                 catch (Exception ex)
                 {
@@ -121,12 +122,12 @@ namespace Incoding.Core.Tasks
         {
             if (immediate)
                 StopImmediately = true;
-            lock (_lock)
-            {
+            //lock (_lock)
+            //{
                 _timer?.Stop();
                 _timer?.Dispose();
                 _timer = null;
-            }
+            //}
         }
     }
 }

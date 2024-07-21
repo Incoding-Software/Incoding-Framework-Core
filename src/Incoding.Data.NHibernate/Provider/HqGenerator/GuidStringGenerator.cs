@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using NHibernate.Engine;
 using NHibernate.Id;
 
-namespace Incoding.Data
+namespace Incoding.Data.NHibernate.Provider.HqGenerator
 {
     ////ncrunch: no coverage start
     public class GuidStringGenerator : IIdentifierGenerator

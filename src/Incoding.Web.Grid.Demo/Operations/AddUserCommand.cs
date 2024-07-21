@@ -1,9 +1,10 @@
-﻿using GridUI.Persistance;
+﻿using System.Threading.Tasks;
+using GridUI.Persistance;
 using Incoding.Core.CQRS.Core;
 
 namespace GridUI.Operations
 {
-    public class AddUserCommand : CommandBase
+    public class AddUserCommand : CommandBaseAsync
     {
         #region Properties
 
@@ -14,12 +15,12 @@ namespace GridUI.Operations
 
         #endregion
 
-        protected override void Execute()
+        protected override async Task ExecuteAsync()
         {
             var user = new User();
             user.FirstName = FirstName;
             user.LastName = LastName;
-            Repository.Save(user);
+            await Repository.SaveAsync(user);
             Result = user;
         }
     }

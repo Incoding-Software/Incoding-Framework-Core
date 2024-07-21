@@ -1,6 +1,6 @@
 ﻿using NHibernate;
 
-namespace Incoding.Data.NHibernate
+namespace Incoding.Data.NHibernate.Provider
 {
     #region << Using >>
 

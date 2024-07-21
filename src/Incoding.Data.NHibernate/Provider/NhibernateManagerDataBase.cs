@@ -3,7 +3,7 @@ using FluentNHibernate.Cfg;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
 
-namespace Incoding.Data.NHibernate
+namespace Incoding.Data.NHibernate.Provider
 {
     #region << Using >>
 

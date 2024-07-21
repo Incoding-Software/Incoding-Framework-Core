@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Threading.Tasks;
 using Incoding.Core.Block.Logging.Core;
 using Incoding.Core.Extensions;
 
@@ -40,7 +41,8 @@ namespace Incoding.Core.Block.Logging.Loggers
         #region ILogger Members
 
         public abstract void Log(LogMessage logMessage);
-
+        public abstract Task LogAsync(LogMessage logMessage);
+        
         public ILogger WithTemplate(Func<LogMessage, string> func)
         {
             this.template = func;

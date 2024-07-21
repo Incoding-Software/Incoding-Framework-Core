@@ -1,4 +1,5 @@
-﻿using Incoding.Core.Block.Scheduler.Persistence;
+﻿using System.Threading.Tasks;
+using Incoding.Core.Block.Scheduler.Persistence;
 using Incoding.Core.CQRS;
 using Incoding.Core.CQRS.Core;
 
@@ -8,13 +9,13 @@ namespace Incoding.Core.Block.Scheduler.Command
 
     #endregion
 
-    public class ChangeSchedulerStatusByUIDCommand : CommandBase
+    public class ChangeSchedulerStatusByUIDCommand : CommandBaseAsync
     {
-        protected override void Execute()
+        protected override async Task ExecuteAsync()
         {
             foreach (var delay in Repository.Query(whereSpecification: new DelayToScheduler.Where.ByUID(UID)))
             {
-                Dispatcher.Push(new ChangeSchedulerStatusCommand
+                await Dispatcher.PushAsync(new ChangeSchedulerStatusCommand
                                 {
                                         Id = delay.Id,
                                         Status = Status
@@ -29,5 +30,6 @@ namespace Incoding.Core.Block.Scheduler.Command
         public DelayOfStatus Status { get; set; }
 
         #endregion
+
     }
 }

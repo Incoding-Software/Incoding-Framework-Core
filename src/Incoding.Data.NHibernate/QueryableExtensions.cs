@@ -4,6 +4,7 @@ using Incoding.Core.Block.Core;
 using Incoding.Core.Data;
 using Incoding.Core.Extensions;
 using Incoding.Core.Extensions.LinqSpecs;
+using Incoding.Data.NHibernate.Provider;
 
 namespace Incoding.Data.NHibernate
 {

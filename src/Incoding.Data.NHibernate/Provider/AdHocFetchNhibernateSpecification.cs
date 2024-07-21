@@ -5,7 +5,7 @@ using Incoding.Core.Data;
 using JetBrains.Annotations;
 using NHibernate.Linq;
 
-namespace Incoding.Data.NHibernate
+namespace Incoding.Data.NHibernate.Provider
 {
     public class AdHocFetchNhibernateSpecification<TEntity> : AdHocFetchSpecificationBase<TEntity> where TEntity: class
     {

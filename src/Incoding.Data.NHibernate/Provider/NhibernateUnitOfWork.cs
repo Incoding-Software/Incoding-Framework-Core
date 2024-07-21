@@ -2,7 +2,7 @@ using System.Data;
 using System.Threading.Tasks;
 using NHibernate;
 
-namespace Incoding.Data.NHibernate
+namespace Incoding.Data.NHibernate.Provider
 {
     #region << Using >>
 

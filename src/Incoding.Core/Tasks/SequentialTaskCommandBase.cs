@@ -1,11 +1,11 @@
-﻿using Incoding.Core.CQRS.Core;
+﻿using System.Threading.Tasks;
+using Incoding.Core.CQRS.Core;
 
 namespace Incoding.Core.Tasks
 {
-    public abstract class SequentialTaskCommandBase<T> : CommandBase
+    public abstract class SequentialTaskCommandBase<T> : CommandBaseAsync
     {
         public T Item { get; set; }
-        
-        protected abstract override void Execute();
+        protected abstract override Task ExecuteAsync();
     }
 }

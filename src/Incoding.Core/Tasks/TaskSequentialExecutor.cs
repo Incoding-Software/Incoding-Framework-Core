@@ -17,22 +17,23 @@ namespace Incoding.Core.Tasks
             _createCommand = createCommand;
         }
 
-        protected override void Execute()
+        protected override async Task Execute()
         {
-            IEnumerable<TItem> items = Dispatcher.Query(_query());
+            IEnumerable<TItem> items = await Dispatcher.QueryAsync(_query());
             if (StopImmediately)
                 return;
             foreach (var item in items)
             {
                 var cmd = _createCommand(item);
                 cmd.Item = item;
-                Dispatcher.Push(cmd);
+                await Dispatcher.PushAsync(cmd);
                 if (StopImmediately)
                     return;
                 Task.Delay(Options.DelayBetweenSequencesMs);
             }
 
-            Options.AfterExecution?.Invoke();
+            if(Options.AfterExecution != null)
+                await Options.AfterExecution.Invoke();
         }
     }
 }

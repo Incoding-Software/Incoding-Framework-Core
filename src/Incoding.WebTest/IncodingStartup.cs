@@ -19,8 +19,8 @@ using Incoding.Core.Extensions;
 using Incoding.Core.Extensions.LinqSpecs;
 using Incoding.Core.Tasks;
 using Incoding.Data;
-using Incoding.Data.EF;
 using Incoding.Data.NHibernate;
+using Incoding.Data.NHibernate.Provider;
 using Incoding.Web;
 using Incoding.Web.MvcContrib;
 using Incoding.WebTest.Models;
@@ -98,6 +98,7 @@ namespace Incoding.WebTest
                     .ExposeConfiguration(cfg => new SchemaUpdate(cfg).Execute(false, true));
                 return configuration;
             };
+            services.AddSingleton<IProviderExtension, ProviderExtension>();
             //services.ConfigureIncodingNhDataServices(typeof(ItemEntity), path, builderConfigure);
 
             Func<Configuration> config = () =>
@@ -193,29 +194,30 @@ namespace Incoding.WebTest
             IoCFactory.Instance.Initialize(init => init.WithProvider(new MSDependencyInjectionIoCProvider(app.ApplicationServices)));
             CachingFactory.Instance.Initialize(init => init.WithProvider(new NetCachedProvider(() => app.ApplicationServices.GetRequiredService<IMemoryCache>())));
 
-            new DefaultDispatcher().Push(new ScheduleCommand()
-            {
-                Command = new AddItemCommand
-                {
-                    OriginalValue = "456"
-                },
-                Recurrency = new GetRecurrencyDateQuery
-                {
-                    StartDate = DateTime.UtcNow.AddMinutes(5)
-                }
-            });
+            //var task = new DefaultDispatcher().PushAsync(new ScheduleCommand()
+            //{
+            //    Command = new AddItemCommand
+            //    {
+            //        OriginalValue = "456"
+            //    },
+            //    Recurrency = new GetRecurrencyDateQuery
+            //    {
+            //        StartDate = DateTime.UtcNow.AddMinutes(5)
+            //    }
+            //});
+            //task.Wait();
 
             BackgroundTaskFactory.Instance.AddScheduler();
 
             BackgroundTaskFactory.Instance.AddExecutor("SomeService",
-                () =>
+                async () =>
                 {
-                    new DefaultDispatcher().Push(new BackgroundServiceCommand());
-                }, options => options.Interval = TimeSpan.FromSeconds(15));
+                    await new DefaultDispatcher().PushAsync(new BackgroundServiceCommand());
+                }, options => options.Interval = TimeSpan.FromSeconds(9));
 
-            BackgroundTaskFactory.Instance.AddSequentalExecutor("Some Sequential Service",
+            BackgroundTaskFactory.Instance.AddSequentialExecutor("Some Sequential Service",
                 () => new SequentialTestQuery(), arg => new SequentialTestCommand()
-                , options => options.Interval = TimeSpan.FromSeconds(15));
+                , options => options.Interval = TimeSpan.FromSeconds(25));
 
             BackgroundTaskFactory.Instance.Initialize();
 

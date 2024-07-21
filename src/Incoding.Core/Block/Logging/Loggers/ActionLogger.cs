@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Incoding.Core.Block.Logging.Core;
 
 namespace Incoding.Core.Block.Logging.Loggers
@@ -28,6 +29,11 @@ namespace Incoding.Core.Block.Logging.Loggers
         #endregion
 
         public override void Log(LogMessage logMessage)
+        {
+            this.log(this.template(logMessage));
+        }
+
+        public override async Task LogAsync(LogMessage logMessage)
         {
             this.log(this.template(logMessage));
         }

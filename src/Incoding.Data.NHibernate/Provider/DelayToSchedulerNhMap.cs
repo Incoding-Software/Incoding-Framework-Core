@@ -3,7 +3,7 @@ using Incoding.Core.Block.Scheduler.Persistence;
 using Incoding.Core.Block.Scheduler.Query;
 using JetBrains.Annotations;
 
-namespace Incoding.Data.NHibernate
+namespace Incoding.Data.NHibernate.Provider
 {
         [UsedImplicitly, ExcludeFromCodeCoverage]
         public class DelayToSchedulerNhMap : NHibernateEntityMap<DelayToScheduler>

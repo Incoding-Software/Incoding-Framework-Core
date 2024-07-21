@@ -1,13 +1,12 @@
 ﻿using System;
 using FluentNHibernate.Cfg;
-using FluentNHibernate.Cfg.Db;
 using Incoding.Core.Data;
-using Incoding.Data.NHibernate;
+using Incoding.Core.Extensions;
+using Incoding.Data.NHibernate.Provider;
 using Microsoft.Extensions.DependencyInjection;
 using NHibernate.Cfg;
-using NHibernate.Tool.hbm2ddl;
 
-namespace Incoding.Data.EF
+namespace Incoding.Data.NHibernate
 {
     public static class ServiceCollectionExtensions
     {
@@ -16,7 +15,7 @@ namespace Incoding.Data.EF
             Func<FluentConfiguration, FluentConfiguration> builderConfigure)
         {
             services.AddSingleton<IUnitOfWorkFactory, NhibernateUnitOfWorkFactory>();
-
+            services.AddSingleton<IProviderExtension, ProviderExtension>();
 //            string path = Path.Combine(AppContext.BaseDirectory, string.Format("fluently_{0}_{1}.cfg", version,
 //#if DEBUG
 //                new string(connectionString.ToCharArray().Select(r => Char.IsLetterOrDigit(r) ? r : 'a').ToArray())

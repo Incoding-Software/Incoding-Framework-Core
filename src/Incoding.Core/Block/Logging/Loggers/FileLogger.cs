@@ -5,7 +5,11 @@
 
 using System;
 using System.IO;
+using System.Net.Sockets;
+using System.Threading;
+using System.Threading.Tasks;
 using Incoding.Core.Block.Logging.Core;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Incoding.Core.Block.Logging.Loggers
 {
@@ -22,6 +26,7 @@ namespace Incoding.Core.Block.Logging.Loggers
         #region Static Fields
 
         static readonly object lockObject = new object();
+        static ReaderWriterLock locker = new ReaderWriterLock();
 
         #endregion
 
@@ -94,6 +99,36 @@ namespace Incoding.Core.Block.Logging.Loggers
                     streamWriter.Write(message);
                     streamWriter.Flush();
                 }
+            }
+        }
+
+        public override async Task LogAsync(LogMessage logMessage)
+        {
+            string fullPath = Path.Combine(this.folderPath, this.fileName.Invoke());
+            lock (lockObject)
+            {
+                if (this.clearAtOnce)
+                {
+                    if (File.Exists(fullPath))
+                        File.Delete(fullPath);
+
+                    this.clearAtOnce = false;
+                }
+            }
+
+            string message = this.template.Invoke(logMessage);
+            try
+            {
+                locker.AcquireWriterLock(int.MaxValue); //You might wanna change timeout value
+                using (var streamWriter = new StreamWriter(@fullPath, this.append))
+                {
+                    await streamWriter.WriteAsync(message);
+                    await streamWriter.FlushAsync();
+                }
+            }
+            finally
+            {
+                locker.ReleaseWriterLock();
             }
         }
     }

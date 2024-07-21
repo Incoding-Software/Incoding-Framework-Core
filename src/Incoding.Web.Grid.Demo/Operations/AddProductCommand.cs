@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using GridUI.Persistance;
 using Incoding.Core.CQRS.Core;
 
 namespace GridUI.Operations
 {
-    public class AddProductCommand : CommandBase
+    public class AddProductCommand : CommandBaseAsync
     {
         #region Properties
 
@@ -21,7 +22,7 @@ namespace GridUI.Operations
 
         #endregion
 
-        protected override void Execute()
+        protected override async Task ExecuteAsync()
         {
             var product = new Product();
             product.Name = Name;
@@ -29,7 +30,8 @@ namespace GridUI.Operations
             product.Date = Date;
             product.IsSoldOut = IsSoldOut;
             product.Users = Users;
-            Repository.Save(product);
+            await Repository.SaveAsync(product);
         }
+
     }
 }

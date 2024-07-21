@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Incoding.Core.Block.Scheduler.Persistence;
 using Incoding.Core.Block.Scheduler.Query;
 using Incoding.Core.CQRS.Core;
@@ -10,9 +11,9 @@ namespace Incoding.Core.Block.Scheduler.Command
 
     #endregion
 
-    public class ScheduleCommand : CommandBase
+    public class ScheduleCommand : CommandBaseAsync
     {
-        protected override void Execute()
+        protected override async Task ExecuteAsync()
         {
             Recurrency = Recurrency ?? new GetRecurrencyDateQuery
                                        {
@@ -21,7 +22,7 @@ namespace Incoding.Core.Block.Scheduler.Command
             var type = Command.GetType();
             var option = type.FirstOrDefaultAttribute<OptionOfDelayAttribute>() ?? new OptionOfDelayAttribute();
             var startsOn = Recurrency.StartDate.GetValueOrDefault(DateTime.UtcNow);
-            Repository.Save(new DelayToScheduler
+            await Repository.SaveAsync(new DelayToScheduler
                             {
                                     Command = Command.ToJsonString(),
                                     CreateDt = DateTime.UtcNow,

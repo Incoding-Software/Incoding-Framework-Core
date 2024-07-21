@@ -491,6 +491,37 @@
             </summary>
             <returns>Order Specification expression action</returns>
         </member>
+        <member name="T:Incoding.Core.Extensions.IProviderExtension">
+            <summary>
+            Provider Extension
+            </summary>
+        </member>
+        <member name="M:Incoding.Core.Extensions.IProviderExtension.ToProviderList``1(System.Linq.IQueryable{``0})">
+            <summary>
+            To List by Provider
+            </summary>
+            <param name="items"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Incoding.Core.Extensions.IProviderExtension.ToProviderAny``1(System.Linq.IQueryable{``0})">
+            <summary>
+            Any by Provider
+            </summary>
+            <param name="items"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Incoding.Core.Extensions.IProviderExtension.ToProviderMin``2(System.Linq.IQueryable{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Min by Provider
+            </summary>
+            <param name="items"></param>
+            <param name="selector"></param>
+            <typeparam name="TSource"></typeparam>
+            <typeparam name="TResult"></typeparam>
+            <returns></returns>
+        </member>
         <member name="T:Incoding.Core.Extensions.LinqSpecs.AndSpecification`1">
             <summary>
                 The and specification.

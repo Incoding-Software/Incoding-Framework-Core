@@ -102,7 +102,8 @@ namespace Incoding.Web.Grid.Demo
                 .Open(Configuration.GetConnectionString("Main"))
                 .Database.EnsureCreated();
 
-            new DefaultDispatcher().Push(new ProductsSetupCommand());
+            var task = new DefaultDispatcher().PushAsync(new ProductsSetupCommand());
+            task.Wait(TimeSpan.FromSeconds(60));
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Incoding.Core.Block.Logging.Core;
 using Incoding.Core.Block.Logging.Loggers;
 using Incoding.Core.Extensions;
@@ -72,6 +73,15 @@ namespace Incoding.Core.Block.Logging.Policy
 
             foreach (var logger in this.logContexts)
                 logger.Log(message);
+        }
+
+        public async Task LogAsync(string type, LogMessage message)
+        {
+            if (!this.supportedTypes.Any(r => r.EqualsWithInvariant(type)))
+                return;
+
+            foreach (var logger in this.logContexts)
+                await logger.LogAsync(message);
         }
 
         #endregion
