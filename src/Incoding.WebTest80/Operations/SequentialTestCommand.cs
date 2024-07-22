@@ -5,7 +5,7 @@ namespace Incoding.WebTest80.Operations
 {
     public class SequentialTestCommand : SequentialTaskCommandBase<SequentialTestQuery.Response>
     {
-        protected override void Execute()
+        protected override async Task ExecuteAsync()
         {
             Debug.WriteLine($"{Item.Id} : {Item.Name}");
         }

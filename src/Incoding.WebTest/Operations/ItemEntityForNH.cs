@@ -5,6 +5,7 @@ using Incoding.Core.Extensions;
 using Incoding.Core.Extensions.LinqSpecs;
 using Incoding.Data;
 using Incoding.Data.NHibernate;
+using Incoding.Data.NHibernate.Provider;
 
 namespace Incoding.WebTest.Operations
 {

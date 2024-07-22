@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Tests\When_DoSomething.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\js\benchmark.js" />
     <Content Remove="wwwroot\js\blanket.jasmine.adapter.js" />
     <Content Remove="wwwroot\js\blanket.min.js" />

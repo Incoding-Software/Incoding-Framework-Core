@@ -24,6 +24,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.Extensions.Caching.Memory;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
+using Incoding.Data.NHibernate.Provider;
 
 namespace Incoding.WebTest30
 {

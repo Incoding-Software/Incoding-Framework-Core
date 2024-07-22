@@ -14,9 +14,9 @@
     <PackageReleaseNotes>Incoding Framework library migrated to .NET Standard and .NET Core</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Version>1.3.0</Version>
-    <FileVersion>1.3.0.0</FileVersion>
-    <AssemblyVersion>1.3.0.0</AssemblyVersion>
+    <Version>1.3.2</Version>
+    <FileVersion>1.3.2.0</FileVersion>
+    <AssemblyVersion>1.3.2.0</AssemblyVersion>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <Title>Incoding Software Data Nhibernate</Title>
     <PackageReadmeFile>README.md</PackageReadmeFile>

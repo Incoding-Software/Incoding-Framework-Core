@@ -3,6 +3,7 @@ using Incoding.Core.Data;
 using Incoding.Core.Extensions;
 using Incoding.Core.Extensions.LinqSpecs;
 using Incoding.Data.NHibernate;
+using Incoding.Data.NHibernate.Provider;
 
 namespace Incoding.WebTest80.Operations
 {

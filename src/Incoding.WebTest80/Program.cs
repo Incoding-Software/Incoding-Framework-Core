@@ -16,6 +16,7 @@ using Incoding.Core.Block.Caching;
 using Incoding.Core.Block.Caching.Providers;
 using Incoding.Core.Block.IoC;
 using Incoding.Core.Block.IoC.Provider;
+using Incoding.Data.NHibernate.Provider;
 using Microsoft.Extensions.Caching.Memory;
 
 var builder = WebApplication.CreateBuilder(args);

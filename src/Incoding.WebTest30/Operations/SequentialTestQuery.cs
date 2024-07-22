@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Incoding.Core.Tasks;
 
 namespace Incoding.WebTest30.Operations
@@ -11,7 +12,7 @@ namespace Incoding.WebTest30.Operations
             public string Name { get; set; }
         }
 
-        protected override IEnumerable<Response> ExecuteResult()
+        protected override async Task<IEnumerable<Response>> ExecuteResult()
         {
             return new List<Response>
             {

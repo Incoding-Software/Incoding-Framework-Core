@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.Core", "Incoding.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.Data", "Incoding.Data\Incoding.Data.csproj", "{7FA0F901-5A61-4EBA-8D3F-739FE4394A7F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.WebTest", "Incoding.WebTest\Incoding.WebTest.csproj", "{FD898759-A664-4053-B750-B89BD5EBAD70}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.UnitTestsCore", "Incoding.UnitTestsCore\Incoding.UnitTestsCore.csproj", "{5161D152-6803-46E4-B3E2-ABB8727C91E5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.Data.EF", "Incoding.Data.EF\Incoding.Data.EF.csproj", "{923ECD3D-3BF3-41EA-8359-1117C72AC9BD}"
@@ -43,7 +41,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.WebTest30", "Incod
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.WebTest60", "Incoding.WebTest60\Incoding.WebTest60.csproj", "{B497ED7B-5C99-4DBC-8297-C123F977FBEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Incoding.WebTest80", "Incoding.WebTest80\Incoding.WebTest80.csproj", "{73B44642-52A9-4655-BF44-50D8A7ACEAD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.WebTest80", "Incoding.WebTest80\Incoding.WebTest80.csproj", "{73B44642-52A9-4655-BF44-50D8A7ACEAD5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,12 +68,6 @@ Global
 		{7FA0F901-5A61-4EBA-8D3F-739FE4394A7F}.Publish|Any CPU.Build.0 = Debug|Any CPU
 		{7FA0F901-5A61-4EBA-8D3F-739FE4394A7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FA0F901-5A61-4EBA-8D3F-739FE4394A7F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FD898759-A664-4053-B750-B89BD5EBAD70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FD898759-A664-4053-B750-B89BD5EBAD70}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FD898759-A664-4053-B750-B89BD5EBAD70}.Publish|Any CPU.ActiveCfg = Debug|Any CPU
-		{FD898759-A664-4053-B750-B89BD5EBAD70}.Publish|Any CPU.Build.0 = Debug|Any CPU
-		{FD898759-A664-4053-B750-B89BD5EBAD70}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FD898759-A664-4053-B750-B89BD5EBAD70}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5161D152-6803-46E4-B3E2-ABB8727C91E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5161D152-6803-46E4-B3E2-ABB8727C91E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5161D152-6803-46E4-B3E2-ABB8727C91E5}.Publish|Any CPU.ActiveCfg = Debug|Any CPU
@@ -162,7 +154,6 @@ Global
 		{7FE49241-90AD-4BD2-BFF5-4E49E5238031} = {506ED6C6-6671-43EC-98A9-5FBF14201B62}
 		{A6C75E3B-28AC-4EA3-99B5-014C3541657B} = {506ED6C6-6671-43EC-98A9-5FBF14201B62}
 		{7FA0F901-5A61-4EBA-8D3F-739FE4394A7F} = {506ED6C6-6671-43EC-98A9-5FBF14201B62}
-		{FD898759-A664-4053-B750-B89BD5EBAD70} = {81999E6B-994A-4762-A4E3-AB5AC3BAE569}
 		{5161D152-6803-46E4-B3E2-ABB8727C91E5} = {81999E6B-994A-4762-A4E3-AB5AC3BAE569}
 		{923ECD3D-3BF3-41EA-8359-1117C72AC9BD} = {540D8C0B-630F-48A8-875B-8CFA62F498E2}
 		{65546B67-1D7A-4127-8C33-197819DAD18F} = {540D8C0B-630F-48A8-875B-8CFA62F498E2}
@@ -179,13 +170,13 @@ Global
 		{73B44642-52A9-4655-BF44-50D8A7ACEAD5} = {81999E6B-994A-4762-A4E3-AB5AC3BAE569}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_UpdateAssemblyVersion = False
-		BuildVersion_UpdateFileVersion = False
-		BuildVersion_BuildAction = ReBuild
-		BuildVersion_IncrementBeforeBuild = True
-		BuildVersion_DetectChanges = True
-		BuildVersion_BuildVersioningStyle = None.None.None.None
 		SolutionGuid = {834D889F-F4B3-4006-83EC-584703FCCDA2}
+		BuildVersion_BuildVersioningStyle = None.None.None.None
+		BuildVersion_DetectChanges = True
+		BuildVersion_IncrementBeforeBuild = True
+		BuildVersion_BuildAction = ReBuild
+		BuildVersion_UpdateFileVersion = False
+		BuildVersion_UpdateAssemblyVersion = False
 	EndGlobalSection
 	GlobalSection(NDepend) = preSolution
 		Project = ".\IncFramework.ndproj"
