@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Incoding.Core.CQRS.Core;
 using Incoding.Core.Data;
 
 namespace Incoding.WebTest30.Operations.Test
 {
-    public class CreateOrCloneEntity<T> : CommandBase<T> where T : IncEntityBase, new()
+    public class CreateOrCloneEntity<T> : CommandBaseAsync<T> where T : IncEntityBase, new()
     {
         public int? Id { get; set; }
 
@@ -14,7 +15,7 @@ namespace Incoding.WebTest30.Operations.Test
         public Func<T, bool> IsEqual { get; set; }
         
         /// <inheritdoc />
-        protected override T ExecuteResult()
+        protected override async Task<T> ExecuteResult()
         {
             //if (Id.HasValue && Id > 0)
             //{

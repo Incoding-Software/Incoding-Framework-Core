@@ -13,10 +13,10 @@ namespace Incoding.WebTest30.Tests
             var entity = Pleasure.Generator.Invent<ItemEntity>();
 
             var mockCommand = MockCommand<DoSomeCommand>.When(command)
-                .StubPushT(new CreateOrCloneEntity<ItemEntity>() {Id = command.Id},
-                    entity,
+                .StubPushAsync(new CreateOrCloneEntity<ItemEntity>() {Id = command.Id},
+                    
                     dsl => dsl.ForwardToAction(r => r.IsEqual, cloneEntity => cloneEntity.IsEqual.Invoke(Pleasure.Generator.Invent<ItemEntity>()))
-                        );
+                        , result: entity);
 
             mockCommand.Execute();
         };

@@ -150,6 +150,44 @@ namespace Incoding.UnitTests.MSpec
             return this;
         }
 
+        public MockMessage<TMessage, TResult> StubPushT<TCommand, T>(TCommand command, T result, Action<ICompareFactoryDsl<TCommand, TCommand>> dsl = null, MessageExecuteSetting setting = null) where TCommand : CommandBase<T>
+        {
+            command.Setting = command.Setting ?? (setting ?? new MessageExecuteSetting());
+            var type = typeof(TCommand);
+            Action<TCommand> verify = cmd =>
+            {
+                bool isAny = false;
+                try
+                {
+                    cmd.ShouldEqualWeak(command as TCommand, factoryDsl =>
+                    {
+                        factoryDsl.ForwardToAction(r => r.Setting, a =>
+                        {
+                            if (a.Setting != null)
+                                a.Setting.ShouldEqualWeak(command.Setting);
+                        });
+                        if (dsl != null)
+                            dsl(factoryDsl);
+                    });
+                    isAny = true;
+                    command.SetValue("Result", result);
+                    if (this.stubsOfSuccess.ContainsKey(type))
+                        this.stubsOfSuccess[type]++;
+                    else
+                        this.stubsOfSuccess.Add(type, 1);
+                }
+                catch (InternalSpecificationException ex)
+                {
+                    Console.WriteLine(ex);
+                }
+
+                isAny.ShouldBeTrue();
+            };
+            dispatcher.Setup(x => x.Push<T>(Pleasure.MockIt.Is<TCommand>(verify))).Returns(result);
+
+            return this;
+        }
+
         public MockMessage<TMessage, TResult> StubPushAsync<TCommand>(TCommand command, Action<ICompareFactoryDsl<TCommand, TCommand>> dsl = null, MessageExecuteSetting setting = null, object result = null) where TCommand : CommandBaseAsync
         {
             command.Setting = command.Setting ?? (setting ?? new MessageExecuteSetting());
