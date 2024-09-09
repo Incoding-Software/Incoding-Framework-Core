@@ -491,6 +491,14 @@
             </summary>
             <returns>Order Specification expression action</returns>
         </member>
+        <member name="M:Incoding.Core.Extensions.DictionaryExtensions.CombineDynamics(System.Object,System.Object)">
+            <summary>
+            Combine Dynamics
+            </summary>
+            <param name="object1"></param>
+            <param name="object2"></param>
+            <returns></returns>
+        </member>
         <member name="T:Incoding.Core.Extensions.IProviderExtension">
             <summary>
             Provider Extension

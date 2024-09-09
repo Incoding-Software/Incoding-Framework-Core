@@ -61,6 +61,10 @@ namespace Incoding.WebTest80.Operations
 
         public class AsView : QueryBase<List<GetItemsQuery.Response>>
         {
+            public int X1 { get; set; }
+            public string X2 { get; set; }
+            public string X3 { get; set; }
+            public string X4 { get; set; }
             protected override List<Response> ExecuteResult()
             {
                 var connection = IoCFactory.Instance.TryResolve<IConfiguration>().GetConnectionString("Main");

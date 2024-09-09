@@ -1,12 +1,23 @@
 ﻿@using Incoding.Web.MvcContrib
 @using Incoding.WebTest80.Operations
+@using Incoding.Core.Extensions
 @using (Html.BeginForm())
 {
     
 }
 
-@using (Html.When(JqueryBind.None)
-    .Ajax(new GetItemsQuery.AsView())
+<input type="hidden" id="x2" value="112233" />
+
+@using (Html.When(JqueryBind.InitIncoding | JqueryBind.None)
+   .Ajax<GetItemsQuery.AsView>(new
+   {    
+       X1 = 15,
+       X2 = Selector.Jquery.Id("x2")
+   }.CombineDynamics(new
+   {
+       X2 = "xxxx2222",
+       X3 = "something"
+   }))
     .OnSuccess(dsl => dsl.Self().JQuery.Dom.Use(Selector.Result).WithTemplateByView("~/Views/Item/ItemTmpl.cshtml").Html())
     .AsHtmlAttributes(new {id = nameof(GetItemsQuery)})
     .ToBeginTag(HtmlTag.Div))

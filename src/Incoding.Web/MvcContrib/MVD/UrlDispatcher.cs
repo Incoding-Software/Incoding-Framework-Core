@@ -60,6 +60,8 @@ namespace Incoding.Web.MvcContrib
                                         .Where(s => s != null)
                                         .Select(o =>
                                                 {
+                                                    if (o is IDictionary<string, object> || o is IDictionary<string, string>)
+                                                        return new RouteValueDictionary(o);
                                                     var res = new RouteValueDictionary();
                                                     var type = o.GetType();
 
