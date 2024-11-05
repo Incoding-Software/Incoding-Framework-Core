@@ -74,15 +74,15 @@ namespace Incoding.Core.CQRS
 
             #endregion
 
-            //public void Commit()
-            //{
-            //    this.Select(r => r.Value)
-            //        .DoEach(r =>
-            //                {
-            //                    if (r.IsValueCreated)
-            //                        r.Value.Commit();
-            //                });
-            //}
+            public void Commit()
+            {
+                this.Select(r => r.Value)
+                    .DoEach(r =>
+                            {
+                                if (r.IsValueCreated)
+                                    r.Value.Commit();
+                            });
+            }
             public async Task CommitAsync()
             {
                 foreach (var r in this.Select(r => r.Value))
@@ -101,51 +101,46 @@ namespace Incoding.Core.CQRS
         {
             return new DefaultDispatcher();
         }
-
+        
         public void Push(CommandComposite composite)
         {
-            PushAsyncInternal(composite).GetAwaiter().GetResult();
+            bool isOuterCycle = !unitOfWorkCollection.Any();
+            var isFlush = composite.Parts.Any(s => s is CommandBase || s is CommandBaseAsync);
+            try
+            {
+                foreach (var groupMessage in composite.Parts.GroupBy(part => part.Setting, r => r))
+                {
+                    foreach (var part in groupMessage)
+                    {
+                        if (isOuterCycle)
+                        {
+                            if (part.Setting.UID == Guid.Empty)
+                                part.Setting.UID = Guid.NewGuid();
+                            part.Setting.IsOuter = true;
+                        }
+                        var unitOfWork = unitOfWorkCollection.AddOrGet(groupMessage.Key, isFlush);
+                        foreach (var interception in interceptions)
+                            interception().OnBefore(part);
+
+                        part.OnExecute(this, unitOfWork);
+
+                        foreach (var interception in interceptions)
+                            interception().OnAfter(part);
+
+                        var isFlushInIteration = part is CommandBase || part is CommandBaseAsync;
+                        if (unitOfWork.IsValueCreated && isFlushInIteration)
+                            unitOfWork.Value.Flush();
+                    }
+                }
+                if (isOuterCycle && isFlush)
+                    this.unitOfWorkCollection.Commit();
+            }
+            finally
+            {
+                if (isOuterCycle)
+                    unitOfWorkCollection.Dispose();
+            }
         }
-
-        //public void Push(CommandComposite composite)
-        //{
-        //    bool isOuterCycle = !unitOfWorkCollection.Any();
-        //    var isFlush = composite.Parts.Any(s => s is CommandBase || s is CommandBaseAsync);
-        //    try
-        //    {
-        //        foreach (var groupMessage in composite.Parts.GroupBy(part => part.Setting, r => r))
-        //        {
-        //            foreach (var part in groupMessage)
-        //            {
-        //                if (isOuterCycle)
-        //                {
-        //                    if(part.Setting.UID == Guid.Empty)
-        //                    part.Setting.UID = Guid.NewGuid();
-        //                    part.Setting.IsOuter = true;
-        //                }
-        //                var unitOfWork = unitOfWorkCollection.AddOrGet(groupMessage.Key, isFlush);
-        //                foreach (var interception in interceptions)
-        //                    interception().OnBefore(part);
-
-        //                part.OnExecute(this, unitOfWork);
-
-        //                foreach (var interception in interceptions)
-        //                    interception().OnAfter(part);
-
-        //                var isFlushInIteration = part is CommandBase || part is CommandBaseAsync;
-        //                if (unitOfWork.IsValueCreated && isFlushInIteration)
-        //                    unitOfWork.Value.Flush();
-        //            }
-        //        }
-        //        if (isOuterCycle && isFlush)
-        //            this.unitOfWorkCollection.Commit();
-        //    }
-        //    finally
-        //    {
-        //        if (isOuterCycle)
-        //            unitOfWorkCollection.Dispose();
-        //    }
-        //}
 
         public void Push(CommandBase command)
         {
