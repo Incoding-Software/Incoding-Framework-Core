@@ -9,8 +9,8 @@ namespace Incoding.Core.CQRS.Common
 
     public interface IMessageInterception
     {
-        Task OnBefore(IMessage message);
+        Task OnBeforeAsync(IMessage message);
 
-        Task OnAfter(IMessage message);
+        Task OnAfterAsync(IMessage message);
     }
 }

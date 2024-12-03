@@ -10,7 +10,7 @@ namespace Incoding.WebTest80.Operations
         public List<Guid> ItemId { get; set; }
         public IFormFile F1 { get; set; }
         public List<int> TargetIds { get; set; }
-
+        
         public class Validator : AbstractValidator<AddItemCommand>
         {
             public Validator()
@@ -44,15 +44,16 @@ namespace Incoding.WebTest80.Operations
             Result = 5;
         }
 
-        public class AsView : QueryBase<AddItemCommand>
+        public class AsView : QueryBaseAsync<AddItemCommand>
         {
-            protected override AddItemCommand ExecuteResult()
+            protected async override Task<AddItemCommand> ExecuteResult()
             {
                 return new AddItemCommand
                 {
                     TargetIds = new List<int> {1555, 1777}
                 };
             }
+
         }
     }
 }

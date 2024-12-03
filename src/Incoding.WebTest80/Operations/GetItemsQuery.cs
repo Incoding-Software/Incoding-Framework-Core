@@ -18,8 +18,6 @@ namespace Incoding.WebTest80.Operations
 
     public class GetWithParams : QueryBase<OptGroupVm>
     {
-        public int SomeId { get; set; }
-        public List<int> Ids { get; set; }
         protected override OptGroupVm ExecuteResult()
         {
             return new OptGroupVm(new List<KeyValueVm> { new KeyValueVm(1555, "Item1")});

@@ -35,13 +35,13 @@ namespace Incoding.Web.MvcContrib
             foreach (var interception in interceptionFuncs)
             {
                 foreach (var message in Instance.Parts)
-                    await interception().OnBefore(message);
+                    await interception().OnBeforeAsync(message);
             }
             
             foreach (var interception in interceptions)
             {
                 foreach (var message in Instance.Parts)
-                    await interception.OnBefore(message);
+                    await interception.OnBeforeAsync(message);
             }
 
             await new DefaultDispatcher().PushAsyncInternal(Instance);
@@ -49,13 +49,13 @@ namespace Incoding.Web.MvcContrib
             foreach (var interception in interceptionFuncs)
             {
                 foreach (var message in Instance.Parts)
-                    await interception().OnAfter(message);
+                    await interception().OnAfterAsync(message);
             }
 
             foreach (var interception in interceptions)
             {
                 foreach (var message in Instance.Parts)
-                    await interception.OnAfter(message);
+                    await interception.OnAfterAsync(message);
             }
 
             return Instance.Parts.Count == 1 ? Instance.Parts[0].Result : Instance.Parts.Select(r => r.Result);

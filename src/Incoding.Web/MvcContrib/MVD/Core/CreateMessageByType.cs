@@ -40,7 +40,7 @@ namespace Incoding.Web.MvcContrib
                 Type = byPair[0],
             });
             var formCollection = new DefaultDispatcher().Query(new GetFormCollectionsQuery());
-            var instanceType = IsGroup ? typeof(List<>).MakeGenericType(inst) : inst;
+            var instanceType = IsGroup ? typeof(List<>).MakeGenericType(inst.ResultType) : inst.ResultType;
             if (instanceType.IsTypicalType() && IsModel)
             {
                 string str = formCollection["incValue"];
@@ -61,7 +61,7 @@ namespace Incoding.Web.MvcContrib
                     .Select(name => new DefaultDispatcher().Query(new FindTypeByName()
                     {
                         Type = name,
-                    }))
+                    }).ResultType)
                     .ToArray());
             }
 
@@ -148,11 +148,16 @@ namespace Incoding.Web.MvcContrib
 
         #region Nested classes
 
-        public   sealed class FindTypeByName : QueryBase<Type>
+        public   sealed class FindTypeByName : QueryBase<FindTypeByName.Response>
         {
+            public class Response
+            {
+                public Type ResultType { get; set; }
+            }
+
             #region Static Fields
 
-            static readonly ConcurrentDictionary<string, string> cache = new ConcurrentDictionary<string, string>();
+            static readonly ConcurrentDictionary<string, Response> cache = new ConcurrentDictionary<string, Response>();
 
             #endregion
 
@@ -162,22 +167,46 @@ namespace Incoding.Web.MvcContrib
 
             #endregion
 
-            protected override Type ExecuteResult()
+            //protected override Type ExecuteResult()
+            //{
+            //    string name = HttpUtility.UrlDecode(Type).Replace(" ", "+");
+            //    var typeName = cache.GetOrAdd(name, (i) =>
+            //    {
+            //        var clearName = name.Contains("`") ? name.Split('`')[0] + "`1" : name;
+            //        foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            //        {
+            //            var findType = ReflectionExtensions.GetLoadableTypes(assembly).FirstOrDefault(type => type.Name == clearName || type.FullName == clearName);
+            //            if (findType != null)
+            //                return findType.AssemblyQualifiedName;
+            //        }
+
+            //        throw new IncMvdException("Not found any type {0}".F(name));
+            //    });
+            //    return System.Type.GetType(typeName);
+            //}
+
+            protected override Response ExecuteResult()
             {
                 string name = HttpUtility.UrlDecode(Type).Replace(" ", "+");
-                var assmelbyName = cache.GetOrAdd(name, (i) =>
+
+                var typeResult = cache.GetOrAdd(name, (i) =>
                 {
                     var clearName = name.Contains("`") ? name.Split('`')[0] + "`1" : name;
                     foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
                     {
                         var findType = ReflectionExtensions.GetLoadableTypes(assembly).FirstOrDefault(type => type.Name == clearName || type.FullName == clearName);
                         if (findType != null)
-                            return findType.AssemblyQualifiedName;
+                        {
+                            return new Response
+                            {
+                                ResultType = findType
+                            };
+                        }
                     }
 
                     throw new IncMvdException("Not found any type {0}".F(name));
                 });
-                return System.Type.GetType(assmelbyName);
+                return typeResult;
             }
         }
 

@@ -120,12 +120,12 @@ namespace Incoding.Core.CQRS
                         }
                         var unitOfWork = unitOfWorkCollection.AddOrGet(groupMessage.Key, isFlush);
                         foreach (var interception in interceptions)
-                            interception().OnBefore(part);
+                            interception().OnBeforeAsync(part).GetAwaiter().GetResult();
 
                         part.OnExecute(this, unitOfWork);
 
                         foreach (var interception in interceptions)
-                            interception().OnAfter(part);
+                            interception().OnAfterAsync(part).GetAwaiter().GetResult();
 
                         var isFlushInIteration = part is CommandBase || part is CommandBaseAsync;
                         if (unitOfWork.IsValueCreated && isFlushInIteration)
@@ -144,12 +144,12 @@ namespace Incoding.Core.CQRS
 
         public void Push(CommandBase command)
         {
-            PushAsyncInternal(new CommandComposite(command)).GetAwaiter().GetResult();
+            Push(new CommandComposite(command));
         }
 
         public T Push<T>(CommandBase<T> command)
         {
-            PushAsyncInternal(new CommandComposite(command)).GetAwaiter().GetResult();
+            Push(new CommandComposite(command));
             return command.Result;
         }
 
@@ -181,12 +181,12 @@ namespace Incoding.Core.CQRS
                         }
                         var unitOfWork = unitOfWorkCollection.AddOrGet(groupMessage.Key, isFlush);
                         foreach (var interception in interceptions)
-                            await interception().OnBefore(part);
+                            await interception().OnBeforeAsync(part);
 
                         await part.OnExecuteAsync(this, unitOfWork);
 
                         foreach (var interception in interceptions)
-                            await interception().OnAfter(part);
+                            await interception().OnAfterAsync(part);
 
                         var isFlushInIteration = part is CommandBase || part is CommandBaseAsync;
                         if (unitOfWork.IsValueCreated && isFlushInIteration)
@@ -205,7 +205,7 @@ namespace Incoding.Core.CQRS
 
         public TResult Query<TResult>(QueryBase<TResult> message, MessageExecuteSetting executeSetting = null)
         {
-            PushAsyncInternal(new CommandComposite(message, executeSetting)).GetAwaiter().GetResult();
+            Push(new CommandComposite(message, executeSetting));
             return (TResult)message.Result;
         }
 
