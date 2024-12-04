@@ -257,6 +257,10 @@ namespace Incoding.Web.MvcContrib
         {
             return new BeginTag(htmlHelper, tag, AnonymousHelper.ToDictionary(attributes));
         }
+        public BeginTag BeginTag(string tag, object attributes = null)
+        {
+            return new BeginTag(htmlHelper, tag, AnonymousHelper.ToDictionary(attributes));
+        }
 
         public IHtmlContent Tag(HtmlTag tag, string content, object attributes = null)
         {

@@ -53,6 +53,10 @@ namespace Incoding.Web.MvcContrib
         {
             return new BeginTag(htmlAttributes.HtmlHelper, tag, htmlAttributes);
         }
+        public static BeginTag ToBeginTag(this HtmlRouteValueDictionary htmlAttributes, string tag)
+        {
+            return new BeginTag(htmlAttributes.HtmlHelper, tag, htmlAttributes);
+        }
         
         ////ncrunch: no coverage end
 
