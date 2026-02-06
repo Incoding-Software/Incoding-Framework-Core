@@ -107,7 +107,8 @@ namespace Incoding.Core.Tasks
                 }
                 catch (Exception ex)
                 {
-                    Options.OnError?.Invoke(ex);// LoggingFactory.Instance.Log(LogType.Debug, "TaskManager: ", ex);
+                    if(Options.OnError != null)
+                        await Options.OnError(ex);// LoggingFactory.Instance.Log(LogType.Debug, "TaskManager: ", ex);
                 }
             };
 

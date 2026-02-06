@@ -26,7 +26,7 @@ namespace Incoding.Core.Block.Logging.Loggers
         #region Static Fields
 
         static readonly object lockObject = new object();
-        static ReaderWriterLock locker = new ReaderWriterLock();
+        private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
 
         #endregion
 
@@ -102,6 +102,10 @@ namespace Incoding.Core.Block.Logging.Loggers
             }
         }
 
+        /// <summary>
+        /// Log Async
+        /// </summary>
+        /// <param name="logMessage">Message to log</param>
         public override async Task LogAsync(LogMessage logMessage)
         {
             string fullPath = Path.Combine(this.folderPath, this.fileName.Invoke());
@@ -117,9 +121,9 @@ namespace Incoding.Core.Block.Logging.Loggers
             }
 
             string message = this.template.Invoke(logMessage);
+            await _semaphore.WaitAsync(int.MaxValue);
             try
             {
-                locker.AcquireWriterLock(int.MaxValue); //You might wanna change timeout value
                 using (var streamWriter = new StreamWriter(@fullPath, this.append))
                 {
                     await streamWriter.WriteAsync(message);
@@ -128,7 +132,7 @@ namespace Incoding.Core.Block.Logging.Loggers
             }
             finally
             {
-                locker.ReleaseWriterLock();
+                _semaphore.Release();
             }
         }
     }
