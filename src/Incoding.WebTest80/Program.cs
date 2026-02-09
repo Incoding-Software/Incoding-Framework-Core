@@ -1,23 +1,26 @@
-using FluentNHibernate.Cfg.Db;
 using FluentNHibernate.Cfg;
+using FluentNHibernate.Cfg.Db;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Incoding.Core;
+using Incoding.Core.Block.Caching;
+using Incoding.Core.Block.Caching.Providers;
+using Incoding.Core.Block.IoC;
+using Incoding.Core.Block.IoC.Provider;
+using Incoding.Core.Block.Logging;
+using Incoding.Core.Block.Logging.Core;
 using Incoding.Core.Data;
+using Incoding.Core.Tasks;
 using Incoding.Data.NHibernate;
+using Incoding.Data.NHibernate.Provider;
 using Incoding.Web;
 using Incoding.Web.MvcContrib;
 using Incoding.WebTest80.Models;
 using Incoding.WebTest80.Operations;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
+using Microsoft.Extensions.Caching.Memory;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
-using Incoding.Core.Block.Caching;
-using Incoding.Core.Block.Caching.Providers;
-using Incoding.Core.Block.IoC;
-using Incoding.Core.Block.IoC.Provider;
-using Incoding.Data.NHibernate.Provider;
-using Microsoft.Extensions.Caching.Memory;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -129,5 +132,31 @@ app.MapControllerRoute(
 
 IoCFactory.Instance.Initialize(init => init.WithProvider(new MSDependencyInjectionIoCProvider(app.Services)));
 CachingFactory.Instance.Initialize(init => init.WithProvider(new NetCachedProvider(() => app.Services.GetRequiredService<IMemoryCache>())));
+
+DateTime lastRunCheckForBackgroundCheckResponses = DateTime.Today.AddDays(-1);
+BackgroundTaskFactory.Instance.AddExecutor("Background AI Responses",
+    async () =>
+    {
+        //throw new Exception("test");
+
+        //LoggingFactory.Instance.LogMessage(backgroundJobLog, "Background AI Responses completed");
+        lastRunCheckForBackgroundCheckResponses = DateTime.UtcNow;
+    }, options =>
+    {
+        options.OnError = async exception =>
+        {
+            await LoggingFactory.Instance.LogExceptionAsync(LogType.Debug, exception);
+        };
+        options.Conditional = () =>
+        {
+            return true;
+            //var now = DateTime.Now;
+            //var isRun = now.Hour == 17 && DateTime.UtcNow.Subtract(lastRunFxRatesImport).TotalHours > 10.0;
+            //return isRun;
+        };
+        options.Interval = TimeSpan.FromSeconds(10);
+    });
+
+BackgroundTaskFactory.Instance.Initialize();
 
 app.Run();

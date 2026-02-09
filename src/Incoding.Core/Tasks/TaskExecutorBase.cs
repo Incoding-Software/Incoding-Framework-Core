@@ -102,7 +102,6 @@ namespace Incoding.Core.Tasks
                         if(Options.AfterExecution != null)
                             await Options.AfterExecution.Invoke();
                         _lastRunning = DateTime.UtcNow;
-                        _executing = false;
                     //}
                 }
                 catch (Exception ex)
@@ -110,6 +109,7 @@ namespace Incoding.Core.Tasks
                     if(Options.OnError != null)
                         await Options.OnError(ex);// LoggingFactory.Instance.Log(LogType.Debug, "TaskManager: ", ex);
                 }
+                _executing = false;
             };
 
             Task.Factory.StartNew(() =>
