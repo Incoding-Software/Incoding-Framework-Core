@@ -376,7 +376,7 @@ Tests/
 Install package:
 
 ```
-dotnet add package Incoding.Framework.Core
+dotnet add package Incoding.Web
 ```
 
 Configure services:
