@@ -1,184 +1,435 @@
-<a href="http://incframework.com"><img class="aligncenter size-full wp-image-1738" src="http://blog.incframework.com/upload/IncFramework-logo.png" alt="IncFramework-logo" widht="100%" height="auto"  /></a>
+# Incoding Framework Core
 
-<p style="text-align: justify;"><strong>Incoding Framework</strong> is awesome tool for Full-stack development. Try it with our <a href="https://github.com/IncodingSoftware/get-started">Get Started guide</a></p>
+Incoding Framework Core is a **message-centric CQRS framework** for ASP.NET Core designed for server-driven applications.
+It provides a structured execution model built around **Dispatcher**, **Messages**, and a **MetaLanguage (IML) DSL** for UI interaction.
 
+Unlike mediator-style libraries, Incoding executes business logic directly inside messages.
+There are **no external handler classes** — execution flows through Dispatcher → Message.
 
+---
 
+# Table of Contents
 
+* Overview
+* Core Principles
+* Architecture
+* Execution Model
+* Dispatcher
+* Messages (Queries & Commands)
+* MetaLanguage DSL
+* DispatcherControllerBase
+* Unit Of Work & Transactions
+* Interceptions Pipeline
+* Dispatcher Extensions
+* Hash Navigation Model
+* Template Rendering
+* Testing (Incoding.UnitTests.MSpec)
+* Project Structure
+* Installation & Configuration
+* Mental Model vs Mediator
+* Reference Projects
 
+---
 
-# Incoding Framework
+# Overview
 
-is the opensource library for rapid development web/desktop-applications. Incoding Framework can be used for resolving different kinds of issues - it supports all development life cycle. Incoding Framework helps make more things with less code:
+Incoding Framework Core combines:
 
-Incoding Framework supports different design patterns
-Framework provides base classes for using CQRS
-Meta Language allows to create "rich" client web-applications
-In framework you can find methods an classes for unit tests
+* CQRS execution
+* server-driven UI updates
+* declarative AJAX behaviors
+* message-based orchestration
 
-## Getting Started
+It is optimized for:
 
-Adding [Javascripts](https://github.com/Incoding-Software/Incoding-Framework-Core/js) :
+* ASP.NET Core MVC
+* Razor Views
+* Bootstrap UI
+* long-lived enterprise applications without SPA complexity
+
+---
+
+# Core Principles
+
+## Message-centric execution
+
+Messages are executable units.
+
+They define:
+
+* input state
+* execution logic
+* result
+
+There is no separation into request + handler.
+
+## Dispatcher-driven pipeline
+
+Dispatcher coordinates:
+
+* execution
+* UnitOfWork lifecycle
+* interception hooks
+* transaction boundaries
+
+## DSL-first UI
+
+MetaLanguage (IML) enables declarative UI behavior directly inside Razor.
+
+---
+
+# Architecture
+
 ```
-<script src="~/js/jquery-1.10.2.js"></script>
-<script src="~/js/underscore.js"></script>
-<script src="~/js/jquery.form.js"></script>
-<script src="~/js/jquery.history.js"></script>
-<script src="~/js/jquery.validate.js"></script>
-<script src="~/js/jquery.validate.unobtrusive.js"></script>
-<script src="~/js/handlebars.js"></script>
-<script src="~/js/incoding.framework.js"></script>
+Razor View (MetaLanguage DSL)
+        ↓
+DispatcherControllerBase
+        ↓
+IDispatcher
+        ↓
+Message.OnExecute(...)
+        ↓
+Execute / ExecuteAsync
+        ↓
+ExecuteResult* (business logic)
 ```
 
-Configuring (replace your Startup.cs with this code):
+---
+
+# Execution Model
+
+Dispatcher executes messages by calling:
+
 ```
-public class IncodingStartup
+message.OnExecute(...)
+```
+
+`MessageBase` prepares execution context:
+
+* assigns Repository
+* assigns Dispatcher
+* injects UnitOfWork repository
+
+Then calls:
+
+```
+Execute()
+```
+
+Framework base classes redirect execution into:
+
+```
+ExecuteResult()
+ExecuteResultAsync()
+```
+
+Business logic always lives inside `ExecuteResult*`.
+
+---
+
+# Dispatcher
+
+`DefaultDispatcher` is the execution engine.
+
+Responsibilities:
+
+* Groups message parts by MessageExecuteSetting
+* Manages UnitOfWork instances
+* Executes interception hooks
+* Handles flush and commit lifecycle
+* Supports nested dispatch calls
+
+Dispatcher never contains domain logic.
+
+Typical usage:
+
+```
+dispatcher.Push(command);
+dispatcher.Query(query);
+```
+
+---
+
+# Messages
+
+## MessageBase
+
+Defines the core execution contract:
+
+```
+OnExecute(...)
+    → Execute()
+```
+
+Messages inherit Repository and Dispatcher during execution.
+
+---
+
+## Commands
+
+Commands represent state changes.
+
+Base class example:
+
+```
+CommandBase<T>
+```
+
+Execution flow:
+
+```
+Execute()
+    → ExecuteResult()
+```
+
+Commands may return results or operate as void messages.
+
+---
+
+## Queries
+
+Queries retrieve data.
+
+Common base class:
+
+```
+QueryBaseAsync<T>
+```
+
+Execution flow:
+
+```
+ExecuteAsync()
+    → Result = await ExecuteResult()
+```
+
+Queries typically return DTO arrays or view models.
+
+---
+
+# Dispatcher Extensions
+
+DispatcherExtensions provide fluent helpers:
+
+```
+dispatcher.Push(command);
+dispatcher.Push(command, setting);
+
+dispatcher.Query(query, cfg => { ... });
+```
+
+They configure MessageExecuteSetting and forward execution.
+
+---
+
+# MetaLanguage (IML DSL)
+
+MetaLanguage provides a declarative DSL for UI behavior.
+
+Example:
+
+```
+@(Html.When(JqueryBind.InitIncoding | JqueryBind.IncChangeUrl)
+    .Ajax<GetJobsSessionsQuery>(new { ... })
+    .OnSuccess(dsl =>
     {
-        public IncodingStartup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddMvc(options =>
-            {
-				// Configure Error Handling for mvc controllers
-                options.Filters.Add(new IncodingErrorHandlingFilter());
-            })
-			.AddFluentValidation(configuration =>
-            {
-				// Setting up FluentValidation Validator Factory
-                configuration.ValidatorFactory = new IncValidatorFactory();
-
-                AssemblyScanner.FindValidatorsInAssemblyContaining<ItemEntityMap>().ForEach(result =>
-                {
-                    services.Add(ServiceDescriptor.Transient(result.InterfaceType, result.ValidatorType));
-                    services.Add(ServiceDescriptor.Transient(result.ValidatorType, result.ValidatorType));
-                });
-            });
-			
-			// Configure Core services
-            services.ConfigureIncodingCoreServices();
-			
-			// Configure Entity Framework (requires Incoding.Data.EF provider). You can use any existing provider implementation available in Incoding.Data.* on Nuget
-            services.ConfigureIncodingEFDataServices(typeof(ItemEntity), builder =>
-            {
-                builder.UseSqlServer(Configuration.GetConnectionString("Main"));
-            });
-			
-			// Configure Incoding Framework MVC services
-            services.ConfigureIncodingWebServices();
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime applicationLifetime)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseBrowserLink();
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
-
-            app.UseStaticFiles();
-
-            app.UseMvc(routes =>
-            {
-				// Configure CQRS routes (optional)
-                routes.ConfigureCQRS();
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
-
-			// Configuring Incoding Framework IoC
-            IoCFactory.Instance.Initialize(init => init.WithProvider(new MSDependencyInjectionIoCProvider(app.ApplicationServices)));
-			
-			// Configuring Incoding Framework caching
-            CachingFactory.Instance.Initialize(init => init.WithProvider(new NetCachedProvider(() => app.ApplicationServices.GetRequiredService<IMemoryCache>())));
-
-            BackgroundTaskFactory.Instance.AddScheduler();
-			
-			// Configure some background services
-			/*
-            BackgroundTaskFactory.Instance.AddExecutor("SomeService",
-                () =>
-                {
-                    new DefaultDispatcher().Push(new BackgroundServiceCommand());
-                }, options => options.Interval = TimeSpan.FromSeconds(15));
-
-            BackgroundTaskFactory.Instance.AddSequentalExecutor("Some Sequential Service",
-                () => new SequentialTestQuery(), arg => new SequentialTestCommand()
-                , options => options.Interval = TimeSpan.FromSeconds(15));
-			*/
-			
-			// Execute this after configuring all Tasks above (include Scheduler task)
-            BackgroundTaskFactory.Instance.Initialize();
-
-			// Don't forget to stop all tasks when application is shutting down
-            applicationLifetime.ApplicationStopping.Register(() =>
-            {
-                BackgroundTaskFactory.Instance.StopAll();
-            });
-        }
-    }
+        dsl.Self().JQuery.Dom
+            .WithTemplateByView("~/Views/.../List.cshtml")
+            .Html();
+    }))
 ```
 
-### Prerequisites
+Key characteristics:
 
-* Incoding.Core
-* Incoding.Data -> Incoding.Data.* (providers)
-* Incoding.Web
-* Your web application
+* anonymous binding is standard
+* DSL controls AJAX behavior
+* UI remains server-driven
 
-OR
+---
 
-* Incoding.Core
-* Incoding.Data -> Incoding.Data.* (providers)
-* Your desktop/other application
+# DispatcherControllerBase
 
+MetaLanguage does not call custom MVC actions.
 
-### Testing
+Requests route through DispatcherControllerBase endpoints:
 
-Incoding.MSpec
-
-### Installing
-
-Web App:
 ```
-Nuget (including all dependencies): Incoding.Web
-Nuget (EF provider): Incoding.Data.EF
+Query(...)
+Push(...)
 ```
 
-Domain Library:
+These endpoints reconstruct messages and forward them to dispatcher.
+
+---
+
+# Unit Of Work & Transactions
+
+Dispatcher internally manages UnitOfWork instances.
+
+Behavior:
+
+* Messages grouped by execution settings
+* Commands trigger flush operations
+* Outer dispatch cycle commits once
+* Nested dispatch calls reuse existing UnitOfWork
+
+Isolation level and flush behavior depend on MessageExecuteSetting.
+
+---
+
+# Interceptions Pipeline
+
+Dispatcher supports interception hooks:
+
 ```
-Nuget (including all dependencies): Incoding.Data
-Nuget (EF provider): Incoding.Data.EF
+OnBeforeAsync(...)
+OnAfterAsync(...)
 ```
 
-### Usage Example
+Interceptors allow cross-cutting behavior such as:
+
+* logging
+* validation
+* auditing
+* metrics
+
+---
+
+# Hash Navigation Model
+
+Incoding commonly uses hash-driven UI state.
+
+Example:
+
 ```
-Coming soon
+#!Status=open
 ```
 
-## Versioning
+Receivers listen to:
 
-For the versions available, see the [tags on this repository](https://github.com/Incoding-Software/Incoding-Framework-Core/tags). 
+```
+InitIncoding | IncChangeUrl
+```
 
-## Authors
+Changing hash reloads content automatically.
 
-* **Vlad Kopachinsky** - *Original version* - [Incoding Framework](https://github.com/Incoding-Software/Incoding-Framework)
+---
 
-* **Victor Gelmutdinov** - *.NET Core migration work*
+# Template Rendering
 
-## License
+Rendering is template-driven.
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+Typical pattern:
 
+```
+dsl.Self().JQuery.Dom
+    .WithTemplateByView("~/Views/.../Tmpl/List.cshtml")
+    .Html();
+```
+
+Templates are preferred over manual DOM manipulation.
+
+---
+
+# Testing (Incoding.UnitTests.MSpec)
+
+Incoding provides an MSpec-based testing DSL.
+
+Typical workflow:
+
+```
+MockQuery<TQuery, TResult>.When(query)
+    .StubQuery(...)
+    .Execute()
+    .ShouldBeIsResult(...)
+```
+
+Features:
+
+* message execution without MVC
+* stubbing nested queries
+* weak equality assertions
+* fluent DSL for expectations
+
+Tests mirror real dispatcher execution.
+
+---
+
+# Project Structure
+
+Typical layout:
+
+```
+/Commands
+/Queries
+/Views
+    /Tmpl
+Controllers/
+    DispatcherControllerBase
+Tests/
+```
+
+---
+
+# Installation & Configuration
+
+Install package:
+
+```
+dotnet add package Incoding.Framework.Core
+```
+
+Configure services:
+
+```
+builder.Services.ConfigureIncodingCoreServices();
+builder.Services.ConfigureIncodingWebServices();
+```
+
+---
+
+# Mental Model vs Mediator
+
+Mediator libraries:
+
+```
+Message → Handler → Result
+```
+
+Incoding:
+
+```
+Message → ExecuteResult → Result
+```
+
+The message itself contains execution logic.
+
+---
+
+# Reference Projects
+
+See:
+
+```
+Incoding.WebTest80
+Incoding.WebTest30.Tests
+```
+
+inside the repository for working examples.
+
+---
+
+# When to Use Incoding
+
+Incoding Framework Core is ideal for:
+
+* complex MVC applications
+* server-driven AJAX workflows
+* CQRS without SPA frameworks
+* structured Razor development
+
+---
+
+# License
+
+Refer to repository license for details.
